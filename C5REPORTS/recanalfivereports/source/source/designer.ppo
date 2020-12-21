@@ -1,0 +1,2915 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 17 "source\designer.prg"
+static nOldState
+static oAux
+static nVez := 0
+static lNoClient := .F.
+
+
+static nClrReturn := nil
+static cFaceName  := ""
+static coControl  := ""
+
+
+
+
+function Designer( nType, cInfo, nWidth, nHeight )
+
+local oWnd, oDsgn, oBar, oShape
+local o0, o1,o2,o3,o4,o5,o6,o7,o8,o9,o10,o11,o12,o13,o14,o15,o16,o17,o18,o19, o20, o21
+local o22, o23, o24, o25, o26, o27, o28, o29, o30, o31, o32
+local oPanel
+local oBrush
+local lVScroll := .T.
+local lHScroll := .T.
+local cTitle   := "Diseñador de formularios"
+local oSplit
+local oImageList
+local oDirList
+local aClient := GetClientRect( Aplicacion():oWnd:hWnd )
+local rc
+nType := 0
+
+if empty( nWidth ) .AND. empty( nHeight )
+   if nType == nil; nType := 0; endif
+   do case
+      case nType == 1
+           cTitle  := "Pocket PC"
+           nWidth  := 240
+           nHeight := 320
+
+      case nType == 2
+           cTitle := "Pocket PC Square Screen"
+           nWidth  := 240
+           nHeight := 240
+
+      case nType == 3
+           cTitle := "SmartPhone"
+           nWidth  := 176
+           nHeight := 220
+      otherwise
+
+           cTitle := "Test"
+           nWidth  := 321
+           nHeight := 263
+      endcase
+endif
+
+oBrush := TBrush():New( Upper("NULL"),,,,, )
+
+    WndFold()
+
+
+
+
+oWnd := TWindowExt():New( Aplicacion():nTopForm, Aplicacion():nLeftForm, Aplicacion():nTopForm+nHeight,Aplicacion():nLeftForm+nWidth, "Form",,,,,,,,,,,, !.F., !.F., !.F., !.F., .T. )
+       rc := GetClientRect( oWnd:hWnd )
+
+oWnd:Show()
+
+    oDsgn := TDsgnEditor():New( 0, 0, rc[4], rc[3], oWnd )
+    oDsgn:nType = nType
+
+    oWnd:bCopy  := {|| if( oDsgn:oSelected <> nil, oDsgn:oSelected:Copy(),) }
+    oWnd:bPaste := {|| oDsgn:oForm:Paste( 40, 10, oDsgn ) }
+    oWnd:bUndo  := {|| oDsgn:Undo() }
+    oWnd:bSelectAll  := {|| oDsgn:SelectAll() }
+    oWnd:bDelete  := {|| oDsgn:KeyDown( 46 ) }
+    oWnd:bGotFocus := {|| UpAll() }
+
+    oWnd:oClient := oDsgn
+
+    oDsgn:lPocketPC( nType )
+
+
+
+    oDsgn:oBtnBar := oBar
+
+    oDsgn:oForm := TWndDsgn():New( 0, 0, nWidth, nHeight, oDsgn )
+
+    oDsgn:oForm:SetFocus()
+
+    oDsgn:oForm:SetGrid( 10 )
+
+
+    oDsgn:bResized := {|| AdjustDsgn( oDsgn ) }
+    AdjustDsgn( oDsgn )
+
+
+
+
+
+
+
+       oWnd:oHScroll := TScrollBar():WinNew( 12, 500,, (!.T.), oWnd, {||       oDsgn:GoLeft()}, {||     oDsgn:GoRight()}, {||   oDsgn:PageLeft()}, {|| oDsgn:PageRight()}, {|nPos| oDsgn:HThumbPos( nPos ) },,,, .F.,, )
+          oWnd:oHScroll:SetPos( 6 )
+
+
+
+
+
+
+
+
+       oWnd:oVScroll := TScrollBar():WinNew( 12, 500,, (!.F.) .OR. .T., oWnd, {||       oDsgn:GoUp()}, {||     oDsgn:GoDown()}, {||   oDsgn:PageUp()}, {|| oDsgn:PageDown()}, {|nPos| oDsgn:VThumbPos( nPos ) },,,, .F.,, )
+          oWnd:oVScroll:SetPos( 6 )
+
+
+    oWnd:oHScroll:SetRange(0,0)
+    oWnd:oVScroll:SetRange(0,0)
+
+
+return oDsgn
+
+function AddImages( aItems, oImgL, oDirList )
+local images
+local n, nLen
+
+asize( oImgL:aItems, 0 )
+
+nLen := len( aItems )
+
+for n := 2 to nLen
+    images := aItems[n]
+    aadd( oImgL:aItems, oDirList:cPath + images[1] )
+next
+
+oImgL:Refresh()
+
+return nil
+
+
+
+FUNCTION AdjustDsgn( oWnd )
+local aRect := GetClientRect( oWnd:hWnd )
+
+oWnd:oForm:aRect := {0,0,aRect[3],aRect[4]}
+oWnd:Refresh()
+
+return nil
+
+
+function Selection( o )
+local oBtn
+
+for each oBtn in o:oWnd:aControls
+
+    oBtn:lPressed := (o:nId == oBtn:nId)
+
+next
+
+AEval( o:oWnd:aControls, { | oCtrl | oCtrl:Refresh() } )
+
+return nil
+
+
+
+
+
+_HB_CLASS TDsgnEditor ; function TDsgnEditor ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnEditor" , iif( .T., { @TControl() }, { @HBObject() } ), @TDsgnEditor() ) ) ;
+
+      _HB_MEMBER { AS LOGICAL lRegistered } ; oClass:AddMultiClsData( "LOGICAL",, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRegistered"}, .F. )
+
+; _HB_MEMBER { aOldRect } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aOldRect"}, .F. )
+; _HB_MEMBER { aRectSel } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aRectSel"}, .F. )
+; _HB_MEMBER { aRedo } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aRedo"}, .F. )
+; _HB_MEMBER { aSelecteds } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aSelecteds"}, .F. )
+; _HB_MEMBER { aShapes } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aShapes"}, .F. )
+; _HB_MEMBER { aTrash } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aTrash"}, .F. )
+; _HB_MEMBER { aUndo } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aUndo"}, .F. )
+; _HB_MEMBER { AS LOGICAL lBorder } ; oClass:AddMultiData( "LOGICAL", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lBorder"}, .F. )
+; _HB_MEMBER { lEditando } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lEditando"}, .F. )
+; _HB_MEMBER { lKeyDown } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lKeyDown"}, .F. )
+; _HB_MEMBER { lMoviendo } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lMoviendo"}, .F. )
+; _HB_MEMBER { lRotatePPC } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRotatePPC"}, .F. )
+; _HB_MEMBER { lSaved } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lSaved"}, .F. )
+; _HB_MEMBER { lxPocketPC } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxPocketPC"}, .F. )
+; _HB_MEMBER { AS LOGICAL lPaintGuideN } ; oClass:AddMultiData( "LOGICAL", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lPaintGuideN"}, .F. )
+; _HB_MEMBER { AS LOGICAL lPaintGuideW } ; oClass:AddMultiData( "LOGICAL", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lPaintGuideW"}, .F. )
+; _HB_MEMBER { AS LOGICAL lPaintGuideE } ; oClass:AddMultiData( "LOGICAL", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lPaintGuideE"}, .F. )
+; _HB_MEMBER { AS LOGICAL lPaintGuideS } ; oClass:AddMultiData( "LOGICAL", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lPaintGuideS"}, .F. )
+; _HB_MEMBER { nDeltaCol } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nDeltaCol"}, .F. )
+; _HB_MEMBER { nDeltaRow } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nDeltaRow"}, .F. )
+; _HB_MEMBER { nDotSelect } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nDotSelect"}, .F. )
+; _HB_MEMBER { nHPPC } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nHPPC"}, .F. )
+; _HB_MEMBER { nLeftDbf } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nLeftDbf"}, .F. )
+; _HB_MEMBER { nOldCol } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nOldCol"}, .F. )
+; _HB_MEMBER { nOldRow } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nOldRow"}, .F. )
+; _HB_MEMBER { AS NUMERIC nOldCol2 } ; oClass:AddMultiData( "NUMERIC", 0, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nOldCol2"}, .F. )
+; _HB_MEMBER { AS NUMERIC nOldRow2 } ; oClass:AddMultiData( "NUMERIC", 0, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nOldRow2"}, .F. )
+; _HB_MEMBER { nTopDbf } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nTopDbf"}, .F. )
+; _HB_MEMBER { nType } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nType"}, .F. )
+; _HB_MEMBER { nTypePPC } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nTypePPC"}, .F. )
+; _HB_MEMBER { nWPPC } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nWPPC"}, .F. )
+; _HB_MEMBER { oBtnBar } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oBtnBar"}, .F. )
+; _HB_MEMBER { oFocused } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oFocused"}, .F. )
+; _HB_MEMBER { oForm } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oForm"}, .F. )
+; _HB_MEMBER { oGet } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oGet"}, .F. )
+; _HB_MEMBER { oMsgItem } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oMsgItem"}, .F. )
+; _HB_MEMBER { oSelected } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oSelected"}, .F. )
+; _HB_MEMBER { AS NUMERIC nZoom } ; oClass:AddMultiData( "NUMERIC", 100, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nZoom"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nWidth, nHeight, oWnd) AS CLASS TDsgnEditor; oClass:AddMethod( "New", @TDsgnEditor_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AddShape( oShape); oClass:AddMethod( "AddShape", @TDsgnEditor_AddShape(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AddUndo( oShape, cAction, uVal1); oClass:AddMethod( "AddUndo", @TDsgnEditor_AddUndo(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Align( oItem, nTo); oClass:AddMethod( "Align", @TDsgnEditor_Align(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER CheckSelecteds( aRect); oClass:AddMethod( "CheckSelecteds", @TDsgnEditor_CheckSelecteds(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER DbfToDialog(); oClass:AddMethod( "DbfToDialog", @TDsgnEditor_DbfToDialog(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Destroy(); oClass:AddMethod( "Destroy", @TDsgnEditor_Destroy(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Display(); oClass:AddInline( "Display", {|Self | ( ( Self ) ), ::BeginPaint(), ::Paint(), ::EndPaint(), 0 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetContainer( aRect); oClass:AddMethod( "GetContainer", @TDsgnEditor_GetContainer(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoDown(); oClass:AddMethod( "GoDown", @TDsgnEditor_GoDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoLeft(); oClass:AddMethod( "GoLeft", @TDsgnEditor_GoLeft(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoNextCtrl() ; oClass:AddVirtual( "GoNextCtrl" )
+      _HB_MEMBER GoRIght(); oClass:AddMethod( "GoRIght", @TDsgnEditor_GoRIght(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoUp(); oClass:AddMethod( "GoUp", @TDsgnEditor_GoUp(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER HThumbPos( nPos); oClass:AddMethod( "HThumbPos", @TDsgnEditor_HThumbPos(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER HandleEvent( nMsg, nWParam, nLParam); oClass:AddMethod( "HandleEvent", @TDsgnEditor_HandleEvent(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Inspect( oShape); oClass:AddMethod( "Inspect", @TDsgnEditor_Inspect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IsInSelecteds( oShape); oClass:AddMethod( "IsInSelecteds", @TDsgnEditor_IsInSelecteds(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IsOverDot( nRow, nCol); oClass:AddMethod( "IsOverDot", @TDsgnEditor_IsOverDot(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER KeyChar( nKey, nFlags); oClass:AddMethod( "KeyChar", @TDsgnEditor_KeyChar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER KeyDown( nKey, nKeyFlags); oClass:AddMethod( "KeyDown", @TDsgnEditor_KeyDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER KeyUp( nKey, nKeyFlags); oClass:AddMethod( "KeyUp", @TDsgnEditor_KeyUp(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER LButtonDown( nRow, nCol, nKeyFlags); oClass:AddMethod( "LButtonDown", @TDsgnEditor_LButtonDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER LButtonUp( nRow, nCol, nKeyFlags); oClass:AddMethod( "LButtonUp", @TDsgnEditor_LButtonUp(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER LDblCLick( nRow, nCol); oClass:AddMethod( "LDblCLick", @TDsgnEditor_LDblCLick(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MaxMin(); oClass:AddMethod( "MaxMin", @TDsgnEditor_MaxMin(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MouseMove( nRow, nCol, nKeyFlags); oClass:AddMethod( "MouseMove", @TDsgnEditor_MouseMove(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MouseWheel( nKeys, nDelta, nXPos, nYPos); oClass:AddMethod( "MouseWheel", @TDsgnEditor_MouseWheel(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER NextShape(); oClass:AddMethod( "NextShape", @TDsgnEditor_NextShape(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER OpenTrash( oBtn, lActivate); oClass:AddMethod( "OpenTrash", @TDsgnEditor_OpenTrash(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER OpenFormat() ; oClass:AddVirtual( "OpenFormat" )
+      _HB_MEMBER PageDown(); oClass:AddInline( "PageDown", {|Self | ( ( Self ) ), ::GoDown( 30 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PageLeft(); oClass:AddInline( "PageLeft", {|Self | ( ( Self ) ), ::GoLeft( 30 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PageRight(); oClass:AddInline( "PageRight", {|Self | ( ( Self ) ), ::GoRight( 30 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PageUp(); oClass:AddInline( "PageUp", {|Self | ( ( Self ) ), ::GoUp( 30 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint(); oClass:AddMethod( "Paint", @TDsgnEditor_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paste() ; oClass:AddVirtual( "Paste" )
+      _HB_MEMBER PrevShape(); oClass:AddMethod( "PrevShape", @TDsgnEditor_PrevShape(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER RButtonDown( nRow, nCol, nKeyFlags); oClass:AddMethod( "RButtonDown", @TDsgnEditor_RButtonDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ResetSelecteds(); oClass:AddMethod( "ResetSelecteds", @TDsgnEditor_ResetSelecteds(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER RestoreTrash( o); oClass:AddMethod( "RestoreTrash", @TDsgnEditor_RestoreTrash(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Rotate(); oClass:AddMethod( "Rotate", @TDsgnEditor_Rotate(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SaveFile(); oClass:AddMethod( "SaveFile", @TDsgnEditor_SaveFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SaveFormat(); oClass:AddMethod( "SaveFormat", @TDsgnEditor_SaveFormat(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SelectAll(); oClass:AddMethod( "SelectAll", @TDsgnEditor_SelectAll(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Send2Trash( o, lTrash); oClass:AddMethod( "Send2Trash", @TDsgnEditor_Send2Trash(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ShapeOver( nRow, nCol); oClass:AddMethod( "ShapeOver", @TDsgnEditor_ShapeOver(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Size( nModo); oClass:AddMethod( "Size", @TDsgnEditor_Size(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SysKeyChar( nKey, nKeyFlags); oClass:AddMethod( "SysKeyChar", @TDsgnEditor_SysKeyChar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER TakeDrop( aFiles); oClass:AddMethod( "TakeDrop", @TDsgnEditor_TakeDrop(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Undo(); oClass:AddMethod( "Undo", @TDsgnEditor_Undo(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER VThumbPos( nPos); oClass:AddMethod( "VThumbPos", @TDsgnEditor_VThumbPos(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Validate(); oClass:AddMethod( "Validate", @TDsgnEditor_Validate(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lPocketPC( lValue); _HB_MEMBER _lPocketPC( lValue); oClass:AddMethod( "lPocketPC", @TDsgnEditor_lPocketPC(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lPocketPC", @TDsgnEditor_lPocketPC(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nState(); oClass:AddInline( "nState", {|Self | ( ( Self ) ), Aplicacion():nState }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnEditor ;
+
+
+
+
+  static FUNCTION TDsgnEditor_New( nTop, nLeft, nWidth, nHeight, oWnd ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+
+   local o := self
+
+   ::nTop         := nTop
+   ::nLeft        := nLeft
+   ::nBottom      := ::nTop + nHeight - 1
+   ::nRight       := ::nLeft + nWidth - 1
+   ::nStyle       := nOR( 1073741824, 268435456, 65536  )
+   ::nId          := ::GetNewId()
+   ::oWnd         := oWnd
+   ::lCaptured    := .F.
+
+   ::aRectSel     := nil
+   ::aShapes      := {}
+   ::oFocused     := nil
+   ::oSelected    := nil
+   ::nDotSelect   := 0
+   ::aOldRect     := array(4)
+   ::aSelecteds   := {}
+   ::lMoviendo    := .F.
+   ::aUndo        := {}
+   ::aRedo        := {}
+   ::aTrash       := {}
+   ::lSaved       := .F.
+   ::lKeyDown     := .F.
+   ::nTopDbf      := 30
+   ::nLeftDbf     := 30
+
+   ::lxPocketPC   := .F.
+   ::nTypePPC     := 1
+   ::nWPPC        := 240
+   ::nHPPC        := 320
+   ::lRotatePPC   := .F.
+   ::bGotFocus    := {|| Aplicacion():oDFocus := self }
+
+   ::oBrush := TBrush():New( Upper("NULL"),,,,, )
+
+   ::Register( nOR( 1, 2 ) )
+
+   if ! Empty( oWnd:hWnd )
+      ::Create()
+      ::lVisible = .T.
+      oWnd:AddControl( Self )
+   else
+      oWnd:DefControl( Self )
+      ::lVisible  = .F.
+   endif
+
+
+
+
+
+   ::bDropFiles := {|nRow,nCol,aFiles| o:TakeDrop( aFiles ) }
+   DragAcceptFiles( ::hWnd, .T. )
+
+return Self
+
+
+
+
+  static FUNCTION TDsgnEditor_Paint( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+   local hDCMem
+   local hBmpMem
+   local aRect := GetClientRect(::hWnd)
+   local hOldBmp
+   local nLen
+   local n
+   local oFigura
+   local hRegion, hRegion2
+   local rc := {aRect[1],aRect[2],aRect[3],aRect[4]}
+   local hOldFont, oFont
+
+
+   if ::oForm <> nil
+      rc := ::oForm:GetClientRect()
+   endif
+
+   hDCMem  := CreateCompatibleDC( ::hDC )
+   hBmpMem := CreateCompatibleBitmap( ::hDC, aRect[4], aRect[3] )
+   hOldBmp := SelectObject( hDCMem, hBmpMem )
+
+   if ::oForm <> nil
+      ::oForm:lCaption := .F.
+      ::oForm:lBorder  := .F.
+
+      if ::oForm:lCaption .AND. lTemas() .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+         FillSolidRect( hDCMem, {0,0,4,aRect[4]}, 16777215 )
+         aRect[1]+=5
+      endif
+   endif
+
+   FillSolidRect( hDCMem, {-1,-1,aRect[3]+2,aRect[4]+2}, if( ::oForm==nil,::nClrPane,::oForm:nClrPane), if(::lBorder,0,nil)  )
+
+   nLen := len( ::aShapes )
+
+
+   if nLen > 0
+      ::aShapes[nLen]:Paint( hDCMem )
+   endif
+
+   if ::oForm <> nil
+
+      if ::oForm:oMenu <> nil
+         ::oForm:oMenu:Paint( hDCMem )
+      endif
+      if ::oForm:oBar <> nil
+         ::oForm:oBar:Paint( hDCMem )
+      endif
+   endif
+
+   hRegion := CreateRectRgn( rc[2],  rc[1], rc[4], rc[3] )
+   SelectClipRgn( hDCMem, hRegion )
+   DeleteObject( hRegion )
+
+   if ::oForm <> nil
+      oFont := ::oForm:GetFontEx()
+      hOldFont := SelectObject( hDCMem, oFont:hFont )
+   endif
+
+   for n := nLen-1 to 1 step -1
+       oFigura := ::aShapes[n]
+       if oFigura:lVisibleInForm
+          oFigura:Paint( hDCMem )
+       endif
+   next
+
+   if ::oSelected <> nil .AND. ::lCaptured
+      if ::lPaintGuideN
+         Line( hDCMem, ::oForm:nHCaption, ::oSelected:aRect[2]+10, ::oSelected:aRect[1], ::oSelected:aRect[2]+10,( 150 + ( 169 * 256 ) + ( 221 * 65536 ) ))
+      endif
+      if ::lPaintGuideW
+         Line( hDCMem, ::oSelected:aRect[1]+10, 4,  ::oSelected:aRect[1]+10, ::oSelected:aRect[2],( 150 + ( 169 * 256 ) + ( 221 * 65536 ) ))
+      endif
+      if ::lPaintGuideE
+         Line( hDCMem, ::oSelected:aRect[1]+10, ::oSelected:aRect[4], ::oSelected:aRect[1]+10, ::nWidth,( 150 + ( 169 * 256 ) + ( 221 * 65536 ) ))
+      endif
+      if ::lPaintGuideS
+         Line( hDCMem, ::oSelected:aRect[3], ::oSelected:aRect[2]+10, ::nHeight, ::oSelected:aRect[2]+10,( 150 + ( 169 * 256 ) + ( 221 * 65536 ) ))
+      endif
+
+
+   endif
+
+   if ::oForm <> nil
+      SelectObject( hDCMem, hOldFont )
+      oFont:End()
+   endif
+
+   if !empty( ::aRectSel )
+      DrawFocusRect( hDCMem, ::aRectSel[1], ::aRectSel[2], ::aRectSel[3], ::aRectSel[4])
+   endif
+
+   SelectClipRgn( hDCMem, nil )
+
+BitBlt( ::hDC, 0, 0, aRect[4], aRect[3], hDCMem, 0, 0, 13369376 )
+
+SelectObject( hDCMem, hOldBmp )
+DeleteObject( hBmpMem )
+DeleteDC( hDCMem )
+
+
+return 0
+
+
+
+  static FUNCTION TDsgnEditor_AddShape( oShape ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+if len( ::aShapes ) == 0
+   aadd( ::aShapes, oShape )
+else
+   aadd( ::aShapes, nil )
+   ains( ::aShapes, 1   )
+   ::aShapes[1] := oShape
+endif
+
+return nil
+
+
+
+      static FUNCTION TDsgnEditor_ShapeOver( nRow, nCol ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local oShape
+local n, nLen
+local oOver
+
+
+::nDotSelect := ::IsOverDot( nRow, nCol )
+
+if ::nDotSelect == 0
+   nLen := len( ::aShapes )
+   for n := 1 to nLen
+       oShape := ::aShapes[n]
+       oOver := oShape:ShapeOver( nRow, nCol )
+       if oOver <> nil
+          return oOver
+       endif
+   next
+else
+   return ::oSelected
+endif
+
+return nil
+
+
+      static FUNCTION TDsgnEditor_IsOverDot( nRow, nCol ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local n
+
+if ::oSelected <> nil
+
+   for n := 1 to 8
+       if ::oSelected:aDotsActives[n] == 1 .AND. PtInRect( nRow, nCol, ::oSelected:aDots[n] )
+          return n
+       endif
+   next
+
+endif
+
+return 0
+
+
+   static FUNCTION TDsgnEditor_LDblCLick( nRow, nCol ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+if ::oSelected <> nil
+   ::oSelected:EditDlg()
+endif
+
+return 0
+
+
+      static FUNCTION TDsgnEditor_LButtonDown( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local oOldSelected := ::oSelected
+local oSel
+local lClone := GetKeyState( 17 )
+
+if lAnd( nRow , 0x8000);   nRow := nOr(nRow,0xFFFF0000); end
+if lAnd( nCol , 0x8000);   nCol := nOr(nCol,0xFFFF0000); end
+
+::SetFocus()
+
+if !::lCaptured
+
+   if ::oForm <> nil .AND. nRow < ::oForm:nHCaption
+      return nil
+   endif
+
+   ::Capture()
+   ::lCaptured := .T.
+
+   ::nOldRow := nRow
+   ::nOldCol := nCol
+
+
+   oSel  := ::ShapeOver( nRow, nCol )
+
+   if oOldSelected <> nil .AND. oOldSelected <> oSel
+      if oOldSelected:bLostFocus <> nil
+         eval( oOldSelected:bLostFocus )
+      endif
+   endif
+
+   if oSel <> nil
+
+      oSel:SetFocus()
+
+      if lClone
+
+
+
+
+      else
+
+
+
+            if ::oSelected:bLClicked <> nil
+               if eval(::oSelected:bLClicked, nRow, nCol )
+                  nOldState := ::nState
+                  Aplicacion():nState := 100
+                  return 0
+               endif
+            endif
+
+
+
+         ::oSelected:LButtonDown( nRow, nCol )
+
+         ::oSelected:StorePos()
+
+         if ::oSelected == atail(::aShapes ) .OR. !::IsInSelecteds( ::oSelected )
+            ::ResetSelecteds()
+         endif
+
+         if ::nDotSelect <> 0
+            Aplicacion():nState     := 0
+         endif
+
+         ::nDeltaRow := nRow - ::oSelected:nTop
+         ::nDeltaCol := nCol - ::oSelected:nLeft
+
+
+
+         ::aOldRect  := {::oSelected:aRect[1], ::oSelected:aRect[2], ::oSelected:aRect[3], ::oSelected:aRect[4]}
+
+      endif
+
+   else
+
+      if len(::aSelecteds) > 0
+         ::ResetSelecteds()
+      endif
+
+   endif
+endif
+
+return 0
+
+
+
+
+      static FUNCTION TDsgnEditor_MouseMove( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local aRect, nWidth, nHeight, nEn, oShape, aPage, n, nLen, oPage
+local nOldLeft, nOldTop
+local nTop, nLeft, nBottom, nRight
+
+
+if lAnd( nRow , 0x8000) ; nRow := nOr(nRow,0xFFFF0000); end
+if lAnd( nCol , 0x8000) ; nCol := nOr(nCol,0xFFFF0000); end
+
+::lMoviendo := .F.
+
+if ::lCaptured
+
+   if ::nState == 100
+      return 0
+   endif
+
+   if ::oSelected == nil .OR. (::oSelected <> nil .AND. !::oSelected:lCanMove .AND. ::nDotSelect == 0)
+
+      ::aRectSel := NormalizeRect( {::nOldRow, ::nOldCol, nRow, nCol } )
+
+   else
+
+
+      if ::oForm <> nil
+         if ::oForm:lGrid
+         endif
+      endif
+
+      do case
+         case ::nDotSelect == 0  .AND. ::oSelected:lCanMove
+
+              ::lMoviendo := .T.
+
+              if len( ::aSelecteds ) > 0
+
+                 for each oShape in ::aSelecteds
+                     oShape:Offset( nRow - ::nOldRow, nCol - ::nOldCol )
+                 next
+
+              else
+
+
+                   nTop  := nRow - ::nOldRow
+                   nLeft := nCol - ::nOldCol
+
+
+
+
+
+
+                   aRect := { ::oSelected:aOldPos[1]+nTop,  ::oSelected:aOldPos[2]+nLeft,  ::oSelected:aOldPos[3]+nTop,  ::oSelected:aOldPos[4]+nLeft  }
+
+
+                   ::oSelected:Offset( nTop, nLeft )
+
+                   ::nOldRow2 := nTop
+                   ::nOldCol2 := nLeft
+
+
+              endif
+
+              CursorSize()
+
+         case ::nDotSelect == 1  .AND. ::oSelected:lCanSize
+
+              aRect := NormalizeRect( { nRow, nCol, ::aOldRect[3], ::aOldRect[4]} )
+
+              if nRow > ::aOldRect[3] - ::oSelected:nMinHeight
+                 nRow := ::aOldRect[3] - ::oSelected:nMinHeight
+              endif
+
+              if  nCol > ::aOldRect[4] - ::oSelected:nMinWidth
+                  nCol := ::aOldRect[4] - ::oSelected:nMinWidth
+              endif
+
+              if ::aOldRect[3] - nRow > ::oSelected:nMaxHeight
+                 nRow := ::aOldRect[3] - ::oSelected:nMaxHeight
+              endif
+
+              if  ::aOldRect[4] - nCol > ::oSelected:nMaxWidth
+                  nCol := ::aOldRect[4] - ::oSelected:nMaxWidth
+              endif
+
+              ::oSelected:aRect := { nRow , nCol , ::aOldRect[3], ::aOldRect[4]    }
+
+              if len( ::oSelected:aPages ) > 0
+                 for each oPage in ::oSelected:aPages
+                     for each oShape in oPage:aShapes
+                         oShape:Offset( nRow - ::nOldRow, nCol - ::nOldCol )
+                     next
+                 next
+              endif
+
+         case ::nDotSelect == 2  .AND. ::oSelected:lCanSize
+
+              aRect := NormalizeRect( { nRow , ::aOldRect[2], ::aOldRect[3], ::aOldRect[4]} )
+
+              if nRow > ::aOldRect[3] - ::oSelected:nMinHeight
+                 nRow := ::aOldRect[3] - ::oSelected:nMinHeight
+              endif
+
+              if ::aOldRect[3] - nRow > ::oSelected:nMaxHeight
+                 nRow := ::aOldRect[3] - ::oSelected:nMaxHeight
+              endif
+
+
+
+
+
+              ::oSelected:aRect := { nRow ,  ::aOldRect[2],  ::aOldRect[3],  ::aOldRect[4]    }
+
+              if len( ::oSelected:aPages ) > 0
+                 for each oPage in ::oSelected:aPages
+                     for each oShape in oPage:aShapes
+                         oShape:Offset( nRow - ::nOldRow, nCol - ::nOldCol )
+                     next
+                 next
+              endif
+
+         case ::nDotSelect == 3  .AND. ::oSelected:lCanSize
+
+              aRect := NormalizeRect( { nRow , ::aOldRect[2], ::aOldRect[3], nCol } )
+
+              if nRow > ::aOldRect[3] - ::oSelected:nMinHeight
+                 nRow := ::aOldRect[3] - ::oSelected:nMinHeight
+              endif
+
+              if  nCol < ::aOldRect[2] + ::oSelected:nMinWidth
+                  nCol := ::aOldRect[2] + ::oSelected:nMinWidth
+              endif
+
+              if ::aOldRect[3] - nRow > ::oSelected:nMaxHeight
+                 nRow := ::aOldRect[3] - ::oSelected:nMaxHeight
+              endif
+
+              if nCol > ::aOldRect[2] + ::oSelected:nMaxWidth
+                 nCol := ::aOldRect[2] + ::oSelected:nMaxWidth
+              endif
+
+
+
+
+              ::oSelected:aRect := { nRow ,  ::aOldRect[2],  ::aOldRect[3],  nCol    }
+
+              if len( ::oSelected:aPages ) > 0
+                 for each oPage in ::oSelected:aPages
+                     for each oShape in oPage:aShapes
+                         oShape:Offset( nRow - ::nOldRow, nCol - ::nOldCol )
+                     next
+                 next
+              endif
+
+         case ::nDotSelect == 4 .AND. ::oSelected:lCanSize
+
+
+              aRect := NormalizeRect( { ::aOldRect[1], ::aOldRect[2], ::aOldRect[3], nCol } )
+
+              if  nCol < ::aOldRect[2] + ::oSelected:nMinWidth
+                  nCol := ::aOldRect[2] + ::oSelected:nMinWidth
+              endif
+
+              if nCol > ::aOldRect[2] + ::oSelected:nMaxWidth
+                 nCol := ::aOldRect[2] + ::oSelected:nMaxWidth
+              endif
+
+
+
+
+              ::oSelected:aRect := { ::aOldRect[1],  ::aOldRect[2],  ::aOldRect[3],  nCol    }
+
+         case ::nDotSelect == 5 .AND. ::oSelected:lCanSize
+
+              aRect := NormalizeRect( { ::aOldRect[1], ::aOldRect[2], nRow, nCol    } )
+
+              if nRow < ::aOldRect[1] + ::oSelected:nMinHeight
+                 nRow := ::aOldRect[1] + ::oSelected:nMinHeight
+              endif
+
+              if  nCol < ::aOldRect[2] + ::oSelected:nMinWidth
+                  nCol := ::aOldRect[2] + ::oSelected:nMinWidth
+              endif
+
+              if nRow > ::aOldRect[1] + ::oSelected:nMaxHeight
+                 nRow := ::aOldRect[1] + ::oSelected:nMaxHeight
+              endif
+
+              if nCol > ::aOldRect[2] + ::oSelected:nMaxWidth
+                 nCol := ::aOldRect[2] + ::oSelected:nMaxWidth
+              endif
+
+
+
+
+              ::oSelected:aRect := { ::aOldRect[1],  ::aOldRect[2],  nRow,  nCol    }
+
+         case ::nDotSelect == 6 .AND. ::oSelected:lCanSize
+
+              aRect := NormalizeRect( { ::aOldRect[1],  ::aOldRect[2], nRow, ::aOldRect[4]  } )
+
+              if nRow < ::aOldRect[1] + ::oSelected:nMinHeight
+                 nRow := ::aOldRect[1] + ::oSelected:nMinHeight
+              endif
+
+
+              if nRow > ::aOldRect[1] + ::oSelected:nMaxHeight
+                 nRow := ::aOldRect[1] + ::oSelected:nMaxHeight
+              endif
+
+
+
+
+
+
+              ::oSelected:aRect := { ::aOldRect[1],  ::aOldRect[2],  nRow,  ::aOldRect[4]  }
+
+         case ::nDotSelect == 7 .AND. ::oSelected:lCanSize
+
+              aRect := NormalizeRect( { ::aOldRect[1], nCol, nRow, ::aOldRect[4] } )
+
+              if nRow < ::aOldRect[1] + ::oSelected:nMinHeight
+                 nRow := ::aOldRect[1] + ::oSelected:nMinHeight
+              endif
+
+              if  nCol > ::aOldRect[4] - ::oSelected:nMinWidth
+                  nCol := ::aOldRect[4] - ::oSelected:nMinWidth
+              endif
+
+              if nRow > ::aOldRect[1] + ::oSelected:nMaxHeight
+                 nRow := ::aOldRect[1] + ::oSelected:nMaxHeight
+              endif
+
+              if  ::aOldRect[4] - nCol > ::oSelected:nMaxWidth
+                  nCol := ::aOldRect[4] - ::oSelected:nMaxWidth
+              endif
+
+
+
+
+              ::oSelected:aRect := { ::aOldRect[1],  nCol,  nRow,  ::aOldRect[4]  }
+
+              if len( ::oSelected:aPages ) > 0
+                 for each oPage in ::oSelected:aPages
+                     for each oShape in oPage:aShapes
+                         oShape:Offset( nRow - ::nOldRow, nCol - ::nOldCol )
+                     next
+                 next
+              endif
+
+         case ::nDotSelect == 8 .AND. ::oSelected:lCanSize
+
+              aRect := NormalizeRect( { ::aOldRect[1], nCol, ::aOldRect[3], ::aOldRect[4]  }  )
+
+              if  nCol > ::aOldRect[4] - ::oSelected:nMinWidth
+                  nCol := ::aOldRect[4] - ::oSelected:nMinWidth
+              endif
+
+              if  ::aOldRect[4] - nCol > ::oSelected:nMaxWidth
+                  nCol := ::aOldRect[4] - ::oSelected:nMaxWidth
+              endif
+
+
+
+
+              ::oSelected:aRect := { ::aOldRect[1],  nCol,  ::aOldRect[3],  ::aOldRect[4]  }
+
+              if len( ::oSelected:aPages ) > 0
+                 for each oPage in ::oSelected:aPages
+                     for each oShape in oPage:aShapes
+                         oShape:Offset( nRow - ::nOldRow, nCol - ::nOldCol )
+                     next
+                 next
+              endif
+
+
+      endcase
+
+
+      if ::lMoviendo
+         if ::oSelected <> nil
+
+         endif
+      endif
+
+      if ::nDotSelect > 0 .AND. ::oSelected:aDotsActives[::nDotSelect] == 1
+         WSetCursor( LoadCursor(0,{ 32642,32645,32643,32644,32642,32645,32643,32644}[::nDotSelect]))
+      endif
+
+      if ::oSelected == ::oForm .AND. ::nDotSelect > 0
+
+         ::SetSize( ::oForm:nWidth, ::oForm:nHeight, .T. )
+      endif
+
+   endif
+   ::oSelected:Resize()
+
+   ::Refresh()
+
+
+else
+   if ::oSelected <> nil
+      if ( ::nDotSelect := ::IsOverDot( nRow, nCol )) <> 0
+         WSetCursor( LoadCursor(0,{ 32642,32645,32643,32644,32642,32645,32643,32644}[::nDotSelect]))
+      else
+         CursorArrow()
+         ::oSelected:MouseMove( nRow, nCol )
+      endif
+   else
+      CursorArrow()
+   endif
+endif
+
+return 0
+
+
+
+  static FUNCTION TDsgnEditor_LButtonUp( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local oShape
+local oBtn
+local rc := GetClientRect(::hwnd)
+
+if lAnd( nRow , 0x8000)  ;   nRow := nOr(nRow,0xFFFF0000); end
+if lAnd( nCol , 0x8000)  ;   nCol := nOr(nCol,0xFFFF0000); end
+
+::lPaintGuideN := .F.
+::lPaintGuideS := .F.
+::lPaintGuideE := .F.
+::lPaintGuideW := .F.
+
+
+if ::lCaptured
+
+   ReleaseCapture()
+   ::lCaptured := .F.
+
+   if ::nState == 100
+      Aplicacion():nState := nOldState
+      return 0
+   endif
+
+   if ::oForm <> nil
+
+
+
+
+
+
+   endif
+
+   ::aRectSel := NormalizeRect( {::nOldRow, ::nOldCol, nRow, nCol } )
+
+   if ::lMoviendo
+
+
+      if len( ::aSelecteds ) > 0
+
+         for each oShape in ::aSelecteds
+             ::AddUndo( oShape, "MoveTo", {oShape:aOldPos[1],oShape:aOldPos[2],oShape:aOldPos[3],oShape:aOldPos[4]}, .T. )
+             oShape:StorePos()
+         next
+
+      else
+
+          ::AddUndo( ::oSelected, "MoveTo", {::oSelected:aOldPos[1],::oSelected:aOldPos[2],::oSelected:aOldPos[3],::oSelected:aOldPos[4]}, .T. )
+
+      endif
+      ::nOldRow := 0
+      ::nOldCol := 0
+
+   else
+
+
+      if ( ::oSelected == nil .OR. (::oSelected <> nil .AND. !::oSelected:lCanMove ) )
+
+         if ::nState == 0
+
+            ::CheckSelecteds( ::aRectSel )
+
+         else
+
+            if ::oForm <> nil
+
+               do case
+                  case ::nState ==  1
+                       oShape := TDsgnBtn():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self, 1 )
+
+                  case ::nState ==  2
+                       oShape := TDsgnBtn():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self, 3 )
+
+                  case ::nState ==  7
+                       oShape := TDsgnBtn():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self, 2 )
+
+                  case ::nState ==  3
+                       oShape := TDsgnEdit():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  6
+                       oShape := TDsgnGrp():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  8
+                       oShape := TDsgnSay():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  5
+                       oShape := TDsgnLbx():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  10
+                       oShape := TDsgnScroll():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self, .F. )
+
+                  case ::nState ==  11
+                       oShape := TDsgnScroll():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self, .T. )
+
+                  case ::nState ==  4
+                       oShape := TDsgnCbx():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  9
+                       oShape := TDsgnImg():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  29
+                       oShape := TDsgnImg():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self, .T. )
+
+                  case ::nState ==  14
+                       oShape := TDsgnPrgBar():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  12
+                       oShape := TDsgnSlider():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  19
+                       oShape := TDsgnSay():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+                       oShape:cCaption := ""
+                       oShape:lSunken := .T.
+                       oShape:aRect[4] := oShape:aRect[2]+2
+                       oShape:nMaxWidth  := 3
+                       oShape:nMinWidth  := 3
+
+                  case ::nState ==  20
+                       oShape := TDsgnSay():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+                       oShape:cCaption := ""
+                       oShape:lSunken := .T.
+                       oShape:aRect[3] := oShape:aRect[1]+2
+                       oShape:nMaxHeight := 3
+                       oShape:nMinHeight := 3
+
+                  case ::nState ==  22
+
+                       oShape := TDsgnSay():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+                       oShape:cCaption := ""
+                       oShape:lStaticFrame := .T.
+
+                  case ::nState ==  17
+
+                       oShape := TDsgnFolder():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+                       oShape:AddPage()
+
+                  case ::nState ==  15
+
+                       oShape := TDsgnListView():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+
+                  case ::nState ==  26
+
+                       oShape := TDsgnBrowse():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  16
+
+                       oShape := TDsgnTreeView():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  24
+
+                       oShape := TDsgnBar():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  25
+
+                       if ::oForm:oMenu == nil
+                          ::oForm:oMenu := TDsgnMenuBar():New( 0,0,20,rc[4], self )
+                          ::oForm:oMenu:AddItem( "&File" )
+                          ::oForm:oMenu:AddItem( "&Edit" )
+                          ::oForm:oMenu:AddItem( "&View" )
+                          ::oForm:oMenu:AddItem( "&Project" )
+                          ::oForm:oMenu:AddItem( "&Tools" )
+                          ::oForm:oMenu:AddItem( "&Help" )
+                       endif
+
+                  case ::nState ==  27
+                       oShape := TDsgnBtnBmp():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  28
+                       oShape := TDsgnUser():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  30
+                       oShape := TDsgnPanel():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+                  case ::nState ==  31
+                       oShape := TVistaMenu():NewShape( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+                       oShape:nMaxHeight := GetSysMetrics(1)
+                       oShape:nMinHeight := 3
+                  otherwise
+
+                       oShape := TShape():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+
+               endcase
+
+
+
+
+
+            else
+
+                oShape := TShape():New( ::aRectSel[1],::aRectSel[2],::aRectSel[3],::aRectSel[4], self )
+                oShape:nClrpane := 8421504
+
+            endif
+
+            Aplicacion():nState := 0
+
+            if oShape <> nil
+               oShape:oWnd := self
+               oShape:SetFocus()
+               ::oSelected:StorePos()
+            endif
+
+         endif
+
+      else
+
+         if ::nDotSelect <> 0
+            ::AddUndo( ::oSelected, "MoveTo", {::oSelected:aOldPos[1],::oSelected:aOldPos[2],::oSelected:aOldPos[3],::oSelected:aOldPos[4]}, .T. )
+            ::oSelected:StorePos()
+         endif
+
+         ::aOldRect  := {}
+         ::nDeltaRow := 0
+         ::nDeltaCol := 0
+
+      endif
+
+   endif
+
+   ::aRectSel := {}
+   ::Refresh()
+   ::nOldRow2 := 0
+   ::nOldCol2 := 0
+
+endif
+
+
+return 0
+
+
+   static FUNCTION TDsgnEditor_HandleEvent( nMsg, nWParam, nLParam ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local nRow, nCol, aPoint, nWidth, nHeight, nMedW, nMedH
+local nRow0, nCol0
+
+
+
+if nMsg == 20
+   return 1
+endif
+
+if nMsg == 257
+   return ::KeyUp( nMsg, nWParam, nLParam )
+endif
+
+if nMsg == 132
+
+   nWidth  := ::nWidth
+   nHeight := ::nHeight
+   nMedW   := nWidth / 2
+   nMedH   := nHeight/ 2
+   nRow0   := nHiWord( nLParam )
+   nCol0   := nLoWord( nLParam )
+   aPoint  := { nRow0, nCol0 }
+   aPoint  := ScreenToClient( ::hWnd, aPoint )
+
+   nRow    := aPoint[ 1 ]
+   nCol    := aPoint[ 2 ]
+
+   do case
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      case nRow >= nHeight - 4 .AND. nCol >= nWidth-4
+           return 17
+
+
+      case nRow >= nHeight - 4
+
+           return 15
+
+
+
+
+      case nCol >= nWidth - 4
+
+           return 11
+   endcase
+
+endif
+
+
+
+if nMsg == 262
+   return ::SysKeyChar( nWParam, nLParam )
+endif
+
+
+
+return ::TControl:HandleEvent( nMsg, nWParam, nLParam )
+
+
+  static FUNCTION TDsgnEditor_RButtonDown( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local oMenu
+local oSelectedAnt := ::oSelected
+local oItem
+local o := self
+
+ ::oSelected  := ::ShapeOver( nRow, nCol )
+ oItem := ::oSelected
+ ::Refresh()
+
+ if !empty( ::aSelecteds ) .AND. oItem <> nil
+    oMenu := MenuBegin( .T.,,, .F., .F. )
+       MenuAddItem( "Bloquear",, .F.,, {|oMenuItem|( aeval( ::aSelecteds, {|x| x:lCanMove := !x:lCanMove} ),o:Refresh())},,,,,,, .F.,,, .F. )
+       MenuAddItem( "Copiar",, .F.,, {|oMenuItem|::oSelected:Copy( nRow, nCol )},,,,,,, .F.,,, .F. )
+       MenuAddItem( "Pegar",, .F.,, {|oMenuItem|if( o:oForm <> nil, o:oForm:Paste( nRow, nCol, self ), o:Paste( nRow, nCol, self ) )},,,,,,, .F.,,, .F. )
+       MenuAddItem( "Alinear a",, .F.,,,,,,,,, .F.,,, .F. )
+       MenuBegin( .F.,,, .F., .F. )
+           MenuAddItem( "Arriba",, .F.,, {|oMenuItem|::Align( oItem, 2 )},, "al_top",,,,, .F.,,, .F. )
+           MenuAddItem( "Abajo",, .F.,, {|oMenuItem|::Align( oItem, 6 )},, "al_down",,,,, .F.,,, .F. )
+           MenuAddItem( "Izquierda",, .F.,, {|oMenuItem|::Align( oItem, 8 )},, "al_left",,,,, .F.,,, .F. )
+           MenuAddItem( "Derecha",, .F.,, {|oMenuItem|::Align( oItem, 4 )},, "al_right",,,,, .F.,,, .F. )
+           MenuAddItem()
+           MenuAddItem( "Arriba del principal",, .F.,, {|oMenuItem|::Align( oItem, 12 )},, "al_top",,,,, .F.,,, .F. )
+           MenuAddItem( "Abajo del principal",, .F.,, {|oMenuItem|::Align( oItem, 16 )},, "al_down",,,,, .F.,,, .F. )
+           MenuAddItem( "Izquierda del principal",, .F.,, {|oMenuItem|::Align( oItem, 18 )},, "al_left",,,,, .F.,,, .F. )
+           MenuAddItem( "Derecha del principal",, .F.,, {|oMenuItem|::Align( oItem, 14 )},, "al_right",,,,, .F.,,, .F. )
+       MenuEnd()
+       MenuAddItem( "Tamaño",, .F.,,,,,,,,, .F.,,, .F. )
+       MenuBegin( .F.,,, .F., .F. )
+           MenuAddItem( "Mismo alto",, .F.,, {|oMenuItem|::Size( 1 )},, "samehe",,,,, .F.,,, .F. )
+           MenuAddItem( "Mismo ancho",, .F.,, {|oMenuItem|::Size( 2 )},, "samewi",,,,, .F.,,, .F. )
+           MenuAddItem( "Igual que el principal",, .F.,, {|oMenuItem|::Size( 7 )},, "samebo",,,,, .F.,,, .F. )
+           MenuAddItem()
+           MenuAddItem( "Máximo alto",, .F.,, {|oMenuItem|::Size( 3 )},,,,,,, .F.,,, .F. )
+           MenuAddItem( "Máximo ancho",, .F.,, {|oMenuItem|::Size( 4 )},,,,,,, .F.,,, .F. )
+           MenuAddItem( "Mínimo alto",, .F.,, {|oMenuItem|::Size( 5 )},,,,,,, .F.,,, .F. )
+           MenuAddItem( "Mínimo ancho",, .F.,, {|oMenuItem|::Size( 6 )},,,,,,, .F.,,, .F. )
+
+       MenuEnd()
+    MenuEnd()
+    oMenu:Activate( nRow, nCol, Self, ! .F., )
+ else
+    if ::oSelected <> nil
+       oMenu := MenuBegin( .T.,,, .F., .F. )
+          if ::oSelected:bContextMenu <> nil
+             eval(::oSelected:bContextMenu, nRow, nCol )
+             if ::oSelected <> ::oForm
+                MenuAddItem( "Copiar",, .F.,, {|oMenuItem|::oSelected:Copy( nRow, nCol )},,,,,,, .F.,,, .F. )
+             endif
+          endif
+          if ::oSelected <> ::oForm
+
+
+
+
+          endif
+       MenuEnd()
+       oMenu:Activate( nRow, nCol, Self, ! .F., )
+    endif
+ endif
+
+return 0
+
+
+  static FUNCTION TDsgnEditor_SelectAll( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local oShape
+local lHay := .F.
+local n, nLen
+
+nLen := len( ::aShapes ) - if(::oForm==nil,0,1)
+
+for n := 1 to nLen
+
+    oShape := ::aShapes[n]
+
+    aadd( ::aSelecteds, oShape )
+    oShape:StorePos()
+    oShape:lSelected := .T.
+
+next
+
+::Refresh()
+
+return nil
+
+
+
+
+  static FUNCTION TDsgnEditor_CheckSelecteds( aRect ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local oShape
+local lHay := .F.
+local n, nLen
+
+nLen := len( ::aShapes ) - if( ::oForm == nil, 0, 1 )
+
+for n := 1 to nLen
+
+    oShape := ::aShapes[n]
+
+    if oShape:IntersectRect( aRect )
+       if !oShape:lCanMove
+          loop
+       endif
+       lHay := .T.
+       aadd( ::aSelecteds, oShape )
+       oShape:StorePos()
+       oShape:lSelected := .T.
+    else
+       if oShape:lContainer
+          if oShape:CheckSelecteds( aRect )
+             lHay := .T.
+          endif
+       else
+          oShape:lSelected := .F.
+       endif
+    endif
+
+next
+
+if !lHay
+   ::aSelecteds := {}
+endif
+
+return lHay
+
+function EsMayor( a, queb )
+
+if a[1] < queb[1] .AND. a[2]< queb[2] .AND. a[3] > queb[3] .AND. a[4] > queb[4]
+   return .T.
+endif
+return .F.
+
+
+  static FUNCTION TDsgnEditor_ResetSelecteds( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local oShape
+local n, nLen
+
+nLen := len( ::aShapes ) - if(::oForm==nil,0,1)
+
+for n := 1 to nLen
+
+    oShape := ::aShapes[n]
+
+    if ::oSelected <> nil .AND. ::oSelected == oShape
+    else
+       oShape:lSelected := .F.
+    endif
+
+next
+
+::aSelecteds := {}
+::Refresh()
+
+return nil
+
+
+
+      static FUNCTION TDsgnEditor_Align( oItem, nTo ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local nTop
+local nLeft
+local nBottom
+local nRight
+local n, nLen, n2
+local oShape
+local nMedTop, nMedLeft
+local nMX, nMY
+local nTramo
+
+If( oItem == nil, oItem := ::oSelected, ) ;
+
+nMedTop  := oItem:nTop  + ((oItem:nBottom-oItem:nTop ) / 2 )
+nMedLeft := oItem:nLeft + ((oItem:nRight-oItem:nLeft ) / 2 )
+
+nLen := len( ::aSelecteds )
+
+for n := 1 to nLen
+
+    oShape := ::aSelecteds[n]
+
+    if n == 1
+       nTop    := oShape:nTop
+       nLeft   := oShape:nLeft
+       nBottom := oShape:nBottom
+       nRight  := oShape:nRight
+    else
+       nTop    := min(oShape:nTop, nTop    )
+       nLeft   := min(oShape:nLeft   , nLeft   )
+       nBottom := max(oShape:nBottom , nBottom )
+       nRight  := max(oShape:nRight  , nRight  )
+    endif
+
+next
+
+for n := 1 to nLen
+
+    oShape := ::aSelecteds[n]
+
+    do case
+       case nTo == 2
+            oShape:GotoY( nTop )
+
+       case nTo == 4
+            oShape:GotoX( nRight - oShape:nWidth )
+
+       case nTo == 6
+            oShape:GotoY( nBottom - oShape:nHeight )
+
+       case nTo == 8
+            oShape:GotoX( nLeft )
+
+       case nTo == 9
+
+            if oShape == oItem
+               loop
+            endif
+
+            nMX := ((oShape:nRight-oShape:nLeft)/2)
+            oShape:GotoX( nMedLeft-nMX )
+
+       case nTo == 10
+
+            if oShape == oItem
+               loop
+            endif
+
+            nMY := ((oShape:nBottom-oShape:nTop)/2)
+            oShape:GotoY( nMedTop-nMY )
+
+       case nTo == 12
+            oShape:GotoY( oItem:nTop )
+
+       case nTo == 14
+            oShape:GotoX( oItem:nRight - oShape:nWidth )
+
+       case nTo == 16
+            oShape:GotoY( oItem:nBottom - oShape:nHeight )
+
+       case nTo == 18
+            oShape:GotoX( oItem:nLeft )
+
+       case nTo == 20
+
+            ::aSelecteds := asort( ::aSelecteds,,,{|x,y| x:nLeft < y:nLeft } )
+            nTramo := ( ::aSelecteds[nLen]:nLeft - ::aSelecteds[1]:nLeft ) / (nLen-1)
+            for n2 := 2 to nLen - 1
+                ::aSelecteds[n2]:GotoX( ::aSelecteds[1]:nLeft +  ( nTramo * (n2 - 1) ) )
+            next
+
+       case nTo == 21
+
+            ::aSelecteds := asort( ::aSelecteds,,,{|x,y| x:nTop < y:nTop } )
+            nTramo := ( ::aSelecteds[nLen]:nTop - ::aSelecteds[1]:nTop ) / (nLen-1)
+            for n2 := 2 to nLen - 1
+                ::aSelecteds[n2]:GotoY( ::aSelecteds[1]:nTop +  ( nTramo * (n2 - 1) ) )
+            next
+
+    endcase
+    oShape:StorePos()
+
+next
+::Refresh()
+
+
+return nil
+
+
+      static FUNCTION TDsgnEditor_Size( nModo ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+local oShape
+local n, nLen
+local nMaxWidth  := 0
+local nMaxHeight := 0
+local nMinWidth
+local nMinHeight
+local nWidth  := ::oSelected:nWidth
+local nHeight := ::oSelected:nHeight
+
+nLen := len( ::aSelecteds )
+
+nMaxWidth  := ::aSelecteds[1]:nWidth
+nMaxHeight := ::aSelecteds[1]:nHeight
+nMinWidth  := ::aSelecteds[1]:nWidth
+nMinHeight := ::aSelecteds[1]:nHeight
+
+for n := 2 to nLen
+
+    nMaxWidth  := Max(::aSelecteds[n]:nWidth , nMaxWidth )
+    nMaxHeight := Max(::aSelecteds[n]:nHeight, nMaxHeight)
+    nMinWidth  := Min(::aSelecteds[n]:nWidth , nMinWidth )
+    nMinHeight := Min(::aSelecteds[n]:nHeight, nMinHeight)
+
+next
+
+
+for n := 1 to nLen
+
+    oShape := ::aSelecteds[n]
+
+    do case
+       case nModo == 1
+            oShape:SetSize(                 , nHeight            )
+       case nModo == 2
+            oShape:SetSize(           nWidth,                    )
+       case nModo == 3
+            oShape:SetSize(                 , nMaxHeight         )
+       case nModo == 4
+            oShape:SetSize( nMaxWidth,                           )
+       case nModo == 5
+            oShape:SetSize(                 , nMinHeight         )
+       case nModo == 6
+            oShape:SetSize( nMinWidth,                           )
+       case nModo == 7
+            oShape:SetSize(          nWidth,             nHeight)
+    endcase
+
+next
+
+::Refresh()
+
+return nil
+
+
+
+      static FUNCTION TDsgnEditor_AddUndo( oShape, cAction, uVal1, uVal2, uVal3, uVal4, uVal5 ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+aadd( ::aUndo, { oShape, cAction, uVal1, uVal2, uVal3, uVal4, uVal5 } )
+
+return nil
+
+
+
+      static FUNCTION TDsgnEditor_Undo( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+local aUndo := atail( ::aUndo )
+local oShape
+local cAction
+local uVal1
+local uVal2
+local uVal3
+local uVal4
+local uVal5
+
+if empty( aUndo )
+   MsgAlert( "No hay acciones para deshacer" )
+   return nil
+endif
+
+oShape  := aUndo[1]
+cAction := aUndo[2]
+uVal1   := aUndo[3]
+uVal2   := aUndo[4]
+uVal3   := aUndo[5]
+uVal4   := aUndo[6]
+uVal5   := aUndo[7]
+
+BeginFromUndo()
+
+OSend( oShape, cAction, uVal1, uVal2, uVal3, uVal4, uVal5 )
+
+EndFromUndo()
+
+adel( ::aUndo, len( ::aUndo ) )
+asize( ::aUndo, len( ::aUndo )-1 )
+
+return nil
+
+
+   static FUNCTION TDsgnEditor_SysKeyChar( nKey, nKeyFlags ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+return 0
+
+
+   static FUNCTION TDsgnEditor_KeyUp( nKey, nKeyFlags ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+::lKeyDown := .F.
+::Refresh()
+
+
+return 0
+
+
+   static FUNCTION TDsgnEditor_KeyChar( nKey, nFlags ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+if ::oSelected <> nil
+   if ::oSelected:bKeyChar <> nil
+      if eval( ::oSelected:bKeyChar, nKey, nFlags )
+         return 0
+      endif
+   endif
+   if nKey >= 32 .AND. nKey <= asc( "z" )
+      ::oSelected:Edit( nKey )
+   endif
+
+endif
+
+return ::TControl:KeyChar( nKey, nFlags )
+
+
+   static FUNCTION TDsgnEditor_KeyDown( nKey, nKeyFlags ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local lControl := GetKeyState( 17 )
+local lShift   := GetKeyState( 16   )
+local n
+local nLenSel  := len( ::aSelecteds )
+local cMsg
+local nGrid := if( !lControl, 1, if(::oForm==nil,1,::oForm:nGrid) )
+local oOldSelected := ::oSelected
+local nLen
+local nDelta
+
+if ::oSelected <> nil
+   if ::oSelected:bKeyDown <> nil
+      if eval( ::oSelected:bKeyDown, nKey, nKeyFlags )
+         return 0
+      endif
+   endif
+endif
+
+::lKeyDown := .T.
+
+do case
+
+   case (lShift .OR. lControl) .AND. nKey == 9
+        ::lKeyDown := .F.
+        ::PrevShape()
+
+        if oOldSelected <> nil .AND. oOldSelected <> ::oSelected
+           if oOldSelected:bLostFocus <> nil
+              eval( oOldSelected:bLostFocus )
+           endif
+        endif
+
+   case nKey == 9
+        ::lKeyDown := .F.
+        ::NextShape()
+
+        if oOldSelected <> nil .AND. oOldSelected <> ::oSelected
+           if oOldSelected:bLostFocus <> nil
+              eval( oOldSelected:bLostFocus )
+           endif
+        endif
+
+
+   case nKey == 38
+
+        if nLenSel == 0
+           if ::oSelected == nil .OR. ::oSelected:nItemId == ::oForm:nItemId
+              return nil
+           endif
+           if ::oSelected <> nil .AND. !::oSelected:lCanSize ; return 0 ; endif
+           if ::oSelected <> nil .AND. !::oSelected:lCanMove              ; return 0 ; endif
+        endif
+
+
+        do case
+           case lShift
+                if nLenSel == 0
+                   ::oSelected:SetSize( , ::oSelected:nHeight-nGrid,.F. )
+                else
+                   for n := 1 to nLenSel
+                       ::aSelecteds[n]:SetSize( , ::aSelecteds[n]:nHeight-nGrid,.F. )
+                   next
+                endif
+                ::Refresh()
+           otherwise
+              if nLenSel == 0
+                 ::oSelected:ToTop( nGrid )
+              else
+                 for n := 1 to nLenSel
+                     ::aSelecteds[n]:ToTop( nGrid )
+                 next
+              endif
+        endcase
+
+
+   case nKey == 40
+
+        if nLenSel == 0
+           if ::oSelected == nil .OR. ::oSelected:nItemId == ::oForm:nItemId
+              return nil
+           endif
+           if ::oSelected <> nil .AND. !::oSelected:lCanSize ; return 0 ; endif
+           if ::oSelected <> nil .AND. !::oSelected:lCanMove              ; return 0 ; endif
+        endif
+        do case
+           case lShift
+                if nLenSel == 0
+                   ::oSelected:SetSize( , ::oSelected:nHeight+nGrid,.F. )
+                else
+                   for n := 1 to nLenSel
+                       ::aSelecteds[n]:SetSize( , ::aSelecteds[n]:nHeight+nGrid,.F. )
+                   next
+                endif
+                ::Refresh()
+           otherwise
+              if nLenSel == 0
+                 ::oSelected:ToBottom( nGrid )
+              else
+                 for n := 1 to nLenSel
+                     ::aSelecteds[n]:ToBottom( nGrid )
+                 next
+              endif
+        endcase
+
+
+   case nKey == 37
+
+        if nLenSel == 0
+           if ::oSelected == nil .OR. ::oSelected:nItemId == ::oForm:nItemId
+              return nil
+           endif
+           if ::oSelected <> nil .AND. !::oSelected:lCanSize ; return 0 ; endif
+           if ::oSelected <> nil .AND. !::oSelected:lCanMove              ; return 0 ; endif
+        endif
+        do case
+           case lShift
+                if nLenSel == 0
+                   ::oSelected:SetSize(::oSelected:nWidth-nGrid,,.F. )
+                else
+                   for n := 1 to nLenSel
+                       ::aSelecteds[n]:SetSize(::aSelecteds[n]:nWidth-nGrid,,.F. )
+                   next
+                endif
+                ::Refresh()
+           otherwise
+              if nLenSel == 0
+                 ::oSelected:ToLeft( nGrid )
+              else
+                 for n := 1 to nLenSel
+                     ::aSelecteds[n]:ToLeft( nGrid )
+                 next
+              endif
+        endcase
+
+
+   case nKey == 39
+
+        if nLenSel == 0
+           if ::oSelected == nil .OR. ::oSelected:nItemId == ::oForm:nItemId
+              return nil
+           endif
+           if ::oSelected <> nil .AND. !::oSelected:lCanSize ; return 0 ; endif
+           if ::oSelected <> nil .AND. !::oSelected:lCanMove              ; return 0 ; endif
+        endif
+        do case
+           case lShift
+                if nLenSel == 0
+                   ::oSelected:SetSize(::oSelected:nWidth+nGrid,,.F. )
+                else
+                   for n := 1 to nLenSel
+                       ::aSelecteds[n]:SetSize(::aSelecteds[n]:nWidth+nGrid,,.F. )
+                   next
+                endif
+                ::Refresh()
+           otherwise
+              if nLenSel == 0
+                 ::oSelected:ToRight( nGrid )
+              else
+                 for n := 1 to nLenSel
+                     ::aSelecteds[n]:ToRight( nGrid )
+                 next
+              endif
+        endcase
+
+   case nKey == 93
+
+        if ::oSelected <> nil
+           return ::RButtonDown( ::oSelected:nBottom, ::oSelected:nLeft )
+        endif
+
+   case lControl .AND. (nKey == asc( "C" ) .OR. nKey == asc( "c" ))
+
+        if  ::oSelected <> nil .AND. ::oSelected:nItemId <> ::oForm:nItemId
+            ::oSelected:Copy( ::oSelected:nTop, ::oSelected:nLeft )
+        else
+            if nLenSel > 0
+               ::aSelecteds[1]:Copy( ::aSelecteds[1]:nTop, ::aSelecteds[1]:nLeft )
+            endif
+        endif
+
+   case lControl .AND. (nKey == asc( "V" ) .OR. nKey == asc( "v" ))
+
+        ::oForm:Paste( 40, 10, self )
+
+   case lControl .AND. (nKey == asc( "Z" ) .OR. nKey == asc( "z" ))
+
+        ::Undo()
+
+   case nKey == 46
+
+        if ( ::oSelected:nItemId == ::oForm:nItemId ) .AND. nLenSel == 0
+           return nil
+        endif
+
+        if lShift
+           cMsg := "¿Esta seguro de borrar definitivamente el control?"
+        else
+           cMsg := "¿Desea enviar el control a la papelera?"
+        endif
+
+        if MsgYesNo( cMsg )
+
+           if ::oForm:oMenu <> nil .AND. ::oForm:oMenu = ::oSelected
+              ::oForm:oMenu := nil
+           endif
+
+           if nLenSel == 0
+
+              ::NextShape()
+              ::Send2Trash( oOldSelected, !lShift )
+
+           else
+              for n := 1 to nLenSel
+                  ::Send2Trash( ::aSelecteds[n], !lShift )
+              next
+           endif
+
+           ::lKeyDown := .F.
+
+           ::Refresh()
+
+        endif
+
+   case nKey == 13
+
+        if ::oSelected <> nil
+            ::oSelected:Edit()
+        endif
+
+   case nKey == 27
+        ::ResetSelecteds()
+        ::oForm:SetFocus()
+
+   case nKey == 107
+
+        ::nZoom += 1
+
+        nDelta := ::nZoom/100
+
+        ::oWnd:nWidth *= nDelta
+        ::oWnd:nHeight *= nDelta
+
+        nLen := len(::aShapes)
+
+        for n := 1 to nLen-1
+            ::aShapes[n]:aRect := {::aShapes[n]:aRect[1]*nDelta,::aShapes[n]:aRect[2]*nDelta,::aShapes[n]:aRect[3]*nDelta,::aShapes[n]:aRect[4]*nDelta}
+        next
+
+        ::Refresh()
+
+
+   case nKey == 109
+
+        ::nZoom -= 1
+
+        nDelta := ::nZoom/100
+
+        ::oWnd:nWidth /= nDelta
+        ::oWnd:nHeight /= nDelta
+
+        nLen := len(::aShapes)
+        for n := 1 to nLen-1
+            ::aShapes[n]:aRect := {::aShapes[n]:aRect[1]/nDelta,::aShapes[n]:aRect[2]/nDelta,::aShapes[n]:aRect[3]/nDelta,::aShapes[n]:aRect[4]/nDelta}
+        next
+        ::Refresh()
+
+
+
+endcase
+
+
+return 0
+
+
+  static FUNCTION TDsgnEditor_NextShape( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local nLen := len( ::aShapes )
+local n, nFocus
+
+if len( ::aSelecteds ) > if(::oForm==nil,0,1)
+   ::ResetSelecteds()
+endif
+
+if ::oSelected == nil .AND. ::oForm <> nil
+   ::oForm:SetFocus()
+endif
+
+for n := 1 to nLen
+
+    if ::aShapes[n]:nItemId == ::oSelected:nItemId
+       if n == 1 .AND. ::oForm <> nil
+          ::oForm:SetFocus()
+       else
+          ::aShapes[n-1]:SetFocus()
+       endif
+       exit
+    endif
+
+next
+
+::Refresh()
+
+
+return nil
+
+
+
+  static FUNCTION TDsgnEditor_PrevShape( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local nLen := len( ::aShapes )
+local n
+
+
+
+if len( ::aSelecteds ) > if(::oForm==nil,0,1)
+   ::ResetSelecteds()
+endif
+
+if ::oSelected == nil .AND. ::oForm <> nil
+   ::oForm:SetFocus()
+endif
+
+for n := 1 to nLen
+
+    if ::aShapes[n]:nItemId == ::oSelected:nItemId
+       if n == nLen
+          ::aShapes[1]:SetFocus()
+       else
+          ::aShapes[n+1]:SetFocus()
+       endif
+       exit
+    endif
+next
+
+::Refresh()
+
+return nil
+
+
+      static FUNCTION TDsgnEditor_Send2Trash( o, lTrash ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local n, nLen, n2
+local nEn := 0
+local nUndos := 0
+
+If( lTrash == nil, lTrash := .T., ) ;
+
+if lTrash
+   aadd( ::aTrash, o )
+endif
+
+if o:oParent <> nil
+   o:StoreRelPos()
+   o:oParent:DeleteChild(o)
+   for n := 1 to len( o:aPages )
+       for n2 := 1 to len( o:aPages[n] )
+           ::Send2Trash( o:aPages[n,n2], lTrash )
+       next
+   next
+endif
+
+n := 1
+while n <= len( ::aUndo )
+   if ::aUndo[n,1]:nItemId == o:nItemId
+      adel ( ::aUndo, n )
+      asize( ::aUndo, len( ::aUndo )-1)
+   else
+      n++
+   endif
+enddo
+
+nLen := len( ::aShapes )
+for n := 1 to nLen
+    if ::aShapes[n]:nItemId == o:nItemId
+       nEn := n
+       exit
+    endif
+next
+
+if nEn <> 0
+   adel( ::aShapes, n )
+   asize( ::aShapes, nLen - 1 )
+   ::Refresh()
+endif
+
+return nil
+
+
+
+      static FUNCTION TDsgnEditor_OpenTrash( oBtn, lActivate ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local oMenu
+local n, nLen
+local cAux := ""
+If( lActivate == nil, lActivate := .F., ) ;
+
+
+oAux := self
+
+nLen := len( ::aTrash )
+
+if nLen == 0
+   MsgInfo( "Papelera vacía" )
+   return nil
+endif
+
+
+oMenu := MenuBegin( .T.,,, .F., .F. )
+
+for n := 1 to nLen
+    cAux := "{||GetSelf():RestoreTrash("+ALLTRIM(STR(n))+")}"
+
+    MenuAddItem (alltrim(str(n)) + ". " + ::aTrash[n]:ClassName(),, .F.,, & (cAux) ,,,,,,, .F. )
+next
+MenuEnd()
+if lActivate
+   oMenu:Activate( oBtn:nTop + oBtn:nHeight(), oBtn:nLeft, oBtn:oWnd, .F. )
+endif
+
+return oMenu
+
+function GetSelf()
+return oAux
+
+
+
+
+      static FUNCTION TDsgnEditor_RestoreTrash( N ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local o := ::aTrash[n]
+local nLen
+
+aadd( ::aShapes, nil )
+ains( ::aShapes, 1 )
+::aShapes[1] := o
+if o:oParent <> nil
+   o:oParent:AddShape( o, o:nEnPage )
+
+
+
+   o:aRect := { o:oParent:aRect[1] + o:aRelPos[1], o:oParent:aRect[2] + o:aRelPos[2], o:oParent:aRect[3] + o:aRelPos[3], o:oParent:aRect[4] + o:aRelPos[4] }
+endif
+
+nLen := len( ::aTrash )
+adel( ::aTrash, n )
+asize( ::aTrash, nLen-1)
+
+::Refresh()
+
+return nil
+
+
+  static FUNCTION TDsgnEditor_IsInSelecteds( oShape ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local lIs := .F.
+local n, nLen
+
+nLen := len( ::aSelecteds )
+
+
+for n := 1 to nLen
+    if ::aSelecteds[n]:nItemId == oShape:nItemId
+       lIs := .T.
+       exit
+    endif
+next
+
+return lIs
+
+
+
+  static FUNCTION TDsgnEditor_GetContainer( aRect ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local oShape
+local n
+local nLen := len( ::aShapes )
+local oContainer
+
+if empty( aRect ) .OR. aRect[1] == nil
+   return oContainer
+endif
+
+for n := 1 to nLen - 1
+
+    oShape := ::aShapes[n]
+    oContainer := oShape:GetContainer( aRect )
+    if oContainer <> nil
+       return oContainer
+    endif
+next
+
+return oContainer
+
+
+
+      static FUNCTION TDsgnEditor_Validate( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+if !::lSaved
+   if MsgYesNo( "¿Desea salvar?","Atención")
+
+      ::lSaved := .T.
+   endif
+endif
+
+return ::lSaved
+
+
+
+  static FUNCTION TDsgnEditor_GoDown( nInc ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+  local nRow := ::nTop
+  if nInc == nil; nInc := 10; endif
+
+  nRow -= nInc
+
+  SetWindowPos( ::hWnd, 0, nRow, ::nLeft, 0, 0, 0x0001 )
+
+return nil
+
+
+  static FUNCTION TDsgnEditor_GoUp( nInc ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+  local nRow := ::nTop
+  if nInc == nil; nInc := 10; endif
+
+  nRow += nInc
+
+  if nRow > 6
+     nRow := 6
+  endif
+
+  SetWindowPos( ::hWnd, 0, nRow, ::nLeft, 0, 0, 0x0001 )
+
+return nil
+
+
+  static FUNCTION TDsgnEditor_GoRIght( nInc ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+  local nCol := ::nLeft
+  if nInc == nil; nInc := 10; endif
+
+  nCol -= nInc
+
+
+  SetWindowPos( ::hWnd, 0, ::nTop, nCol, 0, 0, 0x0001 )
+
+return nil
+
+
+  static FUNCTION TDsgnEditor_GoLeft( nInc ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+  local nCol := ::nLeft
+  if nInc == nil; nInc := 10; endif
+
+  nCol += nInc
+
+  if nCol > 6
+     nCol := 6
+  endif
+  SetWindowPos( ::hWnd, 0, ::nTop, nCol, 0, 0, 0x0001 )
+
+return nil
+
+
+  static FUNCTION TDsgnEditor_HThumbPos( nPos ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+  local nCol := nPos
+
+  if nCol > 12
+     nCol := 12
+  endif
+
+  SetWindowPos( ::hWnd, 0, ::nTop, nCol, 0, 0, 0x0001 )
+
+return nil
+
+
+  static FUNCTION TDsgnEditor_VThumbPos( nPos ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+  local nRow := nPos
+
+  if nRow > 12
+     nRow := 12
+  endif
+  SetWindowPos( ::hWnd, 0, nRow, ::nLeft, 0, 0, 0x0001 )
+
+return nil
+
+
+
+  static FUNCTION TDsgnEditor_TakeDrop( aFiles ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+   local n, lBrowsed := .F.
+
+   if ::oForm <> nil
+
+      for n = 1 to Len( aFiles )
+
+         if upper(Right( aFiles[ 1 ], 3 )) <> "DBF"
+            MsgAlert( "Solo ficheros dbf!!!" )
+         else
+            cursorwait()
+            ::DbfToDialog(aFiles[ n ], 1 )
+            cursorarrow()
+         endif
+
+      next
+
+   endif
+
+return nil
+
+
+
+  static FUNCTION TDsgnEditor_DbfToDialog( cDbfName ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+   local n
+   local oShape
+   local aFields
+   local nTop, nLeft
+   local cCaption
+   local nCount, cAlias
+   local aRect := ::oForm:GetClientRect()
+   local nWidth, nHeight
+   nHeight := aRect[3]-aRect[1]
+   nWidth := aRect[4]-aRect[2]
+
+   nTop  := nHeight - 40
+   nLeft := nWidth - (85*5)
+
+
+   if Empty( cDbfName ) .OR. ! File( cDbfName )
+           MsgAlert( "Please select a DBF file first!" )
+           return nil
+   endif
+
+   cursorwait()
+
+   dbUseArea( .T.,, ( cDbfName ), ( cAlias := GetNewAlias( "CUST" ) ), if(.T. .OR. .F., !.F., NIL), .F. )
+   aFields := DbStruct()
+
+
+   for n := len( aFields ) to 1 step -1
+
+       ::nTopDbf  += 30
+
+       cCaption := Upper(left(aFields[ n ][ 1 ],1)) + lower( substr(aFields[ n ][ 1 ],2 ) )
+
+       do case
+          case aFields[ n ][ 2 ] == "C" .OR. aFields[ n ][ 2 ] == "M"
+               oShape := TDsgnEdit():New( ::nTopDbf, ::nLeftDbf+60,::nTopDbf+23,::nLeftDbf+60+ (aFields[ n ][ 3 ] * 8), self )
+               oShape:cCaption := replicate("X",aFields[ n ][ 3 ] )
+               oShape := TDsgnSay():New( ::nTopDbf+8, ::nLeftDbf,::nTopDbf+15+8,::nLeftDbf+ (len( aFields[ n ][ 1 ]) * 8), self )
+               oShape:cCaption := cCaption
+
+
+          case aFields[ n ][ 2 ] == "D"
+               oShape := TDsgnEdit():New( ::nTopDbf, ::nLeftDbf+60,::nTopDbf+23,::nLeftDbf+60+ (aFields[ n ][ 3 ] * 8), self )
+               oShape:cCaption := "DD-MM-AAAA"
+               oShape := TDsgnSay():New( ::nTopDbf+8, ::nLeftDbf,::nTopDbf+15+8,::nLeftDbf+ (len( aFields[ n ][ 1 ]) * 8), self )
+               oShape:cCaption := cCaption
+
+
+          case aFields[ n ][ 2 ] == "N"
+
+               oShape := TDsgnEdit():New( ::nTopDbf, ::nLeftDbf+60,::nTopDbf+23,::nLeftDbf+60+ (aFields[ n ][ 3 ] * 8), self )
+               oShape:cCaption := replicate("9",aFields[ n ][ 3 ] )
+               oShape := TDsgnSay():New( ::nTopDbf+8, ::nLeftDbf,::nTopDbf+15+8,::nLeftDbf+ (len( aFields[ n ][ 1 ]) * 8), self )
+               oShape:cCaption := cCaption
+
+
+
+          case aFields[ n ][ 2 ] == "L"
+               oShape := TDsgnBtn():New( ::nTopDbf+8, ::nLeftDbf+60,::nTopDbf+15+8,::nLeftDbf+ (len( aFields[ n ][ 1 ]) * 8), self, 3 )
+               oShape:cCaption := cCaption
+
+
+       endcase
+
+       if ::nTopDbf > nHeight - 100
+          ::nTopDbf := 30
+          ::nLeftDbf += 300
+       endif
+
+
+   next
+
+
+   oShape := TDsgnBtn():New( nTop , nLeft, nTop+23,nLeft+ 75, self, 1 )
+   oShape:cCaption := "Inicio"
+   nLeft += 85
+
+   oShape := TDsgnBtn():New( nTop , nLeft, nTop+23,nLeft+ 75, self, 1 )
+   oShape:cCaption := "Previo"
+   nLeft += 85
+
+   oShape := TDsgnBtn():New( nTop , nLeft, nTop+23,nLeft+ 75, self, 1 )
+   oShape:cCaption := "Próximo"
+   nLeft += 85
+   oShape := TDsgnBtn():New( nTop , nLeft, nTop+23,nLeft+ 75, self, 1 )
+   oShape:cCaption := "Fin"
+   nLeft += 85
+   oShape := TDsgnBtn():New( nTop , nLeft, nTop+23,nLeft+ 75, self, 1 )
+   oShape:cCaption := "Aceptar"
+
+
+   ::Refresh()
+
+   DBCloseArea( cALias )
+
+return nil
+
+
+
+   static FUNCTION TDsgnEditor_Destroy( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local oShape, oItem
+
+for each oShape in ::aShapes
+    oShape:Destroy()
+next
+
+Aplicacion():oDFocus := nil
+
+return ::TControl:Destroy()
+
+
+   static FUNCTION TDsgnEditor_MouseWheel( nKeys, nDelta, nXPos, nYPos ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+if ::oSelected <> nil
+   ::oSelected:MouseWheel( nKeys, nDelta, nXPos, nYPos )
+endif
+
+return ::TControl:MouseWheel( nKeys, nDelta, nXPos, nYPos )
+
+
+
+  static FUNCTION TDsgnEditor_lPocketPC( nValue ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+if nValue <> nil
+   ::nType := nValue
+   ::nTypePPC := nValue
+   ::MaxMin()
+
+   if ::nType <> 0
+      ::SetSize( ::nWPPC, ::nHPPC, .T. )
+   endif
+
+endif
+
+return ::nType <> 0
+
+
+  static FUNCTION TDsgnEditor_Rotate( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+if !::lPocketPC()
+   return nil
+endif
+
+::lRotatePPC := !::lRotatePPC
+
+::MaxMin()
+
+::SetSize( ::nHeight, ::nWidth, .T. )
+
+return nil
+
+
+
+  static FUNCTION TDsgnEditor_MaxMin( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+local nWPPC
+local nHPPC
+
+
+if !::lPocketPC()
+
+
+
+   ::aMinMaxInfo = { 2000, 2030, 6,      6, 120,     54, 2150,    2150 }
+else
+
+    if ::lRotatePPC
+
+       do case
+          case ::nTypePPC == 1
+
+               nHPPC        := 240
+               nWPPC        := 320
+
+          case ::nTypePPC == 2
+
+               nHPPC        := 240
+               nWPPC        := 240
+
+          case ::nTypePPC == 3
+
+               nHPPC        := 176
+               nWPPC        := 220
+
+       endcase
+
+    else
+
+       do case
+          case ::nTypePPC == 1
+
+               nWPPC        := 240
+               nHPPC        := 320
+
+          case ::nTypePPC == 2
+
+               nWPPC        := 240
+               nHPPC        := 240
+
+          case ::nTypePPC == 3
+
+               nWPPC        := 176
+               nHPPC        := 220
+
+       endcase
+    endif
+
+
+
+
+    ::aMinMaxInfo  := { nWPPC,   nHPPC, 6,       6, 54,      54, nWPPC,   nHPPC }
+endif
+
+return nil
+
+
+      static FUNCTION TDsgnEditor_Inspect( oShape ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+  if Aplicacion():oInspector == nil
+     WndFold()
+
+  endif
+  Aplicacion():oInspector:SetInspect( oShape )
+
+return nil
+
+
+
+   static FUNCTION TDsgnEditor_SaveFile( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+
+::oForm:Save2PRG()
+
+return nil
+
+
+   static FUNCTION TDsgnEditor_SaveFormat( ) ; local Self AS CLASS TDsgnEditor := QSelf() AS CLASS TDsgnEditor
+
+ local cFileName := cNewFileName( "Test", "ffm" )
+::oForm:SaveFile( )
+
+return nil
+
+
+
+
+
+
+
+
+
+
+
+_HB_CLASS TBtnBmpEx ; function TBtnBmpEx ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TBtnBmpEx" , iif( .T., { @TBtnBmp() }, { @HBObject() } ), @TBtnBmpEx() ) ) ;
+
+      _HB_MEMBER { AS LOGICAL lRegistered } ; oClass:AddMultiClsData( "LOGICAL",, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRegistered"}, .F. )
+
+      _HB_MEMBER LButtonUp( nRow, nCol); oClass:AddMethod( "LButtonUp", @TBtnBmpEx_LButtonUp(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Destroy(); oClass:AddMethod( "Destroy", @TBtnBmpEx_Destroy(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TBtnBmpEx ;
+
+static FUNCTION TBtnBmpEx_Destroy( ) ; local Self AS CLASS TBtnBmpEx := QSelf() AS CLASS TBtnBmpEx
+
+   ::FreeBitmaps()
+   if ::oPopup <> nil .AND. Valtype( ::oPopup ) <> "B"
+      ::oPopup:End()
+   endif
+   TControl():Destroy()
+
+return 0
+
+static FUNCTION TBtnBmpEx_LButtonUp( nRow, nCol ) ; local Self AS CLASS TBtnBmpEx := QSelf() AS CLASS TBtnBmpEx
+
+   local oWnd
+   local oPopup
+   local lClick := IsOverWnd( ::hWnd, nRow, nCol )
+
+   if ::lDrag .OR. ! Empty( ::oDragCursor )
+      return ::TBtnBmp:LButtonUp( nRow, nCol )
+   endif
+
+   if ::bLButtonUp <> nil
+      Eval( ::bLButtonUp, nRow, nCol)
+   endif
+
+   ::lBtnUp  = .T.
+
+   if ! ::lWorking
+      if ::lCaptured
+         ::lCaptured = .F.
+         ReleaseCapture()
+         if ! ::lPressed
+            if ::lBtnDown
+               ::lPressed = .T.
+               ::Refresh()
+            endif
+         else
+            if ! ::lBtnDown
+               ::lPressed = .F.
+               ::Refresh()
+            endif
+         endif
+         if lClick
+            if ::oPopup <> nil
+               if nCol >= ::nWidth() - 13
+                  if ::oWnd:oWnd <> nil .AND. Upper( ::oWnd:oWnd:Classname() ) == "TBAR"
+                     oWnd := ::oWnd:oWnd
+                  else
+                     oWnd := ::oWnd
+                  endif
+                  if GetClassName( GetParent( Self:hWnd ) ) <> "TBAR"
+                     oWnd = oWndFromhWnd( GetParent( Self:hWnd ) )
+                  endif
+                  oWnd:NcMouseMove()
+                  oPopup := ::oPopup
+                  if valtype( ::oPopup ) == "B"
+                     oPopup :=  eval( ::oPopup )
+                  endif
+                  oWnd:oPopup = oPopup
+                  if oPopup <> nil
+                     oPopup:Activate( ::nTop + ::nHeight(), ::nLeft, oWnd, .F. )
+                  endif
+                  oWnd:oPopup = nil
+                  ::Refresh()
+               else
+                  ::Click()
+               endif
+            else
+               ::Click()
+            endif
+         endif
+      endif
+   endif
+
+return 0
+
+
+
+
+
+_HB_CLASS TMDiChild2 ; function TMDiChild2 ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TMDiChild2" , iif( .T., { @TMdiChild() }, { @HBObject() } ), @TMDiChild2() ) ) ;
+
+      _HB_MEMBER KeyChar( nKey, nFlags); oClass:AddMethod( "KeyChar", @TMDiChild2_KeyChar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SaveFile(); oClass:AddMethod( "SaveFile", @TMDiChild2_SaveFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SaveFormat(); oClass:AddMethod( "SaveFormat", @TMDiChild2_SaveFormat(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER OpenFormat(); oClass:AddMethod( "OpenFormat", @TMDiChild2_OpenFormat(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TMDiChild2 ;
+
+static FUNCTION TMDiChild2_KeyChar( nKey, nFlags ) ; local Self AS CLASS TMDiChild2 := QSelf() AS CLASS TMDiChild2
+
+   if nKey == 27
+      return 0
+   endif
+
+return ::TMdiChild:KeyChar( nKey, nFlags )
+
+
+static FUNCTION TMDiChild2_SaveFile( ) ; local Self AS CLASS TMDiChild2 := QSelf() AS CLASS TMDiChild2
+local n, nLen
+
+nLen := len(::aControls )
+
+for n := 1 to nLen
+    if ::aControls[n]:ClassName() == "TDSGNEDITOR"
+       ::aControls[n]:oForm:Save2prg()
+    endif
+next
+
+return 0
+
+
+static FUNCTION TMDiChild2_SaveFormat( ) ; local Self AS CLASS TMDiChild2 := QSelf() AS CLASS TMDiChild2
+local n, nLen
+
+nLen := len(::aControls )
+
+for n := 1 to nLen
+    if ::aControls[n]:ClassName() == "TDSGNEDITOR"
+       ::aControls[n]:oForm:SaveFile()
+    endif
+next
+
+return 0
+
+
+   static FUNCTION TMDiChild2_OpenFormat( ) ; local Self AS CLASS TMDiChild2 := QSelf() AS CLASS TMDiChild2
+
+ local cFileName := cGetFile( "*.ffm", "Seleccione fichero" )
+ if file( cFileName )
+
+ endif
+
+return nil
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function NormalizeRect( aRect )
+local n
+
+if aRect[1] > aRect[3]
+   n := aRect[3]
+   aRect[3] := aRect[1]
+   aRect[1] := n
+endif
+
+if aRect[2] > aRect[4]
+   n := aRect[4]
+   aRect[4] := aRect[2]
+   aRect[2] := n
+endif
+
+return aRect
+
+function OffsetRect( rc, x, y )
+
+rc[1] := rc[1] + y
+rc[2] := rc[2] + x
+rc[3] := rc[3] + y
+rc[4] := rc[4] + x
+
+return rc
+
+
+
+
+
+   function xSelColor( nRow, nCol, nColor )
+
+local oDlg, oBmp
+
+local nFila, nColumna, nOption
+local nHFila, nWCol
+local oBtn, oFont
+local lCancel := .T.
+local oFld
+local oLbx
+local lPaleta := .F.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local aColors := { ( 255 + ( 127 * 256 ) + ( 127 * 65536 ) ), ( 255 + ( 255 * 256 ) + ( 127 * 65536 ) ), ( 127 + ( 255 * 256 ) + ( 127 * 65536 ) ), ( 0 + ( 255 * 256 ) + ( 127 * 65536 ) ), ( 127 + ( 255 * 256 ) + ( 255 * 65536 ) ), ( 0 + ( 127 * 256 ) + ( 255 * 65536 ) ), ( 255 + ( 127 * 256 ) + ( 191 * 65536 ) ), ( 255 + ( 127 * 256 ) + ( 255 * 65536 ) ), ( 255 + ( 0 * 256 ) + ( 0 * 65536 ) ), ( 255 + ( 255 * 256 ) + ( 0 * 65536 ) ), ( 127 + ( 255 * 256 ) + ( 0 * 65536 ) ), ( 0 + ( 255 * 256 ) + ( 63 * 65536 ) ), ( 0 + ( 255 * 256 ) + ( 255 * 65536 ) ), ( 0 + ( 127 * 256 ) + ( 191 * 65536 ) ), ( 127 + ( 127 * 256 ) + ( 191 * 65536 ) ), ( 255 + ( 0 * 256 ) + ( 255 * 65536 ) ), ( 127 + ( 63 * 256 ) + ( 63 * 65536 ) ), ( 255 + ( 127 * 256 ) + ( 63 * 65536 ) ), ( 0 + ( 255 * 256 ) + ( 0 * 65536 ) ), ( 0 + ( 127 * 256 ) + ( 127 * 65536 ) ), ( 0 + ( 63 * 256 ) + ( 127 * 65536 ) ), ( 127 + ( 127 * 256 ) + ( 255 * 65536 ) ), ( 127 + ( 0 * 256 ) + ( 63 * 65536 ) ), ( 255 + ( 0 * 256 ) + ( 127 * 65536 ) ), ( 127 + ( 0 * 256 ) + ( 0 * 65536 ) ), ( 255 + ( 127 * 256 ) + ( 0 * 65536 ) ), ( 0 + ( 127 * 256 ) + ( 0 * 65536 ) ), ( 0 + ( 127 * 256 ) + ( 63 * 65536 ) ), ( 0 + ( 0 * 256 ) + ( 255 * 65536 ) ), ( 0 + ( 0 * 256 ) + ( 159 * 65536 ) ), ( 127 + ( 0 * 256 ) + ( 127 * 65536 ) ), ( 127 + ( 0 * 256 ) + ( 255 * 65536 ) ), ( 63 + ( 0 * 256 ) + ( 0 * 65536 ) ), ( 127 + ( 63 * 256 ) + ( 0 * 65536 ) ), ( 0 + ( 63 * 256 ) + ( 0 * 65536 ) ), ( 0 + ( 63 * 256 ) + ( 63 * 65536 ) ), ( 0 + ( 0 * 256 ) + ( 127 * 65536 ) ), ( 0 + ( 0 * 256 ) + ( 63 * 65536 ) ), ( 63 + ( 0 * 256 ) + ( 63 * 65536 ) ), ( 63 + ( 0 * 256 ) + ( 127 * 65536 ) ), ( 0 + ( 0 * 256 ) + ( 0 * 65536 ) ), ( 127 + ( 127 * 256 ) + ( 0 * 65536 ) ), ( 127 + ( 127 * 256 ) + ( 63 * 65536 ) ), ( 127 + ( 127 * 256 ) + ( 127 * 65536 ) ), ( 63 + ( 127 * 256 ) + ( 127 * 65536 ) ), ( 191 + ( 191 * 256 ) + ( 191 * 65536 ) ), ( 63 + ( 0 * 256 ) + ( 63 * 65536 ) ), ( 255 + ( 255 * 256 ) + ( 255 * 65536 ) ) }
+
+oFont := TFont():New( "Ms Sans Serif", 5, 13,,,,,,,,,,,,,, )
+
+nClrReturn := nil
+
+
+oDlg = TDialog():New( nRow, nCol, nRow + 152, nCol + 148,,,, .F., nOr( 2147483648, 128 ),,,,, .T.,,,,,, .F., )
+
+       oFld := TFolder():New( 0, 0, {"Custom","System"}, {}, oDlg,,,, .T., .F., 150, 150,, .F.,, )
+
+       oDlg:oClient := oFld
+
+
+
+
+       oBmp := TBitmap():New( 0, 0, 73, 54, "paleta",, .T., oFld:aDialogs[1],,, .F., .F.,,, .F.,, .T.,, .F. )
+
+
+
+
+
+
+
+
+       oBtn := TButton():New( 54, 0, "&Mas...", oFld:aDialogs[1], {|| ( nClrReturn := ChooseColor( nColor ), lCancel := .F. , oDlg:End() )}, 72, 12,, oFont, .F., .T., .F.,, .F.,,, .F. )
+
+
+
+
+       oBmp:bLClicked := {| nRow, nCol | nFila := nRow, nColumna := nCol , lCancel := .F., lPaleta := .T., oDlg:End() }
+
+       oLbx := TLbxSysColor():New( 0, 0, 75, 70, oFld:aDialogs[2] )
+
+       oLbx:bLDblClick := { || lPaleta := .F., SetColorReturn( GetSysColor( oLbx:aSysColors[ oLbx:GetPos() ] )), oDlg:End(), lCancel := .F.  }
+
+
+
+
+oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .F.,,,, oDlg:bRClicked,,, )
+
+if lCancel
+   return nColor
+endif
+
+if lPaleta
+
+   nHFila := int( 108 / 6 )
+   nWCol  := int( 145 / 8 )
+
+   nOption := ( int( nFila / nHFila ) * 8 ) + int( nColumna / nWCol ) + 1
+
+   nClrReturn := aColors[ nOption ]
+
+endif
+
+return nClrReturn
+
+
+function SetColorReturn( n )
+nClrReturn := n
+return nClrReturn
+
+
+   function xSelFont( nRow, nCol, cFont )
+
+local oDlg
+local oLbx
+local lCancel := .T.
+
+cFaceName := cFont
+
+
+oDlg = TDialog():New( nRow, nCol-20, nRow + 132, nCol + 148,,,, .F., nOr( 2147483648, 128 ),,,,, .T.,,,,,, .F., )
+
+       oLbx := TLbxFont():New( 0, 0, 85, 70, oDlg, { | u | If( PCount()==0, cFont, cFont:= u ) } )
+
+       oLbx:bLDblClick := { || SetFaceNameReturn( oLbx:aItems[ oLbx:GetPos() ] ), oDlg:End()  }
+
+       oDlg:oClient := oLbx
+
+
+oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .F.,,,, oDlg:bRClicked,,, )
+
+return cFaceName
+
+function SetFaceNameReturn( cFont )
+cFaceName := cFont
+return cFaceName
+
+
+function xSelImage()
+local oDirL1, oImagelist, oDlg
+
+
+oDlg = TDialog():New( 10, 10, 400, 700,,,, .F.,,,,,, .T.,,,,,, .F., )
+
+       oDirL1 := TDirList():New( 10, 10, 90, 120, oDlg )
+       oImageList := TImageBrw():New( 10, 110, 185, 155, oDlg )
+       oDirL1:bChange := {|aItems| oImageList:nFirst := 1, AddImages( aItems, oImageList, oDirL1 ) }
+
+       TButton():New( 170, 270, "Aceptar",, {|| oDlg:End()}, 28, 12,,, .F., .T., .F.,, .F.,,, .F. )
+
+oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .T.,,,, oDlg:bRClicked,,, )
+
+
+return nil
+
+
+   function xSelControl( nRow, nCol, coControl2, acoControls, oForm )
+
+local oDlg
+local oLbx
+local lCancel := .T.
+
+
+
+
+oDlg = TDialog():New( nRow, nCol-20, nRow + 147, nCol + 148,,,, .F., nOr( 2147483648, 128 ),,,,, .T.,,,,,, .F., )
+
+
+       oLbx := TListBox():New( 0, 0, { | u | If( PCount()==0, coControl2, coControl2:= u ) }, acoControls, 85, 80, {|| oForm:cSetFocus( coControl2 )}, oDlg,,,, .T., .F.,,,, .F.,,,, .F., .F. )
+
+       oLbx:bLDblClick := { || SetcoCOntrolReturn( oLbx:aItems[ oLbx:GetPos() ] ), lCancel := .F., oDlg:End()  }
+
+       oDlg:oClient := oLbx
+
+
+oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .F.,,,, oDlg:bRClicked,,, )
+
+return coControl
+
+function SetcoControlReturn( c )
+coControl := c
+return coControl
+
+
+_HB_CLASS TWindowExt ; function TWindowExt ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TWindowExt" , iif( .T., { @TWindow() }, { @HBObject() } ), @TWindowExt() ) ) ;
+
+      _HB_MEMBER { AS LOGICAL lRegistered } ; oClass:AddMultiClsData( "Logical",, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRegistered"}, .F. )
+
+      _HB_MEMBER HandleEvent( nMsg, nWParam, nLParam); oClass:AddMethod( "HandleEvent", @TWindowExt_HandleEvent(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TWindowExt ;
+
+static FUNCTION TWindowExt_HandleEvent( nMsg, nWParam, nLParam ) ; local Self AS CLASS TWindowExt := QSelf() AS CLASS TWindowExt
+
+if nMsg == 6
+
+   if nWParam == 0
+
+   else
+
+   endif
+
+endif
+
+return ::TWindow:HandleEvent( nMsg, nWParam, nLParam )
+
+
+
+  function UpAll()
+
+
+
+
+
+
+
+
+return 1

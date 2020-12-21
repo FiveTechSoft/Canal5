@@ -1,0 +1,1308 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 7 "source\scintilla.prg"
+static nError
+static oCode
+static cLastFind := ""
+
+
+
+static oReport
+
+_HB_CLASS TScintilla ; function TScintilla ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TScintilla" , iif( .T., { @TControl() }, { @HBObject() } ), @TScintilla() ) ) ;
+
+; _HB_MEMBER { cFileName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFileName"}, .F. )
+
+      _HB_MEMBER { AS LOGICAL lRegisterd } ; oClass:AddMultiClsData( "LOGICAL",, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRegisterd"}, .F. )
+      _HB_MEMBER { hLib } ; oClass:AddMultiClsData(,, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hLib"}, .F. )
+; _HB_MEMBER { aCopys } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aCopys"}, .F. )
+      _HB_MEMBER { AS NUMERIC nInst } ; oClass:AddMultiClsData( "NUMERIC", 0, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nInst"}, .F. )
+      _HB_MEMBER { AS ARRAY aMrus } ; oClass:AddMultiClsData( "ARRAY", {}, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aMrus"}, .F. )
+      _HB_MEMBER { cLineBuffer } ; oClass:AddMultiClsData(,, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cLineBuffer"}, .F. )
+
+      _HB_MEMBER Default(); oClass:AddMethod( "Default", @TScintilla_Default(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetColor( nClrText, nClrPane); oClass:AddMethod( "SetColor", @TScintilla_SetColor(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+      _HB_MEMBER New( nRow, nCol, oWnd, nWidth, nHeight) AS CLASS TScintilla; oClass:AddMethod( "New", @TScintilla_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER End(); oClass:AddMethod( "End", @TScintilla_End(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AddText(); oClass:AddInline( "AddText", {|Self, cText | ( ( Self ) ), ::SendEditor( 2001, len( cText ), cText ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AddTextCRLF(); oClass:AddInline( "AddTextCRLF", {|Self, cText | ( ( Self ) ), ::SendEditor( 2001, len( cText )+2, cText+Chr(13)+Chr(10) ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Backtab(); oClass:AddInline( "Backtab", {|Self | ( ( Self ) ), ::SendEditor( 2328,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER CanRedo(); oClass:AddInline( "CanRedo", {|Self | ( ( Self ) ), ::SendEditor( 2016, 0, 0) <> 0 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER CanUndo(); oClass:AddInline( "CanUndo", {|Self | ( ( Self ) ), ::SendEditor( 2174, 0, 0) <> 0 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Cancel(); oClass:AddInline( "Cancel", {|Self | ( ( Self ) ), ::SendEditor( 2325 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Charleft(); oClass:AddInline( "Charleft", {|Self | ( ( Self ) ), ::SendEditor( 2304 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Charleftextend(); oClass:AddInline( "Charleftextend", {|Self | ( ( Self ) ), ::SendEditor( 2305 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Charleftrectextend(); oClass:AddInline( "Charleftrectextend", {|Self | ( ( Self ) ), ::SendEditor( 2428 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Charright(); oClass:AddInline( "Charright", {|Self | ( ( Self ) ), ::SendEditor( 2306 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Charrightextend(); oClass:AddInline( "Charrightextend", {|Self | ( ( Self ) ), ::SendEditor( 2307 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Charrightrectextend(); oClass:AddInline( "Charrightrectextend", {|Self | ( ( Self ) ), ::SendEditor( 2429 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ClearAll(); oClass:AddInline( "ClearAll", {|Self | ( ( Self ) ), ::SendEditor( 2004 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER CopyLine(); oClass:AddInline( "CopyLine", {|Self | ( ( Self ) ), ::SendEditor( 2455, 0, 0 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Deleteback(); oClass:AddInline( "Deleteback", {|Self | ( ( Self ) ), ::SendEditor( 2326 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Deletebacknotline(); oClass:AddInline( "Deletebacknotline", {|Self | ( ( Self ) ), ::SendEditor( 2344 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Dellineleft(); oClass:AddInline( "Dellineleft", {|Self | ( ( Self ) ), ::SendEditor( 2395 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Dellineright(); oClass:AddInline( "Dellineright", {|Self | ( ( Self ) ), ::SendEditor( 2396 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Delwordleft(); oClass:AddInline( "Delwordleft", {|Self | ( ( Self ) ), ::SendEditor( 2335 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Delwordright(); oClass:AddInline( "Delwordright", {|Self | ( ( Self ) ), ::SendEditor( 2336 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER DlgFindText(); oClass:AddMethod( "DlgFindText", @TScintilla_DlgFindText(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Documentend(); oClass:AddInline( "Documentend", {|Self | ( ( Self ) ), ::SendEditor( 2318 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Documentendextend(); oClass:AddInline( "Documentendextend", {|Self | ( ( Self ) ), ::SendEditor( 2319 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Documentstart(); oClass:AddInline( "Documentstart", {|Self | ( ( Self ) ), ::SendEditor( 2316 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Documentstartextend(); oClass:AddInline( "Documentstartextend", {|Self | ( ( Self ) ), ::SendEditor( 2317 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Edittoggleovertype(); oClass:AddInline( "Edittoggleovertype", {|Self | ( ( Self ) ), ::SendEditor( 2324 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER EmptyUndoBuffer(); oClass:AddInline( "EmptyUndoBuffer", {|Self | ( ( Self ) ), ::SendEditor( 205 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER FindText(); oClass:AddInline( "FindText", {|Self, nFlags, ft | ( ( Self ) ), ::SendEditor( 2150, nFlags, ft ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Formfeed(); oClass:AddInline( "Formfeed", {|Self | ( ( Self ) ), ::SendEditor( 2330 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetCurLine(); oClass:AddInline( "GetCurLine", {|Self, nLength, cText | ( ( Self ) ), ::SendEditor( 2027, nLength, cText ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetCurrentPos(); oClass:AddInline( "GetCurrentPos", {|Self | ( ( Self ) ), ::SendEditor( 2008, 0, 0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetCurrentStyle(); oClass:AddMethod( "GetCurrentStyle", @TScintilla_GetCurrentStyle(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetLine(); oClass:AddInline( "GetLine", {|Self, nLine | ( ( Self ) ), SC_GetLine( ::hWnd, nLine ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetLineCount(); oClass:AddInline( "GetLineCount", {|Self | ( ( Self ) ), ::SendEditor( 2154, 0, 0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetModify(); oClass:AddMethod( "GetModify", @TScintilla_GetModify(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetReadOnly(); oClass:AddInline( "GetReadOnly", {|Self | ( ( Self ) ), ::SendEditor( 2140 ) <> 0 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetSelText(); oClass:AddInline( "GetSelText", {|Self | ( ( Self ) ), C5GetSelText(::hWnd, ::SendEditor(2145) - ::SendEditor(2143) ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetSelectionStart(); oClass:AddInline( "GetSelectionStart", {|Self | ( ( Self ) ), ::SendEditor( 2143, 0, 0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetText(); oClass:AddInline( "GetText", {|Self | ( ( Self ) ), SC_GetText( ::hWnd ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoDown(); oClass:AddInline( "GoDown", {|Self | ( ( Self ) ), ::SendEditor( 2300, 0, 0 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoEol(); oClass:AddInline( "GoEol", {|Self | ( ( Self ) ), ::SendEditor( 2314, 0, 0 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoHome(); oClass:AddInline( "GoHome", {|Self | ( ( Self ) ), ::SendEditor( 2312, 0, 0 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoLeft(); oClass:AddInline( "GoLeft", {|Self | ( ( Self ) ), ::CharLeft() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoRight(); oClass:AddInline( "GoRight", {|Self | ( ( Self ) ), ::CharRight() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoUp(); oClass:AddInline( "GoUp", {|Self | ( ( Self ) ), ::SendEditor( 2302, 0, 0 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GotoLine(); oClass:AddInline( "GotoLine", {|Self, nLine | ( ( Self ) ), ::SendEditor( 2024, nLine-1, 0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GotoPos(); oClass:AddInline( "GotoPos", {|Self, nPos | ( ( Self ) ), ::SendEditor( 2025, nPos, 0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Home(); oClass:AddInline( "Home", {|Self | ( ( Self ) ), ::SendEditor( 2312 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Homedisplay(); oClass:AddInline( "Homedisplay", {|Self | ( ( Self ) ), ::SendEditor( 2345 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Homedisplayextend(); oClass:AddInline( "Homedisplayextend", {|Self | ( ( Self ) ), ::SendEditor( 2346 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Homeextend(); oClass:AddInline( "Homeextend", {|Self | ( ( Self ) ), ::SendEditor( 2313 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Homerectextend(); oClass:AddInline( "Homerectextend", {|Self | ( ( Self ) ), ::SendEditor( 2430 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Homewrap(); oClass:AddInline( "Homewrap", {|Self | ( ( Self ) ), ::SendEditor( 2349 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Homewrapextend(); oClass:AddInline( "Homewrapextend", {|Self | ( ( Self ) ), ::SendEditor( 2450 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER InsertText(); oClass:AddInline( "InsertText", {|Self, nPos, cText | ( ( Self ) ), ::SendEditor( 2003, nPos, cText) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IsReadOnly(); oClass:AddInline( "IsReadOnly", {|Self | ( ( Self ) ), SC_IsReadOnly( ::hWnd ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER KeyChar( nKey, nFlags); oClass:AddMethod( "KeyChar", @TScintilla_KeyChar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER KeyDown( nKey, nFlags); oClass:AddMethod( "KeyDown", @TScintilla_KeyDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER LineFromPosition(); oClass:AddInline( "LineFromPosition", {|Self, nPos | ( ( Self ) ), ::SendEditor( 2166, nPos, 0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER LineLength(); oClass:AddInline( "LineLength", {|Self, nLine | ( ( Self ) ), ::SendEditor( 2350, nLine, 0 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Linecopy(); oClass:AddInline( "Linecopy", {|Self | ( ( Self ) ), ::SendEditor( 2455 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Linecut(); oClass:AddInline( "Linecut", {|Self | ( ( Self ) ), ::SendEditor( 2337 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Linedelete(); oClass:AddInline( "Linedelete", {|Self | ( ( Self ) ), ::SendEditor( 2338 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Linedown(); oClass:AddInline( "Linedown", {|Self | ( ( Self ) ), ::SendEditor( 2300 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Linedownextend(); oClass:AddInline( "Linedownextend", {|Self | ( ( Self ) ), ::SendEditor( 2301 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Linedownrectextend(); oClass:AddInline( "Linedownrectextend", {|Self | ( ( Self ) ), ::SendEditor( 2426 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lineduplicate(); oClass:AddInline( "Lineduplicate", {|Self | ( ( Self ) ), ::SendEditor( 2404 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lineend(); oClass:AddInline( "Lineend", {|Self | ( ( Self ) ), ::SendEditor( 2314 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lineenddisplay(); oClass:AddInline( "Lineenddisplay", {|Self | ( ( Self ) ), ::SendEditor( 2347 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lineenddisplayextend(); oClass:AddInline( "Lineenddisplayextend", {|Self | ( ( Self ) ), ::SendEditor( 2348 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lineendextend(); oClass:AddInline( "Lineendextend", {|Self | ( ( Self ) ), ::SendEditor( 2315 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lineendrectextend(); oClass:AddInline( "Lineendrectextend", {|Self | ( ( Self ) ), ::SendEditor( 2432 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lineendwrap(); oClass:AddInline( "Lineendwrap", {|Self | ( ( Self ) ), ::SendEditor( 2451 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lineendwrapextend(); oClass:AddInline( "Lineendwrapextend", {|Self | ( ( Self ) ), ::SendEditor( 2452 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Linescrolldown(); oClass:AddInline( "Linescrolldown", {|Self | ( ( Self ) ), ::SendEditor( 2342 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Linescrollup(); oClass:AddInline( "Linescrollup", {|Self | ( ( Self ) ), ::SendEditor( 2343 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Linetranspose(); oClass:AddInline( "Linetranspose", {|Self | ( ( Self ) ), ::SendEditor( 2339 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lineup(); oClass:AddInline( "Lineup", {|Self | ( ( Self ) ), ::SendEditor( 2302 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lineupextend(); oClass:AddInline( "Lineupextend", {|Self | ( ( Self ) ), ::SendEditor( 2303 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lineuprectextend(); oClass:AddInline( "Lineuprectextend", {|Self | ( ( Self ) ), ::SendEditor( 2427 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Lowercase(); oClass:AddInline( "Lowercase", {|Self | ( ( Self ) ), ::SendEditor( 2340 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MarkerAdd(); oClass:AddInline( "MarkerAdd", {|Self, nLine,  nMarkerNumber | ( ( Self ) ), ::SendEditor( 2043, nLine, nMarkerNumber) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MouseMove(); oClass:AddInline( "MouseMove", {|Self, nRow, nCol, nKeyFlags | ( ( Self ) ), CallWindowProc( ::nOldProc, ::hWnd, 512, nKeyFlags, nMakeLong( nCol, nRow ) ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER NewLine(); oClass:AddInline( "NewLine", {|Self | ( ( Self ) ), ::SendEditor( 2329, 0, 0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Open(); oClass:AddMethod( "Open", @TScintilla_Open(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER OpenFile( cFileName); oClass:AddMethod( "OpenFile", @TScintilla_OpenFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER OptionSetFont(); oClass:AddMethod( "OptionSetFont", @TScintilla_OptionSetFont(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Pagedown(); oClass:AddInline( "Pagedown", {|Self | ( ( Self ) ), ::SendEditor( 2322 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Pagedownextend(); oClass:AddInline( "Pagedownextend", {|Self | ( ( Self ) ), ::SendEditor( 2323 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Pagedownrectextend(); oClass:AddInline( "Pagedownrectextend", {|Self | ( ( Self ) ), ::SendEditor( 2434 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Pageup(); oClass:AddInline( "Pageup", {|Self | ( ( Self ) ), ::SendEditor( 2320 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Pageupextend(); oClass:AddInline( "Pageupextend", {|Self | ( ( Self ) ), ::SendEditor( 2321 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Pageuprectextend(); oClass:AddInline( "Pageuprectextend", {|Self | ( ( Self ) ), ::SendEditor( 2433 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paradown(); oClass:AddInline( "Paradown", {|Self | ( ( Self ) ), ::SendEditor( 2413 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paradownextend(); oClass:AddInline( "Paradownextend", {|Self | ( ( Self ) ), ::SendEditor( 2414 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paraup(); oClass:AddInline( "Paraup", {|Self | ( ( Self ) ), ::SendEditor( 2415 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paraupextend(); oClass:AddInline( "Paraupextend", {|Self | ( ( Self ) ), ::SendEditor( 2416 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Print(); oClass:AddMethod( "Print", @TScintilla_Print(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Redo(); oClass:AddInline( "Redo", {|Self | ( ( Self ) ), ::SendEditor( 2011, 0, 0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ReplaceSel(); oClass:AddInline( "ReplaceSel", {|Self, cText | ( ( Self ) ), ::SendEditor( 2170, 0, cText ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Save(); oClass:AddMethod( "Save", @TScintilla_Save(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SayMemo(); oClass:AddMethod( "SayMemo", @TScintilla_SayMemo(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SearchNext(); oClass:AddInline( "SearchNext", {|Self, nFlags, cText | ( ( Self ) ), ::SendEditor( 2367, nFlags, cText) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SearchPrev(); oClass:AddInline( "SearchPrev", {|Self, nFlags, cText | ( ( Self ) ), ::SendEditor( 2368, nFlags, cText) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SendAsEmail(); oClass:AddMethod( "SendAsEmail", @TScintilla_SendAsEmail(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SendEditor( Msg, wParam, lParam); oClass:AddMethod( "SendEditor", @TScintilla_SendEditor(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetFixedFont(); oClass:AddMethod( "SetFixedFont", @TScintilla_SetFixedFont(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetReadOnly(); oClass:AddInline( "SetReadOnly", {|Self, lOn | ( ( Self ) ), ::SendEditor( 2171, if( lOn, 1, 0 ), 0 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetSavePoint(); oClass:AddInline( "SetSavePoint", {|Self | ( ( Self ) ), ::SendEditor( 2014 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetSel(); oClass:AddInline( "SetSel", {|Self, nStart,  nEnd | ( ( Self ) ), ::SendEditor( 2160, nStart, nEnd ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetText(); oClass:AddInline( "SetText", {|Self, cText | ( ( Self ) ), ::SendEditor( 2181, 0, cText ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetUndoCollection(); oClass:AddInline( "SetUndoCollection", {|Self | ( ( Self ) ), ::SendEditor( 2012 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Stutteredpagedown(); oClass:AddInline( "Stutteredpagedown", {|Self | ( ( Self ) ), ::SendEditor( 2437 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER StutteredpagedownextenD(); oClass:AddInline( "StutteredpagedownextenD", {|Self | ( ( Self ) ), ::SendEditor( 2438 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Stutteredpageup(); oClass:AddInline( "Stutteredpageup", {|Self | ( ( Self ) ), ::SendEditor( 2435 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Stutteredpageupextend(); oClass:AddInline( "Stutteredpageupextend", {|Self | ( ( Self ) ), ::SendEditor( 2436 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER StyleSetBold( nStyle,  bold); oClass:AddMethod( "StyleSetBold", @TScintilla_StyleSetBold(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER StyleSetFont( nStyle, cFontName); oClass:AddMethod( "StyleSetFont", @TScintilla_StyleSetFont(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER StyleSetFore( nStyle, fore); oClass:AddMethod( "StyleSetFore", @TScintilla_StyleSetFore(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER StyleSetItalic( nStyle,  italic); oClass:AddMethod( "StyleSetItalic", @TScintilla_StyleSetItalic(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER StyleSetSize( nStyle,  nSizePoints); oClass:AddMethod( "StyleSetSize", @TScintilla_StyleSetSize(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER StyleSetUnderline( nStyle,  underline); oClass:AddMethod( "StyleSetUnderline", @TScintilla_StyleSetUnderline(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Tab(); oClass:AddInline( "Tab", {|Self | ( ( Self ) ), ::SendEditor( 2327 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Undo(); oClass:AddInline( "Undo", {|Self | ( ( Self ) ), ::SendEditor( 2176, 0, 0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Uppercase(); oClass:AddInline( "Uppercase", {|Self | ( ( Self ) ), ::SendEditor( 2341 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Vchome(); oClass:AddInline( "Vchome", {|Self | ( ( Self ) ), ::SendEditor( 2331 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Vchomeextend(); oClass:AddInline( "Vchomeextend", {|Self | ( ( Self ) ), ::SendEditor( 2332 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Vchomerectextend(); oClass:AddInline( "Vchomerectextend", {|Self | ( ( Self ) ), ::SendEditor( 2431 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Vchomewrap(); oClass:AddInline( "Vchomewrap", {|Self | ( ( Self ) ), ::SendEditor( 2453 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Vchomewrapextend(); oClass:AddInline( "Vchomewrapextend", {|Self | ( ( Self ) ), ::SendEditor( 2454 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordleft(); oClass:AddInline( "Wordleft", {|Self | ( ( Self ) ), ::SendEditor( 2308 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordleftend(); oClass:AddInline( "Wordleftend", {|Self | ( ( Self ) ), ::SendEditor( 2439 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordleftendextend(); oClass:AddInline( "Wordleftendextend", {|Self | ( ( Self ) ), ::SendEditor( 2440 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordleftextend(); oClass:AddInline( "Wordleftextend", {|Self | ( ( Self ) ), ::SendEditor( 2309 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordpartleft(); oClass:AddInline( "Wordpartleft", {|Self | ( ( Self ) ), ::SendEditor( 2390 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordpartleftextend(); oClass:AddInline( "Wordpartleftextend", {|Self | ( ( Self ) ), ::SendEditor( 2391 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordpartright(); oClass:AddInline( "Wordpartright", {|Self | ( ( Self ) ), ::SendEditor( 2392 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordpartrightextend(); oClass:AddInline( "Wordpartrightextend", {|Self | ( ( Self ) ), ::SendEditor( 2393 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordright(); oClass:AddInline( "Wordright", {|Self | ( ( Self ) ), ::SendEditor( 2310 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordrightend(); oClass:AddInline( "Wordrightend", {|Self | ( ( Self ) ), ::SendEditor( 2441 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordrightendextend(); oClass:AddInline( "Wordrightendextend", {|Self | ( ( Self ) ), ::SendEditor( 2442 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Wordrightextend(); oClass:AddInline( "Wordrightextend", {|Self | ( ( Self ) ), ::SendEditor( 2311 ,0,0) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nLine(); oClass:AddInline( "nLine", {|Self | ( ( Self ) ), ::LineFromPosition( ::GetCurrentPos() )+1 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nPos( nNewVal); _HB_MEMBER _nPos( nNewVal); oClass:AddMethod( "nPos", @TScintilla_nPos(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nPos", @TScintilla_nPos(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER SetAStyle( style, fore, back, size, face); oClass:AddMethod( "SetAStyle", @TScintilla_SetAStyle(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Prueba(); oClass:AddMethod( "Prueba", @TScintilla_Prueba(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Notify( nIdCtrl, nPtrNMHDR); oClass:AddMethod( "Notify", @TScintilla_Notify(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TScintilla ;
+
+
+      static FUNCTION TScintilla_SendEditor( Msg, wParam, lParam ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+If( wParam == nil, wParam := 0, ) ;
+If( lParam == nil, lParam := 0, ) ;
+
+return SendMessage( ::hWnd, Msg, wParam, lParam )
+
+
+
+      static FUNCTION TScintilla_End( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+if ::nInst == 0
+   FreeLibrary( ::hLib )
+endif
+
+return ::TControl:End()
+
+
+
+      static FUNCTION TScintilla_nPos( nNewVal ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+      if pcount() > 0
+         ::GotoPos( nNewVal )
+      endif
+
+      return ::GetCurrentPos()
+
+
+
+
+  static FUNCTION TScintilla_New( nRow, nCol, nWidth, nHeight, oWnd ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+If( nRow == nil, nRow := 0, ) ; If( nCol == nil, nCol := 0, ); If( nWidth == nil, nWidth := 100, ); If( nHeight == nil, nHeight := 100, );
+
+   ::nTop     = nRow
+   ::nLeft    = nCol
+   ::nBottom  = nRow + nHeight
+   ::nRight   = nCol + nWidth
+   ::oWnd     = oWnd
+   ::nStyle   = nOR( 1073741824, 268435456, 65536, 8388608, 2097152, 1048576  )
+   ::nId       = ::GetNewId()
+   ::cFileName = "Noname"
+
+
+   ::oBrush := TBrush():New( Upper("NULL"),,,,, )
+
+   if ::nInst == 0
+      ::hLib := LoadLibrary( "SciLexer.DLL" )
+      ::nInst ++
+   endif
+
+
+
+
+   if ! Empty( oWnd:hWnd )
+      ::Create("Scintilla")
+      ::Default()
+      oWnd:AddControl( Self )
+   else
+      oWnd:DefControl( Self )
+   endif
+
+   ::aCopys := {}
+
+   SendMessage( ::hWnd, 2242, 0, 35 )
+   ::SendEditor(2242, 1, 30)
+
+   ::SendEditor(2233, 16, 0)
+
+   ::SendEditor( 2242, 2, 25)
+   ::SendEditor( 2240, 2, 0)
+   ::SendEditor( 2244, 2, 0xFE000000)
+   ::SendEditor( 2359, 0x8, 0)
+   ::SendEditor( 2246, 2, 1)
+   ::SendEditor( 2040, 31, 6)
+   ::SendEditor( 2041, 31,50000)
+   ::SendEditor( 2042, 31, 0)
+   ::SendEditor( 2040, 30, 2)
+   ::SendEditor( 2041, 30, 50000)
+   ::SendEditor( 2042, 30, 0)
+   ::SendEditor( 2132, 1, 0)
+   ::SendEditor( 2134, 30, 0)
+
+
+
+   ::SetFixedFont()
+   ::SetSavePoint()
+
+
+   ::Prueba()
+
+
+return Self
+
+
+   static FUNCTION TScintilla_SetColor( nClrText, nClrPane ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+
+::SendEditor( 2051, 32, nClrText )
+::SendEditor( 2052, 32, nClrPane )
+
+return nil
+
+
+   static FUNCTION TScintilla_Open( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+local cFileName
+
+cFileName := cGetFile("*.prg", "Seleccione fichero prg")
+
+if !file( cFileName )
+   return .F.
+endif
+
+::OpenFile( cFileName )
+
+::oWnd:cTitle := "Med - [" + cFileName + "]"
+
+::SetFixedFont()
+
+
+return nil
+
+static FUNCTION TScintilla_Default( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+   local cSintax := "aadd abrwposrec2 abs achoice aclone3 acopy addfontresource adel adir adrives aeval afields afill afindfile agetworkareas ains alert alias alltrim altd amididevices ansilower ansitooem ansiupper aodata appendmenu arc aread arg array asave asc asend asize asort at atail atcbrwposrec atreebmps auxgetcaps auxgetdev auxgetvol auxsetvol b2bin baradjust barinvert barpaint beginpaint bin2d bin2i bin2l bin2w bindtoport bitblt blobdirectget blobdirectimport blobdirectput blobexport blobget blobimport blobrootget blobrootlock blobrootput blobrootunlock bof break bringwindo browse btndisable btnpaint buildcommdcb calldll calldll32 callwindowproc cargv cchr2data cctrl2chr cdlg2chr cdow cfiledisk cfileext cfilemask cfilename cfilenoext cfilepath cfilesubdir cfreadline cgetdir cgetdir32 cgetexpression cgetfile cgetfile32 cgetnewalias changeproc checkmenu childwindo choosecolor choosefont chord chr classcreat clientip clienttoscreen closeclipboard closecomm closemetafile closesocket closewindow closezipfile cmdistruct cmimedec cmimeenc cmonth cnewfilename cntxkey col colorselect colorsqty cputype createcare createcdc createdc createdlgindirect createfont createhatch createmenu createoleobject createpattern createpen createpopupmenu createsolidbrush createwindow crestostr cstrword ctempfile ctl3dlook ctod ctrldrawfo curdir curdrive cursor cursorarrow cursorcatch cursorhand cursoribeam cursorns cursorsize cursorwait cursorwe cvaltochar d2bin date day dbappend dbclearfilter dbclearindex dbclearrelation dbcloseall dbclosearea dbcommit "
+
+
+
+
+
+
+
+
+
+
+
+
+
+return ""
+
+
+
+
+   static FUNCTION TScintilla_Save( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+local hMani
+local cFile
+
+if empty( ::cFileName ) .OR. !file( ::cFileName )
+   cFile := cGetFile( , "Salvar", 0, CurDrive() + ":\" + CurDir(), .T., .T.)
+   ::cFileName := cFile
+endif
+
+hMani := Fcreate( ::cFileName )
+fwrite( hMani, ::GetText() )
+fclose( hMani )
+::oWnd:cTitle := "Med - [" + ::cFileName + "]"
+
+
+return nil
+
+
+   static FUNCTION TScintilla_OpenFile( cFileName ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+local cStr
+
+cStr := MemoRead( cFileName )
+
+::SetText( cStr )
+::cFilename := cFileName
+
+if ascan( ::aMrus, cFileName ) == 0
+   aadd( ::aMrus, cFileName )
+endif
+
+AddFile( cFileName )
+
+return nil
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  static FUNCTION TScintilla_OptionSetFont( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+local oFont
+LOCAL aFont
+
+oFont := TFont():New(,,, .T.,,,,,,,,,,,,, )
+
+
+if abs(oFont:nInpHeight ) < 5
+   MsgStop( "Operación cancelada" )
+   return nil
+endif
+
+::StyleSetFont      (::GetCurrentStyle(), oFont:cFaceName )
+::StyleSetSize      (::GetCurrentStyle(), abs(oFont:nSize) )
+::StyleSetBold      (::GetCurrentStyle(), oFont:lBold  )
+::StyleSetItalic    (::GetCurrentStyle(), oFont:lItalic )
+::StyleSetUnderline (::GetCurrentStyle(), oFont:lUnderline )
+
+oFont:End()
+
+return nil
+
+
+   static FUNCTION TScintilla_GetCurrentStyle( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+local nPos := ::SendEditor(2008, 0, 0)
+
+return ::SendEditor(2010, nPos, 0)
+
+
+ static FUNCTION TScintilla_StyleSetFont( nStyle, cFontName ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+return ::SendEditor( 2056, nStyle, cFontName)
+
+
+ static FUNCTION TScintilla_StyleSetFore( nStyle, fore ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+return ::SendEditor( 2051, nStyle, fore)
+
+
+ static FUNCTION TScintilla_StyleSetBold( nStyle,  bold ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+return ::SendEditor( 2053, nStyle, bold )
+
+
+ static FUNCTION TScintilla_StyleSetItalic( nStyle,  italic ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+return ::SendEditor( 2054, nStyle, italic)
+
+
+ static FUNCTION TScintilla_StyleSetSize( nStyle,  nSizePoints ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+return ::SendEditor( 2055, nStyle, nSizePoints)
+
+
+ static FUNCTION TScintilla_StyleSetUnderline( nStyle,  underline ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+return ::SendEditor( 2059, nStyle, underline)
+
+
+
+
+ static FUNCTION TScintilla_SetFixedFont( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+::StyleSetFont      (::GetCurrentStyle(), "Courier New" )
+::StyleSetSize      (::GetCurrentStyle(), 10 )
+::StyleSetBold      (::GetCurrentStyle(), .F.  )
+::StyleSetItalic    (::GetCurrentStyle(), .F. )
+::StyleSetUnderline (::GetCurrentStyle(), .F. )
+
+
+
+return nil
+
+
+ static FUNCTION TScintilla_GetModify( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+return ::SendEditor( 2159, 0, 0) <> 0
+
+
+
+static FUNCTION TScintilla_Print( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+     LOCAL nRecno, oFont
+     local o := self
+
+     oFont := TFont():New( "Courier New", 0, -12,,,,,,,,,,,,,, )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     oReport := RptBegin({}, {}, {}, {oFont}, {}, .F.,,,, .T.,,, "Text File Printout",,, )
+
+
+
+     RptAddColumn( {}, , {{|| " "}}, 76, {} ,, .F., ,, .F., .F.,, .F., .F.,,, .F., )
+
+
+     RptEnd()
+
+
+
+
+     oReport:nTitleUpLine := 0
+     oReport:nTitleDnLine := 0
+     oReport:Margin(.15,1,1)
+     oReport:Margin(.25,4,1)
+     oReport:Margin(.25,5,1)
+
+
+
+
+
+
+
+
+
+     oReport:Activate(,, {|| o:SayMemo()},,,,,,,,,,, )
+
+     oFont:End()
+
+RETURN NIL
+
+
+
+ static FUNCTION TScintilla_SayMemo( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+     LOCAL cText, cLine
+     LOCAL nFor, nLines, nPageln
+     cText := ::GetText()
+     nLines := ::GetLineCount()
+     nPageln := 0
+
+
+
+
+
+     FOR nFor := 1 TO nLines
+
+          cLine := ::GetLine( nFor )
+          cLine := substr( cLine, 1, len( cLine ) -2 )
+          cLine := strtran( cLine, chr(9),"   " )
+          cLine := strtran(str(nFor,5)," ","0") + "  " + cLine
+
+          oReport:StartLine()
+          oReport:Say(1,cLine)
+          oReport:EndLine()
+
+
+
+
+
+
+
+
+
+
+
+
+          nPageln := nPageln + 1
+          IF nPageln = 60
+             nFor := GetTop(cText,nFor,nLines)
+             nPageln := 0
+          ENDIF
+
+     NEXT
+
+
+
+
+RETURN NIL
+
+
+
+STATIC FUNCTION GetTop(cText,nFor,nLines)
+LOCAL Test := .T.,cLine
+while Test = .T. .AND. nFor <= nLines
+   nFor := nFor + 1
+   cLine := MemoLine(cText, 76, nFor)
+   TEST := EMPTY(cLine)
+ENDDO
+nFor := nFor - 1
+SysRefresh()
+
+RETURN nFor
+
+
+function SetLastFind( c )
+cLastFind := c
+return c
+
+
+
+  static FUNCTION TScintilla_DlgFindText( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+local oDlg, oGet
+local cText := ::GetSelText()
+local oClp
+
+if empty( cText )
+
+    oClp := TClipBoard():New( Upper("TEXT"), Self )
+
+    if oClp:Open()
+       cText := oClp:GetText()
+    endif
+    oClp:End()
+
+    if empty( cText )
+       cText := if( empty(cLastFind),space(1), cLastFind )
+    endif
+
+endif
+
+if mlcount( cText ) > 1
+   cText := trim(memoline(cText,,1))
+endif
+
+
+oGet := TGet():New( 2, 2, { | u | If( PCount()==0, cText, cText:= u ) },, 100, 25,,,,,, .F.,, .F.,, .F.,, .F., .F.,, .F., .F., .F.,, .F.,,,,,,, "cText", )
+oGet:Hide()
+
+oDlg := DlgFindText( cText,oGet, {|cText| .T. }, Self )
+
+return nil
+
+
+
+
+
+
+
+static FUNCTION TScintilla_KeyChar( nKey, nFlags ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+::oWnd:cTitle := "keychar" +str(nKey)
+do case
+   case nKey == 6
+        ::DlgFindText()
+        return 1
+endcase
+
+return ::TControl:KeyChar( nKey, nFlags )
+
+
+
+static FUNCTION TScintilla_KeyDown( nKey, nFlags ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+local lControl := GetKeyState( 17 )
+local lShift := GetKeyState( 16 )
+local n
+
+::oWnd:cTitle := "keydown" +str(nKey)
+
+do case
+   case nKey == 190
+        ::DlgFindText()
+        return 1
+
+   case nKey == 38 .AND. lControl
+
+        ::cLineBuffer := ::GetLine( ::nLine() )
+
+        return 1
+
+      case nKey == 40 .AND. lControl
+
+        if !empty( ::cLineBuffer )
+           n := ::GetCurrentPos()
+           ::SendEditor(2312,0,0)
+           ::InsertText(::GetCurrentPos(),::cLineBuffer)
+           ::SetSel(n,n)
+           ::GoLeft()
+           ::GoRight()
+        endif
+
+        return 1
+
+    case nKey == 34
+
+         ::PageDown()
+         return 1
+
+    case nKey == 33
+
+         ::PageUp()
+         return 1
+
+endcase
+
+return ::TControl:KeyDown( nKey, nFlags )
+
+
+function Lfn2SfnEx( cDir )
+local cDirEx := ""
+local nDirs := len( cDir ) - len(strtran( cDir, "\", "" ))
+local nEn, n
+local cAux
+
+for n := 1 to nDirs
+    nEn := FindChar( cDir, "\", n )
+    cAux := left( cDir, nEn )
+    cDirEx := Lfn2Sfn( cAux )
+
+next
+
+cAux := cDirEx + substr( cDir, nEn+1 )
+cDirEx := cAux
+
+return cDirEx
+
+function FindChar( cStr, cChar, nOcurrence )
+local nCount := 0
+local nLen := len( cStr )
+local c, n
+
+for n := 1 to nLen
+    if substr( cStr, n, len( cChar ) ) == cChar
+       if nOcurrence == ++nCount
+          nCount := n
+          exit
+       endif
+    endif
+next
+
+return nCount
+
+
+   static FUNCTION TScintilla_SendAsEmail( lAttach ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+   local oMail
+   If( lAttach == nil, lAttach := .F., ) ;
+
+   if lAttach
+
+
+
+
+
+      oMail := TMail():New( "Envio de fichero", ::cFileName,,,,, .T., .T.,, { }, { {::cFileName,::cFileName} } )
+   else
+
+
+
+
+      oMail := TMail():New( "Envio de fichero", ::GetText(),,,,, .T., .T.,, { }, { } )
+   endif
+   oMail:Activate()
+
+
+
+return nil
+
+
+
+
+
+
+
+
+
+
+
+static FUNCTION TScintilla_SetAStyle( style, fore, back, size, face ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+If( size == nil, size := 0, ) ;
+If( face == nil, face := "", ) ;
+If( back == nil, back := 16777215, ) ;
+
+
+    ::SendEditor( 2051, style, fore )
+    ::SendEditor( 2052, style, back )
+    if size >= 1
+        ::SendEditor( 2055, style, size )
+    endif
+    if !empty( face )
+        ::SendEditor( 2056, style, face )
+    endif
+
+return nil
+
+
+static FUNCTION TScintilla_Prueba( ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+local htmlKeyWords
+
+
+
+
+
+
+
+
+local c1 := "aadd abrwposrec2 abs achoice aclone3 acopy addfontresource adel adir adrives aeval afields afill afindfile agetworkareas ains alert "    +    "alias alltrim altd amididevices ansilower ansitooem ansiupper aodata appendmenu arc aread arg array asave asc asend asize asort at "    +    "atail atcbrwposrec atreebmps auxgetcaps auxgetdev auxgetvol auxsetvol b2bin baradjust barinvert barpaint beginpaint bin2d bin2i bin2l "    +    "bin2w bindtoport bitblt blobdirectget blobdirectimport blobdirectput blobexport blobget blobimport blobrootget blobrootlock "    +    "blobrootput blobrootunlock bof break bringwindo browse btndisable btnpaint buildcommdcb calldll calldll32 callwindowproc cargv "    +    "cchr2data cctrl2chr cdlg2chr cdow cfiledisk cfileext cfilemask cfilename cfilenoext cfilepath cfilesubdir cfreadline cgetdir cgetdir32 "    +    "cgetexpression cgetfile cgetfile32 cgetnewalias changeproc checkmenu childwindo choosecolor choosefont chord chr classcreat clientip "    +    "clienttoscreen closeclipboard closecomm closemetafile closesocket closewindow closezipfile cmdistruct cmimedec cmimeenc cmonth "    +    "cnewfilename cntxkey col colorselect colorsqty cputype createcare createcdc createdc createdlgindirect createfont createhatch "
+
+
+
+
+
+
+
+
+local c2 :=    "createmenu createoleobject createpattern createpen createpopupmenu createsolidbrush createwindow crestostr cstrword ctempfile ctl3dlook "    +    "ctod ctrldrawfo curdir curdrive cursor cursorarrow cursorcatch cursorhand cursoribeam cursorns cursorsize cursorwait cursorwe "    +    "cvaltochar d2bin date day dbappend dbclearfilter dbclearindex dbclearrelation dbcloseall dbclosearea dbcommit dbcommitall dbcreate "  +    "dbcreateindex dbcretein dbdelete dbedit dbeval dbf dbfcdx dbfcdxax dbfieldinfo dbfileget dbfileput dbfilter dbfntx dbgobottom dbgoto "    +    "dbgotop dbinfo dborderinfo dbpack dbpx dbrecall dbrecordinfo dbreindex dbrelation dbrlock dbrlocklist dbrselect dbrunlock dbseek "+    "dbselectarea dbsetdefa dbsetdriver dbsetfilter dbsetindex dbsetorder dbsetrelation dbskip dbstruct dbunlock dbunlockall dbusearea "+    "dbzap ddeaccessdata ddeack ddeclientt ddecmpstri ddecommand ddeconnect ddedisconn ddefreestr ddegetcommand ddegetdata ddeinitial "+    "ddequeryst ddeterminate ddeuniniti decrypt defwindowp deldbfmdx deleted deletedc deletemeta deleteobject delinientr delinisect "+    "delresource delwndbrus descend destroycursor destroyico destroymenu destroywindow devmode devout devoutpict devpos dialogboxindirect "
+
+
+
+
+
+
+
+
+
+
+local c3 :=    "dibdraw dibfrombitmap dibheight dibpalette dibread dibwidth dibwrite dirchange directory dirmake dirremove diskchange diskname "    +    "diskspace dispbegin dispbox dispend dispout ditbackgrd dlgfindtext doserror dotsadjust dow dptolp draftmode dragaccept dragfinish "    +    "dragquerypoint drawbitmap drawfocusr drawgrayed drawgrid drawicon drawmasked drawmenuba drawmsgitem drawtext dtoc dtos duprecord "    +    "editcell ellipse empty emptyclipboard enablecomm enablemenu enablewindow encrypt enddialog enddoc endmonitor endpage endpaint "    +    "enumfontfa eof errorblock errorlevel escape escapecomm eval existwnd exitwindowsexec exp extfloodfi extracticon exttextout fattrib "    +    "fclose fcount fcreate ferase ferror ffmimedec ffmimeenc fieldblock fieldget fieldpos fieldput fieldtype fieldwblock file fillevent "    +    "fillrect findexecut findresource findtext findwindow fklabel fkmax flock floodfill flushcomm fmimedec fmimeenc foldpaint fopen found "    +    "fread freadstr freelib32 freelibrary frename fseek fsize fwbitmap fwbrushes fwrite gellipse getactive getactivewindow getapplykey "    +    "getasynckey getbkcolor getcapture getcaretpos getclassname getclientrect getclpdata getcommerror getcoors getcpu getctrlid getcurdir "    +    "getcursorpos getdatas getdc getdesktopwindow getdevicecaps getdialogbaseunits getdlgbase getdlgitem getdosetkey getdrawite getdrawmenu "    +    "getdropinfo getenv getfirstinzip getfocus getfontinfo getframeproc getfreefil getfreespace getftime getgridsize gethelpfile gethelptopic "
+
+
+
+
+
+
+
+
+local c4 :=    "gethostbyname gethostname gethwnd32 getinstance getip getkeystat getkeytoggle getlocal getmapmode getmdichlp getmeaitem getmenustate "    +    "getmetabit getmetafile getmitemid getmodulefilename getnextinzip getnumtask getordnames getparam getparent getpeername getpixel "    +    "getport getpostvalidate getprevalidate getprinter getproc32 getprocaddress getprofint getprofstr getprop getpvpprofstring getquery "    +    "getreader getresources getscrollpos getservbyname getstockobject getsubmenu getsyscolor getsysdir getsysmetrics getsystemmenu gettasks "    +    "gettextalign gettextcolor gettextheight gettextwidth gettickcount getversion getwindir getwindowword getwinflags getwintxtlength "    +    "getwndapp getwndframe getwndrect getwndtask gfnterase gfntload gfntset gframe ggetpixel gline globaladdatom globalalloc globalcompact "    +    "globaldata globalfree globalgeta globallock globalrealloc globalsize gmode gpolygon gputpixel grect gsetclip gsetexcl gsetpal gwriteat "    +    "hardcr hasresources header helpindex helppopup helpsearch helptopic hextodec hidecaret hilimenuitem htons i2bin if iif indexext indexkey "    +    "indexord inet_address inkey inporbyte insertmenu int interruptunregister invalidaterect invertrect isalpha isansi isansilower isansiupper "
+
+
+
+
+
+
+
+
+
+local c5 :=    "iscdrom ischild iscolor isdefbutton isdigit isdiskette isiconic islower ismenu isoem isoverwnd isprinter isupper iswin95 iswindowvisible "    +    "iswinnt iszip iszoomed joygetdevcaps joygetnumdevs joygetthreshold joysetcapture joysetthre keyfast keytoggle killtimer l2bin land "    +    "largefonts lastmenu lastrec lbxdrawitem lbxgetitem lbxgetselitems lbxmeasure lchdir lclose lcreat left len lfn2sfn lgettextline lineto "    +    "lisdir listen llfnmkdir llfnrmdir lmdiiexist lmidioutopen lmkdir loadaccelerators loadbitmap loadcursor loadicon loadlib32 loadlibrary "    +    "loadmenu loadresource loadstring loadvalue localshrink log logevent logfile logstatics lopen lower lptodp lrmdir lsaveobject ltrim "    +    "lwrunning lxor lzcopyfile makewin max maxcol maxrow mcigeterrorstring mcisendcommand mcisendstring mcol mdblclk mdictrladjust mdirecedit         "    +    "measureitem memoedit memoline memoread memory memosetsuper memotran memowrit memstat memvarblock menubegin menudrawitem menuend                  "    +    "menumeasureitem menumodal messagebox meterpaint mgetcreate mgetline mgetreplace mhide midinoteon min mlcount mlctopos mleftdown mlpos            "    +    "mod modifymenu month moreheap moveget moveto movewindow mpostolc mpresent mreststate mrightdown mrow msavestate msetbounds msetclip              "    +    "msetcursor msetpos msgabout msgalert msgbeep msgdate msgget msginfo msglist msglogo msgmeter msgnoyes msgpaint msgretrycancel msgrun             "
+
+
+
+
+
+
+
+local c6 :=    "msgsound msgstop msgtoolbar msgwait msgyesno mshow mstate nand nargc nbmpheight ncolorton ndbl2flt nddesharesetinfo ndlgbox nextdlgtabitem       "    +    "nextmem nfilecrc ngetbackrgb ngetforergb nhex nicons nmciopen nmciplay nmciwindow nmididevices nmsgbox nnot nor nrandom nrgb nrgbblue            "    +    "nrgbgreen nrgbred nseriala nserialhd nstrcrc nstrhash ntcwrow ntxpos ntxtlines nwindows nwndchrheight nwrow nwrows nxor oclone oemtoansi         "    +    "openclipboard opencomm oread osend outportbyte outpudebugstring paint3d palbmpdraw palbmpload palbmpread palbtnpain paramcount pbmpcolors        "    +    "pbmpheigh pbmpwidth peekbyte peekmessage peekword pie playmetafile pokebyte pokeword polypolygon postmessage postquitmessage printeresc          "    +    "printerini printersetup prnbinsource prngetdriver prngetname prngetorientation prngetport prngetsize prnlandscape prnoffset prnportrait          "    +    "prnsetcopies prnsetpage prnsetsize raconst radial raenumconnections raenumentries ragetconst rageterror rahangup ras_dialentry readbitmap        "    +    "readcomm readeven readvar realizepalette rectangle rectdotted recv regclosekey regcreatekey regdeletekey regenumkey registerclass                "
+
+
+
+
+
+
+
+local c7 :=    "regopenkey regqueryvalue regsetvalue releasecapture releasedc removefont removemenu removeprop report resetdc resourcefree restoredc             "    +    "restproc rlnew rpreview rptaddcolumn rptaddgroup rptbegin rptend savedc say3d scan screentoclient scrollwindow selectobject selectpalette        "    +    "sendbinary sendmessage serverip set3dlook setactivewindow setbkcolor setbkmode setblackpen setbrushorg setcapture setcaretpos                    "    +    "setclassword setclipboarddata setclpdata setcommstate setcurdrive setcursor setdate setdeskwallpaper setdropinfo setfocus setftime               "    +    "setgridsize sethandlecount setidleaction setmapmode setmenu setminmax setmultiple setparent setpixel setpolyfillmode setprop setresources        "    +    "setsockopt settextalign settextcolor settextjustification settime settimer setvieworg setviewportext setwhitepen setwin95look setwindowtext      "    +    "setwnddefault shellabout shellexecute showcaret showcursor showwindow sndplayres sndplaysound socket socketselect spoolfile startdoc             "    +    "startmonitor startpage startplayback startrecord stopplayback stoprecord strbyte strcapfirst strchar strcpy strtoken symname symstat             "
+
+
+
+
+
+
+local c8 :=    "symtblat symtbllen sysrefresh systime syswait tabctrladd tabspaint tcbrwscrol tcdrawcell terminateapp textout thisstruct time timercount         "    +    "timerevent trackpopupmenu treebegin treeend tvinsertitem uchartoval uloadstruct unescape unzipfile updatewindow uvalblank virtualrdd             "    +    "waitrun wbrwline wbrwpane wbrwscroll wbrwselbox windowfrompoint winexec winhelp winuser wndadjbottom wndadjcliente wndadjleft wndadjright        "    +    "wndadjtop wndbitmap wndbottom wndbox wndboxin wndboxraised wndbrush wndcenter wndcopy wndhasscrolls wndheight wndhlineraised wndhraised          "    +    "wndinset wndleft wndmain wndprint wndraised wndsetsize wndtop wndvlineraised wndvraised wndwidth wnetaddconnection wnetbrowse wnetconnectdialog  "    +    "wnetdisconnectdialog wneterror wnetgeterrortext wnetgetuser worksheet writecomm writepprostring wrtieprofstring wsaasyncselect wsacleanup        "    +    "wsagetlasterror wsastartup wsay wsayrect wscroll xpadc xpadl xpadr zipblock zipfile zipmsg zipname zipsize ziptype method class from data classdata                             "
+
+
+local jsKeyWords :=     "if else endif do while enddo case endcase otherwise"
+
+
+
+local red, offWhite, darkGreen, darkBlue, lightBlue
+local bstyle  := 71
+local bastyle := 81
+local n
+local jstyle  := 41
+local jastyle := 56
+local black   := 0
+local white   := 16777215
+
+htmlKeyWords := c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8
+
+
+
+
+
+    ::SendEditor(4005, 0, htmlKeyWords)
+    ::SendEditor(4005, 1, jsKeyWords)
+
+    ::SetAStyle(7, 255)
+
+
+
+    ::SetAStyle( 2, 32768)
+    ::SetAStyle( 14, 16711680)
+    ::SetAStyle( 12, 8421376)
+    ::SetAStyle( 13, ( 92 + ( 92 * 256 ) + ( 92 * 65536 ) ) )
+    ::SendEditor( 2052, 13, ( 255 + ( 255 * 256 ) + ( 192 * 65536 ) ))
+    ::SendEditor( 2056, 13, "Courier New")
+
+        ::StyleSetFont      (7, "Courier New" )
+        ::StyleSetSize      (7, 10 )
+        ::StyleSetBold      (7, .T.  )
+        ::StyleSetItalic    (7, .F. )
+        ::StyleSetUnderline (7, .F. )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+return nil
+
+
+  static FUNCTION TScintilla_Notify( nIdCtrl, nPtrNMHDR ) ; local Self AS CLASS TScintilla := QSelf() AS CLASS TScintilla
+
+
+   local nCode := GetNMHDRCode( nPtrNMHDR )
+   local line_number, position
+
+   if nCode == 2010
+      position :=  GetPosHdr( nPtrNMHDR )
+      line_number := ::SendEditor(2166, position, 0)
+      ::MarkerAdd( line_number, 1)
+
+   endif
+
+return nil
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma BEGINDUMP
+#include "windows.h"
+#include "hbapi.h"
+#include "commctrl.h"
+#include "include\Scintilla.h"
+
+
+int GetHdr( LPARAM lParam )
+{
+   struct SCNotification *pMsg =
+       (struct SCNotification*)lParam;
+    return (pMsg->position);
+}
+
+
+
+HB_FUNC( GETPOSHDR )
+{
+   hb_retni( GetHdr( hb_parnl( 1 ) ));
+}
+
+
+
+BOOL SearchForward( HWND hWnd, LPSTR szText, int nSearchFlags ) //@parm text to search
+{
+   long lPos;
+   TEXTTOFIND tf;
+   if (szText == NULL)
+      return FALSE;
+   lPos = SendMessage(hWnd, SCI_GETCURRENTPOS, 0, 0);
+   tf.lpstrText = szText;
+   tf.chrg.cpMin = lPos+1;
+   tf.chrg.cpMax = SendMessage( hWnd, SCI_GETLENGTH, 0, 0);
+   lPos = SendMessage( hWnd, SCI_FINDTEXT, (int) nSearchFlags, (long)&tf);
+   if (lPos >= 0)
+   {
+      SetFocus( hWnd );
+      SendMessage( hWnd, SCI_GOTOPOS, lPos, 0);
+      SendMessage( hWnd, SCI_SETSEL, tf.chrgText.cpMin, tf.chrgText.cpMax);
+      SendMessage( hWnd, SCI_FINDTEXT, (int) nSearchFlags, (long)&tf);
+      return TRUE;
+   }
+   return FALSE;
+}
+/////////////////////////////////////
+// @mfunc Search backward for a given string and select it if found. You may use regular expressions on the text.
+// @rvalue BOOL | TRUE if text is ffound else FALSE
+//
+BOOL SearchBackward( HWND hWnd, LPSTR szText, int nSearchFlags ) //@parm text to search
+{
+   int lPos;
+   int lMinSel;
+   TEXTTOFIND tf;
+   if (szText == NULL)
+      return FALSE;
+   lPos = SendMessage(hWnd, SCI_GETCURRENTPOS, 0, 0);
+   lMinSel = SendMessage(hWnd,SCI_GETSELECTIONSTART, 0, 0);
+   tf.lpstrText = szText;
+   if (lMinSel >= 0)
+      tf.chrg.cpMin = lMinSel-1;
+   else
+      tf.chrg.cpMin = lPos-1;
+   tf.chrg.cpMax = 0;
+   lPos = SendMessage( hWnd, SCI_FINDTEXT, (int) nSearchFlags, (long)&tf);
+   if (lPos >= 0)
+   {
+      SetFocus(hWnd);
+      SendMessage( hWnd, SCI_GOTOPOS, lPos, 0);
+      SendMessage( hWnd, SCI_SETSEL, tf.chrgText.cpMin, tf.chrgText.cpMax);
+      SendMessage( hWnd, SCI_FINDTEXT, (int) nSearchFlags, (long)&tf);
+      return TRUE;
+   }
+   return FALSE;
+}
+
+
+HB_FUNC( SC_ADDTEXT )
+{
+    SendMessage( (HWND) hb_parnl( 1 ) , SCI_ADDTEXT, hb_parclen( 2 ), (LPARAM) hb_parc( 2 )) ;
+    hb_ret();
+}
+
+HB_FUNC( SCI_OPENFILE )
+{
+   HWND hWnd = ( HWND ) hb_parnl( 1 );
+   char* fileName = hb_parc( 2 );
+
+        char data[131072];
+   FILE *fp;
+   int lenFile;
+
+   SendMessage( hWnd, SCI_CLEARALL,0,0);
+        SendMessage( hWnd, EM_EMPTYUNDOBUFFER, 0, 0);
+        SendMessage( hWnd, SCI_SETSAVEPOINT, 0, 0);
+        SendMessage( hWnd, SCI_CANCEL, 0, 0);
+        SendMessage( hWnd, SCI_SETUNDOCOLLECTION, 0, 0);
+
+        fp = fopen(fileName, "rb");
+        if (fp) {
+                lenFile = fread(data, 1, sizeof(data), fp);
+                while (lenFile > 0) {
+                        SendMessage( hWnd, SCI_ADDTEXT, lenFile, (LPARAM) data );
+                        lenFile = fread(data, 1, sizeof(data), fp);
+                }
+                fclose(fp);
+        } else {
+                MessageBox(0, "No puedo abrir el fichero", "Atención", MB_OK);
+        }
+        SendMessage( hWnd, SCI_SETUNDOCOLLECTION, 1, 0);
+        SetFocus( hWnd );
+        SendMessage( hWnd, EM_EMPTYUNDOBUFFER, 0, 0);
+        SendMessage( hWnd, SCI_SETSAVEPOINT, 0, 0 );
+        SendMessage( hWnd, SCI_GOTOPOS, 0, 0);
+   hb_ret();
+}
+
+HB_FUNC( SC_GETTEXT )
+{
+   HWND hWnd = ( HWND ) hb_parnl( 1 );
+   int wLen;
+   BYTE * pbyBuffer;
+   wLen = SendMessage( hWnd, SCI_GETLENGTH, 0, 0 );
+   pbyBuffer = ( char * ) hb_xgrab( wLen+1 );
+
+   SendMessage( hWnd, SCI_GETTEXT, wLen+1, (LPARAM) pbyBuffer );
+
+   hb_retclen( ( char * ) pbyBuffer, wLen+1 );
+   hb_xfree( pbyBuffer );
+}
+
+
+HB_FUNC( SC_GETLINE )
+{
+   HWND hWnd = ( HWND ) hb_parnl( 1 );
+   int nLine = hb_parni( 2 )-1;
+   int wLen;
+   BYTE * pbyBuffer;
+   wLen = SendMessage( hWnd, SCI_LINELENGTH, nLine, 0 );
+   if( wLen )
+   {
+      pbyBuffer = ( char * ) hb_xgrab( wLen+1 );
+      SendMessage( hWnd, SCI_GETLINE, nLine, (LPARAM) pbyBuffer );
+      hb_retclen( ( char * ) pbyBuffer, wLen );
+      hb_xfree( pbyBuffer );
+   }
+   else
+      hb_retc("");
+
+}
+
+HB_FUNC( SC_ISREADONLY )
+{
+    hb_retl( SendMessage( (HWND) hb_parnl( 1 ), SCI_GETREADONLY, 0, 0 ) );
+}
+/*
+HB_FUNC( SC_GETTEXTRANGE )
+{
+
+
+}
+#define SCFIND_WHOLEWORD 2
+#define SCFIND_MATCHCASE 4
+#define SCFIND_WORDSTART 0x00100000
+#define SCFIND_REGEXP 0x00200000
+#define SCFIND_POSIX 0x00400000
+*/
+
+
+HB_FUNC( SEARCHFORWARD )
+{
+   hb_retl(SearchForward( (HWND) hb_parnl( 1 ), hb_parc( 2 ), hb_parni( 3 ) ));
+}
+HB_FUNC( SEARCHBACKWARD )
+{
+    hb_retl(SearchBackward((HWND) hb_parnl( 1 ), hb_parc( 2 ), hb_parni( 3 ) ));
+}
+
+
+HB_FUNC ( C5GETSELTEXT )
+{
+   HWND hWnd = (HWND) hb_parnl( 1 );
+   int wSize = hb_parni( 2 );
+   LPSTR cBuff = ( char * ) hb_xgrab( wSize + 1 );
+
+   SendMessage( hWnd, SCI_GETSELTEXT, (WPARAM)0, (LPARAM)cBuff );
+
+   hb_retclen( cBuff, wSize );
+   hb_xfree( cBuff );
+}
+
+
+
+
+#pragma ENDDUMP

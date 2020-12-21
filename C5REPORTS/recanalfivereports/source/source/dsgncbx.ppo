@@ -1,0 +1,509 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 6 "source\dsgncbx.prg"
+_HB_CLASS TDsgnCbx ; function TDsgnCbx ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnCbx" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnCbx() ) ) ;
+
+; _HB_MEMBER { lFlat } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFlat"}, .F. )
+; _HB_MEMBER { lRightVScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRightVScroll"}, .F. )
+; _HB_MEMBER { lDownHScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lDownHScroll"}, .F. )
+; _HB_MEMBER { lVScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lVScroll"}, .F. )
+; _HB_MEMBER { lHScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lHScroll"}, .F. )
+; _HB_MEMBER { nAlign } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nAlign"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+; _HB_MEMBER { lModalFrame } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lModalFrame"}, .F. )
+; _HB_MEMBER { nTipo } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nTipo"}, .F. )
+; _HB_MEMBER { aList } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aList"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd) AS CLASS TDsgnCbx; oClass:AddMethod( "New", @TDsgnCbx_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnCbx_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnCbx_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ShapeOver( nRow, nCol); oClass:AddMethod( "ShapeOver", @TDsgnCbx_ShapeOver(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IntersectRect( aRect); oClass:AddMethod( "IntersectRect", @TDsgnCbx_IntersectRect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PaintContour( hDC); oClass:AddMethod( "PaintContour", @TDsgnCbx_PaintContour(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Inspect( cDataName); oClass:AddMethod( "Inspect", @TDsgnCbx_Inspect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GenPrg( lDialog, cFrom, cHeader); oClass:AddMethod( "GenPrg", @TDsgnCbx_GenPrg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProps( oList); oClass:AddMethod( "SetProps", @TDsgnCbx_SetProps(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnCbx ;
+
+
+      static FUNCTION TDsgnCbx_New( nTop, nLeft, nBottom, nRight, oWnd ) ; local Self AS CLASS TDsgnCbx := QSelf() AS CLASS TDsgnCbx
+
+
+   if nTop <> nil .AND. ( nBottom-nTop < 10 .OR. nRight-nLeft < 10 )
+      nBottom := nTop + 21
+      nRight  := nLeft + 82
+   endif
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::lFlat         := .F.
+   ::nClrText      := 0
+   ::nClrBorder    := 0
+   ::nClrPane      := 16777215
+   ::nAlign        := nOr(0x00000020,0x00000004)
+   ::lActive       := .T.
+   ::lRightVScroll := .T.
+   ::lDownHScroll  := .T.
+   ::lVScroll      := .T.
+   ::lHScroll      := .F.
+   ::lBorder       := .T.
+   ::lModalFrame   := .F.
+   ::nMinHeight    := 21
+   ::cCaption      := "ComboBox"
+   ::bContextMenu  := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+   ::aList         := {""}
+  ::cObjName         := ::GetObjName()
+
+
+
+
+
+
+  ::aPropertiesPPC := { "nTipo"      , "nID"            , "nTop"           , "nLeft"          , "nWidth"         , "nHeight"        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ::aProperties :=  { "aDotsActives"   , "aList"          , "aRect"          , "cCaption"       , "lActive"        , "lBorder"        , "lCanSize" , "lCanMove"       , "lDownHScroll"   , "lEditable"      , "lHScroll"       , "lRightVScroll"  , "lVScroll"       , "lVisible"       , "nClrBorder"     , "nClrPane"       , "nClrText"       , "nOption"        , "nTipo"          , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      }
+
+
+   ::nTipo         := "DropDown"
+
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+
+return self
+
+
+  static FUNCTION TDsgnCbx_PaintContour( hDC ) ; local Self AS CLASS TDsgnCbx := QSelf() AS CLASS TDsgnCbx
+
+local hPen := ExtCreatePen( 2, 0 )
+local hOldPen := SelectObject( hDC, hPen )
+
+Moveto( hDC, ::nLeft,  ::nTop )
+Lineto( hDC, ::nRight, ::nTop )
+Lineto( hDC, ::nRight, ::nTop + 21 )
+Lineto( hDC, ::nLeft,  ::nTop + 21 )
+Lineto( hDC, ::nLeft,  ::nTop )
+
+SelectObject( hDC, hOldPen )
+DeleteObject( hPen )
+
+
+return nil
+
+
+  static FUNCTION TDsgnCbx_Paint( hDC ) ; local Self AS CLASS TDsgnCbx := QSelf() AS CLASS TDsgnCbx
+
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local rc2
+local rcText
+local iMode
+local color
+local nTop, nLeft, nBottom, nRight
+local hTheme, nState
+local hBmp
+
+local hFont, hOldFont, oFontPPC
+
+if ::oWnd:lPocketPc()
+
+   rc := {::aRect[1],::aRect[2],::aRect[1]+22,::aRect[4]}
+
+   FillSolidRect( hDC, rc, ::nClrPane, 0 )
+
+   hBmp     := LoadBitmap( GetResources(), "arrow" )
+   DrawMasked( hDC, hBmp, rc[1]+8, rc[4]-13 )
+   DeleteObject( hBmp )
+
+
+
+
+
+   SetBkMode( hDC, 1 )
+   color := SetTextColor( hDC, ::nClrText )
+
+   rc[2] += 3
+   rc[4] -= 13
+   DrawText( hDC, ::cCaption, rc, ::nAlign )
+
+   if ::nTipo == "Simple"
+      rc := {::aRect[1]+22,::aRect[2],::aRect[3],::aRect[4]}
+      FillSolidRect( hDC, rc, ::nClrPane, 0 )
+   endif
+
+
+
+
+
+   SetTextColor(hDC, color)
+
+
+
+
+else
+
+
+   if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "EDIT")
+      if hTheme <> nil
+
+         nState := if(::lActive, 1, 4)
+         rc := {::aRect[1],::aRect[2],::aRect[1]+22,::aRect[4]}
+         C5_DrawThemeBackground( hTheme, hDC, 1, nState , rc )
+         if ::nTipo == "Simple"
+            rc := {::aRect[1]+22,::aRect[2],::aRect[3],::aRect[4]}
+            C5_DrawThemeBackground( hTheme, hDC, 1, nState , rc )
+         endif
+         rc := {::aRect[1],::aRect[2],::aRect[1]+22,::aRect[4]}
+         rc[2] += 3
+         C5_DrawThemeText( hTheme, hDC, 1, nState, ::cCaption, nOr( 0x00000004, 0x00000020 ), nil, rc )
+         C5_CloseThemeData()
+
+
+      endif
+
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "COMBOBOX")
+
+      if ::nTipo <> "Simple"
+         if hTheme <> nil
+            rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+            nState := if(::lActive, 1, 4)
+            rc[1] += 2
+            rc[3] := rc[1] +18
+            rc[4] -= 2
+            rc[2] := rc[4]-15
+            C5_DrawThemeBackground( hTheme, hDC, 1, nState , rc )
+            C5_CloseThemeData()
+
+         endif
+      endif
+
+   else
+
+
+
+
+       iMode := SetBkMode(hDC,1)
+       if ::nTipo <> "Simple"
+          rc[3] := rc[1] + 21
+       endif
+
+       FillSolidRect(hDC, rc, if(::lActive,16777215,GetSysColor(15)) )
+
+       rcText := {rc[1],rc[2],rc[3],rc[4]}
+
+       if !::lActive
+          rc[1]++; rc[2]++; rc[3]++; rc[4]++
+          color := SetTextColor( hDC,  ( 255 + ( 255 * 256 ) + ( 255 * 65536 ) ) )
+          DrawText( hDC, ::cCaption, rcText, nOr(0x00000000, 0x00000000, 0x00000010 ) )
+          rc[1]--; rc[2]--; rc[3]--; rc[4]--
+          SetTextColor( hDC, color )
+          color := SetTextColor( hDC, GetSysColor( 17 ) )
+       else
+          rcText[1]+=3; rcText[2]+=3
+          color := SetTextColor( hDC, ::nClrText )
+       endif
+
+       DrawText( hDC, ::cCaption, rcText, nOr(0x00000000, 0x00000000, 0x00000010 ))
+       SetBkMode(hDC,iMode)
+
+       if ::lBorder
+
+               rc := {::aRect[1],::aRect[2],::aRect[1]+ 21,::aRect[4]}
+
+               if ::lModalFrame
+                  rc[1]++; rc[2]++; rc[3]--; rc[4]--
+               endif
+
+               DrawEdge( hDC, rc, 0x0002, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+               rc[1]++; rc[2]++; rc[3]--; rc[4]--
+               DrawEdge( hDC, rc, 0x0008, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+               rc[1]--; rc[2]--; rc[3]++; rc[4]++
+
+               if ::nTipo == "Simple"
+                  rc := {::aRect[1]+21,::aRect[2],::aRect[3],::aRect[4]}
+
+                  DrawEdge( hDC, rc, 0x0002, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+                  rc[1]++; rc[2]++; rc[3]--; rc[4]--
+                  DrawEdge( hDC, rc, 0x0008, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+                  rc[1]--; rc[2]--; rc[3]++; rc[4]++
+
+               endif
+
+               if ::lModalFrame
+                  rc := {::aRect[1],::aRect[2],::aRect[1]+ 21,::aRect[4]}
+                  rc[1]-=2; rc[2]-=2; rc[3]+=2; rc[4]+=2
+               endif
+       endif
+       nTop    := rc[1]+2
+       nLeft   := rc[4]-19
+       nBottom := rc[3]-2
+       nRight  := rc[4]-2
+
+       if ::nTipo <> "Simple"
+
+
+
+          DrawFrameControl(hDC, { nTop  , nLeft   , nBottom     , nRight        }, 3, 0x0001)
+       endif
+   endif
+
+endif
+
+if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+   ::DotsSelect( hDC )
+endif
+
+return nil
+
+
+      static FUNCTION TDsgnCbx_ShapeOver( nRow, nCol ) ; local Self AS CLASS TDsgnCbx := QSelf() AS CLASS TDsgnCbx
+
+local rc
+
+ if ::nTipo == "Simple"
+    rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+ else
+    rc := {::aRect[1],::aRect[2],::aRect[1]+21,::aRect[4]}
+ endif
+
+ if PtInRect( nRow, nCol, rc )
+    return self
+ endif
+
+ return nil
+
+
+
+
+
+      static FUNCTION TDsgnCbx_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnCbx := QSelf() AS CLASS TDsgnCbx
+
+local oMenu
+local o := self
+
+    MenuAddItem("Flat"         ,,o:lFlat         ,,{|oMenuItem|::lFlat          := !::lFlat         ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lActive"      ,,o:lActive       ,,{|oMenuItem|::lActive        := !::lActive       ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem( "Tipo",, .F.,,,,,,,,, .F.,,, .F. )
+    MenuBegin( .F.,,, .F., .F. )
+       MenuAddItem("Simple"      ,,o:nTipo == "Simple"      ,,{|oMenuItem|::nTipo         := "Simple"         ,::Refresh()},,,,,,,.F.,,,.F. )
+       MenuAddItem("DropDown"    ,,o:nTipo == "DropDown"    ,,{|oMenuItem|::nTipo         := "DropDown"       ,::Refresh()},,,,,,,.F.,,,.F. )
+       MenuAddItem("DropDownList",,o:nTipo == "DropDownList",,{|oMenuItem|::nTipo         := "DropDownList"   ,::Refresh()},,,,,,,.F.,,,.F. )
+
+    MenuEnd()
+
+   MenuAddItem()
+
+
+return nil
+
+
+
+  static FUNCTION TDsgnCbx_IntersectRect( aRect ) ; local Self AS CLASS TDsgnCbx := QSelf() AS CLASS TDsgnCbx
+
+local lIntersect := .F.
+local rc
+
+if ::nTipo == "Simple"
+   rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+else
+   rc := {::aRect[1],::aRect[2],::aRect[1]+21,::aRect[4]}
+endif
+
+if IntersectRect( aRect, rc )
+   lIntersect := .T.
+endif
+
+return lInterSect
+
+
+  static FUNCTION TDsgnCbx_Inspect( cDataName ) ; local Self AS CLASS TDsgnCbx := QSelf() AS CLASS TDsgnCbx
+
+
+local o := self
+
+   do case
+      case cDataName == "nTipo"
+           return { "DropDown","DropDownList","Simple" }
+   endcase
+
+return nil
+
+
+
+  static FUNCTION TDsgnCbx_GenPrg( lDialog, cFrom, cHeader, cFunciones ) ; local Self AS CLASS TDsgnCbx := QSelf() AS CLASS TDsgnCbx
+
+local cRet := ""
+local cObject
+local cVar
+local cAItems
+
+
+If( lDialog == nil, lDialog := .T., ) ;
+If( cFrom == nil, cFrom := "oWnd", ) ;
+If( cHeader == nil, cHeader := "", ) ;
+If( cFunciones == nil, cFunciones := "", ) ;
+
+        cObject := ::cObjName
+        cVar    := "c" + substr( cObject, 2 )
+        caItems := "a" + substr( cObject, 2 )
+        cHeader += "local " + cObject + Chr(13)+Chr(10)
+        cHeader += "local " + cVar + ' := "' + alltrim( ::cCaption ) + '"' + Chr(13)+Chr(10)
+        cHeader += "local " + caItems + ' := {"' + alltrim( ::cCaption )  + '"}' + Chr(13)+Chr(10)
+
+
+
+
+        cRet += "        @ " + ::cStrTop(lDialog) + ", " + ::cStrLeft(lDialog) + " COMBOBOX " + cObject + " VAR " + cVar + " ITEMS " + caItems + " ;" + Chr(13)+Chr(10) + "                 SIZE " + ::cStrWidth(lDialog) + ", " + ::cStrHeight(lDialog) + " PIXEL ; " + Chr(13)+Chr(10) + "                 OF " + cFrom  + Chr(13)+Chr(10)
+
+return cRet
+
+
+   static FUNCTION TDsgnCbx_SetProps( oList ) ; local Self AS CLASS TDsgnCbx := QSelf() AS CLASS TDsgnCbx
+
+local nGroup
+local o := self
+
+
+
+
+
+
+
+
+
+
+
+
+
+nGroup := oList:AddGroup( "Appearence" )
+
+oList:AddItem( "cObjName","Name", ,nGroup )
+oList:AddItem( "lActive","Active","L" ,nGroup )
+oList:AddItem( "cCaption","Text",,nGroup )
+oList:AddItem( "lCanMove","Can move", "L",nGroup )
+oList:AddItem( "lCanSize","Can size", "L",nGroup )
+oList:AddItem( "aList","Items","B",nGroup,,,{|| InspectArray(o, "aList") })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+nGroup := oList:AddGroup(  "Position" )
+
+oList:AddItem( "nTop","Top", ,nGroup )
+oList:AddItem( "nLeft","Left", ,nGroup )
+oList:AddItem( "nWidth","Width", ,nGroup )
+oList:AddItem( "nHeight","Height", ,nGroup )
+
+
+
+
+
+return 0
+
+
+
+
+  function InspectArray( o, aName )
+
+local c := ""
+local nLines
+local n
+local aList := OSend( o, aName )
+
+for n := 1 to len( aList )
+    c += aList[n] + Chr(13)+Chr(10)
+next
+
+MemoEdit2( @c, "Escriba un elemento por línea")
+
+nLines := mlcount(c)
+if nLines == 0
+   return {}
+endif
+
+aList := {}
+
+for n := 1 to nLines
+    aadd( aList, rtrim(memoline(c,,n)))
+next
+
+oSend( o, "_" + aName,  aList )
+
+return aList

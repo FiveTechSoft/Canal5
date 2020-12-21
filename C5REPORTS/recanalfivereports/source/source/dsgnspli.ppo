@@ -1,0 +1,281 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 6 "source\dsgnspli.prg"
+_HB_CLASS TDsgnSplitter ; function TDsgnSplitter ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnSplitter" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnSplitter() ) ) ;
+
+; _HB_MEMBER { aProperties } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aProperties"}, .F. )
+
+
+; _HB_MEMBER { lFlat } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFlat"}, .F. )
+; _HB_MEMBER { lVertical } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lVertical"}, .F. )
+
+; _HB_MEMBER { nAlign } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nAlign"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+; _HB_MEMBER { lModalFrame } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lModalFrame"}, .F. )
+; _HB_MEMBER { cStyle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cStyle"}, .F. )
+; _HB_MEMBER { cClassName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cClassName"}, .F. )
+
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd) AS CLASS TDsgnSplitter; oClass:AddMethod( "New", @TDsgnSplitter_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnSplitter_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnSplitter_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMinWidth( nVal); _HB_MEMBER _nMinWidth( nVal); oClass:AddMethod( "nMinWidth", @TDsgnSplitter_nMinWidth(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMinWidth", @TDsgnSplitter_nMinWidth(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMinHeight( nVal); _HB_MEMBER _nMinHeight( nVal); oClass:AddMethod( "nMinHeight", @TDsgnSplitter_nMinHeight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMinHeight", @TDsgnSplitter_nMinHeight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnSplitter ;
+
+
+      static FUNCTION TDsgnSplitter_New( nTop, nLeft, nBottom, nRight, oWnd ) ; local Self AS CLASS TDsgnSplitter := QSelf() AS CLASS TDsgnSplitter
+
+
+   if nTop <> nil .AND. (nBottom-nTop < 10 .OR. nRight-nLeft < 10)
+      nBottom := nTop + 65
+      nRight  := nLeft + 72
+   endif
+
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::lFlat         := .F.
+   ::cClassName    := ""
+   ::nClrText      := 0
+   ::nClrBorder    := 0
+   ::nClrPane      := 12632256
+   ::lActive       := .T.
+   ::lRightVScroll := .T.
+   ::lDownHScroll  := .T.
+   ::lVScroll      := .F.
+   ::lHScroll      := .F.
+   ::lBorder       := .T.
+   ::lModalFrame   := .F.
+   ::cStyle        := "WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP"
+  ::cObjName         := ::GetObjName()
+
+   ::cCaption     := ""
+   ::bContextMenu := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ::aPropertiesPPC := { "cCaption"      , "cClassName"    , "cStyle"        , "lBorder"       , "lHScroll"      , "lVScroll"      , "nID"           , "nTop"          , "nLeft"         , "nWidth"        , "nHeight"       , "nClrPane"      , "nClrText"      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ::aProperties := { "cCaption"       , "cClassName"     , "cStyle"         , "aDotsActives"   , "aRect"          , "lActive"        , "lBorder"        , "lCanSize"       , "lCanMove"       , "lDownHScroll"   , "lEditable"      , "lFlat"          , "lHScroll"       , "lModalFrame"    , "lRightVScroll"  , "lVScroll"       , "lVisible"       , "nClrBorder"     , "nClrPane"       , "nClrText"       , "nOption"        , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      }
+
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+return self
+
+
+
+
+  static FUNCTION TDsgnSplitter_Paint( hDC ) ; local Self AS CLASS TDsgnSplitter := QSelf() AS CLASS TDsgnSplitter
+
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local rc2
+local rcText
+local iMode
+local color
+local hTheme, nState
+
+
+
+if ::oWnd:lPocketPc()
+
+   FillSolidRect( hDC, rc, ::nClrPane, if(::lBorder,0,nil) )
+
+
+
+
+
+   SetBkMode( hDC, 1 )
+   color := SetTextColor( hDC, ::nClrText )
+
+   rc[2] += 3
+   DrawText( hDC, ::cCaption, rc, ::nAlign )
+
+
+   SetTextColor(hDC, color)
+
+
+else
+
+
+   if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "LISTVIEW")
+
+      if hTheme <> nil
+
+         nState := if(::lActive, 1, 4)
+
+         C5_DrawThemeBackground( hTheme, hDC, 1, nState , rc )
+
+         if ::lBorder
+            rc[1]++; rc[2]++; rc[3]--; rc[4]--
+         endif
+
+         FillSolidRect(hDC, rc, ::nClrPane )
+
+         rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+         rc[2] += 3
+         C5_DrawThemeText( hTheme, hDC, 1, nState, ::cCaption, nOr( 0x00000020 ), nil, rc )
+         C5_CloseThemeData()
+
+
+      endif
+
+   else
+
+
+
+
+
+       iMode := SetBkMode(hDC,1)
+       FillSolidRect(hDC, rc, ::nClrPane )
+
+       rcText := {rc[1],rc[2],rc[3],rc[4]}
+
+       if !::lActive
+          rc[1]++; rc[2]++; rc[3]++; rc[4]++
+
+          color := SetTextColor( hDC,  ( 255 + ( 255 * 256 ) + ( 255 * 65536 ) ) )
+          DrawText( hDC, ::cCaption, rcText, nOr(0x00000000, 0x00000000, 0x00000010 ) )
+          rc[1]--; rc[2]--; rc[3]--; rc[4]--
+          SetTextColor( hDC, color )
+          color := SetTextColor( hDC, GetSysColor( 17 ) )
+       else
+          rcText[1]+=3; rcText[2]+=3
+          color := SetTextColor( hDC, ::nClrText )
+       endif
+
+       DrawText( hDC, ::cCaption, rcText, nOr(0x00000000, 0x00000000, 0x00000010 ))
+       SetBkMode(hDC,iMode)
+
+       if ::lBorder
+
+               rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+               if ::lModalFrame
+                  rc[1]++; rc[2]++; rc[3]--; rc[4]--
+               endif
+               DrawEdge( hDC, rc, 0x0002, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+               rc[1]++; rc[2]++; rc[3]--; rc[4]--
+               DrawEdge( hDC, rc, 0x0008, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+               rc[1]--; rc[2]--; rc[3]++; rc[4]++
+               if ::lModalFrame
+                  rc[1]-=2; rc[2]-=2; rc[3]+=2; rc[4]+=2
+               endif
+       endif
+   endif
+endif
+
+if ::lVScroll
+   ::PaintVScroll( hDC, ::lRightVScroll,::lHScroll, ::lDownHScroll )
+endif
+
+if ::lHScroll
+   ::PaintHScroll( hDC, ::lDownHScroll ,::lVScroll, ::lRightVScroll )
+endif
+
+
+if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+   ::DotsSelect( hDC )
+endif
+
+return nil
+
+
+
+
+
+
+
+      static FUNCTION TDsgnSplitter_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnSplitter := QSelf() AS CLASS TDsgnSplitter
+
+local oMenu
+local o := self
+
+    MenuAddItem("Flat"         ,,o:lFlat         ,,{|oMenuItem|::lFlat          := !::lFlat         ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lBorder"      ,,o:lBorder       ,,{|oMenuItem|::lBorder        := !::lBorder       ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lVScroll"     ,,o:lVScroll      ,,{|oMenuItem|::lVScroll       := !::lVScroll      ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lHScroll"     ,,o:lHScroll      ,,{|oMenuItem|::lHScroll       := !::lHScroll      ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lRightVScroll",,o:lRightVScroll ,,{|oMenuItem|::lRightVScroll  := !::lRightVScroll ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lDownHScroll" ,,o:lDownHScroll  ,,{|oMenuItem|::lDownHScroll   := !::lDownHScroll  ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lActive"      ,,o:lActive       ,,{|oMenuItem|::lActive        := !::lActive       ,::Refresh()},,,,,,,.F.,,,.F. )
+
+   MenuAddItem()
+
+
+return nil
+
+
+  static FUNCTION TDsgnSplitter_nMinWidth( nVal ) ; local Self AS CLASS TDsgnSplitter := QSelf() AS CLASS TDsgnSplitter
+
+
+if pcount() > 0
+   ::xMinWidth := nVal
+endif
+
+return if( ::lHScroll .OR. ::lVScroll, max( 22, ::xMinWidth ), ::xMinWidth )
+
+
+  static FUNCTION TDsgnSplitter_nMinHeight( nVal ) ; local Self AS CLASS TDsgnSplitter := QSelf() AS CLASS TDsgnSplitter
+
+
+if pcount() > 0
+   ::xMinHeight := nVal
+endif
+
+return if( ::lVScroll .OR. ::lHScroll , max( 22, ::xMinHeight ), ::xMinHeight )

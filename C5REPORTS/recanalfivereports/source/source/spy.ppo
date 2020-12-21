@@ -1,0 +1,2968 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 30 "source\spy.prg"
+STATIC nMiMensaje
+static lPrimera := .T.
+
+STATIC oDlgShow, oGet11, oGet21, oGet31, oGet41, oGet51, oGet61, oGet71, oGet81, oGet91, oGet101, oGet111
+static oRad
+static nRad := 4
+static hWndMain
+static oDsgn := nil
+static hBmpDesk
+
+_HB_CLASS TSpy ; function TSpy ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TSpy" , iif( .T., { @TControl() }, { @HBObject() } ), @TSpy() ) ) ;
+
+; _HB_MEMBER { AS LOGICAL lBitmap } ; oClass:AddMultiData( "LOGICAL", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lBitmap"}, .F. )
+; _HB_MEMBER { hIco } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hIco"}, .F. )
+; _HB_MEMBER { hWndOld } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hWndOld"}, .F. )
+; _HB_MEMBER { lCaptured } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lCaptured"}, .F. )
+; _HB_MEMBER { aoFiles } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aoFiles"}, .F. )
+; _HB_MEMBER { cClassname } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cClassname"}, .F. )
+; _HB_MEMBER { AS ARRAY aVarNames } ; oClass:AddMultiData( "ARRAY",, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aVarNames"}, .F. )
+   _HB_MEMBER { AS NUMERIC hWndCmp1 } ; oClass:AddMultiClsData( "NUMERIC", 0, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hWndCmp1"}, .F. )
+   _HB_MEMBER { AS NUMERIC hWndCmp2 } ; oClass:AddMultiClsData( "NUMERIC", 0, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hWndCmp2"}, .F. )
+; _HB_MEMBER { hCursor } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hCursor"}, .F. )
+; _HB_MEMBER { nType } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nType"}, .F. )
+; _HB_MEMBER { lGroup } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lGroup"}, .F. )
+; _HB_MEMBER { aEqualAs } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aEqualAs"}, .F. )
+; _HB_MEMBER { oGost } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oGost"}, .F. )
+; _HB_MEMBER { lGostCapture } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lGostCapture"}, .F. )
+; _HB_MEMBER { aRect } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aRect"}, .F. )
+; _HB_MEMBER { aPos } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aPos"}, .F. )
+
+   _HB_MEMBER { AS LOGICAL lRegistered } ; oClass:AddMultiClsData( "LOGICAL",, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRegistered"}, .F. )
+
+   _HB_MEMBER New( nTop, nLeft, nWidth, nHeight, oWnd, cResName, nType, lBitmap) AS CLASS TSpy; oClass:AddMethod( "New", @TSpy_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Display(); oClass:AddInline( "Display", {|Self | ( ( Self ) ), ::BeginPaint(),::Paint(),::EndPaint(),0 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Paint(); oClass:AddMethod( "Paint", @TSpy_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER LButtonDown( nRow, nCol, nKeyFlags); oClass:AddMethod( "LButtonDown", @TSpy_LButtonDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER MouseMove( nRow, nCol, nKeyFlags); oClass:AddMethod( "MouseMove", @TSpy_MouseMove(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER LButtonUp( nRow, nCol, nKeyFlags); oClass:AddMethod( "LButtonUp", @TSpy_LButtonUp(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SmallestWindowFromPoint( point); oClass:AddMethod( "SmallestWindowFromPoint", @TSpy_SmallestWindowFromPoint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER HighlightWindow( hwnd, fDraw); oClass:AddMethod( "HighlightWindow", @TSpy_HighlightWindow(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER GenCode( hWnd); oClass:AddMethod( "GenCode", @TSpy_GenCode(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER GenCodeRC( hWnd); oClass:AddMethod( "GenCodeRC", @TSpy_GenCodeRC(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER GenForm( hWnd); oClass:AddMethod( "GenForm", @TSpy_GenForm(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Destroy(); oClass:AddMethod( "Destroy", @TSpy_Destroy(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER GenDbfRc( cFile); oClass:AddMethod( "GenDbfRc", @TSpy_GenDbfRc(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER GenDbfPrg( cFile); oClass:AddMethod( "GenDbfPrg", @TSpy_GenDbfPrg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER GetItems( hWnd); oClass:AddMethod( "GetItems", @TSpy_GetItems(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER TakeDrop( aFiles); oClass:AddMethod( "TakeDrop", @TSpy_TakeDrop(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER BuscaRel( aFiles); oClass:AddMethod( "BuscaRel", @TSpy_BuscaRel(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SaveBmp( hWnd, cFileName); oClass:AddMethod( "SaveBmp", @TSpy_SaveBmp(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SaveBmp2( hWnd, cFileName); oClass:AddMethod( "SaveBmp2", @TSpy_SaveBmp2(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER GetStrMenu( hMenu); oClass:AddMethod( "GetStrMenu", @TSpy_GetStrMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER GetVarName( cClase); oClass:AddMethod( "GetVarName", @TSpy_GetVarName(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER CaptureWnd( hWnd); oClass:AddMethod( "CaptureWnd", @TSpy_CaptureWnd(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER CmpWnd( hWnd); oClass:AddMethod( "CmpWnd", @TSpy_CmpWnd(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER CmpVisual( hWnd); oClass:AddMethod( "CmpVisual", @TSpy_CmpVisual(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Comparar( a1, a2); oClass:AddMethod( "Comparar", @TSpy_Comparar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER End(); oClass:AddInline( "End", {|Self | ( ( Self ) ), if( ::hBitmap, DeleteObject( ::hIco ), DestroyIcon( ::hIco ) ) , oDsgn := nil, ::TControl:End() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Capturador(); oClass:AddMethod( "Capturador", @TSpy_Capturador(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER MoveGost( nRow,nCol); oClass:AddMethod( "MoveGost", @TSpy_MoveGost(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER BtnUpGost(); oClass:AddMethod( "BtnUpGost", @TSpy_BtnUpGost(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Pinta( hDC); oClass:AddMethod( "Pinta", @TSpy_Pinta(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TSpy ;
+
+
+
+   static FUNCTION TSpy_New( nTop, nLeft, nWidth, nHeight, oWnd, cResname, nType, lBitmap ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+
+   local o := self
+
+   If( nTop == nil, nTop := 10, ) ;
+   If( nLeft == nil, nLeft := 10, ) ;
+   If( nWidth == nil, nWidth := 100, ) ;
+   If( nHeight == nil, nHeight := 100, ) ;
+   If( cResName == nil, cResName := "", ) ;
+   If( nType == nil, nType := 0, ) ;
+   If( lBitmap == nil, lBitmap := .F., ) ;
+
+   ::nTop        := nTop
+   ::nLeft       := nLeft
+   ::nRight      := nLeft + nWidth
+   ::nBottom     := nTop + nHeight
+   ::oWnd        := oWnd
+   ::nType       := nType
+   ::hWndOld     := 0
+   ::lCaptured   := .F.
+   ::cClassname  := "TSPY"
+   ::aProperties := {"nTop","nLeft","nWidth","nHeight"}
+   ::lGroup      := .F.
+   ::aEqualAs    := {}
+
+   ::lBitmap := lBitmap
+
+   if ::lBitmap
+      ::hIco := LoadBitmap( GetInstance(), cResName  )
+   else
+      if empty( cResName )
+         ::hIco := LoadIcon( GetInstance(), "magic")
+      else
+         ::hIco := LoadIcon( GetInstance(), cResName )
+      endif
+   endif
+
+   ::nStyle    = nOR( 1073741824, 268435456, 65536 )
+   ::Register( nOR( 1, 2 ) )
+   ::aoFiles := {}
+   ::aVarNames := {}
+
+   ::SetColor( 0, GetSysColor( 15 ) )
+   nMiMensaje := RegisterWindowMessage( "WM_SCRIP_TESTPARNER" )
+
+   if !Empty( oWnd:hWnd )
+      ::Create()
+      oWnd:AddControl( Self )
+   else
+      oWnd:DefControl( Self )
+   endif
+
+   ::bDropFiles := {|nRow,nCol,aFiles| o:TakeDrop( aFiles ) }
+   DragAcceptFiles( ::hWnd, .T. )
+
+
+
+
+
+return self
+
+
+   static FUNCTION TSpy_Destroy( ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+
+DestroyIcon( ::hIco )
+
+return 0
+
+
+   static FUNCTION TSpy_SaveBmp( hWnd, hBmp ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+
+DibWrite( "screen.bmp", DibFromBitmap( hBmp ) )
+
+
+return nil
+
+
+   static FUNCTION TSpy_SaveBmp2( hWnd, cBmpFile ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local hBmp := DibFromBitmap( WndBitmap( hWnd ) )
+
+If( cBmpFile == nil, cBmpFile := "screen.bmp", ) ;
+
+DibWrite( cBmpFile, hBmp )
+
+
+return nil
+
+
+   static FUNCTION TSpy_Paint( ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+
+   if ::lBitmap
+      DrawBitmap( ::hDC, ::hIco, 3, 3 )
+   else
+      DrawIcon( ::hDC, 3,3, ::hIco )
+   endif
+
+return nil
+
+
+   static FUNCTION TSpy_LButtonDown( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+
+   SetCapture( ::hWnd )
+   ::lCaptured := .T.
+   ::DestroyToolTip()
+   if ::nType == 6
+      ::oWnd:Move( 10000,10000,,,.T.)
+      ::hCursor := LoadCursor(0,32515)
+      WSetCursor( ::hCursor )
+   else
+      CursorMagic()
+   endif
+
+return 0
+
+
+   static FUNCTION TSpy_MouseMove( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local pt
+local PID
+local hWnd
+local n
+local a
+local cText
+
+
+
+if ::lCaptured
+
+   if ::nType == 6
+      WSetCursor( ::hCursor )
+   else
+      CursorMagic()
+      pt := GetCursorPos()
+      hWnd := ::SmallestWindowFromPoint( pt )
+
+
+
+
+
+
+
+      if ::hWndOld   == hWnd .OR. ::hWnd      == hWnd .OR. ::oWnd:hWnd == hWnd .OR. GetParent( hWnd ) == ::oWnd:hWnd
+         return 0
+      endif
+
+      if ::hWndOld <> 0
+         ::HighlightWindow(::hWndOld,.F.)
+      endif
+
+      ::HighlightWindow(hWnd,.T.)
+
+
+      ShowDatos( hWnd )
+      lPrimera := .T.
+
+      ::hWndOld := hWnd
+   endif
+else
+   if !empty( ::cToolTip )
+      ::ShowTooltip()
+   endif
+endif
+
+return 0
+
+
+   static FUNCTION TSpy_LButtonUp( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local oMenu, oClp, a
+local this := self
+local oWndAux
+local cCode
+local oEditor
+
+local hBmp := 0
+
+if ::lCaptured
+
+   if ::hWndOld <> 0
+       ::HighlightWindow( ::hWndOld,.F.)
+   endif
+
+   if ::hWndOld <> 0
+
+      do case
+         case nRad == 1
+
+              cCode   := ::GenCode( ::hWndOld )
+              oEditor := NuevoCode()
+              oEditor:AddText( cCode )
+
+         case nRad == 4
+
+              hWndMain := nil
+              ::GenForm( ::hWndOld )
+
+
+
+
+              hWndMain := nil
+              ::oWnd:End()
+              oDlgShow := nil
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      endcase
+
+   endif
+
+   ::hWndOld := 0
+
+   CursorArrow()
+
+
+   ReleaseCapture()
+   ::lCaptured := .F.
+
+endif
+
+return 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   static FUNCTION TSpy_GetItems( hWnd ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local cStr := ""
+local nCount
+local n
+local cClassName := upper( GetClassName( hWnd ) )
+
+do case
+   case cClassName == "SYSTABCONTROL32"
+        WQout( { GetTcmText( hWnd ) } )
+   case cClassName == "SYSLISTVIEW32"
+
+
+
+
+
+
+   case cClassName == "LISTBOX"
+        nCount := SendMessage( hWnd, 395, 0, 0 )
+        for n := 0 to nCount - 1
+            cStr += GetLbxText( hWnd, n ) + Chr(13)+Chr(10)
+        next
+endcase
+
+return cStr
+
+
+
+
+   static FUNCTION TSpy_GetStrMenu( hMenu ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local str := ""
+local nCount
+local n
+local hSubMenu
+
+if hMenu == 0
+   return str
+endif
+
+nCount := GetmItemCount( hMenu )
+
+for n := 0 to nCount - 1
+    str += GetMenuString( hMenu, n ) + Chr(13)+Chr(10)
+    hSubMenu := GetSubMenu( hMenu, n )
+    if hSubMenu <> 0
+       str += ::GetStrMenu( hSubMenu ) + Chr(13)+Chr(10)
+    endif
+next
+
+str := strtran( str, "&", "" )
+
+return str
+
+
+
+  static FUNCTION TSpy_SmallestWindowFromPoint( point ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+    local rect, rcTemp
+    local hParent, hWnd, hTemp
+
+    hWnd := WindowFromPoint( point[2], point[1] )
+    if hWnd <> 0
+
+        rect := GetWndRect( hWnd )
+        hParent := GetParent( hWnd )
+
+
+        if hParent <> 0
+
+
+            hTemp := hWnd
+            while .T.
+
+                hTemp  := GetWindow( hTemp, 2 )
+
+
+                rcTemp := GetWndRect( hTemp )
+                if PtInRect( point[1],point[2], rcTemp  ) .AND. GetParent(hTemp) == hParent .AND. IsWindowVisible(hTemp)
+
+
+                    if (rcTemp[4] - rcTemp[2]) * (rcTemp[3] - rcTemp[1]) < ((rect[4] - rect[2]) * (rect[3] - rect[1]))
+
+                        hWnd := hTemp
+                        rect := GetWndRect(hWnd)
+                    endif
+                endif
+                if hTemp == 0
+                   exit
+                endif
+            enddo
+        endif
+    endif
+
+    return hWnd
+
+
+
+
+
+
+   static FUNCTION TSpy_HighlightWindow( hwnd, fDraw ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+
+
+   local hdc
+   local rc
+   local bBorderOn
+   bBorderOn := fDraw
+
+   if hwnd == 0 .OR. !IsWindow(hwnd)
+       return 0
+   endif
+
+   hdc := GetWindowDC(hwnd)
+   rc := GetWndRect(hwnd)
+   rc := OffsetRect(rc, -rc[2], -rc[1])
+
+   if (!IsRectEmpty(rc))
+
+       PatBlt(hdc, rc[2], rc[1], rc[4] - rc[2], 3,  5570569)
+       PatBlt(hdc, rc[2], rc[3] - 3, 3, -(rc[3] - rc[1] - 2 * 3), 5570569)
+       PatBlt(hdc, rc[4] - 3, rc[1] + 3, 3, rc[3] - rc[1] - 2 * 3, 5570569)
+       PatBlt(hdc, rc[4], rc[3] - 3, -(rc[4] - rc[2]), 3, 5570569)
+
+   endif
+
+   ReleaseDC(hwnd, hdc)
+
+return 0
+
+
+   static FUNCTION TSpy_GetVarName( cClase ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local cName, n
+local nNum := 1
+local lFind := .F.
+
+if len( ::aVarNames ) == 0
+   aadd( ::aVarNames, cClase + "1" )
+   return ::aVarNames[1]
+endif
+
+for n := len( ::aVarNames ) to 1 step -1
+
+    if lower(substr( ::aVarNames[n], 1, len( cClase ) )) == lower(cClase)
+       nNum := val( right( ::aVarNames[n], 1 )) + 1
+       cName := cClase + alltrim( str( nNum ) )
+       aadd( ::aVarNames, cName )
+       lFind := .T.
+       exit
+    endif
+
+next
+
+if !lFind
+   cName := cClase + alltrim( str( nNum ) )
+   aadd( ::aVarNames, cName )
+endif
+
+return cName
+
+
+   static FUNCTION TSpy_GenCode( hwnd, lxChild, cFrom, lRC ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local o, n, nLen, nStyle
+local cFw := ""
+local cRc := ""
+local cAux
+local hTemp
+local cPrg := ""
+local aRect
+local cText, nTop, nLeft, nWidth, nHeight, cClass, nBottom, nRight
+local hCtrl
+local nUnits
+local oDlg
+local cStyle := ""
+local cRCSty := ""
+local cRCStyEx := ""
+local nId
+local cFileName
+local cCurPath
+local cOVar, cuVar
+
+local lCaption      := .F.
+local lPopup        := .F.
+local lChild        := .F.
+local lMinimize     := .F.
+local lVisible      := .F.
+local lDisable      := .F.
+local lClipSiblings := .F.
+local lClipChildren := .F.
+local lMaximize     := .F.
+local lBorder       := .F.
+local lDlgFrame     := .F.
+local lVScroll      := .F.
+local lHScroll      := .F.
+local lSysMenu      := .F.
+local lThickFrame   := .F.
+local lGroup        := .F.
+local lTabStop      := .F.
+local lMinimizeBox  := .F.
+local lMaximizeBox  := .F.
+
+nStyle  :=  GetWindowLong( hWnd, -16 )
+
+If( lxChild == nil, lxChild := .F., ) ;
+If( cFrom == nil, cFrom := "oDlg", ) ;
+
+aRect   := GetCoors( hWnd )
+
+nTop    := aRect[1]
+nLeft   := aRect[2]
+nWidth  := aRect[4]-aRect[2]
+nHeight := aRect[3]-aRect[1]
+nBottom := nTop + nHeight
+nRight  := nLeft + nWidth
+
+
+nUnits := GetDlgBaseUnits()
+nLeft   = MulDiv(nLeft, 4, nLoWord(nUnits))
+nTop    = MulDiv(nTop, 8, nHiWord(nUnits))
+nRight  = MulDiv(nRight, 4, nLoWord(nUnits))
+nBottom = MulDiv(nBottom, 8, nHiWord(nUnits))
+nWidth  = nRight - nLeft
+nHeight = nBottom - nTop
+
+
+cText   := GetWindowText( hWnd )
+cClass  := lower( GetClassName( hWnd ))
+
+nID     := GetDlgCtrlID ( ::hWndOld )
+
+if nID == 65535
+   nID := -1
+endif
+
+
+
+do case
+   case cClass == "static"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " SAY " + '"'+ cText + '" ;'+ Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+   case cClass == "edit"
+
+        coVar := ::GetVarName("oGet")
+        cuVar := ::GetVarName("cVar")
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+ ", " + strtrim( nLeft ) + " GET " + coVar + " VAR " + cuVar + " ;"
+
+        hTemp := GetWindow( hWnd, 5 )
+        if hTemp <> 0
+           cPrg += space( 12 ) + "// Posiblemente se trate de TBtnGet"
+        endif
+
+        cPrg += Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+
+
+   case cClass == "button"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " BUTTON " + '"'+ cText + '" ;'+ Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom
+
+        if at("cancel", lower(strtran(cText,"&",""))) <> 0
+           cPrg += ";" + Chr(13)+Chr(10)
+           cPrg += space(12) + " ACTION " + alltrim( cFrom ) + ":End()" + Chr(13)+Chr(10)
+        endif
+
+        cPrg += Chr(13)+Chr(10)
+
+
+   case cClass == "listbox"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " LISTBOX "
+        if SendMessage( hWnd, 395 ) > 0
+           cPrg += '"' + GetLbxText( hWnd, 0 ) + '"'
+        endif
+        cPrg += " ITEMS {"
+        for n = 1 to SendMessage( hWnd, 395 )
+
+           if n > 1
+              cPrg += ", "
+           endif
+           cPrg += '"' + GetLbxText( hWnd, n-1 ) + '"'
+        next
+
+        cPrg += " } ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "combobox"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " COMBOBOX "
+
+        if SendMessage( hWnd, ( 320 + 6 ) ) > 0
+           cPrg += '"' + GetCbxText( hWnd, 0 ) + '"'
+        endif
+
+        cPrg += " ITEMS {"
+
+        for n = 1 to SendMessage( hWnd, ( 320 + 6 ) )
+
+           if n > 1
+              cPrg += ", "
+           endif
+           cPrg += '"' + GetCbxText( hWnd, n-1 ) + '"'
+        next
+
+        cPrg += " } ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "twbrowse"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " LISTBOX " + "FIELDS [<Flds,...>] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ ALIAS <cAlias> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ FIELDSIZES, SIZES, COLSIZES <aColSizes,...> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ HEAD,HEADER,HEADERS,TITLE <aHeaders,...> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "tbitmap"
+
+        lMkDir( "almacen" )
+        cCurPath := CurDrive() + ":\" + GetCurDir()
+        cCurPath += if( right(cCurPath,1) <> "\","\","") + "almacen\"
+        cFileName := cNewFileName( cCurPath+"bmp", "bmp")
+        ::SaveBmp2( hWnd, cFileName )
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " BITMAP ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + 'FILE "' + LFN2SFNEX( cFileName ) + '" ;' + Chr(13)+Chr(10)
+        cPrg += space(12) + "NOBORDER ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "ticon"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " ICON ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ NAME, RESNAME, RESOURCE <cResName> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ FILENAME, FILE, DISK <cBmpFile> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ BORDER ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "ttabs"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " TABS ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ <prm: PROMPT, PROMPTS, ITEMS> <cPrompt,...> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "tmeter"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " METER nActual ;"+ Chr(13)+Chr(10)
+        cPrg += space(12) + "[ TOTAL <nTotal> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+
+   case cClass == "tbtnbmp"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " BTNBMP ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ <resource: NAME, RESNAME, RESOURCE> <cResName1> [,<cResName2>[,<cResName3>] ] ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ <file: FILE, FILENAME, DISK> <cBmpFile1> [,<cBmpFile2>[,<cBmpFile3>] ] ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+
+   case cClass == "msctls_updown32"
+
+   case cClass == "tfolder"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " FOLDER  ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "OF " + cFrom + ";" + Chr(13)+Chr(10)
+        cPrg += space(12) + "PROMPT "
+
+        nLen := ChildsCount( hWnd )
+
+        for n := 1 to nLen
+            if n > 1
+               cPrg += ", "
+            endif
+            cPrg += "cDlgName" + strtrim( n )
+        next
+
+        cPrg += " PIXEL" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+        n := 0
+        hCtrl := GetWindow( hWnd, 5 )
+
+        while hCtrl <> 0
+
+           n++
+           cPrg += ::GenCode( hCtrl, .T., "oFolder:oDlgName" + strtrim( n ) )
+
+           hCtrl = GetWindow( hCtrl, 2 )
+
+        enddo
+
+
+   case cClass == "#32770" .OR. cClass == "bordlg"
+
+        aRect   := GetWndRect( hWnd )
+
+        nTop    := aRect[1]
+        nLeft   := aRect[2]
+        nWidth  := aRect[4]-aRect[2]
+        nHeight := aRect[3]-aRect[1]
+
+        if !lxChild
+           cPrg += "DEFINE DIALOG " + cFrom + " ;" + Chr(13)+Chr(10)
+           cPrg += space(7) + "FROM " + strtrim( nTop )+ ", " + strtrim( nLeft ) + " TO " + strtrim( nTop + nHeight ) + ", " + strtrim( nLeft + nWidth ) + " PIXEL ;" + Chr(13)+Chr(10)
+           cPrg += space(7) + 'TITLE "' + cText + '"'+ Chr(13)+Chr(10) + Chr(13)+Chr(10)
+        endif
+
+        hCtrl := GetWindow( hWnd, 5 )
+
+        while hCtrl <> 0
+
+           nStyle := GetWindowLong( hCtrl, -16 )
+
+           cPrg += ::GenCode( hCtrl, .T., cFrom )
+
+           hCtrl = GetWindow( hCtrl, 2 )
+
+        enddo
+
+        if !lxChild
+           cPrg += "ACTIVATE DIALOG " + cFrom
+           cAux := ""
+           for n := 1 to len( ::aVarNames )
+               cAux += "local " + ::aVarNames[n] + Chr(13)+Chr(10)
+           next
+           cAux += Chr(13)+Chr(10)
+           cPrg := cAux + cPrg
+
+        endif
+
+
+
+endcase
+
+return cPrg
+
+
+
+   static FUNCTION TSpy_GenForm( hwnd, lExplore, oParent ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local n, nLen, nStyle
+local aRect, cPrg
+local cText, nTop, nLeft, nWidth, nHeight, cClass, nBottom, nRight
+local hCtrl
+local nUnits
+local oDlg
+local nId
+local cFileName
+local cCurPath
+local cOVar, cuVar
+local cFrom  := "oDlg"
+local oShape
+local aPoint
+local h
+local rc
+
+If( lExplore == nil, lExplore := .T., ) ;
+
+aRect := GetWndRect( hwnd )
+
+if oDsgn <> nil
+   aPoint := {aRect[1],aRect[2]}
+   aPoint := ScreenToClient( hWndMain, aPoint )
+   nTop  := aPoint[1]
+   nLeft := aPoint[2]
+else
+   nTop    := aRect[1]
+   nLeft   := aRect[2]
+endif
+
+nWidth  := aRect[4]-aRect[2]
+nHeight := aRect[3]-aRect[1]
+
+nStyle := GetWindowLong( hWnd, -16 )
+
+
+
+
+
+
+
+nBottom := nTop + nHeight
+nRight  := nLeft + nWidth
+
+cText   := GetWindowText( hWnd )
+cClass  := lower( GetClassName( hWnd ))
+
+nID     := GetDlgCtrlID ( ::hWndOld )
+
+if nID == 65535
+   nID := -1
+endif
+
+
+do case
+   case cClass == "systabcontrol32"
+        WQout( { GetTcmText( hWnd ) } )
+
+   case cClass == "syslistview32"
+        WQout( { GetTcmText2( hWnd ) } )
+
+   case GetWindow( hWnd, 5 ) <> 0 .AND. cClass <> "tcombobox" .AND. lExplore .AND. cClass <> "combobox" .AND. cClass <> "tfolder"
+
+        aRect   := GetWndRect( hWnd )
+
+        nTop    := aRect[1]
+        nLeft   := aRect[2]
+        nWidth  := aRect[4]-aRect[2]
+        nHeight := aRect[3]-aRect[1]
+
+        if lPrimera
+           hWndMain := hWnd
+           oDsgn := Designer(,,nWidth+8, nHeight+8)
+           oDsgn:SetSize( nWidth+8, nHeight+8, .T. )
+           oDsgn:oWnd:cTitle := cText
+           nTopWnd := nTop
+           nLeftWnd := nLeft
+           lPrimera := .F.
+        else
+           ::GenForm( hWnd, .F. )
+        endif
+
+        hCtrl := GetWindow( hWnd, 5 )
+
+        while hCtrl <> 0
+
+           nStyle := GetWindowLong( hCtrl, -16 )
+
+           ::GenForm( hCtrl )
+
+           hCtrl = GetWindow( hCtrl, 2 )
+
+        enddo
+
+        oDsgn:Refresh()
+
+   case cClass == "static" .OR. cClass == "tsay" .OR. cClass == "tlabel"
+
+        if nAnd( nStyle, 3 ) == 3 .OR. nAnd( nStyle, 14 ) == 14
+           lMkDir( "almacen" )
+           cCurPath := CurDrive() + ":\" + GetCurDir()
+           cCurPath += if( right(cCurPath,1) <> "\","\","") + "almacen\"
+           cFileName := cNewFileName( cCurPath+"bmp", "bmp")
+           ::SaveBmp2( hWnd, cFileName )
+           oShape := TDsgnImg():New( nTop,nLeft,nBottom,nRight, oDsgn )
+           oShape:cFileName := cFileName
+        else
+           if nAnd( nStyle, 16 ) == 16
+           else
+              if nAnd( nStyle, 17 ) == 17
+              else
+                 oShape := TDsgnSay():New( nTop,nLeft,nBottom,nRight, oDsgn )
+                 oShape:cCaption := cText
+              endif
+           endif
+           if nAnd( nStyle, 2 ) == 2
+              oShape:cAlign := "Right"
+           elseif nAnd( nStyle, 1 ) == 1
+              oShape:cAlign := "Center"
+           else
+              oShape:cAlign := "Left"
+           endif
+        endif
+
+   case cClass == "edit" .OR. cClass == "tget" .OR. cClass == "tedit" .OR. cClass == "tmemo" .OR. cClass == "subedit"
+
+        oShape := TDsgnEdit():New( nTop,nLeft,nBottom,nRight, oDsgn )
+        oShape:cCaption := cText
+
+
+
+
+
+   case cClass == "button"     .OR.  cClass == "tbutton"    .OR.  cClass == "tcheckbox"  .OR.  cClass == "tgroupbox"  .OR.  cClass == "tradio"
+
+        if nAnd( nStyle, 7 ) == 7 .OR. cClass == "tgroupbox"
+           oShape := TDsgnGrp():New( nTop,nLeft,nBottom,nRight, oDsgn )
+        else
+           if ( nAnd( nStyle, 2 ) == 2 .OR. nAnd( nStyle, 3 ) == 3 ) .OR. cClass == "tcheckbox"
+              oShape := TDsgnBtn():New( nTop,nLeft,nBottom,nRight, oDsgn, 3 )
+              oShape:lChecked := IsButtonChecked(hWnd)
+           else
+              if ( nAnd( nStyle, 4 ) == 4 .OR. nAnd( nStyle, 9 ) == 9 ) .OR. cClass == "tradio"
+                 oShape := TDsgnBtn():New( nTop,nLeft,nBottom,nRight, oDsgn, 2 )
+                 oShape:lChecked := IsButtonChecked(hWnd)
+              else
+                 oShape := TDsgnBtn():New( nTop,nLeft,nBottom,nRight, oDsgn, 1 )
+              endif
+           endif
+        endif
+
+        oShape:cCaption := cText
+
+
+   case cClass == "listbox" .OR. cClass == "tlistbox"
+
+        oShape := TDsgnLbx():New( nTop,nLeft,nBottom,nRight, oDsgn )
+        oShape:cCaption := cText
+
+   case cClass == "combobox" .OR. cClass == "tcombobox"
+
+        oShape := TDsgnCbx():New( nTop,nLeft,nBottom,nRight, oDsgn )
+        oShape:cCaption := cText
+        h := hWndComboList( hWnd )
+        if h <> 0
+           rc := GetWndRect( h )
+           oShape:nHeight := rc[3]-rc[1]+21
+        endif
+
+   case cClass == "twbrowse"
+
+        oShape := TDsgnBrowse():New( nTop, nLeft, nBottom, nRight, oDsgn )
+
+   case cClass == "tbitmap" .OR. cClass == "timage"
+
+        lMkDir( "almacen" )
+        cCurPath := CurDrive() + ":\" + GetCurDir()
+        cCurPath += if( right(cCurPath,1) <> "\","\","") + "almacen\"
+        cFileName := cNewFileName( cCurPath+"bmp", "bmp")
+        ::SaveBmp2( hWnd, cFileName )
+
+        oShape := TDsgnImg():New( nTop,nLeft,nBottom,nRight, oDsgn )
+        oShape:cFileName := cFileName
+
+   case cClass == "ticon"
+
+   case cClass == "ttabs"
+
+   case cClass == "tmeter"
+
+        oShape := TDsgnPrgBar():New( nTop,nLeft,nBottom,nRight, oDsgn )
+        oShape:lVertical := nHeight > nWidth
+
+
+   case cClass == "tbtnbmp"
+
+        oShape := TDsgnBtn():New( nTop,nLeft,nBottom,nRight, oDsgn, 1 )
+        oShape:cCaption := cText
+
+
+   case cClass == "tfolder"
+
+        oShape := TDsgnFolder():New( nTop,nLeft,nBottom,nRight, oDsgn )
+
+        nLen := ChildsCount( hWnd )
+
+        for n := 1 to nLen
+            oShape:AddPage()
+        next
+
+
+
+   case cClass == "msctls_trackbar32"
+
+        oShape := TDsgnSlider():New( nTop,nLeft,nBottom,nRight, oDsgn )
+
+        oShape:lVertical := nBottom - nTop > nRight - nLeft
+
+
+   case cClass == "msctls_updown32"
+
+        oShape := TDsgnScroll():New( nTop,nLeft,nBottom,nRight, oDsgn, .T. )
+
+   case cClass == "syslistview32"
+
+        oShape := TDsgnListView():New( nTop,nLeft,nBottom,nRight, oDsgn )
+        oShape:nStyle := SendMessage( hWnd, (4096 + 143), 0, 0 )
+
+   case cClass == "systreeview32"
+
+        oShape := TDsgnTreeView():New( nTop,nLeft,nBottom,nRight, oDsgn )
+
+   case cClass == "toolbarwindow32"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+endcase
+
+return nil
+
+
+
+   static FUNCTION TSpy_GenCodeRC( hwnd, lChild, cFrom ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local o, n, nLen, nStyle
+local c := ""
+local cAux
+local hTemp
+local cPrg := ""
+local aRect
+local cText, nTop, nLeft, nWidth, nHeight, cClass
+local hCtrl
+local cStyle := ""
+
+nStyle  :=  GetWindowLong( hWnd, -16 )
+
+If( lChild == nil, lChild := .F., ) ;
+If( cFrom == nil, cFrom := "", ) ;
+
+
+aRect   := GetCoors( hWnd )
+
+nTop    := aRect[1]
+nLeft   := aRect[2]
+nWidth  := aRect[4]-aRect[2]
+nHeight := aRect[3]-aRect[1]
+cText   := GetWindowText( hWnd )
+
+cClass := lower(GetClassName( hWnd ))
+
+do case
+   case cClass == "static"
+
+
+
+
+           if nAnd( nStyle, 1 ) == 1
+              cStyle += "SS_CENTER" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 2 ) == 2
+              cStyle += "SS_RIGHT" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 3 ) == 3
+              cStyle += "SS_ICON" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 4 ) == 4
+              cStyle += "SS_BLACKRECT" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 5 ) == 5
+              cStyle += "SS_GRAYRECT" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 6 ) == 6
+              cStyle += "SS_WHITERECT" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 7 ) == 7
+              cStyle += "SS_BLACKFRAME" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 8 ) == 8
+              cStyle += "SS_GRAYFRAME" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 9 ) == 9
+              cStyle += "SS_WHITEFRAME" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 10 ) == 10
+              cStyle += "SS_USERITEM" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 11 ) == 11
+              cStyle += "SS_SIMPLE" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 12 ) == 12
+              cStyle += "SS_LEFTNOWORDWRAP" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 13 ) == 13
+              cStyle += "SS_OWNERDRAW" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 14 ) == 14
+              cStyle += "SS_BITMAP" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 15 ) == 15
+              cStyle += "SS_ENHMETAFILE" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 16 ) == 16
+              cStyle += "SS_ETCHEDHORZ" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 17 ) == 17
+              cStyle += "SS_ETCHEDVERT" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 18 ) == 18
+              cStyle += "SS_ETCHEDFRAME" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 31 ) == 31
+              cStyle += "SS_TYPEMASK" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 128 ) == 128
+              cStyle += "SS_NOPREFIX" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 256 ) == 256
+              cStyle += "SS_NOTIFY" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 512 ) == 512
+              cStyle += "SS_CENTERIMAGE" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 1024 ) == 1024
+              cStyle += "SS_RIGHTJUST" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 2048 ) == 2048
+              cStyle += "SS_REALSIZEIMAGE" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 4096 ) == 4096
+              cStyle += "SS_SUNKEN" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 16384 ) == 16384
+              cStyle += "SS_ENDELLIPSIS" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 32768 ) == 32768
+              cStyle += "SS_PATHELLIPSIS" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 49152 ) == 49152
+              cStyle += "SS_WORDELLIPSIS" + Chr(13)+Chr(10)
+           endif
+           if nAnd( nStyle, 49152 ) == 49152
+              cStyle += "SS_ELLIPSISMASK" + Chr(13)+Chr(10)
+           endif
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " SAY " + '"'+ cText + '" ;'+ Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+   case cClass == "edit"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " GET " + '"cVar" ;'+ Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "button"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " BUTTON " + '"'+ cText + '" ;'+ Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "listbox"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " LISTBOX "
+        if SendMessage( hWnd, 395 ) > 0
+           cPrg += '"' + GetLbxText( hWnd, 0 ) + '"'
+        endif
+        cPrg += " ITEMS {"
+        for n = 1 to SendMessage( hWnd, 395 )
+
+           if n > 1
+              cPrg += ", "
+           endif
+           cPrg += '"' + GetLbxText( hWnd, n-1 ) + '"'
+        next
+
+        cPrg += " } ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "combobox"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " COMBOBOX "
+
+        if SendMessage( hWnd, ( 320 + 6 ) ) > 0
+           cPrg += '"' + GetCbxText( hWnd, 0 ) + '"'
+        endif
+
+        cPrg += " ITEMS {"
+
+        for n = 1 to SendMessage( hWnd, ( 320 + 6 ) )
+
+           if n > 1
+              cPrg += ", "
+           endif
+           cPrg += '"' + GetCbxText( hWnd, n-1 ) + '"'
+        next
+
+        cPrg += " } ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "twbrowse"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " LISTBOX " + "FIELDS [<Flds,...>] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ ALIAS <cAlias> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ FIELDSIZES, SIZES, COLSIZES <aColSizes,...> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ HEAD,HEADER,HEADERS,TITLE <aHeaders,...> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "tbitmap"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " BITMAP ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ NAME, RESNAME, RESOURCE <cResName> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ FILENAME, FILE, DISK <cBmpFile> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ NOBORDER, NO BORDER ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "ticon"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " ICON ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ NAME, RESNAME, RESOURCE <cResName> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ FILENAME, FILE, DISK <cBmpFile> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ BORDER ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "ttabs"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " TABS ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ <prm: PROMPT, PROMPTS, ITEMS> <cPrompt,...> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+   case cClass == "tmeter"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " METER nActual ;"+ Chr(13)+Chr(10)
+        cPrg += space(12) + "[ TOTAL <nTotal> ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+
+   case cClass == "tbtnbmp"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " BTNBMP ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ <resource: NAME, RESNAME, RESOURCE> <cResName1> [,<cResName2>[,<cResName3>] ] ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "[ <file: FILE, FILENAME, DISK> <cBmpFile1> [,<cBmpFile2>[,<cBmpFile3>] ] ] ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + " SIZE " + strtrim( nWidth ) + ", " + strtrim( nHeight ) + " PIXEL OF " + cFrom + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+
+   case cClass == "tfolder"
+
+        cPrg += space(7) + "@ " + strtrim( nTop )+", " + strtrim( nLeft ) + " FOLDER  ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "OF oDlg ;" + Chr(13)+Chr(10)
+        cPrg += space(12) + "PROMPT "
+
+        nLen := ChildsCount( hWnd )
+
+        for n := 1 to nLen
+            if n > 1
+               cPrg += ", "
+            endif
+            cPrg += "cDlgName" + strtrim( n )
+        next
+
+        cPrg += " PIXEL" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+        n := 0
+        hCtrl := GetWindow( hWnd, 5 )
+
+        while hCtrl <> 0
+
+           n++
+           cPrg += ::GenCode( hCtrl, .T., "oFolder:oDlgName" + strtrim( n ) )
+
+           hCtrl = GetWindow( hCtrl, 2 )
+
+        enddo
+
+
+   case cClass == "#32770"
+
+        aRect   := GetWndRect( hWnd )
+
+        nTop    := aRect[1]
+        nLeft   := aRect[2]
+        nWidth  := aRect[4]-aRect[2]
+        nHeight := aRect[3]-aRect[1]
+
+        if !lChild
+           cPrg += "DEFINE WINDOW oDlg ;" + Chr(13)+Chr(10)
+           cPrg += space(7) + "FROM " + strtrim( nTop )+ ", " + strtrim( nLeft ) + " TO " + strtrim( nTop + nHeight ) + ", " + strtrim( nLeft + nWidth ) + " PIXEL ;" + Chr(13)+Chr(10)
+           cPrg += space(7) + 'TITLE "' + cText + '"'+ Chr(13)+Chr(10) + Chr(13)+Chr(10)
+        endif
+
+        hCtrl := GetWindow( hWnd, 5 )
+
+        while hCtrl <> 0
+
+           nStyle := GetWindowLong( hCtrl, -16 )
+
+           cPrg += ::GenCode( hCtrl, .T., if( empty(cFrom), "oDlg", cFrom ) )
+
+           hCtrl = GetWindow( hCtrl, 2 )
+
+        enddo
+
+        if !lChild
+           cPrg += "ACTIVATE WINDOW oDlg "
+           MemoWrit( "cCode.prg", cPrg )
+        endif
+
+endcase
+
+return cPrg
+
+
+
+
+static FUNCTION TSpy_GenDbfRc( cDbfName, nFiles ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+    local n, nId := 110
+    local cRC := "", cCH := "", cButton := ""
+    local aFields, cRow
+    local cRCFile := ""
+    local lButton := .F.
+    local nMax := 0
+
+    if Empty( cDbfName ) .OR. ! File( cDbfName )
+        MsgAlert( "Please select a DBF file first!" )
+        return nil
+    endif
+
+    cursorwait()
+
+    dbUseArea( .F.,, ( cDbfName ),, if(.F. .OR. .F., !.F., NIL), .F. )
+    aFields = DbStruct()
+
+   for n := 1 to len( aFields )
+       nMax := max( nMax, 45 + aFields[ n ][ 3 ] * 7 )
+   next
+
+   nMax += 4
+
+   nMax := max( 300, nMax )
+
+   cRC += '#include "..\include\WinApi.ch"' + Chr(13)+Chr(10)
+   cRC += "//#define DS_MODALFRAME       0x80L" + Chr(13)+Chr(10)
+    cRC += Alias() + " DIALOG 32, 18, " + alltrim(str(nMax,4)) + " ," + Str( ( Len( aFields ) * 14)+43) + Chr(13)+Chr(10)
+    cRC += "STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU" + Chr(13)+Chr(10)
+    cRC += 'CAPTION "' + Alias() + '"' + Chr(13)+Chr(10)
+    cRC += 'FONT 8, "MS Sans Serif"' + Chr(13)+Chr(10)
+    cRC += "BEGIN" + Chr(13)+Chr(10)
+
+    for n = 1 to Len( aFields )
+          cRC += "#define ID_" + PadR( aFields[ n ][ 1 ], 11 ) + Str( nId, 4 ) + Chr(13)+Chr(10)
+      nID += 10
+   next
+
+   nID := 110
+    for n = 1 to Len( aFields )
+
+        do case
+
+            case aFields[ n ][ 2 ] $ "CND"
+
+                cRC += '   LTEXT "' + Upper(left(aFields[ n ][ 1 ],1))+ lower(substr(aFields[ n ][ 1 ],2)) + '"' +     Space( 10 - Len( aFields[ n ][ 1 ] ) ) + ", -1, 3," + Str( 5 + 14 * ( n - 1 ), 4 ) + ", 41, 8" + Chr(13)+Chr(10)
+
+
+
+                cRC += "   EDITTEXT ID_" + aFields[ n ][ 1 ] +     ", 45," + Str( 3 + 14 * ( n - 1 ), 4 ) + ", " +     Str( aFields[ n ][ 3 ] * 7, 4 ) + ", 12" + Chr(13)+Chr(10)
+
+            case aFields[ n ][ 2 ] == "L"
+
+
+
+
+                cRC += '   CONTROL "' + aFields[ n ][ 1 ] +     '", ID_' + aFields[ n ][ 1 ] +     ', "BUTTON", BS_AUTOCHECKBOX | WS_CHILD | WS_VISIBLE | WS_TABSTOP, ' +     "45, " + Str( 3 + 14 * ( n - 1 ), 4 ) +     ", 50, 12" + Chr(13)+Chr(10)
+
+            case aFields[ n ][ 2 ] == "M"
+
+
+                cRC += '   LTEXT "' + aFields[ n ][ 1 ] + '"' +     Space( 10 - Len( aFields[ n ][ 1 ] ) ) + ", -1, 100," +     Str( 5 + 14 * ( n - 1 ), 4 ) + ", 41, 8" + Chr(13)+Chr(10)
+
+
+
+
+
+                cRC += '   CONTROL "' + "" +     '", ID_' + aFields[ n ][ 1 ] +     ', "EDIT", ES_LEFT | ES_MULTILINE | ES_WANTRETURN | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | WS_TABSTOP , ' +     "145, " + Str(3 + 14 * ( n - 1 ), 4 ) + ", "  + "77, 63" + Chr(13)+Chr(10)
+
+
+        endcase
+
+        nId += 10
+
+    next
+
+
+        cRow := alltrim(str(len(aFields)*14+12))
+        cRC += 'PUSHBUTTON "|<", ' + alltrim(str(nId   ))+ ",   50, " + cRow +", 37, 12   "     + Chr(13)+Chr(10)
+        cRC += 'PUSHBUTTON "<", ' + alltrim(str(nId+=10))+ ",   99, " + cRow +", 37, 12   "     + Chr(13)+Chr(10)
+        cRC += 'PUSHBUTTON ">", ' + alltrim(str(nId+=10))+ ",  148, " + cRow +", 37, 12   "     + Chr(13)+Chr(10)
+        cRC += 'PUSHBUTTON ">|", ' + alltrim(str(nId+=10))+ ", 197, " + cRow +", 37, 12   "     + Chr(13)+Chr(10)
+        cRC += 'PUSHBUTTON "Ok", ' + alltrim(str(nId+=10))+ ", 246, " + cRow +", 37, 12   "     + Chr(13)+Chr(10)
+
+    cRC += "END" + Chr(13)+Chr(10)
+
+
+
+
+    dbCloseArea()
+
+return nil
+
+
+  static FUNCTION TSpy_GenDbfPrg( cDbfName, nType ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+
+    local n, nId := 110
+    local cPrg := "", cCH := "", cButton := ""
+    local aFields, cRow
+    local cPrgFile := ""
+    local lButton := .F.
+    local nMax := 0
+    local cAux, cVar, coVar
+    local acVars := {}
+
+    if Empty( cDbfName ) .OR. ! File( cDbfName )
+        MsgAlert( "Please select a DBF file first!" )
+        return nil
+    endif
+
+    cursorwait()
+
+    dbUseArea( .F.,, ( cDbfName ),, if(.F. .OR. .F., !.F., NIL), .F. )
+    aFields = DbStruct()
+
+   for n := 1 to len( aFields )
+       nMax := max( nMax, 45 + aFields[ n ][ 3 ] * 7 )
+   next
+
+   nMax += 4
+
+
+   for n := 1 to len( aFields )
+        cPrg += "#define ID_" + PadR( aFields[ n ][ 1 ], 11 ) + Str( nId, 4 ) + Chr(13)+Chr(10)
+        nId+=10
+   next
+   nId := 110
+
+   cPrg += Chr(13)+Chr(10)
+
+   cPrg += '#include "Fivewin.ch"' + Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+   cPrg += "Function main()" + Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+
+   for n := 1 to len( aFields )
+       cVar  :=  lower( aFields[ n ][ 2 ]) + Upper(left(aFields[ n ][ 1 ],1))+ lower(substr(aFields[ n ][ 1 ],2))
+       coVar := "o" + Upper(left(aFields[ n ][ 1 ],1))+ lower(substr(aFields[ n ][ 1 ],2))
+       cPrg += "local " + coVar + Chr(13)+Chr(10)
+       cPrg += "local " + cVar + " := "
+       aadd( acVars, {cVar, nId, coVar } )
+       nId += 10
+
+       do case
+          case aFields[ n ][ 2 ] == "C"
+               cPrg += "space(" + alltrim( str(aFields[ n ][ 3 ]))+ ")" + Chr(13)+Chr(10)
+          case aFields[ n ][ 2 ] == "D"
+               cPrg += 'ctod("  -  -    ")' + Chr(13)+Chr(10)
+          case aFields[ n ][ 2 ] == "N"
+               cAux := space(aFields[ n ][ 3 ])
+               cAux := strtran( cAux, " ","0" )
+               if aFields[ n ][ 4 ] <> 0
+                  cAux := left( cAux, aFields[ n ][ 3 ] - aFields[ n ][ 4 ]-1) + "." + substr( cAux,aFields[ n ][ 3 ] - aFields[ n ][ 4 ]+1)
+               endif
+               cPrg += cAux + Chr(13)+Chr(10)
+          case aFields[ n ][ 2 ] == "L"
+               cPrg += ".f." + Chr(13)+Chr(10)
+       endcase
+
+   next
+
+   for n := 1 to 5
+       cVar := "oBtn" +alltrim(str(nId))
+       cPrg += "local " + cVar + Chr(13)+Chr(10)
+       aadd( acVars, {cVar, nId }  )
+       nId+=10
+   next
+
+   cPrg += Chr(13)+Chr(10)
+   cPrg += "local oDlg" + Chr(13)+Chr(10)
+   cPrg += 'local dateformat := set( _SET_DATEFORMAT, "dd-mm-yyyy" )' + Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+
+   cPrg += "DEFINE DIALOG oDlg NAME " + '"' + Alias() + '"' + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+    for n = 1 to Len( aFields )
+
+
+        do case
+
+            case aFields[ n ][ 2 ] $ "CND"
+
+              cPrg += "       REDEFINE GET " + acVars[n,3] + " VAR " + acVars[n,1] + " ID " + alltrim(str(acVars[n][2])) +  " OF oDlg " + Chr(13)+Chr(10)
+
+            case aFields[ n ][ 2 ] == "L"
+
+              cPrg += "       REDEFINE CHECKBOX " + acVars[n,3]  + " VAR " + acVars[n,1] + " ID " + alltrim(str(acVars[n][2])) + " OF oDlg " + Chr(13)+Chr(10)
+
+            case aFields[ n ][ 2 ] == "M"
+
+              cPrg += "       REDEFINE GET " + acVars[n,3]  + " VAR " + acVars[n,1] + " ID " + alltrim(str(acVars[n][2])) + " OF oDlg ;" + Chr(13)+Chr(10)
+              cPrg += "                MULTILINE" + Chr(13)+Chr(10)
+
+        endcase
+
+    next
+
+   cPrg += "       REDEFINE BUTTON " + acVars[len(acVars)-4][1] + " ID " + alltrim(str(acVars[len(acVars)-4][2])) + " OF oDlg ACTION GoTop()" + Chr(13)+Chr(10)
+   cPrg += "       REDEFINE BUTTON " + acVars[len(acVars)-3][1] + " ID " + alltrim(str(acVars[len(acVars)-3][2])) + " OF oDlg ACTION GoUp()" + Chr(13)+Chr(10)
+   cPrg += "       REDEFINE BUTTON " + acVars[len(acVars)-2][1] + " ID " + alltrim(str(acVars[len(acVars)-2][2])) + " OF oDlg ACTION GoDown()" + Chr(13)+Chr(10)
+   cPrg += "       REDEFINE BUTTON " + acVars[len(acVars)-1][1] + " ID " + alltrim(str(acVars[len(acVars)-1][2])) + " OF oDlg ACTION GoBottom()" + Chr(13)+Chr(10)
+   cPrg += "       REDEFINE BUTTON " + acVars[len(acVars)  ][1] + " ID " + alltrim(str(acVars[len(acVars)  ][2])) + " OF oDlg ACTION oDlg:End()" + Chr(13)+Chr(10)
+
+   cPrg += Chr(13)+Chr(10)
+   cPrg += "ACTIVATE DIALOG oDlg CENTERED"+ Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+
+   cPrg += "set( _SET_DATEFORMAT, dateformat )" + Chr(13)+Chr(10)
+
+   cPrg += Chr(13)+Chr(10)
+      cPrg += "return nil"     + Chr(13)+Chr(10)
+
+   cPrg += Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+   cPrg += "Function GoTop( acVars )" + Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+   cPrg += "return nil" + Chr(13)+Chr(10)
+
+   cPrg += Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+   cPrg += "Function GoUp( acVars )" + Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+   cPrg += "return nil" + Chr(13)+Chr(10)
+
+   cPrg += Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+   cPrg += "Function GoDown( acVars )" + Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+   cPrg += "return nil" + Chr(13)+Chr(10)
+
+   cPrg += Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+   cPrg += "Function GoBottom( acVars )" + Chr(13)+Chr(10)
+   cPrg += Chr(13)+Chr(10)
+   cPrg += "return nil" + Chr(13)+Chr(10)
+
+
+
+    MemoWrit( "_"+alias() + ".prg", cPrg )
+
+    dbCloseArea()
+
+return nil
+
+
+
+static FUNCTION TSpy_TakeDrop( aFiles ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+   local n, lBrowsed := .F.
+
+
+
+  do case
+     case ::nType == 4
+     case ::nType == 5
+
+     otherwise
+          for n = 1 to Len( aFiles )
+             if upper(Right( aFiles[ 1 ], 3 )) <> "DBF"
+                MsgAlert( "Solo ficheros dbf!!!" )
+             else
+                  cursorwait()
+                  ::GenDbfRc(aFiles[ n ], 1  )
+                  ::GenDbfPrg(aFiles[ n ], 1  )
+                 cursorarrow()
+             endif
+          next
+  endcase
+return nil
+
+
+   static FUNCTION TSpy_BuscaRel( aFiles ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local n, n2
+local oFile, oFile2
+
+asize( ::aoFiles, 0 )
+
+for n := 1 to len( aFiles )
+    aadd( ::aoFiles, TRelDbf():New( aFiles[n] ) )
+next
+
+
+for n := 1 to len( ::aoFiles )
+    oFile := ::aoFiles[n]
+    for n2 := 1 to len( ::aoFiles )
+        oFile2 := ::aoFiles[n2]
+        if !(oFile == oFile2)
+           oFile:BuscaRel( oFile2 )
+        endif
+    next
+next
+
+for n := 1 to len( ::aoFiles )
+    for n2 := 1 to len( ::aoFiles[n]:aRelaciones )
+
+        WQout( { "Posible relación entre " + cFileName( ::aoFiles[n]:cDbfName ) + " y " + ::aoFiles[n]:aRelaciones[n2,1] , "por los campos " + ::aoFiles[n]:aRelaciones[n2,2] } )
+    next
+next
+
+
+return nil
+
+
+  static FUNCTION TSpy_CaptureWnd( hWnd ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+
+WndCopy2( hWnd, 45 )
+
+
+return nil
+
+
+
+   static FUNCTION TSpy_CmpWnd( hWnd ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local aControls1 := {}
+local aControls2 := {}
+local hCtrl := 0
+local oDlg, oLbx1, oLbx2
+local cVar1, cVar2
+local aItem1 := {}
+local aItem2 := {}
+local o := self
+local cText
+local n
+
+if ::hWndCmp1 == 0
+   ::hWndCmp1 := hWnd
+   DibWrite( "screen1.bmp", DibFromBitmap( WndBitmap( ::hWndCmp1 ) ) )
+   MsgInfo( "Seleccione la siguiente ventana" )
+   return nil
+endif
+
+::hWndCmp2 := hWnd
+DibWrite( "screen2.bmp", DibFromBitmap( WndBitmap( ::hWndCmp2 ) ) )
+
+
+ hCtrl := GetWindow( ::hWndCmp1, 5 )
+ while hCtrl <> 0
+    cText := GetWindowText( hCtrl )
+    if !empty( ctext )
+       aadd( aControls1, cText   )
+    endif
+    hCtrl = GetWindow( hCtrl, 2 )
+ enddo
+
+ hCtrl := 0
+
+ hCtrl := GetWindow( ::hWndCmp2, 5 )
+ while hCtrl <> 0
+    cText := GetWindowText( hCtrl )
+    if !empty( ctext )
+       aadd( aControls2, cText   )
+    endif
+
+    hCtrl = GetWindow( hCtrl, 2 )
+ enddo
+
+ if !empty( aControls1 ) .AND. !empty( aControls2 )
+
+
+
+    oDlg = TDialog():New( 110, 96, 526, 804, "Comparar ventanas",,, .F.,,,,,, .T.,,,,,, .F., )
+
+
+          TButton():New( 133, 286, "OK", oDlg, {|| oDlg:End()}, 44, 11,,, .F., .T., .F.,, .F.,,, .F. )
+
+
+          TButton():New( 147, 286, "Cancel", oDlg, {|| oDlg:End()}, 44, 12,,, .F., .T., .F.,, .F.,,, .F. )
+
+
+          TButton():New( 162, 286, "Help", oDlg,, 44, 11,,, .F., .T., .F.,, .F.,,, .F. )
+
+
+          oLbx1 := TListBox():New( 17, 22, { | u | If( PCount()==0, aControls1[1], aControls1[1]:= u ) }, aControls1, 121, 157,, oDlg,,,, .T., .F.,,,, .F.,,,, .F., .F. )
+
+
+          oLbx2 := TListBox():New( 17, 149, { | u | If( PCount()==0, aControls2[1], aControls2[1]:= u ) }, aControls2, 121, 157,, oDlg,,,, .T., .F.,,,, .F.,,,, .F., .F. )
+
+
+          TButton():New( 17, 286, "Comparar", oDlg, {|| o:Comparar( aControls1, aControls2 )}, 44, 12,,, .F., .T., .F.,, .F.,,, .F. )
+
+
+          TButton():New( 31, 286, "Visual", oDlg, {|| o:CmpVisual()}, 44, 12,,, .F., .T., .F.,, .F.,,, .F. )
+
+   oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .F.,,,, oDlg:bRClicked,,, )
+else
+   MsgInfo( "Una de las ventanas no tiene controles o no se encuentra abierta" )
+endif
+::hWndCmp1 := 0
+::hWndCmp2 := 0
+
+
+for n := 1 to len( ::oWnd:aControls )
+    o := ::oWnd:aControls[n]
+    if o:ClassName() == "TSPY" .AND. ( o:nType == 4 .OR. o:nType == 5 )
+       DestroyIcon( o:hIco )
+       o:hIco := LoadIcon( GetInstance(), "dlgempty" )
+       o:Refresh()
+    endif
+next
+
+return nil
+
+
+
+   static FUNCTION TSpy_CmpVisual( ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local oDlg, oBmp1, oBmp2
+local aRect1 := GetWndRect( ::hWndCmp1 )
+local aRect2 := GetWndRect( ::hWndCmp2 )
+
+
+oDlg = TDialog():New(,,,, "Comparación visual de las ventanas - Pincha en la imagen",,, .F.,,,,,, .F.,,,,,, .F., )
+
+     oBmp1 := TBitmap():New( 0, 0, aRect1[4]-aRect1[2], aRect1[3]-aRect1[1],, "screen1.bmp", .T., oDlg, { |nRow,nCol,nKeyFlags| (oBmp1:Hide(), oBmp2:Show()) },, .F., .F.,,, .F.,, .T.,, .F. )
+     oBmp2 := TBitmap():New( 0, 0, aRect2[4]-aRect2[2], aRect2[3]-aRect2[1],, "screen2.bmp", .T., oDlg, { |nRow,nCol,nKeyFlags| (oBmp2:Hide(), oBmp1:Show()) },, .F., .F.,,, .F.,, .T.,, .F. )
+
+oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .T.,,, {|Self|(  oDlg:SetSize( max(oBmp1:nWidth, oBmp2:nWidth), max( oBmp1:nHeight + 24,oBmp2:nHeight + 24), .T. ),oBmp2:Hide() )}, oDlg:bRClicked,,, )
+
+return nil
+
+
+   static FUNCTION TSpy_Comparar( a1, a2 ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local n, n2
+local c1, c2, cStr := ""
+local lFind := .F.
+
+for n := 1 to len( a1 )
+    lFind := .F.
+    c1 := a1[n]
+    for n2 := 1 to len( a2 )
+        if c1 == a2[n2]
+           lFind := .T.
+           exit
+        endif
+    next
+    if !lFind
+       cStr += c1 + Chr(13)+Chr(10)
+    endif
+next
+
+MemoEdit( cStr, "Cadenas que estan en la primera y no en la segunda ventana" )
+
+cStr := ""
+for n := 1 to len( a2 )
+    lFind := .F.
+    c1 := a2[n]
+    for n2 := 1 to len( a1 )
+        if c1 == a1[n2]
+           lFind := .T.
+           exit
+        endif
+    next
+    if !lFind
+       cStr += c1 + Chr(13)+Chr(10)
+    endif
+next
+
+MemoEdit( cStr, "Cadenas que estan en la segunda ventana y no en la primera" )
+
+
+return nil
+
+
+   static FUNCTION TSpy_Capturador( ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local oBrush
+local oCursor
+
+local o := self
+local hBmp
+
+   if hBmpDesk <> nil
+      DeleteObject( hBmpDesk )
+   endif
+
+   hBmpDesk := WndCopy4( GetDeskTopWindow(), GetWndRect(GetDeskTopWindow()) )
+
+
+ oCursor := TCursor():New(, Upper("CROSS") )
+
+ oBrush := TBrush():New( Upper("NULL"),,,,, )
+ syswait(0.3)
+
+ ::oGost := TWindow():New( 0, 0, GetSysMetrics( 1 ), GetSysMetrics( 0 ),, 2147483648,, oBrush,,,,,,, oCursor,, !.F., !.F., !.F., !.F., .T. )
+
+        ::lGostCapture := .F.
+        ::aRect := {0,0,0,0}
+        ::oGost:bLClicked  := {| nRow, nCol | o:aPos := {nRow, nCol}, o:oGost:Capture(), o:lGostCapture := .T. }
+        ::oGost:bMMoved    := {| nRow, nCol | o:MoveGost( nRow, nCol ) }
+        ::oGost:bLButtonUp := {| nRow, nCol | o:BtnUpGost() }
+        ::oGost:bPainted   := {| hDC | o:Pinta( hDC ) }
+
+ ::oGost:Show()
+
+ return nil
+
+
+   static FUNCTION TSpy_Pinta( hDC ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+
+DrawBitmap( hDC, hBmpDesk, 0, 0 )
+
+return nil
+
+
+
+
+   static FUNCTION TSpy_MoveGost( nRow, nCol ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+
+if ::lGostCapture
+
+   DrawFocusRect( ::oGost:GetDC(), ::aRect[1], ::aRect[2], ::aRect[3], ::aRect[4] )
+
+   if nRow < ::aPos[1]
+      ::aRect[1] := nRow
+      ::aRect[3] := ::aPos[1]
+   else
+      ::aRect[3] := nRow
+      ::aRect[1] := ::aPos[1]
+   endif
+
+   if nCol < ::aPos[2]
+      ::aRect[2] := nCol
+      ::aRect[4] := ::aPos[2]
+   else
+      ::aRect[4] := nCol
+      ::aRect[2] := ::aPos[2]
+   endif
+
+   DrawFocusRect( ::oGost:hDC, ::aRect[1], ::aRect[2], ::aRect[3], ::aRect[4] )
+
+   ::oGost:ReleaseDC()
+
+endif
+
+return nil
+
+
+
+
+   static FUNCTION TSpy_BtnUpGost( ) ; local Self AS CLASS TSpy := QSelf() AS CLASS TSpy
+
+local hBmp
+
+::lGostCapture := .F.
+DrawFocusRect( ::oGost:GetDC(), ::aRect[1], ::aRect[2], ::aRect[3], ::aRect[4] )
+::oGost:ReleaseDC()
+hBmp := WndCopy4( ::oGost:hWnd, {::aRect[1]+1, ::aRect[2]+1, ::aRect[3]-1, ::aRect[4]-1} )
+
+::SaveBmp(, hBmp  )
+
+DeleteObject( hBmp )
+ReleaseCapture()
+::oGost:End()
+
+ShellExecute( GetActiveWindow() ,nil, cFilePath(GetModuleFileName(GetInstance())) + "screen.bmp","","",5)
+::oWnd:Show()
+::oWnd:Move( 10, 10,,,.F.)
+SysRefresh()
+
+return nil
+
+
+
+
+
+
+_HB_CLASS TRelDbf ; function TRelDbf ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TRelDbf" , iif( .F., { }, { @HBObject() } ), @TRelDbf() ) ) ;
+
+; _HB_MEMBER { aStruct } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aStruct"}, .F. )
+; _HB_MEMBER { cDbfName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cDbfName"}, .F. )
+; _HB_MEMBER { aRelaciones } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aRelaciones"}, .F. )
+
+      _HB_MEMBER New( cDbfName) AS CLASS TRelDbf; oClass:AddMethod( "New", @TRelDbf_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Igual( oRelDbf2); oClass:AddMethod( "==", @TRelDbf_Igual(), nScope + iif( .F., 2048, 0 ) )
+      _HB_MEMBER BuscaRel( oRelDbf2); oClass:AddMethod( "BuscaRel", @TRelDbf_BuscaRel(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TRelDbf ;
+
+
+
+   static FUNCTION TRelDbf_New( cDbfName ) ; local Self AS CLASS TRelDbf := QSelf() AS CLASS TRelDbf
+
+
+   ::cDbfName := cDbfName
+   dbUseArea( .F.,, ( cDbfName ),, if(.F. .OR. .F., !.F., NIL), .F. )
+   ::aStruct :=  DbStruct()
+   dbCloseArea()
+   ::aRelaciones := {}
+
+return self
+
+
+
+   static FUNCTION TRelDbf_Igual( oRelDbf2 ) ; local Self AS CLASS TRelDbf := QSelf() AS CLASS TRelDbf
+
+local n, n2, n3, n4
+local lIguales := .T.
+
+if len( ::aStruct ) <> len( oRelDbf2:aStruct )
+   return .F.
+endif
+
+for n := 1 to len( ::aStruct )
+    for n2 := 1 to 4
+        if ::aStruct[n,n2] <> oRelDbf2:aStruct[n, n2]
+           lIguales := .F.
+           exit
+        endif
+    next
+    if !lIguales
+       exit
+    endif
+next
+
+return lIguales
+
+
+
+  static FUNCTION TRelDbf_BuscaRel( oRelDbf2 ) ; local Self AS CLASS TRelDbf := QSelf() AS CLASS TRelDbf
+
+local n, n2, n3
+local lIguales := .F.
+local cCampo
+local cTipo
+local nLen
+local nDec
+
+
+for n := 1 to len( ::aStruct )
+    cCampo := ::aStruct[n,1]
+    cTipo  := ::aStruct[n,2]
+    nLen   := ::aStruct[n,3]
+    nDec   := ::aStruct[n,4]
+
+    if  cTipo == "L" .OR. cTipo == "M"
+        loop
+    endif
+
+    for n2 := 1 to len( oRelDbf2:aStruct )
+        lIguales := .T.
+        for n3 := 1 to 4
+            if ::aStruct[n,n3] <> oRelDbf2:aStruct[n2, n3]
+               lIguales := .F.
+               exit
+            endif
+        next
+        if lIguales
+           aadd( ::aRelaciones, { oRelDbf2:cDbfName, cCampo, cTipo, nLen, nDec } )
+        endif
+    next
+next
+
+return nil
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static function OffsetRect( rc, x, y )
+
+rc[1] := rc[1] + y
+rc[2] := rc[2] + x
+rc[3] := rc[3] + y
+rc[4] := rc[4] + x
+
+return rc
+
+
+function strtrim( nVal ) ; return alltrim( str( nVal ))
+
+static function GetStyles( hWnd )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local aCtrlStyles := {    { "Button", "BS_PUSHBUTTON",0},    { "Button", "BS_DEFPUSHBUTTON",1},    { "Button", "BS_CHECKBOX",2},    { "Button", "BS_AUTOCHECKBOX",3},    { "Button", "BS_RADIOBUTTON",4},    { "Button", "BS_3STATE",5},    { "Button", "BS_AUTO3STATE",6},    { "Button", "BS_GROUPBOX",7},    { "Button", "BS_USERBUTTON",8},    { "Button", "BS_AUTORADIOBUTTON",9},    { "Button", "BS_OWNERDRAW",11},    { "Button", "BS_LEFTTEXT",32},    { "Button", "BS_TEXT",0},    { "Button", "BS_ICON",64},    { "Button", "BS_BITMAP",128},    { "Button", "BS_LEFT",256},    { "Button", "BS_RIGHT",512},    { "Button", "BS_CENTER",768},    { "Button", "BS_TOP",1024},    { "Button", "BS_BOTTOM",2048},    { "Button", "BS_VCENTER",3072},    { "Button", "BS_PUSHLIKE",4096},    { "Button", "BS_MULTILINE",8192},    { "Button", "BS_NOTIFY",16384},    { "Button", "BS_FLAT",32768},    { "Button", "BS_RIGHTBUTTON",32},    { "Static", "SS_LEFT",0},    { "Static", "SS_CENTER",1},    { "Static", "SS_RIGHT",2},    { "Static", "SS_ICON",3},    { "Static", "SS_BLACKRECT",4},    { "Static", "SS_GRAYRECT",5},    { "Static", "SS_WHITERECT",6},    { "Static", "SS_BLACKFRAME",7},    { "Static", "SS_GRAYFRAME",8},    { "Static", "SS_WHITEFRAME",9},    { "Static", "SS_USERITEM",10},    { "Static", "SS_SIMPLE",11},    { "Static", "SS_LEFTNOWORDWRAP",12},    { "Static", "SS_OWNERDRAW",13},    { "Static", "SS_BITMAP",14},    { "Static", "SS_ENHMETAFILE",15},    { "Static", "SS_ETCHEDHORZ",16},    { "Static", "SS_ETCHEDVERT",17},    { "Static", "SS_ETCHEDFRAME",18},    { "Static", "SS_NOPREFIX",128},    { "Static", "SS_NOTIFY",256},    { "Static", "SS_CENTERIMAGE",512},    { "Static", "SS_RIGHTJUST",1024},    { "Static", "SS_REALSIZEIMAGE",2048},    { "Static", "SS_SUNKEN",4096},    { "Static", "SS_ENDELLIPSIS",16384},    { "Static", "SS_PATHELLIPSIS",32768},    { "Static", "SS_WORDELLIPSIS",49152},    { "Edit", "ES_LEFT",0},    { "Edit", "ES_CENTER",1},    { "Edit", "ES_RIGHT",2},    { "Edit", "ES_MULTILINE",4},    { "Edit", "ES_UPPERCASE",8},    { "Edit", "ES_LOWERCASE",16},    { "Edit", "ES_PASSWORD",32},    { "Edit", "ES_AUTOVSCROLL",64},    { "Edit", "ES_AUTOHSCROLL",128},    { "Edit", "ES_NOHIDESEL",256},    { "Edit", "ES_OEMCONVERT",1024},    { "Edit", "ES_READONLY",2048},    { "Edit", "ES_WANTRETURN",4096},    { "Edit", "ES_NUMBER",8192},    { "ComboBox", "CBS_SIMPLE",1},    { "ComboBox", "CBS_DROPDOWN",2},    { "ComboBox", "CBS_DROPDOWNLIST",3},    { "ComboBox", "CBS_OWNERDRAWFIXED",16},    { "ComboBox", "CBS_OWNERDRAWVARIABLE",32},    { "ComboBox", "CBS_AUTOHSCROLL",64},    { "ComboBox", "CBS_OEMCONVERT",128},    { "ComboBox", "CBS_SORT",256},    { "ComboBox", "CBS_HASSTRINGS",512},    { "ComboBox", "CBS_NOINTEGRALHEIGHT",1024},    { "ComboBox", "CBS_DISABLENOSCROLL",2048},    { "ComboBox", "CBS_UPPERCASE",CBS_UPPERCASE},    { "ComboBox", "CBS_LOWERCASE",CBS_LOWERCASE},    { "ListBox", "LBS_NOTIFY",1},    { "ListBox", "LBS_SORT",2},    { "ListBox", "LBS_NOREDRAW",4},    { "ListBox", "LBS_MULTIPLESEL",8},    { "ListBox", "LBS_OWNERDRAWFIXED",16},    { "ListBox", "LBS_OWNERDRAWVARIABLE",32},    { "ListBox", "LBS_HASSTRINGS",64},    { "ListBox", "LBS_USETABSTOPS",128},    { "ListBox", "LBS_NOINTEGRALHEIGHT",256},    { "ListBox", "LBS_MULTICOLUMN",512},    { "ListBox", "LBS_WANTKEYBOARDINPUT",1024},    { "ListBox", "LBS_EXTENDEDSEL",2048},    { "ListBox", "LBS_DISABLENOSCROLL",4096},    { "ListBox", "LBS_NODATA",8192},    { "ListBox", "LBS_NOSEL",16384},    { "ListBox", "LBS_STANDARD",( 1 + 2 + 2097152 + 8388608 )},    { "Scrollbar", "SBS_HORZ",0},    { "Scrollbar", "SBS_VERT",1},    { "Scrollbar", "SBS_TOPALIGN",2},    { "Scrollbar", "SBS_LEFTALIGN",2},    { "Scrollbar", "SBS_BOTTOMALIGN",4},    { "Scrollbar", "SBS_RIGHTALIGN",4},    { "Scrollbar", "SBS_SIZEBOXTOPLEFTALIGN",2},    { "Scrollbar", "SBS_SIZEBOXBOTTOMRIGHTALIGN",4},    { "Scrollbar", "SBS_SIZEBOX",8    },    { "Scrollbar", "SBS_SIZEGRIP",16  },    { "User", "WS_POPUP",2147483648               },    { "User", "WS_CHILD",1073741824               },    { "User", "WS_MINIMIZE",536870912         },    { "User", "WS_VISIBLE",268435456           },    { "User", "WS_DISABLED",134217728         },    { "User", "WS_CLIPSIBLINGS",67108864 },    { "User", "WS_CLIPCHILDREN",33554432 },    { "User", "WS_MAXIMIZE",16777216         },    { "User", "WS_CAPTION",12582912           },    { "User", "WS_DLGFRAME",4194304         },    { "User", "WS_VSCROLL",2097152           },    { "User", "WS_HSCROLL",1048576           },    { "User", "WS_SYSMENU",524288           },    { "User", "WS_THICKFRAME",262144     },    { "User", "WS_GROUP",131072               },    { "User", "WS_TABSTOP",65536           },    { "User", "WS_MINIMIZEBOX",131072   },    { "User", "WS_MAXIMIZEBOX",65536   } }
+
+
+local n, cClass, nLen, nStyle
+local aStyles := {}
+local lFind := .F.
+
+cClass := GetClassName( hWnd )
+nStyle := GetWindowLong( hWnd, -16 )
+
+nLen := len( aCtrlStyles )
+
+for n := 1 to nLen
+    if cClass ==  aCtrlStyles[n,1]
+       lFind := .T.
+       exit
+    endif
+next
+
+if !lFind
+   cClass := "User"
+endif
+
+for n := 1 to nLen
+    if cClass == aCtrlStyles[n,1]
+       if nAnd( nStyle, aCtrlStyles[n,3] ) == aCtrlStyles[n,3]
+          aadd( aStyles, aCtrlStyles[n,2] )
+       endif
+    endif
+next
+
+return aStyles
+
+static function WQout2( aParams, cTitle )
+
+    local cOut := ""
+
+    if valtype( aParams ) == "A"
+       AEval( aParams, { | c |  cOut :=  cOut + Chr(13)+Chr(10) + cValToChar( c ) } )
+       nMsgBox( cOut, cTitle )
+    endif
+
+return nil
+
+
+
+
+
+function ShowDatos( hWnd )
+
+
+local cVar11  := space(100)
+local cVar21  := space(100)
+local cVar31  := space(100)
+local cVar41  := space(100)
+local cVar51  := space(100)
+local cVar61  := space(100)
+local cVar71  := space(100)
+local cVar81  := space(100)
+local cVar91  := space(100)
+local cVar101 := space(100)
+local cVar111 := space(100)
+local a       := GetCoors(hWnd)
+
+If( hWnd == nil, hWnd := 0, ) ;
+
+
+
+
+if FindWindow( 0, "CanalFive Spy" ) == 0
+
+
+
+   oDlgShow = TDialog():New( 635-635, 948-948, 944-635, 1220-948, "CanalFive Spy",,, .F.,,,,,, .T.,,,,,, .F., )
+
+          TSpy():New( 10, 110, 20, 20, oDlgShow,"espiar",7,.T.)
+
+
+
+          TGroup():New( 90, 3, 3 + 42, 96+ 127, "Parent Window", oDlgShow,,, .T.,,,,, )
+
+
+
+
+          TSay():New( 12, 8, {|| "hWnd"}, oDlgShow,,, .F., .F., .F., .T.,,, 67, 9, .F., .F., .F., .F., .F., .F., .F. )
+
+
+          oGet11 := TGet():New( 11, 36, { | u | If( PCount()==0, cVar11, cVar11:= u ) }, oDlgShow, 67, 9,,,,,, .F.,, .T.,, .F.,, .F., .F.,, .F., .F., .F.,, .F.,,,,,,, "cVar11", )
+
+
+          TSay():New( 22, 8, {|| "ID"}, oDlgShow,,, .F., .F., .F., .T.,,, 67, 9, .F., .F., .F., .F., .F., .F., .F. )
+
+
+          oGet21 := TGet():New( 21, 36, { | u | If( PCount()==0, cVar21, cVar21:= u ) }, oDlgShow, 67, 9,,,,,, .F.,, .T.,, .F.,, .F., .F.,, .F., .F., .F.,, .F.,,,,,,, "cVar21", )
+
+
+          TSay():New( 32, 8, {|| "Texto"}, oDlgShow,,, .F., .F., .F., .T.,,, 67, 9, .F., .F., .F., .F., .F., .F., .F. )
+
+
+          oGet31 := TGet():New( 31, 36, { | u | If( PCount()==0, cVar31, cVar31:= u ) }, oDlgShow, 91, 9,,,,,, .F.,, .T.,, .F.,, .F., .F.,, .F., .F., .F.,, .F.,,,,,,, "cVar31", )
+
+
+          TSay():New( 42, 8, {|| "Clase"}, oDlgShow,,, .F., .F., .F., .T.,,, 67, 9, .F., .F., .F., .F., .F., .F., .F. )
+
+
+          oGet41 := TGet():New( 41, 36, { | u | If( PCount()==0, cVar41, cVar41:= u ) }, oDlgShow, 91, 9,,,,,, .F.,, .T.,, .F.,, .F., .F.,, .F., .F., .F.,, .F.,,,,,,, "cVar41", )
+
+
+          TSay():New( 52, 8, {|| "Estilo"}, oDlgShow,,, .F., .F., .F., .T.,,, 67, 9, .F., .F., .F., .F., .F., .F., .F. )
+
+
+          oGet51 := TGet():New( 51, 36, { | u | If( PCount()==0, cVar51, cVar51:= u ) }, oDlgShow, 91, 9,,,,,, .F.,, .T.,, .F.,, .F., .F.,, .F., .F., .F.,, .F.,,,,,,, "cVar51", )
+
+
+          TSay():New( 62, 8, {|| "Coords."}, oDlgShow,,, .F., .F., .F., .T.,,, 67, 9, .F., .F., .F., .F., .F., .F., .F. )
+
+
+          oGet61 := TGet():New( 60, 36, { | u | If( PCount()==0, cVar61, cVar61:= u ) }, oDlgShow, 91, 9,,,,,, .F.,, .T.,, .F.,, .F., .F.,, .F., .F., .F.,, .F.,,,,,,, "cVar61", )
+
+
+
+          TSay():New( 71, 8, {|| "hWnd"}, oDlgShow,,, .F., .F., .F., .T.,,, 67, 9, .F., .F., .F., .F., .F., .F., .F. )
+
+          oGet91 := TGet():New( 70, 36, { | u | If( PCount()==0, cVar91, cVar91:= u ) }, oDlgShow, 91, 9,,,,,, .F.,, .T.,, .F.,, .F., .F.,, .F., .F., .F.,, .F.,,,,,,, "cVar91", )
+
+
+          TSay():New( 81, 8, {|| "Text"}, oDlgShow,,, .F., .F., .F., .T.,,, 67, 9, .F., .F., .F., .F., .F., .F., .F. )
+
+          oGet101 := TGet():New( 80, 36, { | u | If( PCount()==0, cVar101, cVar101:= u ) }, oDlgShow, 91, 9,,,,,, .F.,, .T.,, .F.,, .F., .F.,, .F., .F., .F.,, .F.,,,,,,, "cVar101", )
+
+
+          TSay():New( 91, 8, {|| "Estilo"}, oDlgShow,,, .F., .F., .F., .T.,,, 67, 9, .F., .F., .F., .F., .F., .F., .F. )
+
+
+          oGet111 := TGet():New( 90, 36, { | u | If( PCount()==0, cVar111, cVar111:= u ) }, oDlgShow, 91, 9,,,,,, .F.,, .T.,, .F.,, .F., .F.,, .F., .F., .F.,, .F.,,,,,,, "cVar111", )
+
+
+
+
+
+
+
+          oDlgShow:bStart := {|| BringWindowToTop( oDlgShow:hWnd ) }
+
+
+   oDlgShow:Activate( oDlgShow:bLClicked, oDlgShow:bMoved, oDlgShow:bPainted, .T., {|Self|(Aplicacion():oWnd:Show(), .T.)}, ! .T., {|Self|( SetWindowPos( oDlgShow:hWnd, -1, 0, GetSysMetrics(0)-oDlgShow:nWidth,  0, 0, 65))}, oDlgShow:bRClicked,,, )
+
+
+
+
+
+
+
+
+else
+
+
+   if hWnd == 0
+      return nil
+   endif
+
+   oGet11:VarPut ( alltrim(str(hWnd)))                             ; oGet11:Refresh()
+   oGet21:VarPut ( alltrim(str(GetDlgCtrlID(hWnd))))               ; oGet21:Refresh()
+   oGet31:VarPut ( alltrim(GetWindowText(hWnd)))                   ; oGet31:Refresh()
+   oGet41:VarPut ( alltrim(GetClassName(hWnd)))                    ; oGet41:Refresh()
+   oGet51:VarPut ( alltrim(str(GetWindowLong( hWnd, -16 )))) ; oGet51:Refresh()
+   oGet61:VarPut ( "("+ ast(a[1])+","+ast(a[2])+")-("+ ast(a[4]-a[2])+","+ast(a[3]-a[1])+")"  ); oGet61:Refresh()
+   oGet91:VarPut ( ast(GetParent(hWnd))  )               ; oGet91:Refresh()
+
+   if GetParent( hWnd ) <> 0
+      oGet101:VarPut( GetWindowText( GetParent(hWnd)) )  ; oGet101:Refresh()
+      oGet111:VarPut( GetClassName( GetParent(hWnd)) )   ; oGet111:Refresh()
+   endif
+endif
+
+
+
+return nil
+
+function CapturaRect()
+local oIcon1
+local oWnd
+local oSpy
+
+
+ oWnd = TDialog():New( 0, 0, 0, 0, "Capturador",,, .F.,,,,,, .F.,,,, 118, 79, .F., )
+
+          oSpy := TSpy():New( 10, 20.50, 20, 20, oWnd,"espiar",7,.T.)
+
+oWnd:lHelpIcon := .F.
+
+oWnd:Activate( oWnd:bLClicked, oWnd:bMoved, oWnd:bPainted, .T.,,, {|Self|( oWnd:Hide(),sysrefresh(),oSpy:Capturador() )}, oWnd:bRClicked,,, )
+
+return nil
+
+return nil
+
+
+
+function ast( n ); return alltrim(str(n))
+
+
+
+#pragma BEGINDUMP
+
+#include <windows.h>
+#include <winuser.h>
+#include <commctrl.h>
+#include "hbapi.h"
+
+HINSTANCE GetInstance( void );
+HINSTANCE GetResources( void );
+void RegisterResource( HANDLE hRes, LPSTR szType );
+void pascal DelResource( HANDLE hRes );
+#define BM_GETCHECK        0x00F0
+
+BOOL SPGetComboBoxInfo( HWND hWnd, PCOMBOBOXINFO pcbi )
+{
+   typedef BOOL (CALLBACK* LPFNDLLFUNC)( HWND, PCOMBOBOXINFO );
+   HINSTANCE hLib;
+   LPFNDLLFUNC GetComboBoxInfo;
+   BOOL bRet = FALSE;
+
+   hLib = LoadLibrary( "User32.dll" );
+   if( hLib )
+   {
+       GetComboBoxInfo = ((LPFNDLLFUNC) GetProcAddress( hLib, "GetComboBoxInfo" ));
+       bRet = (BOOL) GetComboBoxInfo( hWnd, pcbi );
+       FreeLibrary( hLib );
+   }
+   return bRet;
+}
+
+
+// Obtener el HWND de la lista desplegable del combobox
+HB_FUNC( HWNDCOMBOLIST )
+{
+   COMBOBOXINFO cbi      ;
+   ZeroMemory( &cbi, sizeof( COMBOBOXINFO ) );
+   cbi.cbSize = sizeof(COMBOBOXINFO);
+
+   SPGetComboBoxInfo( (HWND) hb_parnl( 1 ), &cbi );
+
+   hb_retnl( (LONG)cbi.hwndList ) ;
+}
+HB_FUNC( WNDCOPY4 )  //  hWnd        Copies any Window to the Clipboard!
+{
+   HWND hWnd = ( HWND ) hb_parnl( 1 );
+
+   HDC  hDC  = GetWindowDC( hWnd );
+   int x = hb_parvni( 2, 2 )+1;
+   int y = hb_parvni( 2, 1 )+1;
+   int cx = hb_parvni( 2, 4 ) - x-2;
+   int cy = hb_parvni( 2, 3 ) - y-2;
+   HDC  hMemDC;
+   RECT rct;
+   HBITMAP hBitmap, hOldBmp;
+
+
+
+
+   GetWindowRect( hWnd, &rct );
+
+   {
+      hMemDC  = CreateCompatibleDC( hDC );
+
+      hBitmap = CreateCompatibleBitmap( hDC, cx, cy );
+      hOldBmp = ( HBITMAP ) SelectObject( hMemDC, hBitmap );
+
+      StretchBlt(hMemDC, 0, 0, cx, cy, hDC, x, y,cx, cy,  SRCCOPY );
+
+      SelectObject( hMemDC, hOldBmp );
+      DeleteDC( hMemDC );
+   }
+   ReleaseDC( hWnd, hDC );
+   hb_retnl( (LONG ) hBitmap );
+}
+
+
+HB_FUNC( WNDCOPY2 )  //  hWnd        Copies any Window to the Clipboard!
+{
+   HWND hWnd = ( HWND ) hb_parnl( 1 );
+   BOOL bAll = TRUE ; //hb_parl( 2 );
+   HDC  hDC  = GetWindowDC( hWnd );
+   WORD wX, wY;
+   HDC  hMemDC;
+   RECT rct;
+   HBITMAP hBitmap, hOldBmp;
+   BOOL bColor = TRUE; //_parl( 3 );
+   int nRel = hb_parni( 2 );
+
+   //CursorWait();
+
+   GetWindowRect( hWnd, &rct );
+
+   wX = rct.right - rct.left + 1;
+   wY = rct.bottom - rct.top + 1;
+   wX = wX * nRel / 100;
+   wY = wY * nRel / 100;
+
+//   if( GlobalCompact( 0 ) < ( wX * wY ) / 8 )
+//      MessageBox( 0, NotEnough, Error, 0 );
+//   else
+   {
+      hMemDC  = CreateCompatibleDC( hDC );
+
+      hBitmap = CreateCompatibleBitmap( hDC, wX, wY );
+      hOldBmp = ( HBITMAP ) SelectObject( hMemDC, hBitmap );
+
+      StretchBlt(hMemDC, 0, 0, wX, wY, hDC, 0, 0,rct.right - rct.left + 1, rct.bottom - rct.top + 1,  SRCCOPY );
+
+      OpenClipboard( hWnd );
+      EmptyClipboard();
+      SetClipboardData( CF_BITMAP, hBitmap );
+      CloseClipboard();
+
+      SelectObject( hMemDC, hOldBmp );
+      DeleteDC( hMemDC );
+   }
+   ReleaseDC( hWnd, hDC );
+//   CursorArrow();
+}
+
+HB_FUNC( GETLBXTEXT )
+{
+ char sz[300];
+ SendMessage( (HWND) hb_parnl( 1 ), LB_GETTEXT, hb_parni( 2 ), ( LPARAM) sz );
+ hb_retc( sz );
+}
+
+HB_FUNC( GETCBXTEXT )
+{
+ char sz[300];
+ SendMessage( (HWND) hb_parnl( 1 ), CB_GETLBTEXT, hb_parni( 2 ), ( LPARAM) sz );
+ hb_retc( sz );
+}
+
+HB_FUNC( CHILDSCOUNT )
+{
+   int nChilds = 0;
+   HWND hCtrl = GetWindow(( HWND ) hb_parnl( 1 ), GW_CHILD );
+   while ( hCtrl != NULL )
+   {
+      nChilds++;
+      hCtrl = GetWindow(( HWND ) hCtrl, GW_HWNDNEXT );
+   }
+   hb_retni( nChilds );
+}
+
+HB_FUNC( GETWINDOWTHREADPROCESSID )
+{
+   DWORD PID;
+   GetWindowThreadProcessId ((HWND) hb_parnl( 1 ), &PID);
+   hb_parnl( PID );
+}
+
+HB_FUNC( GETCURRENTPROCESSID )
+{
+   hb_parnl( GetCurrentProcessId() );
+}
+
+HB_FUNC( ISRECTEMPTY )
+{
+   RECT rc;
+   rc.top = hb_parvni( 1, 1 );
+   rc.left = hb_parvni( 1, 2 );
+   rc.bottom = hb_parvni( 1, 3 );
+   rc.right = hb_parvni( 1, 4 );
+   hb_retl( IsRectEmpty( &rc ) );
+}
+
+HB_FUNC( PATBLT )
+{
+  hb_retl( PatBlt( (HDC) hb_parnl( 1 ), hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ), hb_parnl( 6 ) ) );
+}
+
+static far BYTE MagicXor[] = {
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+        };
+static far BYTE MagicAnd[] = {
+                0xFF, 0xCF, 0xFF, 0xFF, 0xFF, 0xB7, 0xFF, 0xFF, 0xFF, 0xBB, 0xFF, 0xFF, 0xFF, 0xD9, 0xFF, 0xFF,
+                0xF9, 0xE2, 0xFF, 0xFF, 0xF9, 0xF6, 0x7F, 0xFF, 0xE6, 0x78, 0x3F, 0xFF, 0xE6, 0x7C, 0x1F, 0xFF,
+                0xF9, 0xFE, 0x0F, 0xFF, 0xF9, 0xFF, 0x07, 0xFF, 0xFF, 0xFF, 0x83, 0xFF, 0xFF, 0xFF, 0xC1, 0xFF,
+                0xCF, 0xFF, 0xE0, 0xFF, 0xCF, 0xFF, 0xF0, 0x7F, 0x33, 0x9F, 0xF8, 0x3F, 0x33, 0x9F, 0xFC, 0x1F,
+                0xCE, 0x67, 0xFE, 0x0F, 0xCE, 0x67, 0xFF, 0x07, 0xFF, 0x9F, 0xFF, 0x83, 0xFF, 0x9F, 0xFF, 0xC1,
+                0xFF, 0xFF, 0xFF, 0xE1, 0xFF, 0xFF, 0xFF, 0xF3, 0xE7, 0xFE, 0x7F, 0xFF, 0xE7, 0xFE, 0x7F, 0xFF,
+                0x99, 0xF9, 0x9F, 0xFF, 0x99, 0xF9, 0x9F, 0xFF, 0xE7, 0xFE, 0x7F, 0xFF, 0xE7, 0xFE, 0x7F, 0xFF,
+                0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+        }  ;
+
+static far HCURSOR hMagic  = 0;
+
+HB_FUNC( CURSORMAGIC )
+{
+   if( ! hMagic )
+   {
+      hMagic = CreateCursor( GetInstance(), 11, 2, 32, 32, MagicAnd, MagicXor );
+      RegisterResource( hMagic, "CUR" );
+
+   }
+
+   SetCursor( hMagic );
+}
+
+
+   HB_FUNC( ISBUTTONCHECKED )
+   {
+      hb_retl( SendMessage( ( HWND ) hb_parnl( 1 ), BM_GETCHECK, 0, 0 ) );
+   }
+
+   HB_FUNC( GETDLGCTRLID )
+   {
+      hb_retni( GetDlgCtrlID( ( HWND ) hb_parnl( 1 ) ) );
+   }
+
+
+   HB_FUNC( FONTINFO ) // ( hFont )  --> aInfo
+   {
+      TEXTMETRIC tm;
+      HFONT hFont;
+      HWND hWnd      = ( HWND ) hb_parnl( 1 );
+      HDC hDC        = GetDC( hWnd );
+      HFONT hOldFont ;
+      char cName[ 80 ];
+
+      hFont    = ( HFONT ) SendMessage( hWnd, 49, 0, 0 ) ;
+      hOldFont = ( HFONT ) SelectObject( hDC, hFont );
+
+      GetTextMetrics( hDC, &tm );
+      GetTextFace( hDC, sizeof( cName ), cName );
+      SelectObject( hDC, hOldFont );
+      ReleaseDC( hWnd, hDC );
+
+      hb_reta( 4 );
+      hb_storvni( tm.tmHeight, -1, 1 );
+      hb_storvni( tm.tmAveCharWidth, -1, 2 );
+      hb_storvl( tm.tmWeight == FW_BOLD, -1, 3 );
+      hb_storvc( cName, -1, 4 );
+   }
+   /*
+   //LONG GetDialogBaseUnits(VOID);
+   HB_FUNC( GETDIALOGBASEUNITS )
+   {
+      hb_retnl( GetDialogBaseUnits( ));
+   }
+   */
+   /*BOOL MapDialogRect( HWND hDlg, LPRECT lpRect );*/
+   /*
+   HB_FUNC( MAPDIALOGRECT )
+   {
+      HWND hDlg = ( HWND ) hb_parnl( 1 );
+      RECT  rct;
+      rct.top    = hb_parni( 2, 1 );
+      rct.left   = hb_parni( 2, 2 );
+      rct.bottom = hb_parni( 2, 3 );
+      rct.right  = hb_parni( 2, 4 );
+
+      MapDialogRect( hDlg, &rct );
+
+      hb_reta( 4 );
+      rct.top    = hb_storni( -1, 1 );
+      rct.left   = hb_storni( -1, 2 );
+      rct.bottom = hb_storni( -1, 3 );
+      rct.right  = hb_storni( -1, 4 );
+   }
+   */
+
+   /*HB_FUNC( PRINTWINDOW )
+   {
+      hb_retl( PrintWindow( ( HWND ) hb_parnl( 1 ), ( HDC ) hb_parnl( 2 ), NULL ));
+   }*/
+
+   HB_FUNC( FROMPIXEL )
+   {
+      //void CDlgUnits::FromPixels(long& x, long& y)
+      LONG dlgUnits;
+      HWND hDlg = (HWND) hb_parnl( 1 );
+      int cx, cy;
+      int x = hb_parni( 2 );
+      int y = hb_parni( 3 );
+
+   	if (hDlg)
+   	{
+   		// this is a bit messy ebcause there is no MapDialogRect() in reverse
+   		RECT rect;
+   		rect.top = 0;
+   		rect.left = 0;
+   		rect.bottom = 1000;
+   		rect.right = 1000;
+
+   		MapDialogRect(hDlg, &rect);
+
+   		x = MulDiv(x, 1000, rect.right);
+   		y = MulDiv(y, 1000, rect.right);
+   	}
+   	else
+   	{
+   		dlgUnits = GetDialogBaseUnits();
+   		cx = LOWORD(dlgUnits);
+   		cy = HIWORD(dlgUnits);
+
+   		x = MulDiv(x, 4, cx);
+   		y = MulDiv(y, 8, cy);
+   	}
+   	hb_reta( 2 );
+   	hb_storvni( x, -1, 1 );
+   	hb_storvni( y, -1, 2 );
+	}
+
+
+
+
+   /*HMENU GetMenu( HWND hWnd );*/
+   HB_FUNC( GETMENU )
+   {
+      hb_retnl( ( LONG ) GetMenu( ( HWND ) hb_parnl( 1 ) ) );
+   }
+
+   /*HMENU GetSubMenu( HMENU hMenu, int nPos );*/
+   /*
+   HB_FUNC( GETSUBMENU )
+   {
+      hb_retnl( ( LONG ) GetSubMenu( ( HMENU ) hb_parnl( 1 ), hb_parni( 2 ) ) );
+   }
+   */
+   /*int GetMenuString(          HMENU hMenu,
+    UINT uIDItem,
+    LPTSTR lpString,
+    int nMaxCount,
+    UINT uFlag
+);
+*/
+   /*
+   HB_FUNC( GETMENUSTRING )
+   {
+       char sz[300];
+       GetMenuString( ( HMENU ) hb_parnl( 1 ), hb_parni( 2 ), sz, 300, MF_BYPOSITION );
+       hb_retc( sz );
+   }
+   */
+   HB_FUNC( GETTCMTEXT )
+   {
+  	 //TCITEM item;
+ 	 //ZeroMemory(&item, sizeof(TCITEM) );
+         //item.mask = TCIF_TEXT;
+         //SendMessage( (HWND) hb_parnl( 1 ), TCM_GETITEM, (WPARAM) hb_parni( 2 ), (LPARAM) &item );
+       int nIndex;
+       TCITEM * plvi;
+       TCITEM  lvi;
+       LPTSTR pClipData;
+       HGLOBAL hClipData;
+       HANDLE hProcess;
+       HWND hwndLV = (HWND) hb_parnl( 1 );
+       int nCount = TabCtrl_GetItemCount(hwndLV);
+       // Open a handle to the remote process's kernel object
+       DWORD dwProcessId;
+
+       GetWindowThreadProcessId(hwndLV, &dwProcessId);
+       hProcess = OpenProcess( PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE, FALSE, dwProcessId);
+
+       if (hProcess == NULL) {
+          MessageBox(0, __TEXT("Could not communicate with process"), "Atención", MB_OK | MB_ICONWARNING);
+          hb_ret();
+          return;
+       }
+
+       // Prepare a buffer to hold the ListView's data.
+       // Note: Hardcoded maximum of 10240 chars for clipboard data.
+    	// Note: Clipboard only accepts data that is in a block allocated with
+    	//       GlobalAlloc using the GMEM_MOVEABLE and GMEM_DDESHARE flags.
+       hClipData = GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, sizeof(TCHAR) * 10240);
+       pClipData = (LPTSTR) GlobalLock(hClipData);
+       pClipData[0] = 0;
+
+       // Allocate memory in the remote process's address space
+       plvi = (TCITEM*) VirtualAllocEx(hProcess, NULL, 4096, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+
+       // Get each ListView item's text data
+       for ( nIndex = 0; nIndex < nCount; nIndex++) {
+
+          // Initialize a local LV_ITEM structure
+          lvi.mask = TCIF_TEXT;
+          //lvi.iItem = nIndex;
+          //lvi.iSubItem = 0;
+          // NOTE: The text data immediately follows the LV_ITEM structure
+          //       in the memory block allocated in the remote process.
+          lvi.pszText = (LPTSTR) (plvi + 1);
+          lvi.cchTextMax = 100;
+
+          // Write the local LV_ITEM structure to the remote memory block
+          WriteProcessMemory(hProcess, plvi, &lvi, sizeof(lvi), NULL);
+
+          // Tell the ListView control to fill the remote LV_ITEM structure
+          TabCtrl_GetItem(hwndLV, nIndex, plvi);
+
+          // If this is not the first item, add a carriage-return/linefeed
+          if (nIndex > 0) lstrcat(pClipData, __TEXT("\r\n"));
+
+          // Read the remote text string into the end of our clipboard buffer
+          ReadProcessMemory(hProcess, plvi + 1, &pClipData[lstrlen(pClipData)], 1024, NULL);
+       }
+       // Free the memory in the remote process's address space
+       VirtualFreeEx(hProcess, plvi, 0, MEM_RELEASE);
+       CloseHandle(hProcess);
+       hb_retc( pClipData );
+   }
+
+   HB_FUNC( GETTCMTEXT2 )
+   {
+  	 //TCITEM item;
+ 	 //ZeroMemory(&item, sizeof(TCITEM) );
+         //item.mask = TCIF_TEXT;
+         //SendMessage( (HWND) hb_parnl( 1 ), TCM_GETITEM, (WPARAM) hb_parni( 2 ), (LPARAM) &item );
+       int nIndex;
+       LV_ITEM* plvi;
+       LV_ITEM lvi;
+       LPTSTR pClipData;
+       HGLOBAL hClipData;
+       HANDLE hProcess;
+       HWND hwndLV = (HWND) hb_parnl( 1 );
+       int nCount = ListView_GetItemCount(hwndLV);
+       // Open a handle to the remote process's kernel object
+       DWORD dwProcessId;
+
+       GetWindowThreadProcessId(hwndLV, &dwProcessId);
+       hProcess = OpenProcess( PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE, FALSE, dwProcessId);
+
+       if (hProcess == NULL) {
+          MessageBox(0, __TEXT("Could not communicate with process"), "Atención", MB_OK | MB_ICONWARNING);
+          hb_ret();
+          return;
+       }
+
+       // Prepare a buffer to hold the ListView's data.
+       // Note: Hardcoded maximum of 10240 chars for clipboard data.
+    	// Note: Clipboard only accepts data that is in a block allocated with
+    	//       GlobalAlloc using the GMEM_MOVEABLE and GMEM_DDESHARE flags.
+       hClipData = GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, sizeof(TCHAR) * 10240);
+       pClipData = (LPTSTR) GlobalLock(hClipData);
+       pClipData[0] = 0;
+
+       // Allocate memory in the remote process's address space
+       plvi = (LV_ITEM*) VirtualAllocEx(hProcess, NULL, 4096, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+
+       // Get each ListView item's text data
+       for ( nIndex = 0; nIndex < nCount; nIndex++) {
+
+          // Initialize a local LV_ITEM structure
+          lvi.mask = LVIF_TEXT;
+          lvi.iItem = nIndex;
+          lvi.iSubItem = 0;
+          // NOTE: The text data immediately follows the LV_ITEM structure
+          //       in the memory block allocated in the remote process.
+          lvi.pszText = (LPTSTR) (plvi + 1);
+          lvi.cchTextMax = 100;
+
+          // Write the local LV_ITEM structure to the remote memory block
+          WriteProcessMemory(hProcess, plvi, &lvi, sizeof(lvi), NULL);
+
+          // Tell the ListView control to fill the remote LV_ITEM structure
+          ListView_GetItem(hwndLV, plvi);
+
+          // If this is not the first item, add a carriage-return/linefeed
+          if (nIndex > 0) lstrcat(pClipData, __TEXT("\r\n"));
+
+          // Read the remote text string into the end of our clipboard buffer
+          ReadProcessMemory(hProcess, plvi + 1, &pClipData[lstrlen(pClipData)], 1024, NULL);
+       }
+       // Free the memory in the remote process's address space
+       VirtualFreeEx(hProcess, plvi, 0, MEM_RELEASE);
+       CloseHandle(hProcess);
+       hb_retc( pClipData );
+   }
+
+
+HB_FUNC( CAPTUREWINDOW )
+{
+	 HWND hWnd = ( HWND ) hb_parnl( 1 );
+    HDC hDC;
+    HDC hDCMem = CreateCompatibleDC(NULL);
+    HBITMAP hBmp = NULL;
+    RECT rect;
+    HGDIOBJ hOld;
+    GetWindowRect(hWnd, & rect);
+    {
+        hDC = GetDC(hWnd);
+        hBmp = CreateCompatibleBitmap(hDC, rect.right - rect.left, rect.bottom - rect.top);
+        ReleaseDC(hWnd, hDC);
+    }
+
+    hOld = (HBITMAP) SelectObject(hDCMem, hBmp);
+
+
+    SendMessage(hWnd, WM_PAINT, (WPARAM) hDCMem, 0);
+    SendMessage(hWnd, WM_PRINT, (WPARAM) hDCMem, PRF_CHILDREN | PRF_CLIENT | PRF_ERASEBKGND | PRF_NONCLIENT | PRF_OWNED| PRF_CHECKVISIBLE);
+    SelectObject(hDCMem, hOld);
+    DeleteObject(hDCMem);
+
+    OpenClipboard(hWnd);
+
+    EmptyClipboard();
+    SetClipboardData(CF_BITMAP, hBmp);
+    CloseClipboard();
+
+    hb_retnl( (LONG) hBmp );
+
+}
+
+
+HB_FUNC( ISCHILDWINDOW )
+{
+   hb_retl( GetWindowLong( ( HWND )hb_parnl( 1 ), GWL_STYLE ) && WS_CHILD );
+}
+
+
+
+
+
+
+
+#pragma ENDDUMP

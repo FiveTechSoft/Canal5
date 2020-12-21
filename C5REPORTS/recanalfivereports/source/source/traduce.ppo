@@ -1,0 +1,479 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 10 "source\traduce.prg"
+function Translate()
+
+local oDlg
+local oCCode, cCode := space(1000)
+local oTrans, cTrans := space(1000)
+local oHBFunc
+local oCLFunc
+local oK, oC, oH
+
+
+oDlg = TDialog():New(,,,,, "TRANSLATE",, .F.,,,,,, .F.,,,,,, .F., )
+
+    oCCode := TMultiGet():ReDefine( 101, { | u | If( PCount()==0, cCode, cCode:= u ) }, oDlg,,,,,,, .F.,, .F.,, )
+    oTrans := TMultiGet():ReDefine( 102, { | u | If( PCount()==0, cTrans, cTrans:= u ) }, oDlg,,,,,,, .F.,, .F.,, )
+    oHBFunc := TButton():ReDefine( 103, {||ToCode( cCode, oTrans, .T. )}, oDlg,,, .F.,,,, .F. )
+    oCLFunc := TButton():ReDefine( 104, {||ToCode( cCode, oTrans, .F. )}, oDlg,,, .F.,,,, .F. )
+
+oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .T.,,,, oDlg:bRClicked,,, )
+
+return nil
+
+
+function ToCode( cCode, oTrans, lHB )
+
+local cName
+local aParams
+local nEn
+local cAux
+local cTrans := ""
+local n
+local cType
+local cRet := ""
+local cReturn := ""
+local aParRet := {}
+local cPar
+local oTr := TTransFunc():New( cCode )
+local nCOunt
+
+if lHB
+   cReturn := "HB_FUNC( " + UPPER(oTr:cName) + " )" + Chr(13)+Chr(10)
+else
+   cReturn := "CLIPPER "+ UPPER(oTr:cName) + "( PARAMS )" + Chr(13)+Chr(10)
+endif
+cReturn += "{" + Chr(13)+Chr(10)
+
+nCount := oTr:Count( "rect" )
+
+for n := 1 to len( oTr:aParams )
+
+    do case
+       case "rect" $ oTr:aParams[n,1]
+            cName := strtran(oTr:aParams[n,2],"*","")
+            cReturn += space(5) + "RECT " + cName + ";" + Chr(13)+Chr(10)
+            cReturn += space(5) +cName + ".top = hb_parvni( " + strtrim( n ) + ", 1 );" + Chr(13)+Chr(10)
+            cReturn += space(5) +cName + ".left = hb_parvni( " + strtrim( n ) + ", 2 );" + Chr(13)+Chr(10)
+            cReturn += space(5) +cName + ".bottom = hb_parvni( " + strtrim( n ) + ", 3 );" + Chr(13)+Chr(10)
+            cReturn += space(5) +cName + ".right = hb_parvni( " + strtrim( n ) + ", 4 );" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+       case "point" $ oTr:aParams[n,1]
+            cName := strtran(oTr:aParams[n,2],"*","")
+            cReturn += space(5) + "POINT " + cName + ";" + Chr(13)+Chr(10)
+            cReturn += space(5) +cName + ".x = hb_parvni( " + strtrim( n ) + ", 1 );" + Chr(13)+Chr(10)
+            cReturn += space(5) +cName + ".y = hb_parvni( " + strtrim( n ) + ", 2 );" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+    end
+
+next
+
+do case
+   case oTr:cReturn == "int"
+        cReturn += space(5) +"hb_retni( "
+   case oTr:cReturn == "bool"
+        cReturn += space(5) +"hb_retl( "
+   case left(oTr:cReturn,1) == "h"
+        cReturn += space(5) +"hb_retnl( "
+   otherwise
+        cReturn += space(5) +"hb_ret( "
+endcase
+
+cReturn += oTr:cName + "( "
+
+for n := 1 to len( oTr:aParams )
+    cType := alltrim( oTr:aParams[n,1] )
+    do case
+       case cType == "hdc"
+            cReturn += "(HDC) hb_parnl(" + strtrim(n) +")"
+
+       case cType == "hwnd"
+            cReturn += "(HWND) hb_parnl(" + strtrim(n) +")"
+
+       case cType == "lptstr" .OR. cType == "lpstr"
+            cReturn += "hb_parc(" + strtrim(n) +")"
+
+       case cType == "int" .OR. cType == "uint"
+            cReturn += "hb_parni(" + strtrim(n) +")"
+
+       case "rect" $ cType
+            cReturn += strtran( oTr:aParams[n,2], "*","&" )
+
+       case "point" $ cType
+            cReturn += strtran( oTr:aParams[n,2], "*","&" )
+
+       case cType == "hbrush" .OR. cType == "hpen" .OR. cType == "hregion"
+            cReturn += "hb_parnl(" + strtrim(n) +")"
+
+       case cType == "bool"
+            cReturn += "hb_parl(" + strtrim(n) +")"
+
+       case cType == "dword"
+            cReturn += "hb_parnl(" + strtrim(n) +")"
+
+
+       otherwise
+            cReturn += "(" + upper(oTr:aParams[n,1]) + ")" + "hb_parnl(" + strtrim(n) +")"
+
+
+    endcase
+    if n < len( oTr:aParams )
+       cReturn += ", "
+    endif
+next
+
+cReturn += "));" + Chr(13)+Chr(10)
+cReturn += "}"+ Chr(13)+Chr(10)
+
+
+if !lHB
+   cReturn := strtran(cReturn,"hb_","_")
+endif
+
+
+
+
+oTrans:cText := cReturn
+oTrans:Refresh()
+
+return nil
+
+
+
+
+
+
+static function strtrim(n);return alltrim(str(n))
+
+
+
+
+
+
+
+
+
+
+_HB_CLASS TTransFunc ; function TTransFunc ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TTransFunc" , iif( .F., { }, { @HBObject() } ), @TTransFunc() ) ) ;
+
+; _HB_MEMBER { cStrFunc } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cStrFunc"}, .F. )
+; _HB_MEMBER { cReturn } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cReturn"}, .F. )
+; _HB_MEMBER { cName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cName"}, .F. )
+; _HB_MEMBER { aParams } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aParams"}, .F. )
+; _HB_MEMBER { aEquivale } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aEquivale"}, .F. )
+
+      _HB_MEMBER New( cStr) AS CLASS TTransFunc; oClass:AddMethod( "New", @TTransFunc_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetStr( cStr); oClass:AddMethod( "SetStr", @TTransFunc_SetStr(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetName(); oClass:AddMethod( "GetName", @TTransFunc_GetName(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetReturn(); oClass:AddMethod( "GetReturn", @TTransFunc_GetReturn(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetParams(); oClass:AddMethod( "GetParams", @TTransFunc_GetParams(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetType( n); oClass:AddMethod( "GetType", @TTransFunc_GetType(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetNameParam( n); oClass:AddMethod( "GetNameParam", @TTransFunc_GetNameParam(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Count( cType); oClass:AddMethod( "Count", @TTransFunc_Count(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TTransFunc ;
+
+
+  static FUNCTION TTransFunc_New( cStr ) ; local Self AS CLASS TTransFunc := QSelf() AS CLASS TTransFunc
+
+
+       ::SetStr( cStr )
+       ::cName      := ::GetName()
+       ::cReturn    := ::GetReturn()
+       ::aParams    := {}
+       ::GetParams()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       ::aEquivale := { {"atom"                    ,"parnl"}, {"bool"                    ,"parl"}, {"boolean"                 ,"parl"}, {"byte"                    ,"parni"}, {"callback"                 ,"parnl"}, {"char"                    ,"parc"}, {"colorref"                 ,"parnl"}, {"const"                    ,""}, {"critical_section"      ,""}, {"dword"                    ,""}, {"dword32"                 ,""}, {"dword64"                 ,""}, {"dword_ptr"              ,""}, {"float"                    ,""}, {"haccel"                 ,"parnl"}, {"handle"                 ,"parnl"}, {"hbitmap"                 ,"parnl"}, {"hbrush"                 ,"parnl"}, {"hconv"                    ,"parnl"}, {"hconvlist"              ,"parnl"}, {"hcursor"                 ,"parnl"}, {"hdc"                    ,"parnl"}, {"hddedata"                 ,"parnl"}, {"hdesk"                    ,"parnl"}, {"hdrop"                    ,"parnl"}, {"hdwp"                    ,"parnl"}, {"henhmetafile"           ,"parnl"}, {"hfile"                    ,"parnl"}, {"hfont"                    ,"parnl"}, {"hgdiobj"                 ,"parnl"}, {"hglobal"                 ,"parnl"}, {"hhook"                    ,"parnl"}, {"hicon"                    ,"parnl"}, {"himagelist"              ,"parnl"}, {"himc"                    ,"parnl"}, {"hinstance"              ,"parnl"}, {"hkey"                    ,"parnl"}, {"hkl"                    ,"parnl"}, {"hlocal"                 ,"parnl"}, {"hmenu"                    ,"parnl"}, {"hmetafile"              ,"parnl"}, {"hmodule"                 ,"parnl"}, {"hmonitor"                 ,"parnl"}, {"hpalette"                 ,"parnl"}, {"hpen"                    ,"parnl"}, {"hrgn"                    ,"parnl"}, {"hrsrc"                    ,"parnl"}, {"hsz"                    ,"parnl"}, {"hwinsta"                 ,"parnl"}, {"hwnd"                    ,"parnl"}, {"int"                    ,"parni"}, {"int32"                    ,""}, {"int64"                    ,""}, {"int_ptr"                 ,""}, {"langid"                 ,""}, {"lcid"                    ,""}, {"lctype"                 ,""}, {"long"                    ,""}, {"long32"                 ,""}, {"long64"                 ,""}, {"longlong"                 ,""}, {"long_"                    ,""}, {"lparam"                 ,""}, {"lpbool"                 ,""}, {"lpbyte"                 ,""}, {"lpcolorref"              ,""}, {"lpcritical_section"    ,""}, {"lpcstr"                 ,"parc"}, {"lpctstr"                 ,"parc"}, {"lpcvoid"                 ,""}, {"lpcwstr"                 ,"parc"}, {"lpdword"                 ,""}, {"lphandle"                 ,""}, {"lpint"                    ,""}, {"lplong"                 ,""}, {"lpstr"                    ,""}, {"lptstr"                 ,""}, {"lpvoid"                 ,""}, {"lpword"                 ,""}, {"lpwstr"                 ,""}, {"lresult"                 ,""}, {"luid"                    ,""}, {"pbool"                    ,""}, {"pboolean"                 ,""}, {"pbyte"                    ,""}, {"pchar"                    ,""}, {"pcritical_section"        ,""}, {"pcstr"                    ,""}, {"pctstr"                 ,""}, {"pcwch"                    ,""}, {"pcwstr"                 ,""}, {"pdword"                 ,""}, {"pfloat"                 ,""}, {"phandle"                 ,""}, {"phkey"                    ,""}, {"pint"                    ,""}, {"plcid"                    ,""}, {"plong"                    ,""}, {"pluid"                    ,""}, {"pointer_32"              ,""}, {"pointer_64"              ,""}, {"pshort"                 ,""}, {"pstr"                    ,""}, {"ptbyte"                 ,""}, {"ptbyte"                 ,""}, {"ptchar"                 ,""}, {"ptchar"                 ,""}, {"ptstr"                    ,""}, {"ptstr"                    ,""}, {"puchar"                 ,""}, {"puint"                    ,""}, {"pulong"                 ,""}, {"pushort"                 ,""}, {"pvoid"                    ,""}, {"pwchar"                 ,""}, {"pword"                    ,""}, {"pwstr"                    ,""}, {"regsam"                 ,""}, {"sc_handle"              ,""}, {"sc_lock"                 ,""}, {"service_status_handle" ,""}, {"short"                    ,""}, {"size_t"                 ,""}, {"ssize_ t"                 ,""}, {"tbyte"                    ,""}, {"tchar"                    ,""}, {"uchar"                    ,""}, {"uint"                    ,""}, {"uint32"                 ,""}, {"uint64"                 ,""}, {"uint_ptr"                 ,""}, {"ulong"                    ,""}, {"ulong32"                 ,""}, {"ulong64"                 ,""}, {"ulonglong"              ,""}, {"ulong_ptr"              ,""}, {"unsigned"                 ,""}, {"ushort"                 ,""}, {"void"                    ,""}, {"wchar"                    ,""}, {"winapi"                 ,""}, {"word"                    ,""}, {"wparam"                 ,""} }
+
+
+
+
+
+return self
+
+
+  static FUNCTION TTransFunc_SetStr( cStrFunc ) ; local Self AS CLASS TTransFunc := QSelf() AS CLASS TTransFunc
+
+local n, cLine
+local cStr := ""
+
+  for n := 1 to mlcount( cStrFunc )
+      cLine := memoline( cStrFunc, 255, n )
+      if "//" $ cLine
+         cLine := substr( cLine, 1, at("//", cLine )-1 )
+      endif
+      cStr += alltrim(cLine)
+  next
+  ::cStrFunc := cStr
+
+return ::cStrFunc
+
+
+  static FUNCTION TTransFunc_GetName( ) ; local Self AS CLASS TTransFunc := QSelf() AS CLASS TTransFunc
+
+  local cName
+  local nEn
+  local cStr := ""
+  local n
+  local cLine
+
+  nEn   := at( "(", ::cStrFunc )
+  cName := right( substr( ::cStrFunc, 1, nEn-1), len(substr( ::cStrFunc, 1, nEn-1)) - rat(" ", substr( ::cStrFunc, 1, nEn-1) ) )
+
+  return cName
+
+
+  static FUNCTION TTransFunc_GetReturn( ) ; local Self AS CLASS TTransFunc := QSelf() AS CLASS TTransFunc
+
+  local cReturn
+  local nEn
+
+  nEn := at( ::cName, ::cStrFunc )
+  cReturn := alltrim(lower(left( ::cStrFunc, nEn-1)))
+
+  return cReturn
+
+
+  static FUNCTION TTransFunc_GetParams( ) ; local Self AS CLASS TTransFunc := QSelf() AS CLASS TTransFunc
+
+
+   Local cParam
+   Local nParent1, nParent2
+   Local nPar, cPar
+   Local cAnalizaLine := ::cStrFunc
+   local cName
+   local cType
+
+
+
+   nParent1 := AT( "(", cAnalizaLine )
+   nParent2 := AT( ")", cAnalizaLine )
+
+   cParam := alltrim( substr( cAnalizaLine, nParent1, nParent2 - nParent1+1 ) )
+   cParam := substr( cParam, 2 )
+   cParam := substr( cParam, 1, len( cParam ) - 1 )
+
+   if empty( cParam )
+      return {}
+   endif
+
+   nPar := 1
+
+   while .T.
+
+      cPar := strtoken( cParam, nPar, "," )
+
+      if empty( cPar )
+         exit
+      endif
+
+      cName := right( cPar, len( cPar ) - rat( " ", cPar ) )
+      cType := lower(left( cPar, at( cName, cPar )-1 ))
+
+      if left( cName, 2 ) == "lp"
+         cName := "*" + substr( cName, 3 )
+      endif
+
+      aadd( ::aParams, {cType, cName} )
+
+      nPar++
+
+   enddo
+
+return ::aParams
+
+
+
+  return nil
+
+
+  static FUNCTION TTransFunc_GetType( n ) ; local Self AS CLASS TTransFunc := QSelf() AS CLASS TTransFunc
+
+  local cType
+
+  cType := ::aParams[n,1]
+
+  return cType
+
+
+  static FUNCTION TTransFunc_GetNameParam( n ) ; local Self AS CLASS TTransFunc := QSelf() AS CLASS TTransFunc
+
+  local cName
+
+  cName := ::aParams[n,2]
+
+  return cName
+
+
+  static FUNCTION TTransFunc_Count( cType ) ; local Self AS CLASS TTransFunc := QSelf() AS CLASS TTransFunc
+
+  local nCount := 0
+  local n
+
+  for n := 1 to len( ::aParams )
+      if lower(cType) $ ::aParams[n,1]
+         nCount++
+      endif
+  next
+
+  return nCount

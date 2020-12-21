@@ -1,0 +1,271 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 6 "source\dsgnprgb.prg"
+_HB_CLASS TDsgnPrgBar ; function TDsgnPrgBar ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnPrgBar" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnPrgBar() ) ) ;
+
+; _HB_MEMBER { aProperties } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aProperties"}, .F. )
+
+
+; _HB_MEMBER { lFlat } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFlat"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+; _HB_MEMBER { nClrPane } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrPane"}, .F. )
+; _HB_MEMBER { nClrBarra } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrBarra"}, .F. )
+; _HB_MEMBER { lClientEdge } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lClientEdge"}, .F. )
+; _HB_MEMBER { lStaticEdge } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lStaticEdge"}, .F. )
+; _HB_MEMBER { lPorcentaje } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lPorcentaje"}, .F. )
+; _HB_MEMBER { lVertical } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lVertical"}, .F. )
+; _HB_MEMBER { lBorder } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lBorder"}, .F. )
+ ; ;; _HB_MEMBER { nMax, nMin, nVal } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nMax", "nMin", "nVal"}, .F. )
+; _HB_MEMBER { lSmooth } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lSmooth"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd) AS CLASS TDsgnPrgBar; oClass:AddMethod( "New", @TDsgnPrgBar_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnPrgBar_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnPrgBar_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GenPrg( lDialog, cFrom, cHeader); oClass:AddMethod( "GenPrg", @TDsgnPrgBar_GenPrg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnPrgBar ;
+
+
+      static FUNCTION TDsgnPrgBar_New( nTop, nLeft, nBottom, nRight, oWnd ) ; local Self AS CLASS TDsgnPrgBar := QSelf() AS CLASS TDsgnPrgBar
+
+
+   if nTop <> nil .AND. (nBottom-nTop < 10 .OR. nRight-nLeft < 10)
+      nBottom := nTop + 23
+      nRight  := nLeft + 120
+   endif
+
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::lFlat         := .F.
+   ::nClrText      := 16777215
+   ::nClrBorder    := 0
+   ::cCaption      := "ProgressBar"
+   ::nClrPane      := GetSysColor( 15 )
+   ::nClrBarra     := 8388608
+   ::lActive       := .T.
+   ::lStaticEdge   := .T.
+   ::lPorcentaje   := .T.
+   ::lBorder       := .T.
+   ::nMinHeight    := 1
+   ::nMinWidth     := 1
+   ::nMax          := 10
+   ::nMin          := 0
+   ::nVal          := 7
+   ::lSmooth       := .F.
+   ::lVertical     := .F.
+  ::cObjName         := ::GetObjName()
+
+   ::bContextMenu := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ::aProperties := { "aDotsActives"   , "aRect"          , "cCaption"       , "lActive"        , "lBorder"        , "lCanSize"       , "lCanMove"       , "lClientEdge"    , "lSmooth"        , "lStaticEdge"    , "lPorcentaje"    , "lVertical"      , "lVisible"       , "nClrBarra"      , "nClrPane"       , "nClrText"       , "nMax"           , "nMin"           , "nVal"           , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      }
+
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+return self
+
+
+
+
+  static FUNCTION TDsgnPrgBar_Paint( hDC ) ; local Self AS CLASS TDsgnPrgBar := QSelf() AS CLASS TDsgnPrgBar
+
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local rc2 := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local nHW
+local nWidth, nLeft, nTop, nRight, nBottom, nProp
+local hTheme
+
+if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+   hTheme := C5_OpenThemeData(::oWnd:hWnd, "PROGRESS")
+
+   if hTheme <> nil
+
+
+      nProp := ::nVal / ( ::nMax - ::nMin )
+      if ::lVertical
+         C5_DrawThemeBackground( hTheme, hDC, 2, , rc )
+         rc[1]+=3;rc[2]+=3;rc[3]-=3;rc[4]-=3
+         rc[3] := rc2[1] + ((rc2[3]-rc2[1])*(1-nProp))
+         C5_DrawThemeBackground( hTheme, hDC, 4, , rc )
+      else
+         C5_DrawThemeBackground( hTheme, hDC, 1, , rc )
+         rc[1]+=3;rc[2]+=3;rc[3]-=3;rc[4]-=3
+         rc[4] := rc2[2] + ((rc2[4]-rc2[2])*(1-nProp))
+         C5_DrawThemeBackground( hTheme, hDC, 3, , rc )
+      endif
+
+      C5_CloseThemeData()
+
+   endif
+
+else
+
+
+    FillSolidRect( hDC, rc, ::nClrPane )
+    if ::lStaticEdge
+            DrawEdge( hDC, rc, 0x0002, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+    endif
+
+    if ::lBorder
+       rc2[1]++;rc2[2]++;rc2[3]-=2;rc2[4]-=2
+            Box( hDC, rc2, 0 )
+    endif
+
+    nHW := if( ::lVertical,::nWidth, ::nHeight )
+
+    nHW := int( nHW * 0.6 )
+
+    nWidth := 0
+    nLeft  := rc2[2]
+    nTop   := rc2[1]+ rc2[3]-rc2[1]
+    nRight := rc2[2]
+    nBottom := rc2[3]
+
+    nProp := ::nVal / ( ::nMax - ::nMin )
+
+    while .T.
+
+            if ::lSmooth
+
+                    if ::lVertical
+
+                            nTop    := rc2[1] + (rc2[3]-rc2[1])-( (rc2[3]-rc2[1]) * nProp )
+                            nLeft   := rc2[2] + 4
+                            nBottom := rc2[3] - if(::lSmooth,0,2)
+                            nRight  := rc2[4] - 4
+
+                    else
+                            nTop    := rc2[1] + 2
+                            nLeft   := rc2[2] + if(::lSmooth,0,2)
+                            nRight  := rc2[2] +((rc2[4]-rc2[2])*nProp)
+                            nBottom := rc2[1] +(rc2[3]-rc2[1])-1
+     endif
+            else
+                    if ::lVertical
+                            nLeft   := rc2[2] + 2
+                            nBottom := nTop - if(::lSmooth,0,2)
+                            nRight  := rc2[4] - 2
+                            nTop    := nBottom - nHW
+                            if nTop <  rc2[1] + ((rc2[3]-rc2[1])*(1-nProp))
+           exit
+                            endif
+                    else
+                            nLeft   := nRight + if(::lSmooth,0,2)
+                            nTop    := rc2[1] +2
+                            nRight  := nLeft + nHW
+                            nBottom := rc2[1] +(rc2[3]-rc2[1])-1
+                            if nRight > rc2[2] + ((rc2[4]-rc2[2])* nProp)
+                                exit
+                            endif
+     endif
+            endif
+
+            FillSolidRect(hDC, {nTop,nLeft,nBottom,nRight}, ::nClrBarra )
+
+            if ::lSmooth
+                    exit
+       endif
+
+    enddo
+
+endif
+
+
+if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+   ::DotsSelect( hDC )
+endif
+
+return nil
+
+
+
+      static FUNCTION TDsgnPrgBar_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnPrgBar := QSelf() AS CLASS TDsgnPrgBar
+
+local oMenu
+local o := self
+
+   MenuAddItem("lBorder"      ,,o:lBorder       ,,{|oMenuItem|::lBorder        := !::lBorder       ,::Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("lStaticEdge"  ,,o:lStaticEdge   ,,{|oMenuItem|::lStaticEdge    := !::lStaticEdge   ,::Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("lVertical"    ,,o:lVertical     ,,{|oMenuItem|::lVertical      := !::lVertical     ,::Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("lSmooth"      ,,o:lSmooth       ,,{|oMenuItem|::lSmooth        := !::lSmooth       ,::Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem()
+
+
+return nil
+
+
+
+  static FUNCTION TDsgnPrgBar_GenPrg( lDialog, cFrom, cHeader, cFunciones ) ; local Self AS CLASS TDsgnPrgBar := QSelf() AS CLASS TDsgnPrgBar
+
+local cRet := ""
+local cObject
+local nNum
+local cVar
+
+cObject := ::cObjName
+cVar    := "n" + substr( cObject, 2 )
+
+If( lDialog == nil, lDialog := .T., ) ;
+If( cFrom == nil, cFrom := "oWnd", ) ;
+If( cHeader == nil, cHeader := "", ) ;
+If( cFunciones == nil, cFunciones := "", ) ;
+
+ cHeader += "local " + cObject + Chr(13)+Chr(10)
+ cHeader += "local " + cVar    + " := 0" + Chr(13)+Chr(10)
+
+
+
+
+
+
+ cRet += "        @ " + ::cStrTop(lDialog) + ", " + ::cStrLeft(lDialog) + " METER " + cObject + " VAR " + cVar + " ;" + Chr(13)+Chr(10) + "                 TOTAL " + alltrim(str( ::nMax )) + " ; " + Chr(13)+Chr(10) + "                 SIZE " + ::cStrWidth(lDialog) + ", " + ::cStrHeight(lDialog) + " PIXEL ; " + Chr(13)+Chr(10) + "                 PROMPT " + '"' + alltrim(::cCaption) + '"  ;' + Chr(13)+Chr(10) + "                 BARCOLOR " + alltrim(str(::nClrBarra )) + ", " + alltrim(str(::nClrText)) + "; " + Chr(13)+Chr(10) + "                 OF " + cFrom
+ if !::lPorcentaje
+    cRet += "; " + Chr(13)+Chr(10)
+    cRet += "                 NOPERCENTAGE "
+ endif
+ cRet += Chr(13)+Chr(10)
+
+return cRet

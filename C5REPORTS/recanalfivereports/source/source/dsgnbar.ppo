@@ -1,0 +1,788 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 6 "source\dsgnbar.prg"
+static hOldTheme
+
+_HB_CLASS TDsgnBar ; function TDsgnBar ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnBar" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnBar() ) ) ;
+
+; _HB_MEMBER { nSide } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nSide"}, .F. )
+; _HB_MEMBER { hTheme } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hTheme"}, .F. )
+; _HB_MEMBER { hBmp } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hBmp"}, .F. )
+; _HB_MEMBER { lTemas } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lTemas"}, .F. )
+; _HB_MEMBER { l3D } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"l3D"}, .F. )
+; _HB_MEMBER { lImages } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lImages"}, .F. )
+; _HB_MEMBER { lText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lText"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd, nTipo) AS CLASS TDsgnBar; oClass:AddMethod( "New", @TDsgnBar_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnBar_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnBar_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AddItem( cText, cFileName, lSeparator); oClass:AddMethod( "AddItem", @TDsgnBar_AddItem(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER KeyDown( nKey, nFlags); oClass:AddMethod( "KeyDown", @TDsgnBar_KeyDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Destroy(); oClass:AddMethod( "Destroy", @TDsgnBar_Destroy(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MakeBar(); oClass:AddMethod( "MakeBar", @TDsgnBar_MakeBar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ResizeItems(); oClass:AddMethod( "ResizeItems", @TDsgnBar_ResizeItems(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoPrev(); oClass:AddMethod( "GoPrev", @TDsgnBar_GoPrev(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GoNext(); oClass:AddMethod( "GoNext", @TDsgnBar_GoNext(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER DrawChevron( hDC); oClass:AddMethod( "DrawChevron", @TDsgnBar_DrawChevron(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER DeleteChild( o); oClass:AddMethod( "DeleteChild", @TDsgnBar_DeleteChild(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ShapeOver( nRow, nCol); oClass:AddMethod( "ShapeOver", @TDsgnBar_ShapeOver(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnBar ;
+
+
+      static FUNCTION TDsgnBar_New( nTop, nLeft, nBottom, nRight, oWnd, nSide ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+
+local o := self
+local aClient := {0,0,0,0}
+
+If( nSide == nil, nSide := 1, ) ;
+
+   if oWnd <> nil
+      aClient := oWnd:oForm:GetClientRect()
+   endif
+
+   do case
+      case nSide == 1
+           nTop    := aClient[1]
+           nLeft   := aClient[2]
+           nBottom := nTop + 40
+           nRight  := aClient[4]
+   endcase
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::lBorder        := .T.
+   ::lCanMove       := .F.
+   ::lCanSize       := .F.
+   ::l3D            := .T.
+   ::aDotsActives   := {0,0,0,0,0,0,0,0}
+   ::nSide          := nSide
+   ::hBmp           := 0
+   ::lContainer     := .T.
+   ::lTemas         := lTemas() .AND. !::oWnd:lPocketPc()
+   ::lImages        := .T.
+   ::lText          := .T.
+   ::nClrBorder     := 0
+   ::nClrPane       := GetSysColor( 15 )
+   ::aShapes         := {}
+   ::bContextMenu   := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+   ::aProperties    := {""}
+  ::cObjName         := ::GetObjName()
+
+   if ::oWnd <> nil
+      ::oWnd:oForm:oBar := self
+   endif
+
+   ::bKeyChar := {|nKey,nFlags| o:KeyDown( nKey, nFlags ) }
+
+
+
+   ::aProperties := { "lImages"        , "lText"          , "nSide"          }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ::aProperties :=  { "aDotsActives"   , "aRect"          , "aShapes"        , "lBorder"        , "lCanSize" , "lCanMove"       , "lEditable"      , "lVisible"       , "lImages"        , "lText"          , "nSide"          , "nOption"        , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      }
+
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+
+
+return self
+
+
+
+  static FUNCTION TDsgnBar_AddItem( cText, cFileName, lSeparator, lPopup ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+local oItem
+local nLen := len( ::aShapes )
+local nTop, nLeft, nBottom, nRight
+
+If( cText == nil, cText := "", ) ;
+If( cFileName == nil, cFileName := "bmps\bitmap.bmp", ) ;
+If( lSeparator == nil, lSeparator := .F., ) ;
+If( lPopup == nil, lPopup := .F., ) ;
+
+if nLen == 0
+   nTop    := ::nTop  + 2
+   nLeft   := ::nLeft + 10
+   nBottom := ::nBottom - 2
+else
+   nTop    := ::aShapes[nLen]:nTop
+   nLeft   := ::aShapes[nLen]:nRight+1
+   nBottom := ::aShapes[nLen]:nBottom
+endif
+
+nRight  := nLeft + if( lSeparator, 8, (::nHeight/2)*3 )
+
+if lPopup
+   nRight += 6
+endif
+
+
+oItem := TItemBar():New( nTop, nLeft, nBottom, nRight, ::oWnd, self, , cFileName, lSeparator )
+
+aadd( ::aShapes, oItem )
+
+return nil
+
+
+
+
+  static FUNCTION TDsgnBar_Paint( hDC ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+local rc, n
+local aClient := ::aRect
+local oShape
+local hDCMem, hOldBmp
+local hTheme, color
+local nRight
+local lChangeTheme := .T.
+local nTop, nLeft, nBottom
+local oBtn
+
+if ::hBmp == 0
+   for each oBtn in ::aShapes
+       oBtn:oWnd := ::oWnd
+       oBtn:oParent := self
+   next
+endif
+
+do case
+   case ::nSide == 1
+        nTop    := aClient[1]
+        nLeft   := aClient[2]
+        nBottom := nTop + 30
+        nRight  := aClient[4]
+        ::aRect := {nTop, nLeft, nBottom, nRight}
+endcase
+
+
+
+
+
+
+
+
+
+
+if ::lTemas <> lTemas() .AND. !::oWnd:lPocketPc()
+   ::ResizeItems()
+   ::MakeBar()
+   ::lTemas := lTemas() .AND. !::oWnd:lPocketPc()
+endif
+
+if ::hBmp == 0
+
+   hDCMem  := CreateCompatibleDC( ::oWnd:hDC )
+   ::hBmp  := CreateCompatibleBitmap( ::oWnd:hDC, 1300, ::nHeight )
+   hOldBmp := SelectObject( hDCMem, ::hBmp )
+
+   do case
+      case ::nSide == 1
+           ::nRight := aClient[4]
+      case ::nSide == 2
+           ::nBottom := aClient[3]
+      case ::nSide == 3
+           ::nLeft := aClient[4]-::nWidth
+           ::nBottom := aClient[3]
+      case ::nSide == 4
+           ::nTop := aClient[3]-::nHeight
+   endcase
+
+
+
+   rc := {0, 0, ::nHeight, 1300}
+
+   if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "REBAR" )
+      if hTheme <> nil
+         hOldTheme := hTheme
+         color := GetThemeColor( hTheme, 3, nil, 3808 )
+         FillSolidRect( hDCMem, rc, color )
+         C5_DrawThemeBackground( hTheme, hDCMem, 1, nil , {2,0, ::nHeight-4, 6} )
+
+         C5_DrawThemeEdge( hTheme, hDCMem, 3, nil, {rc[1],rc[2],rc[3],rc[4]}, 0x0001, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+         C5_DrawThemeEdge( hTheme, hDCMem, 3, nil, {rc[1]+1,rc[2]+1,rc[3]-1,rc[4]-1}, 0x0004, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+         C5_CloseThemeData()
+      endif
+
+   else
+      FillSolidRect( hDCMem, rc, GetSysColor(15), 0 )
+
+      rc[1]++
+      rc[2]++
+
+      DrawFrameControl(hDCMem, rc, 4, 0x0010  )
+   endif
+
+   for n := 1 to len( ::aShapes )
+       oShape := ::aShapes[n]
+       nRight := oShape:Paint( hDCMem )
+       if n < len( ::aShapes )
+          if nRight + ::aShapes[n+1]:nWidth > aClient[4]-17
+             ::DrawChevRon( hDC )
+             exit
+          endif
+       endif
+   next
+
+   SelectObject( hDCMem, hOldBmp )
+   BitBlt( hDC, ::nTop, ::nLeft, 1300, ::nHeight, hDCMem, 0, 0, 13369376 )
+   DeleteDC( hDCMem )
+
+endif
+
+hDCMem  := CreateCompatibleDC( ::oWnd:hDC )
+hOldBmp := SelectObject( hDCMem, ::hBmp )
+
+
+StretchBlt( hDC, ::nLeft, ::nTop, aClient[4]-aClient[2], ::nHeight, hDCMem,   0,       0, aClient[4]-aClient[2], ::nHeight, 13369376 )
+
+SelectObject( hDCMem, hOldBmp )
+DeleteDC( hDCMem )
+
+for each oShape in ::aShapes
+    if oShape:nItemId == ::oWnd:oSelected:nItemId
+       oShape:DotsSelect( hDC )
+       exit
+    endif
+next
+
+
+if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+   ::DotsSelect( hDC )
+endif
+
+return nil
+
+
+  static FUNCTION TDsgnBar_DrawChevron( hDC ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+local aClient := ::oWnd:oForm:GetClientRect()
+local hTheme
+local c := chr(187)
+local rc := {aClient[1]-::nHeight,aClient[4]-17,aClient[1],aClient[4]}
+
+if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+   hTheme := C5_OpenThemeData(::oWnd:hWnd, "REBAR" )
+   C5_DrawThemeBackground( hTheme, hDC, 4, 2 , rc )
+   C5_CloseThemeData()
+else
+   DrawText( hDC, c, rc, nOr( 0x00000001 ) )
+endif
+
+return nil
+
+
+
+      static FUNCTION TDsgnBar_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+local oMenu
+local o := self
+
+MenuAddItem("Imágenes",,o:lImages == .T.,,{|oMenuItem| o:lImages := !o:lImages, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+MenuAddItem("Textos"  ,,o:lText   == .T.,,{|oMenuItem| o:lText   := !o:lText  , o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+MenuAddItem( "Altura",, .F.,,,,,,,,, .F.,,, .F. )
+MenuBegin( .F.,,, .F., .F. )
+   MenuAddItem("28",,o:nHeight == 28,,{|oMenuItem| o:nHeight := 28, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("32",,o:nHeight == 32,,{|oMenuItem| o:nHeight := 32, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("36",,o:nHeight == 36,,{|oMenuItem| o:nHeight := 36, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("40",,o:nHeight == 40,,{|oMenuItem| o:nHeight := 40, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("44",,o:nHeight == 44,,{|oMenuItem| o:nHeight := 44, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("48",,o:nHeight == 48,,{|oMenuItem| o:nHeight := 48, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("52",,o:nHeight == 52,,{|oMenuItem| o:nHeight := 52, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("56",,o:nHeight == 56,,{|oMenuItem| o:nHeight := 56, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("60",,o:nHeight == 60,,{|oMenuItem| o:nHeight := 60, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("64",,o:nHeight == 64,,{|oMenuItem| o:nHeight := 64, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("68",,o:nHeight == 68,,{|oMenuItem| o:nHeight := 68, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("70",,o:nHeight == 70,,{|oMenuItem| o:nHeight := 70, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("74",,o:nHeight == 74,,{|oMenuItem| o:nHeight := 74, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("78",,o:nHeight == 78,,{|oMenuItem| o:nHeight := 78, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+   MenuAddItem("82",,o:nHeight == 82,,{|oMenuItem| o:nHeight := 82, o:ResizeItems(),o:MakeBar(),::oWnd:Refresh()},,,,,,,.F.,,,.F. )
+MenuEnd()
+
+
+return nil
+
+
+
+   static FUNCTION TDsgnBar_KeyDown( nKey, nFlags ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+
+do case
+   case nKey == 43
+        ::AddItem()
+        ::MakeBar()
+        ::oWnd:Refresh()
+        return .T.
+
+endcase
+
+return .F.
+
+
+   static FUNCTION TDsgnBar_Destroy( nKey, nFlags ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+
+if ::hBmp <> nil
+   DeleteObject( ::hBmp )
+endif
+
+return nil
+
+
+   static FUNCTION TDsgnBar_MakeBar( ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+
+  DeleteObject( ::hBmp ); ::hBmp := 0
+
+return nil
+
+
+  static FUNCTION TDsgnBar_ResizeItems( ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+local oBtn, n
+local nLen := len( ::aShapes )
+local aClient := ::oWnd:oForm:GetClientRect()
+
+::aRect[1] := aClient[1]-::nHeight
+::aRect[3] := aClient[1]
+
+for n := 1 to nLen
+
+    ::aShapes[n]:nTop    := ::nTop    + 2
+    ::aShapes[n]:nBottom := ::nBottom - 2
+    ::aShapes[n]:nLeft   := if ( n == 1,::nLeft +10, ::aShapes[n-1]:nRight+1 )
+    ::aShapes[n]:nRight  := ::aShapes[n]:nLeft + + if( ::aShapes[n]:lSeparator, 8, (::nHeight/2)*3 )
+    if ::aShapes[n]:lPopup
+       ::aShapes[n]:nRight += 6
+    endif
+next
+
+return nil
+
+
+
+
+   static FUNCTION TDsgnBar_GoPrev( ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+local n, nLen, nFocus
+nLen := len( ::aShapes )
+
+for n := 1 to nLen
+    if ::aShapes[n]:nItemId == ::oWnd:oSelected:nItemId
+       nFocus := n-1
+       if nFocus < 1
+          nFocus := nLen
+       endif
+       ::oWnd:oSelected := ::aShapes[nFocus]
+       exit
+    endif
+next
+
+::oWnd:Refresh()
+
+
+return nil
+
+
+   static FUNCTION TDsgnBar_GoNext( ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+local n, nLen, nFocus
+nLen := len( ::aShapes )
+
+for n := 1 to nLen
+    if ::aShapes[n]:nItemId == ::oWnd:oSelected:nItemId
+       nFocus := n+1
+       if nFocus > nLen
+          nFocus := 1
+       endif
+       ::oWnd:oSelected := ::aShapes[nFocus]
+       exit
+    endif
+next
+
+::oWnd:Refresh()
+return nil
+
+
+  static FUNCTION TDsgnBar_DeleteChild( o ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+local n, nLen
+local nBorrar := 0
+
+nLen := len( ::aShapes )
+
+for n := 1 to nLen
+    if ::aShapes[n] == o
+       nBorrar := n
+       exit
+    endif
+next
+
+if nBorrar <> 0
+   adel( ::aShapes, nBorrar )
+   asize( ::aShapes, nLen-1)
+   ::ResizeItems()
+   ::MakeBar()
+   ::oWnd:Refresh()
+endif
+
+return nil
+
+
+  static FUNCTION TDsgnBar_ShapeOver( nRow, nCol ) ; local Self AS CLASS TDsgnBar := QSelf() AS CLASS TDsgnBar
+
+local oBtn, oOver
+for each oBtn in ::aShapes
+    oOver := oBtn:ShapeOver( nRow, nCol )
+    if oOver <> nil
+       return oOver
+    endif
+next
+
+if PtInRect( nRow, nCol, {::aRect[1]-5,::aRect[2]-5,::aRect[3]+5,::aRect[4]+5} )
+   return self
+endif
+
+return nil
+
+
+
+
+
+
+
+
+_HB_CLASS TItemBar ; function TItemBar ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TItemBar" , iif( .T., { @TShape() }, { @HBObject() } ), @TItemBar() ) ) ;
+
+; _HB_MEMBER { oParent } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oParent"}, .F. )
+; _HB_MEMBER { lSeparator } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lSeparator"}, .F. )
+; _HB_MEMBER { cFileName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFileName"}, .F. )
+; _HB_MEMBER { nAlign } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nAlign"}, .F. )
+; _HB_MEMBER { lPopup } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lPopup"}, .F. )
+; _HB_MEMBER { nStyle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nStyle"}, .F. )
+; _HB_MEMBER { lPressed } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lPressed"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { lBorder } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lBorder"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd, oBar, cCaption, cFileName, lSeparator) AS CLASS TItemBar; oClass:AddMethod( "New", @TItemBar_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TItemBar_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TItemBar_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cGetFileName(); oClass:AddMethod( "cGetFileName", @TItemBar_cGetFileName(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER KeyDown( nKey, nFlags); oClass:AddMethod( "KeyDown", @TItemBar_KeyDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER KeyChar( nKey, nFlags); oClass:AddMethod( "KeyChar", @TItemBar_KeyChar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Edit(); oClass:AddMethod( "Edit", @TItemBar_Edit(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TItemBar ;
+
+
+  static FUNCTION TItemBar_New( nTop, nLeft, nBottom, nRight, oWnd, oBar, cCaption, cFileName, lSeparator ) ; local Self AS CLASS TItemBar := QSelf() AS CLASS TItemBar
+
+
+       local o := self
+
+       If( lSeparator == nil, lSeparator := .F., ) ;
+       If( cCaption == nil, cCaption := "Button", ) ;
+
+       ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+
+       ::aDotsActives   := {0,0,0,0,0,0,0,0}
+       ::bContextMenu   := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+       ::bKeyChar       := {|nKey,nFlags| o:KeyChar( nKey, nFlags ) }
+       ::bKeyDown       := {|nKey,nFlags| o:KeyDown( nKey, nFlags ) }
+       ::cCaption       := cCaption
+       ::cFileName      := cFileName
+       ::lActive        := .T.
+       ::lBorder        := .T.
+       ::lCanSize       := .F.
+       ::lCanMove       := .F.
+       ::lPopup         := .F.
+       ::lPressed       := .F.
+       ::lSeparator     := lSeparator
+       ::nAlign         := nOr( 0x00000004, 0x00000001, 0x00008000 )
+       ::nStyle         := 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       ::aProperties    := { "aDotsActives"   , "aRect"          , "cCaption"       , "cFileName"      , "lActive"        , "lBorder"        , "lCanSize" , "lCanMove"       , "lEditable"      , "lPopup"         , "lPressed"       , "lSeparator"     , "lVisible"       , "nAlign"         , "nClrText"       , "nStyle"         , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      }
+
+  return self
+
+
+
+  static FUNCTION TItemBar_Paint( hDC ) ; local Self AS CLASS TItemBar := QSelf() AS CLASS TItemBar
+
+local hOldBrush, hOldPen
+local rc, mode
+local hFont, hOldFont, hBmp
+local hTheme := nil
+local nWidth, nHeight
+local nTop
+
+
+   rc := {::aRect[1]-::oParent:aRect[1],::aRect[2]-::oParent:aRect[2],::aRect[3]-::oParent:aRect[1],::aRect[4]-::oParent:aRect[2]}
+
+   hOldFont := SelectObject( hDC, GetStockObject( 17 ) )
+
+   if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "TOOLBAR")
+      if hTheme <> nil
+         if ::lSeparator
+            C5_DrawThemeBackground( hTheme, hDC, 5, 1 , rc )
+         else
+            rc := {::aRect[1]-::oParent:aRect[1],::aRect[2]-::oParent:aRect[2],::aRect[3]-::oParent:aRect[1],::aRect[4]-::oParent:aRect[2]}
+            if ::lPopup
+               rc[4] -= 14
+               C5_DrawThemeBackground( hTheme, hDC, 3, 2 , rc )
+               rc := {::aRect[1]-::oParent:aRect[1],::aRect[2]-::oParent:aRect[2],::aRect[3]-::oParent:aRect[1],::aRect[4]-::oParent:aRect[2]}
+               rc[2] := rc[4] - 14
+               C5_DrawThemeBackground( hTheme, hDC, 4, 2 , rc )
+            else
+               C5_DrawThemeBackground( hTheme, hDC, 1, 2 , rc )
+            endif
+            rc := {::aRect[1]-::oParent:aRect[1],::aRect[2]-::oParent:aRect[2],::aRect[3]-::oParent:aRect[1],::aRect[4]-::oParent:aRect[2]}
+            if ::oParent:lText
+               rc[1] := rc[3] - 20
+            endif
+            if ::lPopup
+               rc[4] -= 14
+            endif
+            if ::oParent:lText
+               C5_DrawThemeText( hTheme, hDC, 1, 2, ::cCaption, ::nAlign, nil, rc )
+            endif
+            rc := {::aRect[1]-::oParent:aRect[1],::aRect[2]-::oParent:aRect[2],::aRect[3]-::oParent:aRect[1],::aRect[4]-::oParent:aRect[2]}
+         endif
+         C5_CloseThemeData()
+      endif
+
+   else
+
+     FillSolidRect( hDC, rc, GetSysColor(15) )
+
+     if ::oParent:l3D
+        DrawEdge( hDC, rc, 0x0004, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+     else
+        DrawFrameControl(hDC, rc, 4, 0x0010  )
+     endif
+
+     mode := SetBkMode( hDC, 1 )
+     rc := {::aRect[1]-::oParent:aRect[1],::aRect[2]-::oParent:aRect[2],::aRect[3]-::oParent:aRect[1],::aRect[4]-::oParent:aRect[2]}
+
+     if ::oParent:lImages
+        rc[1] := rc[3] - 20
+     endif
+
+     if ::oParent:lText
+        DrawText(hDC, ::cCaption, rc, ::nAlign )
+     endif
+
+     SetBkMode( hDC, mode )
+
+   endif
+
+   if file( ::cFileName ) .AND. !::lSeparator
+      rc := {::aRect[1]-::oParent:aRect[1],::aRect[2]-::oParent:aRect[2],::aRect[3]-::oParent:aRect[1],::aRect[4]-::oParent:aRect[2]}
+      nWidth  := rc[4]-rc[2]
+      nHeight := rc[3]-rc[1]
+
+      if ::lPopup
+         nWidth -= 14
+      endif
+      hBmp := ReadBitmap( hDC, ::cFileName )
+      if hBmp <> 0
+         if !empty( ::cCaption )
+            rc[1] := rc[1] + ((nHeight/5)*2)
+         else
+            rc[1] := rc[1] + (nHeight/2)
+         endif
+         rc[1] := rc[1] - (nBmpHeight( hBmp ) /2 )
+         if ::oParent:lImages
+            DrawMasked( hDC, hBmp, rc[1], rc[2]+ nWidth/2 - nBmpWidth( hBmp ) /2 )
+         endif
+         DeleteObject( hBmp )
+      endif
+
+   endif
+
+   SelectObject( hDC, hOldFont )
+
+return rc[4]
+
+
+  static FUNCTION TItemBar_ContextMenu( nRow, nCol ) ; local Self AS CLASS TItemBar := QSelf() AS CLASS TItemBar
+
+local oMenu
+local o := self
+
+MenuAddItem( "Fichero",, .F.,, {|oMenuItem|o:cGetFileName()},,,,,,, .F.,,, .F. )
+MenuAddItem( "lPopup",, .F.,, {|oMenuItem|( o:lPopup     := !o:lPopup,     o:oParent:ResizeItems(),o:oParent:MakeBar(),o:oWnd:Refresh())},,,,,,, .F.,,, .F. )
+MenuAddItem( "l3D",, .F.,, {|oMenuItem|( o:l3D        := !o:l3D,        o:oParent:ResizeItems(),o:oParent:MakeBar(),o:oWnd:Refresh())},,,,,,, .F.,,, .F. )
+MenuAddItem( "lSeparator",, .F.,, {|oMenuItem|( o:lSeparator := !o:lSeparator, o:oParent:ResizeItems(),o:oParent:MakeBar(),o:oWnd:Refresh())},,,,,,, .F.,,, .F. )
+MenuAddItem()
+
+return nil
+
+
+
+  static FUNCTION TItemBar_cGetFileName( ) ; local Self AS CLASS TItemBar := QSelf() AS CLASS TItemBar
+
+local cFiltro := "Imágenes (*.bmp *.gif *.jpg *.ico *.cur ) | *.bmp;*.gif;*.jpg;*.ico;*.cur; |"
+local cFiles := cGetFile( cFiltro, "Selecciona imagen" )
+
+::cFileName := cFiles
+::oParent:MakeBar()
+::oWnd:Refresh()
+
+return nil
+
+
+   static FUNCTION TItemBar_KeyChar( nKey, nFlags ) ; local Self AS CLASS TItemBar := QSelf() AS CLASS TItemBar
+
+
+do case
+
+   case nKey == 32
+
+        ::nStyle ++
+        if ::nStyle > 3
+           ::nStyle := 1
+        endif
+        do case
+           case ::nStyle == 1
+                ::lSeparator := .F.
+                ::lPopup     := .F.
+           case ::nStyle == 2
+                ::lSeparator := .T.
+                ::lPopup     := .F.
+           case ::nStyle == 3
+                ::lSeparator := .F.
+                ::lPopup     := .T.
+        endcase
+        ::oParent:ResizeItems()
+        ::oParent:MakeBar()
+        ::oWnd:Refresh()
+
+
+endcase
+
+return .F.
+
+
+   static FUNCTION TItemBar_KeyDown( nKey, nFlags ) ; local Self AS CLASS TItemBar := QSelf() AS CLASS TItemBar
+
+
+do case
+   case nKey == 107
+        ::oParent:AddItem()
+        ::oParent:MakeBar()
+        ::oWnd:Refresh()
+        return .T.
+   case nKey == 39 .OR. nKey == 40
+        ::oParent:GoNext()
+
+   case nKey == 37  .OR. nKey == 38
+        ::oParent:GoPrev()
+
+endcase
+
+return .F.
+
+
+
+   static FUNCTION TItemBar_Edit( ) ; local Self AS CLASS TItemBar := QSelf() AS CLASS TItemBar
+
+local oFont
+local bValid := {||.T.}
+local oShape := self
+local uVar := padr(oShape:cCaption, 100)
+local nClrPane := ( 241 + ( 241 * 256 ) + ( 235 * 65536 ) )
+
+oFont := TFont():New( "Ms Sans Serif", 0, -10,,,,,,,,,,,,,, )
+
+if oShape:lEditable
+
+
+   ::oWnd:oGet := TGet():New(oShape:nBottom - 19,oShape:nLeft+2,{ | u | If( PCount()==0, uVar, uVar:= u ) },oShape:oWnd,oShape:nWidth-3,17,,,0,nClrPane,oFont,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,.T.,)
+
+
+
+
+
+   ::oWnd:nLastKey := 0
+   ::oWnd:oGet:SetFocus()
+
+   if Upper( ::oWnd:oGet:ClassName() ) <> "TGET"
+      ::oWnd:oGet:Refresh()
+   endif
+
+
+   ::oWnd:oGet:bValid := {|| .T. }
+
+
+
+
+
+
+
+
+
+
+
+   ::oWnd:oGet:bLostFocus := {|| (oShape:oWnd:oGet:Assign(), oShape:oWnd:oGet:VarPut( oShape:oWnd:oGet:oGet:VarGet()), oShape:cCaption := if( oShape:oWnd:nLastKey <> 27, (EnableUndo(),alltrim(oShape:oWnd:oGet:oGet:VarGet())), oShape:cCaption) , If( oShape:oWnd:nLastKey <> 27, Eval( bValid, uVar, oShape:oWnd:nLastKey, Self ), Eval( bValid, nil, oShape:oWnd:nLastKey, Self ) ), oShape:oWnd:oGet:End(), DisableUndo(),oShape:oParent:ResizeItems(), oShape:oParent:MakeBar(), oShape:oWnd:Refresh()) }
+
+   ::oWnd:oGet:bKeyDown := { | nKey | If( nKey == 13 .OR. nKey == 27, ( oShape:oWnd:nLastKey := nKey, oShape:oWnd:oGet:End()), ) }
+
+endif
+
+return nil

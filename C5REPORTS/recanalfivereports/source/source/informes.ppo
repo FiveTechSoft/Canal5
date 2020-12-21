@@ -1,0 +1,2690 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 43 "source\informes.prg"
+static nActivo := 0
+static nIdItem := 100
+static oList
+static oBar
+
+
+
+function Informes()
+
+local oWnd, o, oSp,  oPanel, oFont, nGroup, oMenu
+local hDC, aFonts
+local nTop := 20
+local o1, o2, o3, o4, o5, o6, o7, o8
+
+oFont := TFont():New( "Verdana", 0, -11,,,,,,,,,,,,,, )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+oWnd:Activate( Upper("MAXIMIZED"), oWnd:bLClicked, oWnd:bRClicked, oWnd:bMoved, oWnd:bResized, oWnd:bPainted, oWnd:bKeyDown, oWnd:bInit,,,,,,,,,,, oWnd:bLButtonUp )
+
+return nil
+
+ function ResetBar( lBar )
+
+ local n, nLen
+ If( lBar == nil, lBar := .T., ) ;
+
+ nLen := len( oBar:aControls )
+ for n := 1 to nLen
+     oBar:aControls[n]:lPressed := .F.
+     oBar:aControls[n]:Refresh()
+ next
+ if lBar
+    oBar:aControls[1]:lPressed := .T.
+    oBar:aControls[1]:Refresh()
+    nActivo := 0
+ endif
+
+return nil
+
+
+_HB_CLASS TRptItem ; function TRptItem ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TRptItem" , iif( .F., { }, { @HBObject() } ), @TRptItem() ) ) ;
+
+ ; ; ;; _HB_MEMBER { nTop, nLeft, nBottom, nRight } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nTop", "nLeft", "nBottom", "nRight"}, .F. )
+; _HB_MEMBER { oBanda } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oBanda"}, .F. )
+; _HB_MEMBER { lFocused } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFocused"}, .F. )
+; _HB_MEMBER { lSelected } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lSelected"}, .F. )
+; _HB_MEMBER { nId } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nId"}, .F. )
+; _HB_MEMBER { lBorder } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lBorder"}, .F. )
+; _HB_MEMBER { aOldRect } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aOldRect"}, .F. )
+; _HB_MEMBER { aOldPos } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aOldPos"}, .F. )
+; _HB_MEMBER { aProperties } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aProperties"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oBanda) AS CLASS TRptItem; oClass:AddMethod( "New", @TRptItem_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER GetNewId(); oClass:AddInline( "GetNewId", {|Self | ( ( Self ) ), ++nIdItem }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetRect(); oClass:AddInline( "GetRect", {|Self | ( ( Self ) ), {::nTop, ::nLeft, ::nBottom, ::nRight} }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MoveTo( nTop, nLeft, nBottom, nRight); oClass:AddMethod( "MoveTo", @TRptItem_MoveTo(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TRptItem_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PaintDots( hDC); oClass:AddMethod( "PaintDots", @TRptItem_PaintDots(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PaintSel( hDC, aRect); oClass:AddMethod( "PaintSel", @TRptItem_PaintSel(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Refresh(); oClass:AddInline( "Refresh", {|Self | ( ( Self ) ), ::oBanda:Refresh() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetFocus(); oClass:AddInline( "SetFocus", {|Self, lFocus | ( ( Self ) ), ::lFocused := lFocus, if( ::lFocused, ::SetProperties(),) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Select(); oClass:AddInline( "Select", {|Self, lSel | ( ( Self ) ), ::lSelected := lSel }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProperties(); oClass:AddMethod( "SetProperties", @TRptItem_SetProperties(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetOldRect(); oClass:AddInline( "SetOldRect", {|Self | ( ( Self ) ), ::aOldRect := ::GetRect(), ::aOldRect }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetOldPos(); oClass:AddInline( "SetOldPos", {|Self | ( ( Self ) ), ::aOldPos  := {::nTop, ::nLeft} }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nHeight( nVal); _HB_MEMBER _nHeight( nVal); oClass:AddMethod( "nHeight", @TRptItem_nHeight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nHeight", @TRptItem_nHeight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMedHeight(); oClass:AddInline( "nMedHeight", {|Self | ( ( Self ) ), (::nBottom-::nTop)/2}, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMedWidth(); oClass:AddInline( "nMedWidth", {|Self | ( ( Self ) ), (::nRight-::nLeft)/2}, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nWidth( nVal); _HB_MEMBER _nWidth( nVal); oClass:AddMethod( "nWidth", @TRptItem_nWidth(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nWidth", @TRptItem_nWidth(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AddProperties( aProps); oClass:AddMethod( "AddProperties", @TRptItem_AddProperties(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Copy(); oClass:AddMethod( "Copy", @TRptItem_Copy(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TRptItem ;
+
+
+  static FUNCTION TRptItem_New( nTop, nLeft, nBottom, nRight, oBanda ) ; local Self AS CLASS TRptItem := QSelf() AS CLASS TRptItem
+
+
+local nGrid
+
+      ::aProperties := {"nWidth","nHeight","lBorder"}
+
+      ::nTop      := nTop
+      ::nLeft     := nLeft
+      ::nBottom   := nBottom
+      ::nRight    := nRight
+      ::oBanda    := oBanda
+      ::lFocused  := .F.
+      ::lSelected := .F.
+      ::lBorder   := .F.
+      ::nId       := ::GetNewID()
+
+      if ::oBanda:oWnd:lGrid
+         nGrid := ::oBanda:oWnd:nGrid
+         ::nTop    -= ::nTop    % nGrid
+         ::nLeft   -= ::nLeft   % nGrid
+         ::nBottom -= ::nBottom % nGrid
+         ::nRight  -= ::nRight  % nGrid
+      endif
+      aadd( ::oBanda:aItems, self )
+
+return self
+
+
+  static FUNCTION TRptItem_Paint( hDC, nTop, nLeft, nBottom, nRight ) ; local Self AS CLASS TRptItem := QSelf() AS CLASS TRptItem
+
+local hPen, hOldPen
+
+
+if nTop == nil
+   nTop    := ::nTop
+   nLeft   := ::nLeft
+   nBottom := ::nBottom
+   nRight  := ::nRight
+else
+   if valtype( nTop ) == "A"
+      nTop    := nTop[1]
+      nLeft   := nTop[2]
+      nBottom := nTop[3]
+      nRight  := nTop[4]
+   endif
+endif
+
+hPen := CreatePen( 0, 1, ( 220 + ( 220 * 256 ) + ( 220 * 65536 ) ) )
+hOldPen := SelectObject( hDC, hPen )
+
+MoveTo( hDC, nLeft,  nTop )
+LineTo( hDC, nRight, nTop )
+LineTo( hDC, nRight, nBottom )
+LineTo( hDC, nLeft,  nBottom )
+LineTo( hDC, nLeft,  nTop )
+
+SelectObject( hDC, hOldPen )
+DeleteObject( hPen )
+
+return nil
+
+
+  static FUNCTION TRptItem_PaintSel( hDC, aRect ) ; local Self AS CLASS TRptItem := QSelf() AS CLASS TRptItem
+
+local hPen, hOldPen
+local nTop, nLeft, nBottom, nRight
+
+nTop    := aRect[1]
+nLeft   := aRect[2]
+nBottom := aRect[3]
+nRight  := aRect[4]
+
+hPen := CreatePen( 0, 1, ( 220 + ( 220 * 256 ) + ( 220 * 65536 ) ) )
+hOldPen := SelectObject( hDC, hPen )
+
+MoveTo( hDC, nLeft,  nTop )
+LineTo( hDC, nRight, nTop )
+LineTo( hDC, nRight, nBottom )
+LineTo( hDC, nLeft,  nBottom )
+LineTo( hDC, nLeft,  nTop )
+
+SelectObject( hDC, hOldPen )
+DeleteObject( hPen )
+
+
+return nil
+
+
+  static FUNCTION TRptItem_PaintDots( hDC ) ; local Self AS CLASS TRptItem := QSelf() AS CLASS TRptItem
+
+
+local aRect
+local nColor
+
+if ::lSelected
+   nColor := 12632256
+endif
+
+if ::lFocused
+   if len( ::oBanda:aSelecteds ) > 0
+      nColor := 16711680
+   else
+      nColor := 0
+   endif
+endif
+
+if ::lSelected
+
+      aRect := { ::nTop, ::nLeft, ::nTop + 5, ::nLeft+5}
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nTop, ::nLeft+::nMedWidth-2, ::nTop + 5, ::nLeft+::nMedWidth+3}
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nTop, ::nRight-5, ::nTop + 5, ::nRight}
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nTop+::nMedHeight-2, ::nRight-5, ::nTop +::nMedHeight+ 3, ::nRight}
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nBottom-5, ::nRight-5, ::nBottom, ::nRight}
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nBottom-5, ::nLeft+::nMedWidth-2, ::nBottom, ::nLeft+::nMedWidth+3}
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nBottom-5, ::nLeft, ::nBottom , ::nLeft+5}
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nTop+::nMedHeight-2, ::nLeft, ::nTop +::nMedHeight+ 3, ::nLeft+5}
+      FillSolidRect( hDC, aRect, nColor )
+
+else
+   if ::lFocused
+
+      asize( ::oBanda:aDots, 0 )
+
+      aRect := { ::nTop, ::nLeft, ::nTop + 5, ::nLeft+5}
+      aadd( ::oBanda:aDots, aRect )
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nTop, ::nLeft+::nMedWidth-2, ::nTop + 5, ::nLeft+::nMedWidth+3}
+      aadd( ::oBanda:aDots, aRect )
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nTop, ::nRight-5, ::nTop + 5, ::nRight}
+      aadd( ::oBanda:aDots, aRect )
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nTop+::nMedHeight-2, ::nRight-5, ::nTop +::nMedHeight+ 3, ::nRight}
+      aadd( ::oBanda:aDots, aRect )
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nBottom-5, ::nRight-5, ::nBottom, ::nRight}
+      aadd( ::oBanda:aDots, aRect )
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nBottom-5, ::nLeft+::nMedWidth-2, ::nBottom, ::nLeft+::nMedWidth+3}
+      aadd( ::oBanda:aDots, aRect )
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nBottom-5, ::nLeft, ::nBottom , ::nLeft+5}
+      aadd( ::oBanda:aDots, aRect )
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nTop+::nMedHeight-2, ::nLeft, ::nTop +::nMedHeight+ 3, ::nLeft+5}
+      aadd( ::oBanda:aDots, aRect )
+      FillSolidRect( hDC, aRect, nColor )
+
+      aRect := { ::nTop, ::nLeft, ::nBottom, ::nRight}
+      aadd( ::oBanda:aDots, aRect )
+
+   endif
+endif
+return self
+
+
+
+  static FUNCTION TRptItem_MoveTo( nTop, nLeft, nBottom, nRight ) ; local Self AS CLASS TRptItem := QSelf() AS CLASS TRptItem
+
+local nWidth := ::nWidth
+local nHeight := ::nHeight
+
+If( nBottom == nil, nBottom := nTop + nHeight, ) ;
+If( nRight == nil, nRight := nLeft + nWidth, ) ;
+
+
+::nLeft := nLeft
+::nTop  := nTop
+::nBottom := nBottom
+::nRight := nRight
+
+
+return nil
+
+
+  static FUNCTION TRptItem_SetProperties( lReset ) ; local Self AS CLASS TRptItem := QSelf() AS CLASS TRptItem
+
+Local nGroup, oInsp := Inspector()
+local hDC, aFonts
+
+     If( lReset == nil, lReset := .T., ) ;
+
+     if lReset
+        oInsp:Reset()
+        oList:oObject := self
+     endif
+
+     nGroup := oInsp:AddGroup( "Posición" )
+
+     oInsp:AddItem( "nHeight", "Alto", int(::nHeight),,nGroup )
+     oInsp:AddItem( "nWidth",  "Ancho", int(::nWidth),,nGroup )
+     oInsp:AddItem( "nTop",    "Arriba", int(::nTop),,nGroup )
+     oInsp:AddItem( "nLeft",   "Izquierda", int(::nLeft),,nGroup )
+
+     if lReset
+        oInsp:Refresh()
+     endif
+
+return nil
+
+
+  static FUNCTION TRptItem_nWidth( nVal ) ; local Self AS CLASS TRptItem := QSelf() AS CLASS TRptItem
+
+
+if pcount() > 0
+   ::nRight := ::nLeft + nVal
+endif
+
+return ::nRight - ::nLeft
+
+
+
+
+  static FUNCTION TRptItem_nHeight( nVal ) ; local Self AS CLASS TRptItem := QSelf() AS CLASS TRptItem
+
+
+if pcount() > 0
+   ::nBottom := ::nTop + nVal
+endif
+
+return ::nBottom - ::nTop
+
+
+
+
+  static FUNCTION TRptItem_AddProperties( aProps ) ; local Self AS CLASS TRptItem := QSelf() AS CLASS TRptItem
+
+local n, nLen
+
+nLen := len( aProps )
+
+for n := 1 to nLen
+    aadd( ::aProperties, aProps[n] )
+next
+
+return nil
+
+
+  static FUNCTION TRptItem_Copy( ) ; local Self AS CLASS TRptItem := QSelf() AS CLASS TRptItem
+
+local cStr := ""
+local n, nLen
+local uData, cType
+local nProps := 0
+
+nLen := len( ::aProperties )
+cStr += ::ClassName() + Chr(13)+Chr(10)
+
+for n = 1 to nLen
+
+    uData := OSend( Self, ::aProperties[ n ] )
+
+    cType = ValType( uData )
+
+    cStr += ( I2Bin( Len( ::aProperties[ n ] ) ) + ::aProperties[ n ] )
+
+    cStr += ( cType + I2Bin( Len( uData := cValToChar( uData ) ) ) +  uData )
+
+    nProps ++
+
+next
+
+cStr := I2Bin( nProps ) + cStr
+
+return cStr
+
+
+
+
+
+
+
+
+
+
+
+_HB_CLASS TRptTextItem ; function TRptTextItem ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TRptTextItem" , iif( .T., { @TRptItem() }, { @HBObject() } ), @TRptTextItem() ) ) ;
+
+; _HB_MEMBER { cText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cText"}, .F. )
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+; _HB_MEMBER { cFaceName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFaceName"}, .F. )
+; _HB_MEMBER { nHFont } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nHFont"}, .F. )
+; _HB_MEMBER { nWFont } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nWFont"}, .F. )
+; _HB_MEMBER { lBold } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lBold"}, .F. )
+; _HB_MEMBER { lUnderline } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lUnderline"}, .F. )
+; _HB_MEMBER { lItalic } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lItalic"}, .F. )
+; _HB_MEMBER { lStrike } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lStrike"}, .F. )
+; _HB_MEMBER { nEscapement } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nEscapement"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oBanda, cText) AS CLASS TRptTextItem; oClass:AddMethod( "New", @TRptTextItem_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TRptTextItem_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProperties(); oClass:AddMethod( "SetProperties", @TRptTextItem_SetProperties(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TRptTextItem ;
+
+
+  static FUNCTION TRptTextItem_New( nTop, nLeft, nBottom, nRight, oBanda, cText ) ; local Self AS CLASS TRptTextItem := QSelf() AS CLASS TRptTextItem
+
+    If( cText == nil, cText := "Label", ) ;
+
+    ::TRptItem:New( nTop, nLeft, nBottom, nRight, oBanda )
+
+    ::AddProperties( {"cText","nClrText","cFacename","nHFont","nWFont","lBold","lUnderline","lItalic","lStrike","nEscapement"} )
+
+    ::cText      := cText
+    ::nClrText   := 0
+    ::cFaceName  := "Ms Sans Serif"
+    ::nHFont     := -10
+    ::nWFont     := 0
+    ::lBold      := .F.
+    ::lUnderline := .F.
+    ::lItalic    := .F.
+    ::lStrike    := .F.
+    ::nEscapement := 0
+
+return self
+
+
+
+  static FUNCTION TRptTextItem_SetProperties( ) ; local Self AS CLASS TRptTextItem := QSelf() AS CLASS TRptTextItem
+
+
+local oInsp := Inspector()
+local hDC, aFonts
+local nGroup
+
+     oInsp:Reset()
+
+     oList:oObject := self
+
+     nGroup := oInsp:AddGroup( "Apariencia" )
+
+     oInsp:AddItem( "cText",   "Texto", ::cText,,nGroup )
+     oInsp:AddItem( "nClrText","Color", ::nClrText,,nGroup )
+     oInsp:AddItem( "lBorder", "Borde", ::lBorder,,nGroup )
+
+     nGroup := oInsp:AddGroup( "Fuente" )
+
+     oInsp:AddItem( "cFaceName", "Nombre", ::cFaceName, "A", nGroup,,,{||hDC := GetDC( oInsp:hWnd ),aFonts := GetFontNames(hDC), aFonts := asort( aFonts ),ReleaseDC(oInsp:hWnd,hDC), aFonts} )
+     oInsp:AddItem( "nWFont",    "Ancho", ::nWFont,,nGroup )
+     oInsp:AddItem( "nHFont",    "Alto", ::nHFont,,nGroup )
+     oInsp:AddItem( "lItalic",   "Cursiva", ::lItalic,,nGroup )
+     oInsp:AddItem( "lUnderline","Subrayado", ::lUnderline,,nGroup )
+     oInsp:AddItem( "lStrike",   "Tachado", ::lStrike,,nGroup )
+     oInsp:AddItem( "lBold",     "Negrita", ::lBold,,nGroup )
+
+     ::TRptItem:SetProperties( .F. )
+
+     oInsp:Refresh()
+
+return nil
+
+
+  static FUNCTION TRptTextItem_Paint( hDC ) ; local Self AS CLASS TRptTextItem := QSelf() AS CLASS TRptTextItem
+
+
+
+
+
+
+local hFont := CreateFont( { ::nHFont, ::nWFont, ::nEscapement, 0, if( ::lBold, 700, 400), ::lItalic, ::lUnderLine, ::lStrike, 0, 0, 0, 0, 0, ::cFaceName } )
+
+
+local hOldFont
+local oFont
+
+
+
+hOldFont := SelectObject( hDC, hFont )
+
+::TRptItem:Paint( hDC )
+
+TextOut( hDC, ::nTop+3, ::nLeft+3, ::cText )
+
+SelectObject( hDC, hOldFont )
+DeleteObject( hFont )
+
+
+::PaintDots( hDC )
+
+
+return self
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_HB_CLASS TRptLineItem ; function TRptLineItem ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TRptLineItem" , iif( .T., { @TRptItem() }, { @HBObject() } ), @TRptLineItem() ) ) ;
+
+; _HB_MEMBER { nGrueso } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nGrueso"}, .F. )
+; _HB_MEMBER { nColor } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nColor"}, .F. )
+; _HB_MEMBER { nStyle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nStyle"}, .F. )
+; _HB_MEMBER { lVertical } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lVertical"}, .F. )
+; _HB_MEMBER { lHorizontal } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lHorizontal"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oBanda, nGrueso, nStyle, nColor) AS CLASS TRptLineItem; oClass:AddMethod( "New", @TRptLineItem_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TRptLineItem_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProperties(); oClass:AddMethod( "SetProperties", @TRptLineItem_SetProperties(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TRptLineItem ;
+
+
+  static FUNCTION TRptLineItem_New( nTop, nLeft, nBottom, nRight, oBanda, nGrueso, nStyle, nColor ) ; local Self AS CLASS TRptLineItem := QSelf() AS CLASS TRptLineItem
+
+
+If( nGrueso == nil, nGrueso := 1, ) ;
+If( nStyle == nil, nStyle := 0, ) ;
+If( nColor == nil, nColor := 0, ) ;
+
+    ::TRptItem:New( nTop, nLeft, nBottom, nRight, oBanda )
+
+    ::AddProperties( {"nGrueso","nColor","nStyle","lVertical","lHorizontal"} )
+
+    ::nGrueso := nGrueso
+    ::nStyle  := nStyle
+    ::nColor  := nColor
+    ::lVertical := .F.
+    ::lHorizontal := .F.
+
+return self
+
+
+  static FUNCTION TRptLineItem_Paint( hDC ) ; local Self AS CLASS TRptLineItem := QSelf() AS CLASS TRptLineItem
+
+
+local hPen
+local hOldPen
+
+hPen    := CreatePen( ::nStyle, ::nGrueso, ::nColor )
+hOldPen := SelectObject( hDC, hPen )
+
+::TRptItem:Paint( hDC )
+
+if ::lVertical
+   Moveto( hDC, ::nLeft, ::nTop )
+   Lineto( hDC, ::nLeft, ::nBottom )
+else
+   if ::lHorizontal
+      Moveto( hDC, ::nLeft, ::nTop )
+      Lineto( hDC, ::nRight, ::nTop )
+   else
+      Moveto( hDC, ::nLeft, ::nTop )
+      Lineto( hDC, ::nRight, ::nBottom )
+   endif
+endif
+
+SelectObject( hDC, hOldPen )
+DeleteObject( hPen )
+
+::PaintDots( hDC )
+
+
+
+return self
+
+
+  static FUNCTION TRptLineItem_SetProperties( ) ; local Self AS CLASS TRptLineItem := QSelf() AS CLASS TRptLineItem
+
+
+local oInsp := Inspector()
+local hDC, aFonts
+local nGroup
+
+     oInsp:Reset()
+     oList:oObject := self
+     nGroup := oInsp:AddGroup( "Apariencia" )
+
+     oInsp:AddItem( "nColor",     "Color", ::nColor,,nGroup )
+     oInsp:AddItem( "nStyle",     "Estilo", ::nStyle,,nGroup )
+     oInsp:AddItem( "nGrueso",    "Grueso", ::nGrueso,,nGroup )
+     oInsp:AddItem( "lVertical",  "Vertical", ::lVertical,,nGroup )
+     oInsp:AddItem( "lHorizontal","Horizontal", ::lHorizontal,,nGroup )
+
+     ::TRptItem:SetProperties(.F.)
+     oInsp:Refresh()
+
+return nil
+
+
+
+
+
+
+
+
+
+
+_HB_CLASS TRptBoxItem ; function TRptBoxItem ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TRptBoxItem" , iif( .T., { @TRptLineItem() }, { @HBObject() } ), @TRptBoxItem() ) ) ;
+
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TRptBoxItem_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProperties(); oClass:AddMethod( "SetProperties", @TRptBoxItem_SetProperties(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TRptBoxItem ;
+
+
+  static FUNCTION TRptBoxItem_Paint( hDC ) ; local Self AS CLASS TRptBoxItem := QSelf() AS CLASS TRptBoxItem
+
+
+local hPen
+local hOldPen
+
+hPen    := CreatePen( ::nStyle, ::nGrueso, ::nColor )
+hOldPen := SelectObject( hDC, hPen )
+
+Moveto( hDC, ::nLeft, ::nTop )
+Lineto( hDC, ::nRight, ::nTop )
+Lineto( hDC, ::nRight, ::nBottom )
+Lineto( hDC, ::nLeft, ::nBottom )
+Lineto( hDC, ::nLeft, ::nTop )
+
+SelectObject( hDC, hOldPen )
+DeleteObject( hPen )
+
+::PaintDots( hDC )
+
+
+
+return self
+
+
+  static FUNCTION TRptBoxItem_SetProperties( ) ; local Self AS CLASS TRptBoxItem := QSelf() AS CLASS TRptBoxItem
+
+
+local oInsp := Inspector()
+local hDC, aFonts
+local nGroup
+
+     oInsp:Reset()
+     oList:oObject := self
+
+     nGroup := oInsp:AddGroup( "Apariencia" )
+
+     oInsp:AddItem( "nColor",  "Color", ::nColor,,nGroup )
+     oInsp:AddItem( "nStyle",  "Estilo", ::nStyle,,nGroup )
+     oInsp:AddItem( "nGrueso", "Grueso", ::nGrueso,,nGroup )
+
+     ::TRptLineItem:SetProperties(.F.)
+
+     oInsp:Refresh()
+
+return nil
+
+
+
+
+
+
+
+
+
+
+_HB_CLASS TRptDataBaseItem ; function TRptDataBaseItem ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TRptDataBaseItem" , iif( .T., { @TRptItem() }, { @HBObject() } ), @TRptDataBaseItem() ) ) ;
+
+; _HB_MEMBER { aFields } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aFields"}, .F. )
+; _HB_MEMBER { cBaseName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cBaseName"}, .F. )
+; _HB_MEMBER { cPath } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cPath"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oBanda) AS CLASS TRptDataBaseItem; oClass:AddMethod( "New", @TRptDataBaseItem_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TRptDataBaseItem_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProperties(); oClass:AddMethod( "SetProperties", @TRptDataBaseItem_SetProperties(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetNameCampos(); oClass:AddMethod( "GetNameCampos", @TRptDataBaseItem_GetNameCampos(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cGetName(); oClass:AddMethod( "cGetName", @TRptDataBaseItem_cGetName(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TRptDataBaseItem ;
+
+
+      static FUNCTION TRptDataBaseItem_New( nTop, nLeft, nBottom, nRight, oBanda ) ; local Self AS CLASS TRptDataBaseItem := QSelf() AS CLASS TRptDataBaseItem
+
+
+    ::TRptItem:New( nTop, nLeft, nBottom, nRight, oBanda )
+
+    ::AddProperties( {"cPath","cBaseName"} )
+
+    ::aFields   := {}
+    ::cBaseName := ""
+    ::cPath     := ""
+    ::nBottom := ::nTop + 28
+    ::nRight  := ::nLeft + 28
+
+return self
+
+
+  static FUNCTION TRptDataBaseItem_Paint( hDC ) ; local Self AS CLASS TRptDataBaseItem := QSelf() AS CLASS TRptDataBaseItem
+
+local hBitmap := LoadBitmap( GetResources(), "base" )
+
+DrawFrameControl( hDC, {::nTop, ::nLeft, ::nBottom, ::nRight}, 4, 16 )
+DrawBitmap( hDC, hBitmap, ::nTop+1, ::nLeft+1 )
+DeleteObject( hBitmap )
+
+::PaintDots( hDC )
+
+
+return self
+
+
+  static FUNCTION TRptDataBaseItem_SetProperties( ) ; local Self AS CLASS TRptDataBaseItem := QSelf() AS CLASS TRptDataBaseItem
+
+Local nGroup, oInsp := Inspector()
+local hDC, aFonts
+local cCampo := ""
+local o := self
+local aCampos := o:GetNameCampos()
+
+if !empty( aCampos )
+   cCampo := aCampos[1]
+endif
+
+     oInsp:Reset()
+     oList:oObject := self
+
+     nGroup := oInsp:AddGroup( "Apariencia" )
+
+     oInsp:AddItem( "cBaseName", "Nombre", ::cBaseName,"B",nGroup,,,{||o:cGetName()} )
+     oInsp:AddItem( "cPath",     "Path", ::cPath,,nGroup )
+     oInsp:AddItem( "",          "Campos", cCampo, "A", nGroup,,,{||aCampos}  )
+
+     oInsp:Refresh()
+
+return nil
+
+
+  static FUNCTION TRptDataBaseItem_cGetName( ) ; local Self AS CLASS TRptDataBaseItem := QSelf() AS CLASS TRptDataBaseItem
+
+local cName := cGETFILE("Ficheros dbf|*.dbf*|","Seleccione un fichero",1,,.F.,.T.)
+
+if file( cName )
+   ::cBaseName := cFileName( cName )
+   ::cPath := cFilePath( cName )
+   ::oBanda:oWnd:AddTabla(  ::cBaseName, ::cPath  )
+   ::SetProperties()
+endif
+
+return nil
+
+
+  static FUNCTION TRptDataBaseItem_GetNameCampos( ) ; local Self AS CLASS TRptDataBaseItem := QSelf() AS CLASS TRptDataBaseItem
+
+local aCampos := {}
+local aStruct := {}
+local n, nLen
+
+if file( ::cPath + ::cBaseName )
+   dbUseArea( .T.,, ( ::cPath + ::cBaseName ), "base", if(.F. .OR. .F., !.F., NIL), .F. )
+   aStruct := base->(DbStruct())
+   nLen := len( aStruct )
+   for n := 1 to nLen
+       aadd( aCampos, aStruct[n,1] )
+   next
+   dbclosearea("base")
+endif
+return aCampos
+
+
+
+
+
+
+
+
+
+
+_HB_CLASS TRptFieldItem ; function TRptFieldItem ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TRptFieldItem" , iif( .T., { @TRptItem() }, { @HBObject() } ), @TRptFieldItem() ) ) ;
+
+; _HB_MEMBER { cField } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cField"}, .F. )
+; _HB_MEMBER { cBaseName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cBaseName"}, .F. )
+; _HB_MEMBER { cPath } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cPath"}, .F. )
+; _HB_MEMBER { cPicture } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cPicture"}, .F. )
+
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+; _HB_MEMBER { cFaceName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFaceName"}, .F. )
+; _HB_MEMBER { nHFont } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nHFont"}, .F. )
+; _HB_MEMBER { nWFont } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nWFont"}, .F. )
+; _HB_MEMBER { lBold } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lBold"}, .F. )
+; _HB_MEMBER { lUnderline } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lUnderline"}, .F. )
+; _HB_MEMBER { lItalic } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lItalic"}, .F. )
+; _HB_MEMBER { lStrike } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lStrike"}, .F. )
+; _HB_MEMBER { nEscapement } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nEscapement"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oBanda, cField, cBaseName) AS CLASS TRptFieldItem; oClass:AddMethod( "New", @TRptFieldItem_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TRptFieldItem_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProperties(); oClass:AddMethod( "SetProperties", @TRptFieldItem_SetProperties(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetPictures(); oClass:AddMethod( "GetPictures", @TRptFieldItem_GetPictures(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetTablas(); oClass:AddMethod( "GetTablas", @TRptFieldItem_GetTablas(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetNames(); oClass:AddMethod( "GetNames", @TRptFieldItem_GetNames(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TRptFieldItem ;
+
+
+  static FUNCTION TRptFieldItem_New( nTop, nLeft, nBottom, nRight, oBanda, cField, cBaseName ) ; local Self AS CLASS TRptFieldItem := QSelf() AS CLASS TRptFieldItem
+
+    If( cField == nil, cField := "", ) ; If( cBaseName == nil, cBaseName := "", );
+
+    ::TRptItem:New( nTop, nLeft, nBottom, nRight, oBanda )
+
+
+    ::AddProperties( {"cField","cBaseName","cPath","cPicture","cText","nClrText","cFacename","nHFont","nWFont","lBold","lUnderline","lItalic","lStrike","nEscapement"} )
+
+    ::cField     := ""
+    ::cBaseName  := ""
+    ::cPath      := ""
+    ::cPicture   := ""
+
+    ::nClrText   := 0
+    ::cFaceName  := "Ms Sans Serif"
+    ::nHFont     := 8
+    ::nWFont     := 10
+    ::lBold      := .F.
+    ::lUnderline := .F.
+    ::lItalic    := .F.
+    ::lStrike    := .F.
+    ::nEscapement := 0
+
+return self
+
+
+
+  static FUNCTION TRptFieldItem_SetProperties( ) ; local Self AS CLASS TRptFieldItem := QSelf() AS CLASS TRptFieldItem
+
+
+local oInsp := Inspector()
+local hDC, aFonts
+local nGroup
+local o := self
+local aFormatos := o:GetPictures()
+     ::cPicture := aFormatos[1]
+
+     oInsp:Reset()
+     oList:oObject := self
+
+     nGroup := oInsp:AddGroup( "Apariencia" )
+     oInsp:AddItem( "cField",    "Campo",  ::cField, "A", nGroup,,,{|| o:GetNames()  })
+     oInsp:AddItem( "cBaseName", "Tabla",   ::cBaseName, "A", nGroup,,,{|| o:GetTablas() }, )
+     oInsp:AddItem( "cPicture",  "Picture", ::cPicture, "A", nGroup,,,{|| aFormatos })
+
+     nGroup := oInsp:AddGroup( "Fuente" )
+
+     oInsp:AddItem( "cFaceName", "Nombre", ::cFaceName, "A", nGroup,,,{|| aGetFontNames() } )
+     oInsp:AddItem( "nWFont",    "Ancho", ::nWFont,,nGroup )
+     oInsp:AddItem( "nHFont",    "Alto", ::nHFont,,nGroup )
+     oInsp:AddItem( "lItalic",   "Italic", ::lItalic,,nGroup )
+     oInsp:AddItem( "lUnderline","Underline", ::lUnderline,,nGroup )
+     oInsp:AddItem( "lStrike",   "Strike", ::lStrike,,nGroup )
+     oInsp:AddItem( "lBold",     "Bold", ::lBold,,nGroup )
+
+     ::TRptItem:SetProperties( .F. )
+
+     oInsp:Refresh()
+
+return nil
+
+
+  static FUNCTION TRptFieldItem_Paint( hDC ) ; local Self AS CLASS TRptFieldItem := QSelf() AS CLASS TRptFieldItem
+
+
+local hFont := GetStockObject( 17 )
+local hOldFont
+
+hOldFont := SelectObject( hDC, hFont )
+
+::TRptItem:Paint( hDC )
+
+TextOut( hDC, ::nTop+3, ::nLeft+3, ::cField )
+
+SelectObject( hDC, hOldFont )
+
+::PaintDots( hDC )
+
+
+return self
+
+
+
+      static FUNCTION TRptFieldItem_GetPictures( ) ; local Self AS CLASS TRptFieldItem := QSelf() AS CLASS TRptFieldItem
+
+local q := Chr(34)
+local aFormat := array(30)
+
+aFormat[1] = "Sin formato"
+aFormat[2] = "0"
+aFormat[3] = "0.00"
+aFormat[4] = "#,##0"
+aFormat[5] = "#,##0.00"
+aFormat[6] = "#,##0\ " + q + "$" + q + ";\-#,##0\ " + q + "$" + q
+aFormat[7] = "#,##0\ " + q + "$" + q + ";[Red]\-#,##0\ " + q + "$" + q
+aFormat[8] = "#,##0.00\ " + q + "$" + q + ";\-#,##0.00\ " + q + "$" + q
+aFormat[9] = "#,##0.00\ " + q + "$" + q + ";[Red]\-#,##0.00\ " + q + "$" + q
+aFormat[10] = "0%"
+aFormat[11] = "0.00%"
+aFormat[12] = "0.00E+00"
+aFormat[13] = "dd/mm/yy"
+aFormat[14] = "dd/\ mmm\ yy"
+aFormat[15] = "dd/\ mmm"
+aFormat[16] = "mmm\ yy"
+aFormat[17] = "h:mm\ AM/PM"
+aFormat[18] = "h:mm:ss\ AM/PM"
+aFormat[19] = "hh:mm"
+aFormat[20] = "hh:mm:ss"
+aFormat[21] = "dd/mm/yy\ hh:mm"
+aFormat[22] = "##0.0E+0"
+aFormat[23] = "mm:ss"
+aFormat[24] = "@"
+aFormat[25] = "#,##0.000"
+aFormat[26] = "#,##0.0000"
+aFormat[27] = "#,##0.00000"
+aFormat[28] = "#,##0.000000"
+aFormat[29] = "#,##0.0000000"
+aFormat[30] = "#,##0.0"
+
+return aFormat
+
+
+      static FUNCTION TRptFieldItem_GetTablas( ) ; local Self AS CLASS TRptFieldItem := QSelf() AS CLASS TRptFieldItem
+
+local aTablas := {}
+local n, nLen
+
+nLen := len(::oBanda:oWnd:aTablas)
+
+for n := 1 to nLen
+    aadd( aTablas,::oBanda:oWnd:aTablas[n,1] )
+next
+
+return aTablas
+
+
+      static FUNCTION TRptFieldItem_GetNames( ) ; local Self AS CLASS TRptFieldItem := QSelf() AS CLASS TRptFieldItem
+
+local aCampos := {}
+local aStruct := {}
+local n, nLen
+
+if file( ::cPath + ::cBaseName )
+   dbUseArea( .T.,, ( ::cPath + ::cBaseName ), "base", if(.F. .OR. .F., !.F., NIL), .F. )
+   aStruct := base->(DbStruct())
+   nLen := len( aStruct )
+   for n := 1 to nLen
+       aadd( aCampos, aStruct[n,1] )
+   next
+   dbclosearea("base")
+endif
+return aCampos
+
+
+
+
+
+
+
+
+
+
+_HB_CLASS TRptImageItem ; function TRptImageItem ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TRptImageItem" , iif( .T., { @TRptItem() }, { @HBObject() } ), @TRptImageItem() ) ) ;
+
+; _HB_MEMBER { cFileName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFileName"}, .F. )
+; _HB_MEMBER { lAdjust } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lAdjust"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oBanda, cFileName) AS CLASS TRptImageItem; oClass:AddMethod( "New", @TRptImageItem_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TRptImageItem_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProperties(); oClass:AddMethod( "SetProperties", @TRptImageItem_SetProperties(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TRptImageItem ;
+
+
+      static FUNCTION TRptImageItem_New( nTop, nLeft, nBottom, nRight, oBanda, cFileName ) ; local Self AS CLASS TRptImageItem := QSelf() AS CLASS TRptImageItem
+
+
+    If( cFileName == nil, cFileName := "genie", ) ;
+
+    ::TRptItem:New( nTop, nLeft, nBottom, nRight, oBanda )
+
+    ::AddProperties( { "cFileName","lAdjust" } )
+
+    ::cFileName := cFileName
+
+return self
+
+
+  static FUNCTION TRptImageItem_Paint( hDC ) ; local Self AS CLASS TRptImageItem := QSelf() AS CLASS TRptImageItem
+
+local hBitmap
+if "." $ ::cFileName
+   hBitmap := ReadBitmap( 0, ::cFileName )
+else
+   hBitmap := LoadBitmap( GetResources(), ::cFileName )
+endif
+
+if hBitmap <> 0
+   DrawBitmap( hDC, hBitmap, ::nTop+1, ::nLeft+1 )
+   DeleteObject( hBitmap )
+else
+   ::TRptItem:Paint( hDC )
+endif
+
+::PaintDots( hDC )
+
+return self
+
+
+  static FUNCTION TRptImageItem_SetProperties( ) ; local Self AS CLASS TRptImageItem := QSelf() AS CLASS TRptImageItem
+
+
+local oInsp := Inspector()
+local hDC, aFonts
+local nGroup
+
+     oInsp:Reset()
+     oList:oObject := self
+
+     nGroup := oInsp:AddGroup( "Apariencia" )
+
+     oInsp:AddItem( "cFileName","Nombre", ::cFileName,,nGroup )
+     oInsp:AddItem( "lAdjust",  "Ajustar", ::lAdjust,,nGroup )
+
+     ::TRptItem:SetProperties(.F.)
+
+     oInsp:refresh()
+
+return nil
+
+
+
+
+
+_HB_CLASS TSoporte ; function TSoporte ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TSoporte" , iif( .T., { @TControl() }, { @HBObject() } ), @TSoporte() ) ) ;
+
+      _HB_MEMBER { AS LOGICAL lRegistered } ; oClass:AddMultiClsData( "LOGICAL",, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRegistered"}, .F. )
+; _HB_MEMBER { lxGrid } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxGrid"}, .F. )
+; _HB_MEMBER { lLines } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lLines"}, .F. )
+; _HB_MEMBER { nxGrid } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nxGrid"}, .F. )
+; _HB_MEMBER { nLastWidth } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nLastWidth"}, .F. )
+; _HB_MEMBER { aBandas } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aBandas"}, .F. )
+; _HB_MEMBER { oInspect } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oInspect"}, .F. )
+; _HB_MEMBER { AS CHARACTER cFileName } ; oClass:AddMultiData( "CHARACTER", "noname.spr", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFileName"}, .F. )
+; _HB_MEMBER { aTablas } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aTablas"}, .F. )
+
+
+      _HB_MEMBER New( nTop, nLeft, oWnd) AS CLASS TSoporte; oClass:AddMethod( "New", @TSoporte_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER Display(); oClass:AddInline( "Display", {|Self | ( ( Self ) ), ::BeginPaint(), ::Paint(), ::EndPaint(),0 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint(); oClass:AddMethod( "Paint", @TSoporte_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER LButtonDown( nRow, nCol, nKeyFlags); oClass:AddMethod( "LButtonDown", @TSoporte_LButtonDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MouseMove( nRow, nCol, nKeyFlags); oClass:AddMethod( "MouseMove", @TSoporte_MouseMove(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER LButtonUp( nRow, nCol, nKeyFlags); oClass:AddMethod( "LButtonUp", @TSoporte_LButtonUp(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ResizeHeights(); oClass:AddMethod( "ResizeHeights", @TSoporte_ResizeHeights(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ResizeWidths(); oClass:AddMethod( "ResizeWidths", @TSoporte_ResizeWidths(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetGrid( lGrid); oClass:AddMethod( "SetGrid", @TSoporte_SetGrid(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MoveLeft(); oClass:AddMethod( "MoveLeft", @TSoporte_MoveLeft(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MoveRight(); oClass:AddMethod( "MoveRight", @TSoporte_MoveRight(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MoveUp(); oClass:AddMethod( "MoveUp", @TSoporte_MoveUp(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MoveDown(); oClass:AddMethod( "MoveDown", @TSoporte_MoveDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SayCoords(); oClass:AddMethod( "SayCoords", @TSoporte_SayCoords(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IsOverBanda( nRow, nCol, nBanda); oClass:AddMethod( "IsOverBanda", @TSoporte_IsOverBanda(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetFocused( oBanda, oItem); oClass:AddMethod( "SetFocused", @TSoporte_SetFocused(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ResetFocus( lErase); oClass:AddMethod( "ResetFocus", @TSoporte_ResetFocus(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProperties(); oClass:AddMethod( "SetProperties", @TSoporte_SetProperties(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetNameBandas(); oClass:AddMethod( "GetNameBandas", @TSoporte_GetNameBandas(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AddTabla( cBaseName, cPath); oClass:AddMethod( "AddTabla", @TSoporte_AddTabla(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER DelTabla( cBaseName); oClass:AddMethod( "DelTabla", @TSoporte_DelTabla(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Refresh(); oClass:AddInline( "Refresh", {|Self | ( ( Self ) ), ::TControl:Refresh(), aeval( ::aBandas, {|x| x:Refresh() } ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nGrid( nVal); _HB_MEMBER _nGrid( nVal); oClass:AddMethod( "nGrid", @TSoporte_nGrid(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nGrid", @TSoporte_nGrid(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lGrid( lVal); _HB_MEMBER _lGrid( lVal); oClass:AddMethod( "lGrid", @TSoporte_lGrid(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lGrid", @TSoporte_lGrid(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TSoporte ;
+
+
+      static FUNCTION TSoporte_SayCoords( ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local n
+
+for n := 1 to len( ::aBandas )
+    wqout( GetCoors(::aBandas[n]:hWnd))
+next
+
+return nil
+
+
+   static FUNCTION TSoporte_New( nTop, nLeft, oWnd ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+
+   ::nTop       := nTop
+   ::nLeft      := nLeft
+   ::nBottom    := 10000
+   ::nRight     := 10000
+   ::oWnd       := oWnd
+   ::lxGrid     := .T.
+   ::nxGrid     := 10
+   ::nLastWidth := 0
+   ::aBandas    := {}
+   ::aTablas    := {}
+
+   ::nStyle      := nOR( 1073741824, 268435456, 65536, 67108864, 33554432  )
+   ::nId         := ::GetNewId()
+
+   ::SetColor( 0, 8421504 )
+
+   ::Register(nOr( 1, 2 ) )
+
+   if ! Empty( oWnd:hWnd )
+      ::Create()
+      ::lVisible = .T.
+      oWnd:AddControl( Self )
+   else
+      oWnd:DefControl( Self )
+      ::lVisible  = .F.
+   endif
+
+return self
+
+
+
+      static FUNCTION TSoporte_LButtonDown( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local n, nLen
+
+nLen := len( ::aBandas )
+
+for n := 1 to nLen
+
+   if PtInRect( nRow, nCol, ::aBandas[n]:aBtn )
+      ::aBandas[n]:lOpen( !::aBandas[n]:lOpen )
+      return n
+   endif
+
+next
+
+CursorArrow()
+
+if ::IsOverBanda( nRow, nCol, @n )
+   ::aBandas[n]:SetFocus( .T. )
+   ::aBandas[n]:SetProperties()
+   return 0
+endif
+
+::SetProperties()
+
+
+
+return 0
+
+
+
+  static FUNCTION TSoporte_MouseMove( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local n, nLen
+
+nLen := len( ::aBandas )
+
+for n := 1 to nLen
+
+   if PtInRect( nRow, nCol, ::aBandas[n]:aBtn )
+      CursorHand()
+      exit
+   else
+      CursorArrow()
+   endif
+
+next
+
+return 1
+
+
+  static FUNCTION TSoporte_LButtonUp( nRow, nCol, nFlags ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+
+
+return 1
+
+
+  static FUNCTION TSoporte_ResizeHeights( ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local n
+local nLen := len( ::aBandas )
+local oLast
+
+for n := 2 to nLen
+
+    oLast := ::aBandas[n-1]
+
+    ::aBandas[n]:nTop := oLast:nTop + oLast:nHeight + 20
+    ::aBandas[n]:Refresh()
+
+next
+
+::Refresh()
+
+return nil
+
+
+  static FUNCTION TSoporte_ResizeWidths( ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local n
+local nLen := len( ::aBandas )
+
+for n := 1 to nLen
+
+    ::aBandas[n]:nWidth( ::nLastWidth )
+
+next
+
+::nLastWidth := 0
+
+::Refresh()
+
+return nil
+
+
+
+  static FUNCTION TSoporte_Paint( ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local hDC := ::hDC
+local aRect
+local hFont, hOldFont
+local nCol, nRow
+local n, nLen
+local o
+nLen := len(::aBandas)
+
+for n := 1 to nLen
+
+   o := ::aBandas[n]
+
+   aRect := { o:nTop-20, o:nLeft, o:nTop, o:nLeft + 2000 }
+
+   FillSolidRect( hDC, aRect, if( o:hWnd == GetFocus(), 8388608, ( 220 + ( 220 * 256 ) + ( 220 * 65536 ) )) )
+   ::aBandas[n]:aRectTitle := aRect
+
+   if o:lOpen
+      DrawMasked( hDC, o:hMinus, o:nTop - 15, o:nLeft + 10 )
+   else
+      DrawMasked( hDC, o:hPlus, o:nTop - 15, o:nLeft + 10 )
+   endif
+
+   o:aBtn := { o:nTop-15, o:nLeft+10, o:nTop-15+13, o:nLeft+10+13}
+
+   hFont := GetStockObject( 17 )
+   hOldFont := SelectObject( hDC, hFont )
+   SetBkMode( hDC, 1 )
+
+   if o:hWnd == GetFocus()
+      SetTextColor( hDC, 16777215 )
+   else
+      SetTextColor( hDC, 0 )
+   endif
+
+   TextOut( hDC, o:nTop - 15, o:nLeft + 30, o:cName )
+   SelectObject( hDC, hOldFont )
+   SysRefresh()
+
+next
+
+return nil
+
+
+   static FUNCTION TSoporte_SetGrid( lGrid ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local n
+local nLen := len( ::aBandas )
+
+::lGrid := lGrid
+
+for n := 1 to nLen
+
+    ::aBandas[n]:Refresh()
+
+next
+
+
+return nil
+
+
+  static FUNCTION TSoporte_MoveLeft( ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local nLeft := GetCoors(::hWnd )[2]+10
+::Move( GetCoors(::hWnd )[1], nLeft,,,.T.)
+return nil
+
+
+
+  static FUNCTION TSoporte_MoveRight( ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local nLeft := GetCoors(::hWnd )[2]-10
+::Move( GetCoors(::hWnd )[1], nLeft,,,.T.)
+return nil
+
+
+  static FUNCTION TSoporte_MoveUp( ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local nTop := GetCoors(::hWnd )[1]+10
+::Move( nTop, GetCoors(::hWnd )[2],,,.T.)
+return nil
+
+
+
+  static FUNCTION TSoporte_MoveDown( ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local nTop := GetCoors(::hWnd )[1]-10
+::Move( nTop , GetCoors(::hWnd )[2],,,.T.)
+return nil
+
+
+
+  static FUNCTION TSoporte_IsOverBanda( nRow, nCol, nBanda ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local n, nLen
+nBanda := 0
+
+nLen := len( ::aBandas )
+
+for n := 1 to nLen
+    if PtInRect( nRow, nCol, ::aBandas[n]:aRectTitle )
+       nBanda := n
+       return .T.
+    endif
+next
+return .F.
+
+
+  static FUNCTION TSoporte_SetFocused( oBanda, oItem ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local n, nLen
+local n2, nLen2
+local o
+
+nLen := len( ::aBandas )
+
+for n := 1 to nLen
+    nLen2 := len( ::aBandas[n]:aItems )
+    for n2 := 1 to nLen2
+        o := ::aBandas[n]:aItems[n2]
+        o:lFocused := (o:nID == oItem:nID )
+    next
+    ::aBandas[n]:Refresh()
+next
+
+return .F.
+
+
+  static FUNCTION TSoporte_ResetFocus( lErase ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local n, nLen
+local n2, nLen2
+local o
+
+If( lErase == nil, lErase := .T., ) ;
+
+nLen := len( ::aBandas )
+for n := 1 to nLen
+    nLen2 := len( ::aBandas[n]:aItems )
+
+    for n2 := 1 to nLen2
+        o := ::aBandas[n]:aItems[n2]
+        o:lFocused := .F.
+    next
+    if lErase
+       ::aBandas[n]:Refresh()
+    endif
+next
+
+return .F.
+
+
+  static FUNCTION TSoporte_SetProperties( ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+
+local oInsp := Inspector()
+local hDC, aFonts
+local nGroup
+local o := self
+local aBandas := ::GetNameBandas()
+
+     oInsp:Reset()
+     oList:oObject := self
+
+     nGroup := oInsp:AddGroup( "Apariencia" )
+
+        oInsp:AddItem( "cFileName", "Nombre", ::cFileName,,nGroup )
+        oInsp:AddItem( "",          "Bandas", aBandas[1], "A", nGroup,,,{|| aBandas } )
+        oInsp:AddItem( "lGrid",     "Grid", ::lGrid,, nGroup )
+        oInsp:AddItem( "nGrid",     "xy Grid", ::nGrid,, nGroup )
+
+
+
+     nGroup := oInsp:AddGroup( "Posición" )
+
+        oInsp:AddItem( "nHeight", "Alto",    ::nHeight,,nGroup,,.F. )
+        oInsp:AddItem( "nWidth",  "Ancho",    ::nWidth,,nGroup,,.F. )
+        oInsp:AddItem( "nTop",    "Arriba",     ::nTop,,nGroup,,.F. )
+        oInsp:AddItem( "nLeft",   "Izquierda", ::nLeft,,nGroup,,.F. )
+
+     oInsp:refresh()
+
+return nil
+
+
+  static FUNCTION TSoporte_GetNameBandas( ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local aBandas := {}
+local n
+local nLen := len( ::aBandas )
+
+for n := 1 to nLen
+    aadd( aBandas, ::aBandas[n]:cName )
+next
+
+return aBandas
+
+
+
+      static FUNCTION TSoporte_AddTabla( cBaseName, cPath ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local n, nLen
+local lFind := .F.
+nLen := len( ::aTablas )
+for n := 1 to nLen
+    if ::atablas[n,1] == cBaseName
+       lFind := .T.
+       exit
+    endif
+next
+
+if !lFind
+   aadd( ::atablas, {cBaseName, 1, cPath } )
+endif
+
+
+return nil
+
+
+      static FUNCTION TSoporte_DelTabla( cBaseName ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local n, nLen
+local lFind := .T.
+nLen := len( ::aTablas )
+
+for n := 1 to nLen
+
+    if ::atablas[n,1] == cBaseName
+
+       ::atablas[n,2] := ::atablas[n,2] - 1
+
+       if ::atablas[n,2] == 0
+          adel( ::aTablas, n )
+          asize( ::aTablas, nLen - 1 )
+       endif
+
+       exit
+
+    endif
+next
+
+return nil
+
+
+  static FUNCTION TSoporte_nGrid( nVal ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local aBandas := {}
+local n
+local nLen := len( ::aBandas )
+
+if pcount() > 0
+   ::nxGrid := nVal
+   if ::lGrid
+      for n := 1 to nLen
+          ::aBandas[n]:SetGrid( ::nxGrid )
+      next
+   endif
+endif
+
+return ::nxGrid
+
+
+  static FUNCTION TSoporte_lGrid( lVal ) ; local Self AS CLASS TSoporte := QSelf() AS CLASS TSoporte
+
+local aBandas := {}
+local n
+local nLen := len( ::aBandas )
+
+if pcount() > 0
+   ::lxGrid := lVal
+   for n := 1 to nLen
+       ::aBandas[n]:SetGrid( if( ::lxGrid, ::nxGrid, 0 ) )
+   next
+endif
+
+return ::lxGrid
+
+
+
+
+
+
+
+
+
+_HB_CLASS TBanda ; function TBanda ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TBanda" , iif( .T., { @TControl() }, { @HBObject() } ), @TBanda() ) ) ;
+
+      _HB_MEMBER { AS LOGICAL lRegistered } ; oClass:AddMultiClsData( "LOGICAL",, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRegistered"}, .F. )
+
+; _HB_MEMBER { nOldRow } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nOldRow"}, .F. )
+; _HB_MEMBER { nOldCol } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nOldCol"}, .F. )
+; _HB_MEMBER { nOldRow2 } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nOldRow2"}, .F. )
+; _HB_MEMBER { nOldCol2 } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nOldCol2"}, .F. )
+; _HB_MEMBER { nDeltaTop } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nDeltaTop"}, .F. )
+; _HB_MEMBER { nDeltaLeft } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nDeltaLeft"}, .F. )
+; _HB_MEMBER { aOldRect } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aOldRect"}, .F. )
+; _HB_MEMBER { lIsOver } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lIsOver"}, .F. )
+; _HB_MEMBER { iRop } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"iRop"}, .F. )
+ ;; _HB_MEMBER { hPen, hOldPen } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hPen", "hOldPen"}, .F. )
+; _HB_MEMBER { lxOpen } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxOpen"}, .F. )
+ ;; _HB_MEMBER { hMinus, hPlus } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hMinus", "hPlus"}, .F. )
+; _HB_MEMBER { cName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cName"}, .F. )
+; _HB_MEMBER { nState } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nState"}, .F. )
+; _HB_MEMBER { aBtn } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aBtn"}, .F. )
+; _HB_MEMBER { nLastHeight } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nLastHeight"}, .F. )
+; _HB_MEMBER { aItems } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aItems"}, .F. )
+; _HB_MEMBER { aDots } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aDots"}, .F. )
+; _HB_MEMBER { aRectTitle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aRectTitle"}, .F. )
+; _HB_MEMBER { oFocused } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oFocused"}, .F. )
+; _HB_MEMBER { aSelecteds } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aSelecteds"}, .F. )
+; _HB_MEMBER { hBmpBrush } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hBmpBrush"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nWidth, nHeight, oWnd, cName) AS CLASS TBanda; oClass:AddMethod( "New", @TBanda_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER Display(); oClass:AddInline( "Display", {|Self | ( ( Self ) ), ::BeginPaint(), ::Paint(), ::EndPaint(),0 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint(); oClass:AddMethod( "Paint", @TBanda_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Destroy(); oClass:AddInline( "Destroy", {|Self | ( ( Self ) ), DeleteObject( ::hMinus ), DeleteObject( ::hPlus ), ::TControl:Destroy() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER LButtonDown( nRow, nCol, nKeyFlags); oClass:AddMethod( "LButtonDown", @TBanda_LButtonDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MouseMove( nRow, nCol, nKeyFlags); oClass:AddMethod( "MouseMove", @TBanda_MouseMove(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER LButtonUp( nRow, nCol, nKeyFlags); oClass:AddMethod( "LButtonUp", @TBanda_LButtonUp(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER RButtonDown( nRow, nCol, nKeyFlags); oClass:AddMethod( "RButtonDown", @TBanda_RButtonDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER GotFocus( hCtlLost); oClass:AddMethod( "GotFocus", @TBanda_GotFocus(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IsOverDot( nRow, nCol, nDot); oClass:AddMethod( "IsOverDot", @TBanda_IsOverDot(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetFocused(); oClass:AddMethod( "GetFocused", @TBanda_GetFocused(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetItem( nRow, nCol); oClass:AddMethod( "GetItem", @TBanda_GetItem(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProperties(); oClass:AddMethod( "SetProperties", @TBanda_SetProperties(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER nHeight( nVal); _HB_MEMBER _nHeight( nVal); oClass:AddMethod( "nHeight", @TBanda_nHeight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nHeight", @TBanda_nHeight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lOpen( lVal); _HB_MEMBER _lOpen( lVal); oClass:AddMethod( "lOpen", @TBanda_lOpen(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lOpen", @TBanda_lOpen(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetGrid( nGrid); oClass:AddMethod( "SetGrid", @TBanda_SetGrid(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER FindSelection( aRect); oClass:AddMethod( "FindSelection", @TBanda_FindSelection(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IsInSelected( oItem); oClass:AddMethod( "IsInSelected", @TBanda_IsInSelected(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER KeyDown( nKey, nFlags); oClass:AddMethod( "KeyDown", @TBanda_KeyDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER KeyChar( nKey, nFlags); oClass:AddMethod( "KeyChar", @TBanda_KeyChar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TBanda ;
+
+
+
+   static FUNCTION TBanda_New( nTop, nLeft, nWidth, nHeight, oWnd, cName ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+
+   ::nTop        := nTop
+   ::nLeft       := nLeft
+   ::nBottom     := nTop + nHeight
+   ::nRight      := nLeft + nWidth
+   ::oWnd        := oWnd
+   ::aOldRect    := {}
+   ::lCaptured   := .F.
+   ::lxOpen      := .T.
+   ::cName       := cName
+   ::nState      := 0
+   ::aBtn        := {0,0,0,0}
+   ::nLastHeight := ::nBottom - ::nTop
+   ::aItems      := {}
+   ::aDots       := {}
+   ::aRectTitle  := {}
+   ::aSelecteds  := {}
+
+   ::nStyle      := nOR( 1073741824, 268435456, 65536, 67108864, 33554432  )
+   ::nId         := ::GetNewId()
+
+   ::SetGrid( ::oWnd:nGrid )
+   ::Register(nOr( 1, 2 ) )
+
+   if ! Empty( oWnd:hWnd )
+      ::Create()
+      ::lVisible = .T.
+      oWnd:AddControl( Self )
+   else
+      oWnd:DefControl( Self )
+      ::lVisible  = .F.
+   endif
+
+   ::hMinus := LoadBitmap( GetResources(), "minus" )
+   ::hPlus  := LoadBitmap( GetResources(), "plus"  )
+
+   aadd( ::oWnd:aBandas, self )
+
+
+
+return self
+
+
+  static FUNCTION TBanda_SetProperties( ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+Local nGroup, oInsp := Inspector()
+
+     oInsp:Reset()
+     oList:oObject := self
+
+     nGroup := oInsp:AddGroup( "Posición" )
+
+     oInsp:AddItem( "cName",   "Nombre", ::cName,,nGroup )
+     oInsp:AddItem( "nHeight", "Altura", ::nHeight,,nGroup )
+     oInsp:AddItem( "lOpen",   "Abierta", ::lOpen,,nGroup )
+
+     oInsp:Refresh()
+
+return nil
+
+
+
+
+
+      static FUNCTION TBanda_LButtonDown( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+
+  local nSeg
+  local nEn, n, nLen
+  local nDot := 0
+  local oItem
+
+  SetFocus( ::hWnd )
+
+  ::nOldRow  := nRow
+  ::nOldCol  := nCol
+
+  nLen := len( ::aSelecteds )
+
+  ::oWnd:oWnd:cTitle := str( ::nState )
+
+  if ! ::lCaptured
+
+     ::lCaptured := .T.
+     ::Capture()
+
+     oItem       := ::GetItem( nRow, nCol )
+     ::oFocused := ::GetFocused()
+
+     if oItem <> nil
+
+        if ::IsInSelected( oItem )
+
+           if nLen > 0
+
+              ::nState := 4
+
+              for n := 1 to nLen
+                  ::aSelecteds[n]:SetOldPos()
+              next
+
+              ::nDeltaTop  := nRow - oItem:nTop
+              ::nDeltaLeft := nCol - oItem:nLeft
+              ::hDC        := ::GetDC()
+              ::iRop    := SetRop2     ( ::hDC, 7 )
+              ::hPen    := CreatePen   ( 0, 1, 12632256 )
+              ::hOldPen := SelectObject( ::hDC, ::hPen )
+
+              return 0
+
+            endif
+
+        else
+
+           if ::oFocused <> nil
+
+              ::oWnd:ResetFocus()
+              oItem:SetFocus( .T. )
+              oItem:SetProperties()
+              ::oFocused := oItem
+              ::Refresh()
+              SysRefresh()
+
+           endif
+
+        endif
+     endif
+
+     if ::IsOverDot( nRow, nCol, @nDot )
+
+
+        if ::oFocused <> nil
+
+           do case
+              case nDot == 1
+                   ::nState := 5
+              case nDot == 2
+                   ::nState := 6
+              case nDot == 3
+                   ::nState := 7
+              case nDot == 4
+                   ::nState := 8
+              case nDot == 5
+                   ::nState := 9
+              case nDot == 6
+                   ::nState := 10
+              case nDot == 7
+                   ::nState := 11
+              case nDot == 8
+                   ::nState := 12
+              case nDot == 9
+                   ::nState := 3
+           endcase
+
+           ::nOldRow    := ::oFocused:nTop
+           ::nOldCol    := ::oFocused:nLeft
+           ::nOldRow2   := ::oFocused:nBottom
+           ::nOldCol2   := ::oFocused:nRight
+
+           ::nDeltaTop  := nRow - ::oFocused:nTop
+           ::nDeltaLeft := nCol - ::oFocused:nLeft
+
+           ::hDC        := ::GetDC()
+
+        endif
+
+
+
+     else
+
+        if nRow >= ::nHeight - 5 .AND. nRow <= ::nHeight
+
+           ::nOldRow  := nRow
+           ::nOldCol  := 0
+           ::nState   := 1
+           ::hDC      := GetDC( 0 )
+
+        else
+
+           if nCol >= ::nWidth - 5 .AND. nCol <= ::nWidth
+
+              ::nOldRow := nRow
+              ::nOldCol := 0
+              ::hDC     := GetDC( 0 )
+              ::nState  := 2
+
+           else
+
+              ::GetDC()
+
+           endif
+
+        endif
+
+     endif
+
+     ::iRop    := SetRop2     ( ::hDC, 7 )
+     ::hPen    := CreatePen   ( 0, 1, 12632256 )
+     ::hOldPen := SelectObject( ::hDC, ::hPen )
+
+  endif
+
+
+
+return 0
+
+
+
+  static FUNCTION TBanda_MouseMove( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local aRect, n
+local lCtrl   := GetKeyState( 17 )
+local lShift  := GetKeyState( 16 )
+local aPoint
+local iRop
+local aClient := GetClientRect(::oWnd:oWnd:hWnd)
+local nDot    := 0
+local nLen    := len( ::aSelecteds )
+local nDRow
+local nDCol
+local oItem
+
+if ::lCaptured
+
+  ::oWnd:oWnd:cTitle := str( ::nState )
+
+   If nRow > 32768
+      nRow -= 65536
+   Endif
+
+   If nCol > 32768
+      nCol -= 65536
+   Endif
+
+   if ::nState <> 0
+
+      if ::nState == 4
+
+         if !empty( ::aSelecteds[1]:aOldRect )
+
+            for n := 1 to nLen
+                ::aSelecteds[n]:PaintSel( ::hDC, ::aSelecteds[n]:aOldRect )
+            next
+
+         endif
+
+         nDRow := ::nOldRow - nRow
+         nDCol := ::nOldCol - nCol
+
+         for n := 1 to nLen
+
+             oItem := ::aSelecteds[n]
+
+             aRect := { oItem:aOldPos[1]-nDRow, oItem:aOldPos[2]-nDCol, oItem:aOldPos[1]+oItem:nHeight-nDRow, oItem:aOldPos[2]+oItem:nWidth-nDCol }
+
+             oItem:PaintSel( ::hDC, aRect )
+
+             oItem:aOldRect := aRect
+
+         next
+
+      else
+
+         if !empty( ::aOldRect )
+            MoveTo( ::hDC, ::aOldRect[2], ::aOldRect[1] )
+            LineTo( ::hDC, ::aOldRect[4], ::aOldRect[1] )
+            LineTo( ::hDC, ::aOldRect[4], ::aOldRect[3] )
+            LineTo( ::hDC, ::aOldRect[2], ::aOldRect[3] )
+            LineTo( ::hDC, ::aOldRect[2], ::aOldRect[1] )
+         endif
+
+         do case
+            case ::nState == 5
+
+                 aRect := { nRow , nCol, ::nOldRow2, ::nOldCol2 }
+
+            case ::nState == 6
+
+                 aRect := { nRow , ::nOldCol, ::nOldRow2, ::nOldCol2 }
+
+            case ::nState == 7
+
+                 aRect := { nRow , ::nOldCol, ::nOldRow2, nCol }
+
+            case ::nState == 8
+
+                 aRect := { ::nOldRow , ::nOldCol, ::nOldRow2, nCol }
+
+            case ::nState == 9
+
+                 aRect := { ::nOldRow , ::nOldCol, nRow, nCol }
+
+            case ::nState == 10
+
+                 aRect := { ::nOldRow , ::nOldCol, nRow, ::nOldCol2 }
+
+            case ::nState == 11
+
+                 aRect := { ::nOldRow , nCol, nRow, ::nOldCol2 }
+
+            case ::nState == 12
+
+                 aRect := { ::nOldRow , nCol, ::nOldRow2, ::nOldCol2 }
+
+            case ::nState == 3
+
+                 aRect := { nRow - ::nDeltaTop, nCol-::nDeltaLeft, nRow - ::nDeltaTop + ::oFocused:nHeight, nCol-::nDeltaLeft+ ::oFocused:nWidth }
+
+            case ::nState == 1
+
+                 aPoint := {nRow+::nTop, 0}
+                 aPoint := ClientToScreen( ::oWnd:hWnd, aPoint )
+                 aRect := { aPoint[1], aPoint[2],     aPoint[1]+1 , aPoint[2] + +( aClient[4]-aClient[2]) }
+
+            case ::nState == 2
+
+                 aPoint := {24, nCol+::nLeft }
+                 aPoint := ClientToScreen( ::oWnd:hWnd, aPoint )
+                 aRect := { aPoint[1], aPoint[2],    aPoint[1]+( aClient[3]-aClient[1])-25 , aPoint[2] + 1 }
+
+            otherwise
+
+                 aRect := { ::nOldRow, ::nOldCol,    nRow , nCol }
+
+         endcase
+
+         MoveTo( ::hDC, aRect[2], aRect[1] )
+         LineTo( ::hDC, aRect[4], aRect[1] )
+         LineTo( ::hDC, aRect[4], aRect[3] )
+         LineTo( ::hDC, aRect[2], aRect[3] )
+         LineTo( ::hDC, aRect[2], aRect[1] )
+
+         ::aOldRect := aRect
+
+      endif
+
+   else
+
+
+      if !empty( ::aOldRect )
+         MoveTo( ::hDC, ::aOldRect[2], ::aOldRect[1] )
+         LineTo( ::hDC, ::aOldRect[4], ::aOldRect[1] )
+         LineTo( ::hDC, ::aOldRect[4], ::aOldRect[3] )
+         LineTo( ::hDC, ::aOldRect[2], ::aOldRect[3] )
+         LineTo( ::hDC, ::aOldRect[2], ::aOldRect[1] )
+      endif
+
+      aRect := { ::nOldRow, ::nOldCol, nRow , nCol  }
+
+      MoveTo( ::hDC, aRect[2], aRect[1] )
+      LineTo( ::hDC, aRect[4], aRect[1] )
+      LineTo( ::hDC, aRect[4], aRect[3] )
+      LineTo( ::hDC, aRect[2], aRect[3] )
+      LineTo( ::hDC, aRect[2], aRect[1] )
+
+      ::aOldRect := aRect
+
+   endif
+
+else
+
+   if nRow >= ::nHeight - 5 .AND. nRow <= ::nHeight
+      CursorNS()
+   else
+      if nCol >= ::nWidth - 5 .AND. nCol <= ::nWidth
+         CursorWE()
+      else
+         if ::IsOverDot( nRow, nCol, @nDot )
+            do case
+               case nDot == 1
+                    WSetCursor( LoadCursor( 0, 32642 ))
+               case nDot == 2
+                    CursorNS()
+               case nDot == 3
+                    WSetCursor( LoadCursor( 0, 32643 ))
+               case nDot == 4
+                    CursorWE()
+               case nDot == 5
+                    WSetCursor( LoadCursor( 0, 32642 ))
+               case nDot == 6
+                    CursorNS()
+               case nDot == 7
+                    WSetCursor( LoadCursor( 0, 32643 ))
+               case nDot == 8
+                    CursorWE()
+               case nDot == 9
+                    WSetCursor( LoadCursor( 0, 32646 ))
+
+            endcase
+         else
+            CursorArrow()
+         endif
+      endif
+   endif
+
+endif
+
+return 1
+
+
+  static FUNCTION TBanda_LButtonUp( nRow, nCol, nFlags ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+
+   local n, nAux
+   local nSeg
+   local iRop
+   local nWidth,nHeight
+   local aRect := {}
+   local aPoint := {}
+   local aItems := {}
+   local oItem
+   local nTop, nLeft, nBottom, nRight
+   local nLen := len(::aSelecteds)
+   local nDRow, nDCol
+
+   if ::lCaptured
+
+      ::lCaptured = .F.
+      ReleaseCapture()
+
+      if ::nState == 4
+
+         if !empty( ::aSelecteds[1]:aOldRect )
+
+            for n := 1 to nLen
+                ::aSelecteds[n]:PaintSel( ::hDC, ::aSelecteds[n]:aOldRect )
+            next
+
+         endif
+
+         nDRow := ::nOldRow - nRow
+         nDCol := ::nOldCol - nCol
+
+         for n := 1 to nLen
+
+             oItem := ::aSelecteds[n]
+
+             aRect := { oItem:aOldPos[1]-nDRow, oItem:aOldPos[2]-nDCol, oItem:aOldPos[1]+oItem:nHeight-nDRow, oItem:aOldPos[2]+oItem:nWidth-nDCol }
+
+             oItem:MoveTo( aRect[1], aRect[2] )
+
+             oItem:aOldRect := {}
+
+         next
+         ::Refresh()
+
+      else
+
+
+
+         if !empty( ::aOldRect )
+             MoveTo( ::hDC, ::aOldRect[2], ::aOldRect[1] )
+             LineTo( ::hDC, ::aOldRect[4], ::aOldRect[1] )
+             LineTo( ::hDC, ::aOldRect[4], ::aOldRect[3] )
+             LineTo( ::hDC, ::aOldRect[2], ::aOldRect[3] )
+             LineTo( ::hDC, ::aOldRect[2], ::aOldRect[1] )
+             aRect := ::aOldRect
+         endif
+
+         SelectObject( ::hDC, ::hOldPen )
+         DeleteObject( ::hPen )
+         SetRop2( ::hDC, ::iRop )
+
+         do case
+            case ::nState == 3
+
+                 ::ReleaseDC()
+
+                 nTop  := nRow - ::nDeltaTop
+                 nLeft :=  nCol-::nDeltaLeft
+                 if ::oWnd:lGrid
+                    nTop    -= nTop    % ::oWnd:nGrid
+                    nLeft   -= nLeft   % ::oWnd:nGrid
+                 endif
+                 ::oFocused:MoveTo( nTop, nLeft )
+
+                 ::Refresh()
+
+            case ::nState == 1
+                 ReleaseDC(0, ::hDC)
+                 nHeight := nRow
+                 if nHeight + ::nHeight() > 0
+                    ::nHeight( nHeight )
+                    ::oWnd:ResizeHeights()
+                 endif
+
+            case ::nState == 2
+                 nWidth := nCol
+                 if nWidth + ::nWidth() > 0
+                    ::oWnd:nLastWidth := nWidth
+                    ::oWnd:ResizeWidths()
+                 endif
+
+            case ::nState >= 5 .AND. ::nState <= 12
+
+                 ::ReleaseDC()
+
+                 if empty( ::aOldRect )
+                    ::aOldRect := {}
+                    ::nState := 0
+                    ResetBar()
+                    return nil
+                 endif
+
+                 nTop    := ::aOldRect[1]
+                 nLeft   := ::aOldRect[2]
+                 nBottom := ::aOldRect[3]
+                 nRight  := ::aOldRect[4]
+
+                 if ::oWnd:lGrid
+                    nTop     -= nTop     % ::oWnd:nGrid
+                    nLeft    -= nLeft    % ::oWnd:nGrid
+                    nBottom  -= nBottom  % ::oWnd:nGrid
+                    nRight   -= nRight   % ::oWnd:nGrid
+                 endif
+
+                 ::oFocused:MoveTo( nTop, nLeft, nBottom, nRight )
+
+                 ::Refresh()
+
+            otherwise
+
+               ::ReleaseDC()
+
+               nLen := len( ::aSelecteds )
+               if nLen > 0
+                  for n := 1 to nLen
+                      ::aSelecteds[n]:Select(.F.)
+                  next
+                  ::Refresh()
+                  SysRefresh()
+                  asize( ::aSelecteds, 0 )
+               endif
+
+               if !empty( aRect )
+
+                  if aRect[1] > aRect[3]
+                     nAux := aRect[1]
+                     aRect[1] := aRect[3]
+                     aRect[3] := nAux
+                  endif
+                  if aRect[2] > aRect[4]
+                     nAux := aRect[2]
+                     aRect[2] := aRect[4]
+                     aRect[4] := nAux
+                  endif
+
+                  if aRect[3]-aRect[1] <= 3 .AND. aRect[4]-aRect[2] <= 3
+                     return .F.
+                  endif
+
+
+                  if ::nState == 0 .AND. nActivo == 0
+
+                     ::aSelecteds := ::FindSelection( aRect )
+
+                     nLen := len( ::aSelecteds )
+
+                     for n := 1 to nLen
+                         ::aSelecteds[n]:Select(.T.)
+                     next
+
+                     if nLen > 0
+                        ::Refresh()
+                     endif
+
+                  else
+
+
+                     do case
+                        case nActivo == 1
+                             oItem := TRptTextItem():New( aRect[1],aRect[2],aRect[3],aRect[4], self )
+                        case nActivo == 3
+                             oItem := TRptLineItem():New( aRect[1],aRect[2],aRect[3],aRect[4], self )
+                        case nActivo == 4
+                             oItem := TRptBoxItem():New( aRect[1],aRect[2],aRect[3],aRect[4], self )
+                        case nActivo == 5
+                             oItem := TRptImageItem():New( aRect[1],aRect[2],aRect[3],aRect[4], self )
+                        case nActivo == 6
+                             oItem := TRptDataBaseItem():New( aRect[1],aRect[2],aRect[3],aRect[4], self )
+                        case nActivo == 2
+                             oItem := TRptFieldItem():New( aRect[1],aRect[2],aRect[3],aRect[4], self )
+
+                     endcase
+
+                     if oItem <> nil
+                        ::oWnd:SetFocused( self, oItem )
+                        oItem:SetProperties()
+                     endif
+
+                  endif
+
+               else
+
+                  ::SetProperties()
+
+               endif
+
+
+
+         endcase
+
+      endif
+      ::aOldRect := {}
+      ::nState := 0
+
+   endif
+   ResetBar()
+
+
+return 1
+
+
+
+  static FUNCTION TBanda_RButtonDown( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local oMenu
+local lDisable
+
+oMenu := MenuBegin( .T.,,, .F., .F. )
+     MenuAddItem( "Insertar",, .F.,,,,,,,,, .F.,,, .F. )
+     MenuBegin( .F.,,, .F., .F. )
+        MenuAddItem( "Grupo Cabecera/Pie",, .F.,,,,,,,,, .F.,,, .F. )
+        MenuAddItem( "Informe Cabecera/Pie",, .F.,,,,,,,,, .F.,,, .F. )
+     MenuEnd()
+     MenuAddItem( "Borrar Sección",, .F.,,,,,,,,, .F.,,, .F. )
+     MenuAddItem()
+     MenuAddItem( "Cortar",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+     MenuAddItem( "Copiar",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+     MenuAddItem( "Pegar",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+     MenuAddItem( "Traer al frente",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+     MenuAddItem( "Llevar al fondo",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+     MenuAddItem( "Alinear",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+     MenuBegin( .F.,,, .F., .F. )
+        MenuAddItem( "Izquierda",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+        MenuAddItem( "Centro",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+        MenuAddItem( "Dercha",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+        MenuAddItem( "Arriba",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+        MenuAddItem( "En medio",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+        MenuAddItem( "Abajo",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+        MenuAddItem( "Al grid",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+        MenuAddItem( "Centrar en sección",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+     MenuEnd()
+     MenuAddItem( "Tamaño",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+     MenuBegin( .F.,,, .F., .F. )
+        MenuAddItem( "Mismo ancho",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+        MenuAddItem( "Mismo alto",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+        MenuAddItem( "Mismo tamaño",, .F., Upper("DISABLED") == "ENABLED",,,,,,,, .F.,,, .F. )
+     MenuEnd()
+
+MenuEnd()
+
+oMenu:Activate( nRow, nCol, Self, ! .F., )
+
+
+return 1
+
+
+  static FUNCTION TBanda_Paint( ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local nCol, nRow
+local hPen, hOldPen
+local n, nLen
+
+nLen := len( ::aItems )
+
+for n := 1 to nLen
+    ::aItems[n]:Paint( ::hDC )
+next
+
+
+
+return nil
+
+
+  static FUNCTION TBanda_GotFocus( hCtlLost ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local n
+local nLen := len( ::oWnd:aControls )
+
+
+
+return ::TControl:GotFocus()
+
+
+
+  static FUNCTION TBanda_lOpen( lVal ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+
+if pcount() > 0
+
+   ::lxOpen := lVal
+
+   if ::lxOpen
+      ::nHeight( ::nLastHeight )
+   else
+      ::nLastHeight := ::nHeight
+      ::nHeight( 0 )
+   endif
+
+endif
+
+return ::lxOpen
+
+
+
+
+  static FUNCTION TBanda_IsOverDot( nRow, nCol, nDot ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local n, nLen
+
+nDot := 0
+nLen := len( ::aDots )
+for n := 1 to nLen
+    if PtInRect( nRow, nCol, ::aDots[n] )
+       nDot := n
+       return .T.
+    endif
+next
+
+return .F.
+
+
+
+  static FUNCTION TBanda_GetFocused( ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local n
+local nLen := len( ::aItems )
+
+for n := 1 to nLen
+    if ::aItems[n]:lFocused
+       return ::aItems[n]
+    endif
+next
+
+return nil
+
+
+  static FUNCTION TBanda_GetItem( nRow, nCol ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local n, nLen
+
+nLen := len( ::aItems )
+for n := 1 to nLen
+    if PtInRect( nRow, nCol, ::aItems[n]:GetRect() )
+       return ::aItems[n]
+    endif
+next
+
+return nil
+
+
+
+  static FUNCTION TBanda_nHeight( nNewHeight ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local nAux
+
+   if PCount() > 0
+      nAux := WndHeight( ::hWnd, nNewHeight )
+      ::oWnd:ResizeHeights()
+      return nAux
+   else
+      if ! Empty( ::hWnd )
+         return WndHeight( ::hWnd )
+      else
+         return ::nBottom - ::nTop + 1
+      endif
+   endif
+
+return nil
+
+
+   static FUNCTION TBanda_SetGrid( nGrid ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local hDC, hDCMem, hOldBmp
+local n := max( nGrid, 2 )
+
+if ::hBmpBrush <> nil
+   DeleteObject( ::hBmpBrush )
+endif
+
+hDC         := ::GetDC()
+hDCMem      := CreateCompatibleDC( hDC )
+::hBmpBrush := CreateCompatibleBitmap( hDC, n, n )
+hOldBmp     := SelectObject( hDCMem, ::hBmpBrush )
+
+FillSolidRect( hDCMem, {0, 0, n, n }, ::nClrPane, ::nClrPane )
+
+if nGrid <> 0
+   SetPixel( hDCMem, 0, 0, 0 )
+endif
+SelectObject( hDCMem, hOldBmp )
+
+DeleteDC( hDCMem )
+::ReleaseDC()
+
+::oBrush:End()
+
+::oBrush := TBrush():New( Upper("NULL"),,,,, )
+::oBrush:hBrush := CreatePatternBrush( ::hBmpBrush )
+
+::Refresh()
+
+
+return nil
+
+
+  static FUNCTION TBanda_FindSelection( aRect ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local n
+local nLen := len( ::aItems )
+local aItems := {}
+
+for n := 1 to nLen
+    if IntersectRect( ::aItems[n]:GetRect(), aRect )
+       aadd( aItems, ::aItems[n] )
+    endif
+next
+
+return aItems
+
+
+  static FUNCTION TBanda_IsInSelected( oItem ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local n
+local lIs := .F.
+local nLen := len( ::aSelecteds )
+
+for n := 1 to nLen
+    if ::aSelecteds[n]:nId == oItem:nID
+       return .T.
+    endif
+next
+
+return lIs
+
+
+
+  static FUNCTION TBanda_KeyDown( nKey, nKeyFlags ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local n, nLen := len( ::aSelecteds )
+local nTop, nLeft, nBottom, nRight
+local oItem
+local rc, rc1, rc2
+local nStep
+local lControl := GetKeyState( 17 )
+local lShift   := GetKeyState( 16 )
+
+nStep := if( ::oWnd:lGrid, if( lControl, ::oWnd:nGrid*3,::oWnd:nGrid ), 1 )
+
+do case
+   case nKey == 40
+
+        if nLen > 0
+           for n := 1 to nLen
+               oItem := ::aSelecteds[n]
+               rc := oItem:SetOldRect()
+               nTop    := oItem:nTop    + if( lShift, 0, nStep )
+               nLeft   := oItem:nLeft
+               nBottom := oItem:nBottom + nStep
+               nRight  := oItem:nRight
+               oItem:MoveTo( nTop, nLeft, nBottom, nRight )
+               rc1 := oItem:GetRect()
+               rc2 := UnionRect( rc, rc1 )
+               rc2[3] += 1
+               rc2[4] += 1
+               InvalidateRect(::hWnd, rc2, .T. )
+           next
+        else
+           if ::oFocused <> nil
+              oItem := ::oFocused
+              rc := oItem:SetOldRect()
+              nTop    := oItem:nTop    + if( lShift, 0, nStep )
+              nLeft   := oItem:nLeft
+              nBottom := oItem:nBottom + nStep
+              nRight  := oItem:nRight
+              oItem:MoveTo( nTop, nLeft, nBottom, nRight )
+              rc1 := oItem:GetRect()
+              rc2 := UnionRect( rc, rc1 )
+              rc2[3] += 1
+              rc2[4] += 1
+              InvalidateRect(::hWnd, rc2, .T. )
+           endif
+        endif
+
+   case nKey == 39
+
+        if nLen > 0
+           for n := 1 to nLen
+               oItem := ::aSelecteds[n]
+               rc := oItem:SetOldRect()
+               nTop    := oItem:nTop
+               nLeft   := oItem:nLeft   + if( !lShift, nStep, 0 )
+               nBottom := oItem:nBottom
+               nRight  := oItem:nRight  + nStep
+               oItem:MoveTo( nTop, nLeft, nBottom, nRight )
+               rc1 := oItem:GetRect()
+               rc2 := UnionRect( rc, rc1 )
+               rc2[3] += 1
+               rc2[4] += 1
+               InvalidateRect(::hWnd, rc2, .T. )
+           next
+        else
+           if ::oFocused <> nil
+              oItem := ::oFocused
+              rc := oItem:SetOldRect()
+              nTop    := oItem:nTop
+              nLeft   := oItem:nLeft   + if( !lShift, nStep, 0 )
+              nBottom := oItem:nBottom
+              nRight  := oItem:nRight  + nStep
+              oItem:MoveTo( nTop, nLeft, nBottom, nRight )
+              rc1 := oItem:GetRect()
+              rc2 := UnionRect( rc, rc1 )
+              rc2[3] += 1
+              rc2[4] += 1
+              InvalidateRect(::hWnd, rc2, .T. )
+           endif
+        endif
+
+   case nKey == 38
+        if nLen > 0
+           for n := 1 to nLen
+               oItem := ::aSelecteds[n]
+               rc := oItem:SetOldRect()
+               nTop    := oItem:nTop    - if( lShift,0, nStep )
+               nLeft   := oItem:nLeft
+               nBottom := oItem:nBottom - nStep
+               nRight  := oItem:nRight
+               oItem:MoveTo( nTop, nLeft, nBottom, nRight )
+               rc1 := oItem:GetRect()
+               rc2 := UnionRect( rc, rc1 )
+               rc2[3] += 1
+               rc2[4] += 1
+               InvalidateRect(::hWnd, rc2, .T. )
+           next
+        else
+           if ::oFocused <> nil
+              oItem := ::oFocused
+              rc := oItem:SetOldRect()
+              nTop    := oItem:nTop    - if( lShift, 0, nStep )
+              nLeft   := oItem:nLeft
+              nBottom := oItem:nBottom - nStep
+              nRight  := oItem:nRight
+              oItem:MoveTo( nTop, nLeft, nBottom, nRight )
+              rc1 := oItem:GetRect()
+              rc2 := UnionRect( rc, rc1 )
+              rc2[3] += 1
+              rc2[4] += 1
+              InvalidateRect(::hWnd, rc2, .T. )
+           endif
+        endif
+
+   case nKey == 37
+
+        if nLen > 0
+           for n := 1 to nLen
+               oItem := ::aSelecteds[n]
+               rc := oItem:SetOldRect()
+               nTop    := oItem:nTop
+               nLeft   := oItem:nLeft   - if( lShift,0, nStep )
+               nBottom := oItem:nBottom
+               nRight  := oItem:nRight  - nStep
+               oItem:MoveTo( nTop, nLeft, nBottom, nRight )
+               rc1 := oItem:GetRect()
+               rc2 := UnionRect( rc, rc1 )
+               rc2[3] += 1
+               rc2[4] += 1
+               InvalidateRect(::hWnd, rc2, .T. )
+           next
+        else
+           if ::oFocused <> nil
+              oItem := ::oFocused
+              rc := oItem:SetOldRect()
+              nTop    := oItem:nTop
+              nLeft   := oItem:nLeft   - if( lShift, 0, nStep )
+              nBottom := oItem:nBottom
+              nRight  := oItem:nRight  - nStep
+              oItem:MoveTo( nTop, nLeft, nBottom, nRight )
+              rc1 := oItem:GetRect()
+              rc2 := UnionRect( rc, rc1 )
+              rc2[3] += 1
+              rc2[4] += 1
+              InvalidateRect(::hWnd, rc2, .T. )
+           endif
+        endif
+
+endcase
+
+return 0
+
+
+  static FUNCTION TBanda_KeyChar( nKey, nKeyFlags ) ; local Self AS CLASS TBanda := QSelf() AS CLASS TBanda
+
+local n, nLen := len( ::aItems )
+local oItem
+
+
+do case
+   case nKey == 9
+        if nLen > 1 .AND. ::oFocused <> nil
+           for n := 1 to nLen
+               oItem := ::aItems[n]
+               if oItem:nId == ::oFocused:nId
+                  ::oFocused:SetFocus( .F. )
+                  InvalidateRect(::hWnd, ::oFocused:GetRect(),.T.)
+                  if n == nLen
+                     ::aItems[1]:SetFocus( .T. )
+                     ::oFocused := ::aItems[1]
+                  else
+                     ::aItems[n+1]:SetFocus( .T. )
+                     ::oFocused := ::aItems[n+1]
+                  endif
+                  exit
+               endif
+           next
+           InvalidateRect(::hWnd, ::oFocused:GetRect(),.T.)
+        endif
+endcase
+
+return 0
+
+
+
+
+
+
+
+
+
+
+
+
+function Inspector()
+return oList
+
+
+function aGetFontNames()
+
+local oInsp := Inspector()
+local hDC := GetDC( oInsp:hWnd )
+local aFonts := GetFontNames(hDC)
+aFonts := asort( aFonts )
+ReleaseDC(oInsp:hWnd,hDC)
+
+return  aFonts

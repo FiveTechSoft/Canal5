@@ -1,0 +1,417 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 28 "source\tdll.prg"
+function Recursos( cFile )
+
+
+     local oVerDll
+     local oTree
+     local oItem1, oItem2, oItem3, oItem4
+     local oBrush
+     local oImageList
+     local oWnd := Aplicacion():oWnd
+     local oBar
+     local o
+     local oRoot, oRoot2
+     local oRoot0
+     local n, n2
+
+local aTipos := {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local aTipoRes := {"Cursor"        , "Bitmap"        , "Icono"         , "Menu"          , "Dialogo"       , "String Table"  , "FontDir"       , "Font"          , "Acelerador"    , "RCData"        , "TablaMensages" , "GroupCursor"   , "13"            , "GroupIcon"     , "15"            , "Versión"       , "DlgInclude"    , "18"            , "PlugPlay"      , "VXD"           , "AniCursor"     , "AniIcon"       , "Html" }
+
+
+     aTipos := VerTipos( cFile )
+     if ( valtype( aTipos ) == "N" .AND. aTipos == -1 ) .OR. len( aTipos ) == 0
+        MsgStop( "No existen recursos en " + cFile, "Atención" )
+        return 0
+     endif
+
+     oImageList = TImageList():New(16,16,"toolbar\image1.bmp")
+
+     oBrush := TBrush():New( Upper("NULL"),,,,, )
+
+     oVerDll := TMdiChild():New(,,,, cFile,,, oWnd,, .F.,,,, obrush, .F., .F.,,, !.F., !.F., !.F., !.F., )
+
+
+
+
+
+
+
+
+
+
+            oTree := TTreeView():New( 1, 1, oVerDll, 0, 16777215,.T., .F., 1000, 1000 )
+            oTree:SetImageList( oImageList )
+
+            oRoot  := TTVItem():New( oTree, , cFileName( cFile ), 5, .T.,  oTree,,"prj",.T. )
+
+            for n := 1 to len( aTipos )
+                if valtype( aTipos[n] ) <> "N"
+                   loop
+                endif
+
+                oItem := TTVItem():New( oTree,, aTipoRes[n] , 6, .T., oRoot,,,.T.,.T. )
+                aNames := VerNombres( cFile, aTipos[n] )
+                if ( valtype( aNames ) == "N" .AND. aNames == -1 ) .OR. len( aNames ) == 0
+                   loop
+                endif
+                for n2 := 1 to len( aNames )
+                    TTVItem():New( oTree,, cValToChar(aNames[n2]), 6, .T., oItem,,,.T.,.T. )
+                next
+            next
+            oVerDll:oClient := oTree
+
+      oVerDll:Activate(, oVerDll:bLClicked, oVerDll:bRClicked, oVerDll:bMoved, oVerDll:bResized, oVerDll:bPainted, oVerDll:bKeyDown, oVerDll:bInit := { | Self | oVerDll:Resize() },,,,,,,,, {||( oVerDll := nil, oImageList:End(),.T.)},, oVerDll:bLButtonUp )
+
+
+   return nil
+
+return nil
+
+function RecursosRes( cFileName )
+
+local nSize, buffer
+local h := fopen( cFileName, 0 )
+local nPuntero := 1
+
+if empty( h )
+   MsgInfo( "No se pudo abrir el fichero " + cFileName, "Atención")
+   return nil
+endif
+
+nSize  := fsize( cFileName )
+buffer := space( nSize )
+h      := fopen( cFileName, 0 )
+fread( h, @buffer, nSize )
+
+cCabecera   := substr( buffer, nPuntero, 32 )
+nPuntero += 32
+
+
+
+
+
+
+
+
+
+
+fclose( h )
+
+return nil
+
+
+
+
+
+
+
+
+
+#pragma BEGINDUMP
+#include "windows.h"
+#include "hbapi.h"
+
+   char szBuffer[80]; // print buffer for EnumResourceTypes
+   DWORD cbWritten;   // number of bytes written to res. info. file
+   size_t cbString;      // length of string in sprintf
+   HRESULT hResult;
+   HANDLE hFile;
+   static int nTipos = 0;
+   static int nNames = 0;
+
+   // Declare callback functions.
+   BOOL EnumTypesFunc2( HANDLE hModule, LPTSTR lpType, LONG lParam);
+   BOOL EnumTypesFunc( HANDLE hModule, LPTSTR lpType, LONG lParam);
+   BOOL EnumNamesFunc( HANDLE hModule, LPCTSTR lpType, LPTSTR lpName, LONG lParam);
+   BOOL EnumNamesFunc2( HANDLE hModule, LPCTSTR lpType, LPTSTR lpName, LONG lParam);
+   BOOL EnumLangsFunc( HANDLE hModule, LPCTSTR lpType, LPCTSTR lpName, WORD wLang, LONG lParam);
+
+
+HB_FUNC( VERTIPOS )
+{
+   UINT LastErrorMode = SetErrorMode( 1 );
+   HANDLE hExe = LoadLibrary( hb_parc( 1 ) );
+   if ( hExe == NULL )
+   {
+      //MessageBox( 0, "No se pudo cargar el recurso","Atención",0);
+      hb_retni(-1);
+      return;
+   }
+   nTipos = 0;
+   EnumResourceTypes(hExe, (ENUMRESTYPEPROC)EnumTypesFunc2,  0);
+   if( nTipos )
+   {
+      hb_reta(nTipos);
+      nTipos = 0;
+      EnumResourceTypes(hExe, (ENUMRESTYPEPROC)EnumTypesFunc2,  1);
+   }
+}
+
+BOOL EnumTypesFunc2( HANDLE hModule, LPTSTR lpType, LONG lParam)
+{
+   size_t cbString;
+   HRESULT hResult;
+
+    // Write the resource type to a resource information file.
+    // The type may be a string or an unsigned decimal
+    // integer, so test before printing.
+    nTipos++;
+    if( lParam )
+    {
+       if ((ULONG)lpType & 0xFFFF0000)
+       {
+          hb_storvc( lpType, -1, nTipos );
+
+       }
+       else
+       {
+          hb_storvni( (int) lpType, -1, nTipos );
+       }
+    }
+    return TRUE;
+}
+
+HB_FUNC( VERNOMBRES )
+{
+   UINT LastErrorMode = SetErrorMode( 1 );
+   HANDLE hExe = LoadLibrary( hb_parc( 1 ) );
+   if ( hExe == NULL )
+   {
+      //MessageBox( 0, "No se pudo cargar el recurso","Atención",0);
+      hb_retni(-1);
+      return;
+   }
+   nNames = 0;
+   EnumResourceNames(hExe, MAKEINTRESOURCE(hb_parni( 2 )),(ENUMRESNAMEPROC)EnumNamesFunc2,  0);
+   if( nNames )
+   {
+      hb_reta(nNames);
+      nNames = 0;
+      EnumResourceNames(hExe, MAKEINTRESOURCE(hb_parni( 2 )),(ENUMRESNAMEPROC)EnumNamesFunc2,  1);
+   }
+}
+
+BOOL EnumNamesFunc2(HANDLE hModule,LPCTSTR lpType,LPTSTR lpName,LONG lParam)
+{
+   size_t cbString;
+   HRESULT hResult;
+
+    // Write the resource type to a resource information file.
+    // The type may be a string or an unsigned decimal
+    // integer, so test before printing.
+    nNames++;
+    if( lParam )
+    {
+       if ((ULONG)lpName & 0xFFFF0000)
+       {
+          hb_storvc( lpName, -1, nNames );
+
+       }
+       else
+       {
+          hb_storvni( (int) lpName, -1, nNames );
+       }
+    }
+    return TRUE;
+}
+
+
+HB_FUNC( SETERRORMODE )
+{
+    hb_retni( SetErrorMode( hb_parni( 1 )));
+}
+
+HB_FUNC( VERRECURSOS )
+{
+
+   // Load the .EXE whose resources you want to list.
+   UINT LastErrorMode = SetErrorMode( 1 );
+   HANDLE hExe = LoadLibrary( hb_parc(1) );
+   if ( hExe == NULL )
+   {
+
+      return;
+   }
+   hFile = CreateFile("resinfo.txt",GENERIC_READ | GENERIC_WRITE,0,(LPSECURITY_ATTRIBUTES) NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,(HANDLE) NULL);
+
+   if (hFile == INVALID_HANDLE_VALUE) {
+       MessageBox( 0, "Could not open file.","Atención",0);
+       return;
+   }
+
+   cbString = strlen(szBuffer);
+
+   WriteFile(hFile,szBuffer,(DWORD) cbString, &cbWritten, NULL);
+
+   EnumResourceTypes(hExe, (ENUMRESTYPEPROC)EnumTypesFunc,  0);
+
+   FreeLibrary(hExe);
+   CloseHandle(hFile);
+
+}
+
+//    FUNCTION: EnumTypesFunc(HANDLE, LPSTR, LONG)
+//
+//    PURPOSE:  Resource type callback
+BOOL EnumTypesFunc( HANDLE hModule, LPTSTR lpType, LONG lParam)
+{
+   size_t cbString;
+   HRESULT hResult;
+
+    // Write the resource type to a resource information file.
+    // The type may be a string or an unsigned decimal
+    // integer, so test before printing.
+    if ((ULONG)lpType & 0xFFFF0000)
+    {
+      hResult = wsprintf( szBuffer,  "Type: %s\n", lpType);
+      if (FAILED(hResult))
+      {
+         return;
+      }
+    }
+    else
+    {
+      hResult = wsprintf(szBuffer,  "Type: %u\n", (USHORT)lpType);
+      if (FAILED(hResult))
+      {
+      // Add code to fail as securely as possible.
+         return;
+      }
+//        cbString = sprintf(szBuffer, "Type: %u\n", (USHORT)lpType);
+    }
+   cbString = strlen(szBuffer);
+   if (FAILED(hResult))
+      {
+      // Add code to fail as securely as possible.
+         return;
+      }
+    WriteFile(hFile, szBuffer, (DWORD) cbString, &cbWritten, NULL);
+    // Find the names of all resources of type lpType.
+    EnumResourceNames(hModule, lpType,(ENUMRESNAMEPROC)EnumNamesFunc, 0);
+
+    return TRUE;
+}
+
+//    FUNCTION: EnumNamesFunc(HANDLE, LPSTR, LPSTR, LONG)
+//
+//    PURPOSE:  Resource name callback
+BOOL EnumNamesFunc(HANDLE hModule,LPCTSTR lpType,LPTSTR lpName,LONG lParam)
+{
+    size_t cbString;
+   HRESULT hResult;
+
+     // Write the resource name to a resource information file.
+     // The name may be a string or an unsigned decimal
+     // integer, so test before printing.
+    if ((ULONG)lpName & 0xFFFF0000)
+    {
+      hResult = wsprintf(szBuffer,  "\tName: %s\n", lpName);
+      if (FAILED(hResult))
+      {
+         return;
+      }
+    }
+    else
+    {
+      hResult = wsprintf(szBuffer,  "\tName: %u\n", (USHORT)lpName);
+      if (FAILED(hResult))
+      {
+         return;
+      }
+    }
+   cbString = strlen(szBuffer);
+   if (FAILED(hResult))
+      {
+         return;
+      }
+
+    WriteFile(hFile, szBuffer, (DWORD) cbString, &cbWritten, NULL);
+    // Find the languages of all resources of type
+    // lpType and name lpName.
+    EnumResourceLanguages(hModule, lpType, lpName, (ENUMRESLANGPROC)EnumLangsFunc, 0);
+    return TRUE;
+}
+
+//    FUNCTION: EnumLangsFunc(HANDLE, LPSTR, LPSTR, WORD, LONG)
+//
+//    PURPOSE:  Resource language callback
+BOOL EnumLangsFunc( HANDLE hModule, LPCTSTR lpType, LPCTSTR lpName, WORD wLang, LONG lParam )
+{
+    HANDLE hResInfo;
+    char szBuffer[80];
+    size_t cbString = 0;
+   HRESULT hResult;
+
+    hResInfo = FindResourceEx(hModule, lpType, lpName, wLang);
+    // Write the resource language to the resource information file.
+   hResult = wsprintf(szBuffer,  "\t\tLanguage: %u\n", (USHORT) wLang);
+   if (FAILED(hResult))
+   {
+      // Add code to fail as securely as possible.
+         return;
+   }
+   cbString = strlen(szBuffer);
+   if (FAILED(hResult))
+      {
+      // Add code to fail as securely as possible.
+         return;
+      }
+//    cbString = sprintf(szBuffer, "\t\tLanguage: %u\n", (USHORT)wLang);
+    WriteFile(hFile, szBuffer, (DWORD) cbString,
+        &cbWritten, NULL);
+    // Write the resource handle and size to buffer.
+    cbString = sprintf(szBuffer,
+        "\t\thResInfo == %lx,  Size == %lu\n\n",
+        hResInfo,
+        SizeofResource(hModule, hResInfo));
+    WriteFile(hFile, szBuffer, (DWORD) cbString,
+        &cbWritten, NULL);
+    return TRUE;
+}
+
+
+
+
+
+
+#pragma ENDDUMP

@@ -1,0 +1,317 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 10 "source\dsgntree.prg"
+_HB_CLASS TDsgnTreeView ; function TDsgnTreeView ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnTreeView" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnTreeView() ) ) ;
+
+; _HB_MEMBER { aProperties } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aProperties"}, .F. )
+
+; _HB_MEMBER { lRightVScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRightVScroll"}, .F. )
+; _HB_MEMBER { lDownHScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lDownHScroll"}, .F. )
+; _HB_MEMBER { lVScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lVScroll"}, .F. )
+; _HB_MEMBER { lHasButtons } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lHasButtons"}, .F. )
+; _HB_MEMBER { lHasLines } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lHasLines"}, .F. )
+; _HB_MEMBER { lHScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lHScroll"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+; _HB_MEMBER { lModalFrame } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lModalFrame"}, .F. )
+; _HB_MEMBER { nStyle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nStyle"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd) AS CLASS TDsgnTreeView; oClass:AddMethod( "New", @TDsgnTreeView_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnTreeView_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnTreeView_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMinWidth( nVal); _HB_MEMBER _nMinWidth( nVal); oClass:AddMethod( "nMinWidth", @TDsgnTreeView_nMinWidth(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMinWidth", @TDsgnTreeView_nMinWidth(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMinHeight( nVal); _HB_MEMBER _nMinHeight( nVal); oClass:AddMethod( "nMinHeight", @TDsgnTreeView_nMinHeight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMinHeight", @TDsgnTreeView_nMinHeight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER DrawLine( hDC, nTop, nIndent); oClass:AddMethod( "DrawLine", @TDsgnTreeView_DrawLine(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnTreeView ;
+
+
+      static FUNCTION TDsgnTreeView_New( nTop, nLeft, nBottom, nRight, oWnd ) ; local Self AS CLASS TDsgnTreeView := QSelf() AS CLASS TDsgnTreeView
+
+
+   if nTop <> nil .AND. (nBottom-nTop < 10 .OR. nRight-nLeft < 10)
+      nBottom := nTop + 90
+      nRight  := nLeft + 81
+   endif
+
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::lHasButtons   := .T.
+   ::lHasLines     := .T.
+   ::nClrText      := 0
+   ::nClrBorder    := 0
+   ::nClrPane      := 16777215
+   ::lActive       := .T.
+   ::lRightVScroll := .T.
+   ::lDownHScroll  := .T.
+   ::lVScroll      := .F.
+   ::lHScroll      := .F.
+   ::lBorder       := .F.
+   ::lModalFrame   := .T.
+   ::nStyle        := 4
+   ::nMinWidth     := 64
+  ::cObjName         := ::GetObjName()
+
+
+   ::bContextMenu := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ::aProperties := { "aDotsActives"   , "aRect"          , "lActive"        , "lBorder"        , "lCanSize"       , "lCanMove"       , "lDownHScroll"   , "lEditable"      , "lHScroll"       , "lHasButtons"    , "lHasLines"      , "lModalFrame"    , "lRightVScroll"  , "lVScroll"       , "lVisible"       , "nClrBorder"     , "nClrPane"       , "nClrText"       , "nStyle"         , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      }
+
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+return self
+
+
+
+
+  static FUNCTION TDsgnTreeView_Paint( hDC ) ; local Self AS CLASS TDsgnTreeView := QSelf() AS CLASS TDsgnTreeView
+
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local hBmp
+local rcText
+local lCabenV := .T.
+local lCabenH := .T.
+local nTop    := rc[1]+3
+local nLeft   := rc[2]+1
+local nBottom := rc[3]
+local nRight  := rc[4]
+local n
+
+local hTheme
+
+if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+   hTheme := C5_OpenThemeData(::oWnd:hWnd, "TREEVIEW")
+
+   if hTheme <> nil
+
+
+      C5_DrawThemeBackground( hTheme, hDC, 3, , rc )
+
+      hBmp := LoadBitmap( GetResources(), "smyell" )
+
+
+      ::DrawLine( hDC, 1, 1, hBmp )
+      ::DrawLine( hDC, 2, 2, hBmp )
+      ::DrawLine( hDC, 3, 3, hBmp )
+      ::DrawLine( hDC, 4, 3, hBmp )
+      ::DrawLine( hDC, 5, 2, hBmp )
+      ::DrawLine( hDC, 6, 1, hBmp )
+
+      DeleteObject( hBmp )
+
+
+      C5_CloseThemeData()
+
+
+   endif
+
+else
+
+
+
+    if ::lBorder
+       FillSolidRect(hDC, rc, if(::lActive,16777215,GetSysColor(15)), 0 )
+    else
+       FillSolidRect(hDC, rc, if(::lActive,16777215,GetSysColor(15)))
+    endif
+
+    rcText := {rc[1],rc[2],rc[3],rc[4]}
+
+    if ::lModalFrame
+       rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+       DrawEdge( hDC, rc, 0x0002, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+       rc[1]++; rc[2]++; rc[3]--; rc[4]--
+       DrawEdge( hDC, rc, 0x0008, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+       rc[1]--; rc[2]--; rc[3]++; rc[4]++
+    endif
+
+    hBmp := LoadBitmap( GetResources(), "smyell" )
+
+
+    ::DrawLine( hDC, 1, 1, hBmp )
+    ::DrawLine( hDC, 2, 2, hBmp )
+    ::DrawLine( hDC, 3, 3, hBmp )
+    ::DrawLine( hDC, 4, 3, hBmp )
+    ::DrawLine( hDC, 5, 2, hBmp )
+    ::DrawLine( hDC, 6, 1, hBmp )
+
+    DeleteObject( hBmp )
+
+
+
+
+endif
+
+if ::lVScroll
+   ::PaintVScroll( hDC, ::lRightVScroll,::lHScroll , ::lDownHScroll  )
+endif
+
+if ::lHScroll
+   ::PaintHScroll( hDC, ::lDownHScroll ,::lVScroll , ::lRightVScroll )
+endif
+
+if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+   ::DotsSelect( hDC )
+endif
+
+return nil
+
+
+
+
+      static FUNCTION TDsgnTreeView_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnTreeView := QSelf() AS CLASS TDsgnTreeView
+
+local oMenu
+local o := self
+
+
+    MenuAddItem("lBorder"      ,,o:lBorder       ,,{|oMenuItem|::lBorder        := !::lBorder          ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lVScroll"     ,,o:lVScroll      ,,{|oMenuItem|::lVScroll       := !::lVScroll         ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lHScroll"     ,,o:lHScroll      ,,{|oMenuItem|::lHScroll       := !::lHScroll         ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lRightVScroll",,o:lRightVScroll ,,{|oMenuItem|::lRightVScroll  := !::lRightVScroll    ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lDownHScroll" ,,o:lDownHScroll  ,,{|oMenuItem|::lDownHScroll   := !::lDownHScroll     ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lModalFrame"  ,,o:lModalFrame   ,,{|oMenuItem|::lModalFrame    := !::lModalFrame      ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lActive"      ,,o:lActive       ,,{|oMenuItem|::lActive        := !::lActive          ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lHasLines"    ,,o:lHasLines     ,,{|oMenuItem|::lHasLines      := !::lHasLines        ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lHasButtons"  ,,o:lHasButtons   ,,{|oMenuItem|::lHasButtons    := !::lHasButtons      ,::Refresh()},,,,,,,.F.,,,.F. )
+
+   MenuAddItem()
+
+
+return nil
+
+
+  static FUNCTION TDsgnTreeView_nMinWidth( nVal ) ; local Self AS CLASS TDsgnTreeView := QSelf() AS CLASS TDsgnTreeView
+
+
+if pcount() > 0
+   ::xMinWidth := nVal
+endif
+
+return if( ::lHScroll .OR. ::lVScroll, max( 22, ::xMinWidth ), ::xMinWidth )
+
+
+  static FUNCTION TDsgnTreeView_nMinHeight( nVal ) ; local Self AS CLASS TDsgnTreeView := QSelf() AS CLASS TDsgnTreeView
+
+
+if pcount() > 0
+   ::xMinHeight := nVal
+endif
+
+return if( ::lVScroll .OR. ::lHScroll , max( 22, ::xMinHeight ), ::xMinHeight )
+
+
+
+  static FUNCTION TDsgnTreeView_DrawLine( hDC, nItem, nIndent, hBmp ) ; local Self AS CLASS TDsgnTreeView := QSelf() AS CLASS TDsgnTreeView
+
+local nHItem  := 18
+local nTop    := ::nTop + 2 + (nItem-1)*nHitem
+local nLeft   := ::nLeft + 1
+local aText   := {"Expanded node", "Expanded node", "Leaf","Leaf","Collapsed Node","Leaf"}
+local cText
+local hBmp2
+local aLines := {"lines1","lines2","lines3","lines4","lines5"}
+local hTheme := nil
+local lThemes := lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+
+   if nTop + nHItem > ::nBottom
+      return nil
+   endif
+
+
+
+   if ::lHasLines
+      if nItem <= len( aLines )
+         hBmp2 := LoadBitmap( GetResources(),aLines[nItem] )
+         DrawMasked( hDC, hBmp2, nTop, nLeft )
+         DeleteObject( hBmp2 )
+         if lThemes
+            hTheme := C5_OpenThemeData(::oWnd:hWnd, "TREEVIEW")
+            if nItem == 2
+               rc := {nTop+5,nLeft+4,nTop+9+5,nLeft+4+9}
+               C5_DrawThemeBackground( hTheme, hDC, 2,2 , rc )
+            else
+               if nItem == 5
+                  rc := {nTop+5,nLeft+4,nTop+5+9,nLeft+4+9}
+                  C5_DrawThemeBackground( hTheme, hDC, 2,1 , rc )
+               endif
+            endif
+            C5_CloseThemeData()
+         endif
+      endif
+   endif
+   nLeft   := ::nLeft + 1 + (nIndent-1)*19
+
+   if lThemes
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "BUTTON")
+   endif
+
+   if ::lHasButtons
+      rc := {nTop+3,nLeft+2,nTop+16,nLeft+13}
+      if lThemes
+         if hTheme <> nil
+            C5_DrawThemeBackground( hTheme, hDC, 3,1 , rc )
+         endif
+      else
+         DrawFrameControl(hDC, rc, 4, nOr( 0x0000,0x4000))
+      endif
+      nLeft += 16
+   endif
+
+   if nItem <= len( aText )
+      cText := aText[nItem]
+      DrawText( hDC, cText,{nTop,nLeft+22,nTop+nHItem,::nRight-2},nOr( 0x00000020, 0x00000004) )
+   endif
+   DrawMasked( hDC, hBmp, nTop, nLeft )
+
+  if lThemes
+     C5_CloseThemeData()
+  endif
+
+
+return nil

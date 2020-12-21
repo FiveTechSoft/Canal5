@@ -1,0 +1,304 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 9 "source\wndvisor.prg"
+static oShowImg
+
+function Visores()
+local oVisores
+local oWnd
+local oBrush
+local o
+local aClient := GetClientRect( Aplicacion():oWnd:hWnd )
+
+
+oBrush := TBrush():New( Upper("NULL"),,,,, )
+
+if Aplicacion():oWndVisores <> nil
+   Aplicacion():oWndVisores:Show()
+else
+
+
+
+   Aplicacion():oWndVisores := TMdiChild():New( 0, 0, aClient[3]-Aplicacion():oWnd:oBar:nHeight(), 200, "Visores",,, Aplicacion():oWnd,, .F.,,,, oBrush, .T., .F.,,, !.F., !.F., !.F., !.F., )
+
+
+          oVisores := VisToolBar( Aplicacion():oWndVisores )
+          Aplicacion():oWndVisores:oClient := oVisores
+
+
+
+
+   Aplicacion():oWndVisores:Activate(, Aplicacion():oWndVisores:bLClicked, Aplicacion():oWndVisores:bRClicked, Aplicacion():oWndVisores:bMoved, Aplicacion():oWndVisores:bResized, Aplicacion():oWndVisores:bPainted, Aplicacion():oWndVisores:bKeyDown, Aplicacion():oWndVisores:bInit := { | Self | ( Aplicacion():oWndVisores:Move( 0, 0,Aplicacion():oToolBox:nRight , aClient[3]-Aplicacion():oWnd:oBar:nHeight(), .T.) ) },,,,,,,,, {|| (Aplicacion():oWndVisores:Hide(),Aplicacion():lCerrarToolBox)},, Aplicacion():oWndVisores:bLButtonUp )
+endif
+
+return nil
+
+
+function VisToolBar( oPage )
+local oWnd, oDlg
+local oToolBar
+local oToolBar0
+local oToolBar1
+local oBtnFld
+local oSlide1
+local nVar1 := 10
+
+
+        oBtnFld  := TBtnFolder():New( 0, 0, 400, 100, oPage )
+
+        oPage:oClient := oBtnFld
+
+        oToolBar0 := TCtrlToolBar():New( 0, 0, 100, 100, oBtnFld, "Ficheros", "toolbar\image4.bmp", {||.T.} )
+        aadd( oBtnFld:aFolders, oToolBar0 )
+
+
+        oToolBar := TCtrlToolBar():New( 0, 0, 100, 100, oBtnFld, "DBFs", "toolbar\image4.bmp", {||.T.} )
+        aadd( oBtnFld:aFolders, oToolBar )
+
+        oToolBar1 := TCtrlToolBar():New( 0, 0, 100, 100, oBtnFld, "Imágenes", "toolbar\image4.bmp", {||.T.}  )
+        aadd( oBtnFld:aFolders, oToolBar1 )
+
+        FindFiles( oToolBar0 )
+        FindDbfs( oToolBar )
+        FindImgs( oToolBar1 )
+
+        oBtnFld:SetOption( 1 )
+
+
+return oBtnFld
+
+
+function FindFIles( oPage )
+
+Local oDirL1
+
+ oDirL1 := TDirList():New( 0, 0, 300, 230, oPage, ,,, .T. )
+
+ oPage:oClient := oDirL1
+
+return nil
+
+
+function FindDbfs( oPage )
+
+Local oDirL1
+
+ oDirL1 := TDirList():New( 0, 0, 300, 230, oPage,,,,,,".dbf",.F., {|| ViewDbfs( oDirL1 ) } )
+ oPage:oClient := oDirL1
+
+return nil
+
+function FindImgs( oPage )
+
+Local oDirL1
+
+ oDirL1 := TDirList():New( 0, 0, 300, 230, oPage,,,,,,".jpg.bmp.gif.tif.ico",.F., {|| ViewImgs( oDirL1 ) } )
+ oDirL1:oLbx:bChange :=  {|| ViewImgs( oDirL1 ) }
+ oPage:oClient := oDirL1
+
+return nil
+
+
+
+function ViewDbfs( oDirL )
+local aClient := GetClientRect( Aplicacion():oWnd:hWnd )
+local oFont, oFld, oLbx
+local oBrw, aStruc
+local oBrw2
+local cAlias
+local oDsgn
+local oBrush
+local cFile := oDIrL:cFullName()
+
+
+
+
+
+   oFont := TFont():New( "Tahoma", 0, -12,,,,,,,,,,,,,, )
+
+   dbUseArea( .T.,, ( cFile ), ( cAlias := GetNewAlias( "CUST" ) ), if(.T. .OR. .F., !.F., NIL), .F. )
+
+
+
+
+   Aplicacion():oWndViewDbfs := TMdiChild():New(,,,, "Visor Dbfs - " + lower(cFile),,, Aplicacion():oWnd,, .F., 0, 16777215,,, .T., .F.,,, !.F., !.F., !.F., !.F., )
+
+   oFld := TFolder():New( 1, 1, {"Vista","Estructura", "Diálogo"}, {}, Aplicacion():oWndViewDbfs,,,, .F., .F.,,,, .F., oFont, )
+
+
+          oBrw2 := TXBrowse():New( oFld:aDialogs[1] )
+          oBrw2:nMarqueeStyle := 5
+          oBrw2:lColDividerComplete := .T.
+          oBrw2:nColDividerStyle    := 1
+          oBrw2:nRowDividerStyle    := 1
+
+
+          oBrw2:SetRDD()
+          oBrw2:CreateFromCode()
+
+          oFld:aDialogs[1]:oCLient := oBrw2
+
+          Aplicacion():oWndViewDbfs:oClient := oFld
+
+      oBrw := TXBrowse():New( oFld:aDialogs[2] )
+
+      aStruc := DBStruct()
+
+      oBrw:SetArray( aStruc )
+
+
+
+      oBrw:aCols[1]:cHeader := Padr("NAME", 15)
+
+      oBrw:aCols[2]:cHeader       := "TYPE"
+      oBrw:aCols[2]:nDataStrAlign := 2
+      oBrw:aCols[2]:nHeadStrAlign := 2
+
+      oBrw:aCols[3]:cHeader       := "SIZE"
+      oBrw:aCols[3]:nDataStrAlign := 1
+      oBrw:aCols[3]:nHeadStrAlign := 1
+
+      oBrw:aCols[4]:cHeader       := "LENGTH"
+      oBrw:aCols[4]:nDataStrAlign := 1
+      oBrw:aCols[4]:nHeadStrAlign := 1
+
+
+      oBrw:lRecordSelector := .F.
+
+          oBrw:nMarqueeStyle := 5
+          oBrw:lColDividerComplete := .T.
+          oBrw:nColDividerStyle    := 1
+          oBrw:nRowDividerStyle    := 1
+
+
+
+      oBrw:CreateFromCode()
+
+      oFld:aDialogs[2]:oClient := oBrw
+
+
+
+    oDsgn := TDsgnEditor():New( 6, 6, 500, 500, oFld:aDialogs[3] )
+
+
+    oDsgn:nType := 0
+
+
+
+    oDsgn:oForm := TWndDsgn():New( 0, 0, 500, 500, oDsgn )
+    oDsgn:bResized := {|| AdjustDsgn( oDsgn ) }
+    AdjustDsgn( oDsgn )
+
+    oDsgn:DbfToDialog( cFile )
+
+
+
+
+   Aplicacion():oWndViewDbfs:Activate(, Aplicacion():oWndViewDbfs:bLClicked, Aplicacion():oWndViewDbfs:bRClicked, Aplicacion():oWndViewDbfs:bMoved, Aplicacion():oWndViewDbfs:bResized, Aplicacion():oWndViewDbfs:bPainted, Aplicacion():oWndViewDbfs:bKeyDown, Aplicacion():oWndViewDbfs:bInit := { | Self | Aplicacion():oWndViewDbfs:Move( 0, 200, aClient[4]-200, aClient[3]-Aplicacion():oWnd:oBar:nHeight, .T.) },,,,,,,,,,, Aplicacion():oWndViewDbfs:bLButtonUp )
+
+
+
+
+
+
+return nil
+
+
+function ViewImgs( oDirL )
+local aClient := GetClientRect( Aplicacion():oWnd:hWnd )
+local cFile := oDIrL:cFullName()
+local oBar, o
+
+
+
+
+if Aplicacion():oWndViewImgs == nil
+
+   oFont := TFont():New( "Tahoma", 0, -12,,,,,,,,,,,,,, )
+
+
+
+
+   Aplicacion():oWndViewImgs := TMdiChild():New(,,,, "Visor Imágenes - " + lower(cFile),,, Aplicacion():oWnd,, .F., 0, ( 238 + ( 238 * 256 ) + ( 238 * 65536 ) ),,, .T., .F.,,, !.F., !.F., !.F., !.F., )
+
+          oBar := TBar():New( Aplicacion():oWndViewImgs,,, .T., Upper("BOTTOM"),, .F., .F. )
+
+          oShowImg := TShowImg():New( 0, 0, aClient[4], aClient[3], Aplicacion():oWndViewImgs, oDirL, cFile )
+
+          Aplicacion():oWndViewImgs:oClient := oShowImg
+
+
+          o := TBtnBmp():NewBar( "toleft",,,,, {|This|( oDirL:oLbx:GoUp(), oShowImg:SetImage( oDIrL:cFullName ))}, .F., oBar, .F.,,, .F.,, "( oDirL:oLbx:GoUp(), oShowImg:SetImage( oDIrL:cFullName ))",,,,,, !.T.,,,,, .F. )
+          TBtnBmp():NewBar( "toright",,,,, {|This|( oDirL:oLbx:GoDown(), oShowImg:SetImage( oDIrL:cFullName ))}, .F., oBar, .F.,,, .F.,, "( oDirL:oLbx:GoDown(), oShowImg:SetImage( oDIrL:cFullName ))",,,,,, !.T.,,,,, .F. )
+          TBtnBmp():NewBar( "actual",,,,,, .T., oBar, .F.,,, .F.,,,,,,,, !.T.,,,,, .F. )
+          TBtnBmp():NewBar( "diapos",,,,,, .F., oBar, .F.,,, .F.,,,,,,,, !.T.,,,,, .F. )
+          TBtnBmp():NewBar( "zoom2",,,,, {|This|(oShowImg:nZoom := min( oShowImg:nZoom+0.25,10), oShowImg:Refresh() )}, .T., oBar, .F.,,, .F.,, "(oShowImg:nZoom := min( oShowImg:nZoom+0.25,10), oShowImg:Refresh() )",,,,,, !.T.,,,,, .F. )
+          TBtnBmp():NewBar( "unzoom",,,,, {|This|(oShowImg:nZoom := max( oShowImg:nZoom-0.25,1) , oShowImg:Refresh() )}, .F., oBar, .F.,,, .F.,, "(oShowImg:nZoom := max( oShowImg:nZoom-0.25,1) , oShowImg:Refresh() )",,,,,, !.T.,,,,, .F. )
+          TBtnBmp():NewBar( "rotari",,,,, {|This|(oShowImg:RotateRight( 90 ), oShowImg:Refresh() )}, .T., oBar, .F.,,, .F.,, "(oShowImg:RotateRight( 90 ), oShowImg:Refresh() )",,,,,, !.T.,,,,, .F. )
+          TBtnBmp():NewBar( "rotale",,,,, {|This|(oShowImg:RotateLeft( 90 ), oShowImg:Refresh() )}, .F., oBar, .F.,,, .F.,, "(oShowImg:RotateLeft( 90 ), oShowImg:Refresh() )",,,,,, !.T.,,,,, .F. )
+          TBtnBmp():NewBar( "delbmp",,,,,, .T., oBar, .F.,,, .F.,,,,,,,, !.T.,,,,, .F. )
+          TBtnBmp():NewBar( "printbmp",,,,,, .F., oBar, .F.,,, .F.,,,,,,,, !.T.,,,,, .F. )
+          TBtnBmp():NewBar( "editbmp",,,,,, .F., oBar, .F.,,, .F.,,,,,,,, !.T.,,,,, .F. )
+
+
+
+          TBtnBmp():NewBar( "savebmp",,,,,, .F., oBar, .F.,,, .F.,,,,,,,, !.T.,,,,, .F. )
+
+
+
+
+
+
+   Aplicacion():oWndViewImgs:Activate(, Aplicacion():oWndViewImgs:bLClicked, Aplicacion():oWndViewImgs:bRClicked, Aplicacion():oWndViewImgs:bMoved, Aplicacion():oWndViewImgs:bResized, Aplicacion():oWndViewImgs:bPainted, Aplicacion():oWndViewImgs:bKeyDown, Aplicacion():oWndViewImgs:bInit := { | Self | ( Aplicacion():oWndViewImgs:Move( 0, Aplicacion():oToolBox:nRight, aClient[4]-Aplicacion():oToolBox:nWidth, aClient[3]-Aplicacion():oWnd:oBar:nHeight, .T.), Mueve( oBar ) ) },,,,,,,,, {|| (Aplicacion():oWndViewImgs := nil, .T. )},, Aplicacion():oWndViewImgs:bLButtonUp )
+
+else
+
+    Aplicacion():oWndViewImgs:Show()
+    oShowImg:SetImage( cFile )
+    oShowImg:Refresh(.T.)
+
+
+endif
+
+
+
+
+
+
+return nil
+
+function Mueve( oBar )
+local o
+
+for n := 1 to len( oBar:aControls )
+    o := oBar:aControls[n]
+    o:Move( o:nTop, o:nLeft + 200,,,.T.)
+next
+
+return
+
+
+
+
+
+function GetNewAlias( cDbfName )
+
+   static n := 0
+
+return cDbfName + StrZero( ++n, 2 )

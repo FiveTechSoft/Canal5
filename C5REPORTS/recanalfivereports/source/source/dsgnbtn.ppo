@@ -1,0 +1,754 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 6 "source\dsgnbtn.prg"
+_HB_CLASS TDsgnBtn ; function TDsgnBtn ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnBtn" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnBtn() ) ) ;
+
+; _HB_MEMBER { lFlat } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFlat"}, .F. )
+; _HB_MEMBER { lDefault } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lDefault"}, .F. )
+; _HB_MEMBER { cAlign } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cAlign"}, .F. )
+; _HB_MEMBER { nTipo } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nTipo"}, .F. )
+; _HB_MEMBER { lChecked } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lChecked"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { lPressed } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lPressed"}, .F. )
+; _HB_MEMBER { lHotTrack } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lHotTrack"}, .F. )
+; _HB_MEMBER { cAction } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cAction"}, .F. )
+; _HB_MEMBER { nRadMenu } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nRadMenu"}, .F. )
+
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd, nTipo) AS CLASS TDsgnBtn; oClass:AddMethod( "New", @TDsgnBtn_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnBtn_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PaintBtn( hDC); oClass:AddMethod( "PaintBtn", @TDsgnBtn_PaintBtn(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PaintCheck( hDC); oClass:AddMethod( "PaintCheck", @TDsgnBtn_PaintCheck(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PaintRadio( hDC); oClass:AddMethod( "PaintRadio", @TDsgnBtn_PaintRadio(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnBtn_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Inspect( cDataName); oClass:AddMethod( "Inspect", @TDsgnBtn_Inspect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GenPrg( lDialog, cfrom, cHeader, cFunciones); oClass:AddMethod( "GenPrg", @TDsgnBtn_GenPrg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProps( oList); oClass:AddMethod( "SetProps", @TDsgnBtn_SetProps(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnBtn ;
+
+
+      static FUNCTION TDsgnBtn_New( nTop, nLeft, nBottom, nRight, oWnd, nTipo ) ; local Self AS CLASS TDsgnBtn := QSelf() AS CLASS TDsgnBtn
+
+
+If( nTipo == nil, nTipo := 1, ) ;
+
+::lGroup   := .F.
+
+if nTop <> nil
+   if nBottom-nTop < 10 .OR. nRight-nLeft < 10
+      do case
+         case nTipo == 1
+              nBottom    := nTop + 23
+              nRight     := nLeft + 75
+
+         case nTipo == 3
+              nBottom    := nTop + 16
+              nRight     := nLeft + 62
+
+         case nTipo == 2
+              nBottom    := nTop + 16
+              nRight     := nLeft + 62
+              ::nRadMenu := 1
+
+
+      endcase
+   endif
+endif
+
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::lFlat        := .F.
+   ::lDefault     := .F.
+   ::nClrBorder   := 0
+
+   ::nTipo        := nTipo
+   ::lChecked     := .F.
+   ::lActive      := .T.
+   ::lPressed     := .F.
+   ::lHotTrack    := .F.
+   ::cAction      := space(100)
+
+   do case
+      case ::nTipo == 1
+
+           ::nClrPane := ( 222 + ( 207 * 256 ) + ( 198 * 65536 ) )
+           ::cAlign   := "center"
+
+      case ::nTipo == 3
+           ::nClrPane := 16777215
+           ::cAlign   := "left"
+
+      case ::nTipo == 2
+           ::nClrPane := 16777215
+           ::cAlign   := "left"
+   endcase
+
+   ::cCaption     := "botón"
+   ::bContextMenu := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ::aProperties :=    { "cCaption"       , "cAlign"         , "aDotsActives"   , "cObjName"       , "aRect"          , "lActive"        , "lBorder"        , "lCanSize"       , "lCanMove"       , "lEditable"      , "lFlat"          , "lVisible"       , "nClrBorder"     , "nClrPane"       , "nClrText"       , "nTipo"          , "nTop","nLeft","nBottom","nRight" }
+
+  if ::nTipo == 1
+     aadd( ::aProperties, "cAction" )
+  else
+     aadd( ::aProperties, "lChecked" )
+  endif
+
+  if ::nTipo == 2
+     aadd( ::aProperties, "lGroup" )
+  endif
+
+  ::cObjName         := ::GetObjName()
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+return self
+
+
+  static FUNCTION TDsgnBtn_Paint( hDC ) ; local Self AS CLASS TDsgnBtn := QSelf() AS CLASS TDsgnBtn
+
+
+local oFont := ::oWnd:oForm:GetFontEx()
+local hFont := oFont:hFont
+local hOldFont := SelectObject( hDC, hFont )
+
+   do case
+      case ::nTipo == 1
+           ::PaintBtn( hDC )
+      case ::nTipo == 3
+           ::PaintCheck( hDC )
+      case ::nTipo == 2
+           ::PaintRadio( hDC )
+
+      otherwise
+           ::TShape:Paint( hDC )
+   endcase
+
+SelectObject( hDC, hOldFont )
+oFont:End()
+
+
+if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+   ::DotsSelect( hDC )
+endif
+
+return nil
+
+
+
+  static FUNCTION TDsgnBtn_PaintBtn( hDC ) ; local Self AS CLASS TDsgnBtn := QSelf() AS CLASS TDsgnBtn
+
+local hOldBrush, hOldPen
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local hTheme := nil
+local nClrPane := ::nClrPane
+local hFont, hOldFont, oFontPPC
+local nAlign, color
+
+if nClrPane == nil ; nClrPane := ( 222 + ( 207 * 256 ) + ( 198 * 65536 ) ) ; endif
+
+if ::oWnd:lPocketPc()
+
+   FillSolidRect( hDC, rc, nClrPane, 0 )
+
+
+
+
+
+
+
+   SetBkMode( hDC, 1 )
+   color := SetTextColor( hDC, 0 )
+
+   DrawText( hDC, ::cCaption, rc, nOr( 0x00000020 , 0x00000004, 0x00000001, 0x00008000 ))
+
+
+   SetTextColor(hDC, color)
+
+
+
+   if ::lDefault
+      rc[1]++;      rc[2]++;      rc[3]--;      rc[4]--
+      Box(hDC, rc, 0 )
+   endif
+
+else
+
+
+
+   if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "BUTTON")
+
+      if hTheme <> nil
+
+         C5_DrawThemeBackground( hTheme, hDC, 1, nil , rc )
+         C5_DrawThemeText( hTheme, hDC, 1, 1, ::cCaption, nOr( 0x00000004, 0x00000001, 0x00000020 ), nil, rc )
+         C5_CloseThemeData()
+
+      endif
+
+   else
+
+     FillSolidRect( hDC, rc, GetSysColor(15) )
+
+     if ::lFlat
+
+        DrawFrameControl(hDC, rc, 4, nOr(0x0010, 0x4000 ))
+        hOldBrush := SelectObject( hDC, GetStockObject( 5 ))
+        hOldPen   := SelectObject( hDC, GetStockObject( 6 ) )
+        Rectangle( hDC, rc[1]+1, rc[2]+1, rc[3]-1, rc[4]-1 )
+        SelectObject( hDC, hOldPen )
+        SelectObject( hDC, hOldBrush )
+
+     else
+
+        if ::lDefault
+
+           FillSolidRect( hDC, rc, GetSysColor(15), 0 )
+
+           rc[1]++
+           rc[2]++
+
+
+
+        endif
+
+        DrawFrameControl(hDC, rc, 4, 0x0010  )
+
+     endif
+
+     rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+     SetBkMode( hDC, 1 )
+     do case
+        case ::cAlign == "left"
+             nAlign := nOr( 0x00000020, 0x00000004 )
+        case ::cAlign == "center"
+             nAlign := nOr( 0x00000020, 0x00000004, 0x00000001 )
+        case ::cAlign == "right"
+             nAlign := nOr( 0x00000020, 0x00000004, 0x00000002 )
+     endcase
+     DrawText(hDC, ::cCaption, rc, nAlign )
+
+
+   endif
+
+endif
+
+
+
+return nil
+
+
+  static FUNCTION TDsgnBtn_PaintCheck( hDC ) ; local Self AS CLASS TDsgnBtn := QSelf() AS CLASS TDsgnBtn
+
+local hOldBrush, hOldPen
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local iMode
+local hTheme := nil
+local nState
+local hFont, hOldFont, oFontPPC
+local nClrPane := ::nClrPane
+local hBmp
+local nLeft, color
+
+if ::oWnd:lPocketPc()
+
+   if ::cAlign == "left"
+      nLeft := rc[2]
+   else
+      nLeft := rc[4]- 20
+   endif
+
+   FillSolidRect( hDC, rc, nClrPane )
+
+   hBmp     := LoadBitmap( GetResources(), if(::lChecked,"chkonppc","chkofppc" ) )
+   DrawMasked( hDC, hBmp, rc[1]+(::nHeight/2)-8, nLeft )
+   DeleteObject( hBmp )
+
+
+
+
+
+   SetBkMode( hDC, 1 )
+   color := SetTextColor( hDC, 0 )
+
+   if ::cAlign == "left"
+      rc[2] += 20
+   endif
+
+   DrawText(hDC, ::cCaption, rc, nOr(0x00000020,0x00000004) )
+
+
+   SetTextColor(hDC, color)
+
+
+
+else
+
+
+
+   if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "BUTTON")
+
+      if hTheme <> nil
+
+
+          nState := if(::lActive, if(::lPressed, 7, if(::lHotTrack,6,5)), 8)
+
+         if ::cAlign == "left"
+            rc[4] := rc[2] + 20
+         else
+            rc[2] := rc[4] - 20
+         endif
+
+         C5_DrawThemeBackground( hTheme, hDC, 3, if( ::lChecked,5,1 ) , rc )
+         rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+         if ::cAlign == "left"
+            rc[2] += 20
+         else
+            rc[4] -= 20
+         endif
+         C5_DrawThemeText( hTheme, hDC, 3, 5, ::cCaption, nOr( 0x00000004, 0x00000020 ), nil, rc )
+         C5_CloseThemeData()
+
+      endif
+
+   else
+
+     if nClrPane == nil
+        nClrPane := GetSysColor(15)
+     endif
+
+     FillSolidRect( hDC, rc, nClrPane )
+
+     iMode := SetBkMode( hDC, 1 )
+
+     if ::cAlign == "left"
+        rc[2] += 20
+     endif
+
+     DrawText(hDC, ::cCaption, rc, nOr(0x00000020,0x00000004) )
+     SetBkMode( hDC, iMode )
+
+     rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+
+     rc[1] := rc[1] + ((rc[3]-rc[1])/2)-6
+     rc[3] := rc[1] + 14
+
+     if ::cAlign == "left"
+        rc[4] := rc[2] + 20
+     else
+        rc[2] := rc[4] - 20
+     endif
+
+
+
+
+     DrawFrameControl(hDC, rc, 4, nOr( 0x0000, if(::lFlat,0x4000,0 ), if(::lChecked,0x0400,0), if( ::lActive,0,0x0100) ))
+   endif
+
+endif
+
+return nil
+
+
+  static FUNCTION TDsgnBtn_PaintRadio( hDC ) ; local Self AS CLASS TDsgnBtn := QSelf() AS CLASS TDsgnBtn
+
+local hOldBrush, hOldPen
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local iMode
+local hTheme := nil
+local hFont, hOldFont, oFontPPC
+local nClrPane := ::nClrPane
+local hBmp, nLeft, color
+
+if ::oWnd:lPocketPc()
+
+   if ::cAlign == "left"
+      nLeft := rc[2]
+   else
+      nLeft := rc[4]- 20
+   endif
+
+   FillSolidRect( hDC, rc, nClrPane )
+
+   hBmp     := LoadBitmap( GetResources(), if(::lChecked,"radonppc","radofppc" ) )
+   DrawMasked( hDC, hBmp, rc[1]+(::nHeight/2)-8, nLeft )
+   DeleteObject( hBmp )
+
+
+
+
+
+   SetBkMode( hDC, 1 )
+   color := SetTextColor( hDC, 0 )
+
+   if ::cAlign == "left"
+      rc[2] += 20
+   endif
+
+   DrawText(hDC, ::cCaption, rc, nOr(0x00000020,0x00000004) )
+
+
+   SetTextColor(hDC, color)
+
+
+else
+
+
+
+   if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "BUTTON")
+
+      if hTheme <> nil
+
+         if ::cAlign == "left"
+            rc[4] := rc[2] + 20
+         else
+            rc[2] := rc[4] - 20
+         endif
+
+         C5_DrawThemeBackground( hTheme, hDC, 2, if( ::lChecked,5,1 ) , rc )
+         rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+
+         if ::cAlign == "left"
+            rc[2] := rc[2] + 20
+         else
+            rc[4] := rc[4] - 20
+         endif
+
+         C5_DrawThemeText( hTheme, hDC, 2, 5, ::cCaption, nOr( 0x00000004, 0x00000020 ), nil, rc )
+         C5_CloseThemeData()
+
+      endif
+
+   else
+     FillSolidRect( hDC, rc, GetSysColor(15) )
+
+
+
+     if ::cAlign == "left"
+        rc[2] := rc[2] + 20
+     endif
+
+     iMode := SetBkMode( hDC, 1 )
+     DrawText(hDC, ::cCaption, rc, nOr(0x00000020,0x00000004) )
+     SetBkMode( hDC, iMode )
+
+
+     rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+     rc[1] := rc[1] + ((rc[3]-rc[1])/2)-7
+     rc[3] := rc[1] + 14
+
+     if ::cAlign == "left"
+        rc[4] := rc[2] + 20
+     else
+        rc[2] := rc[4] - 20
+     endif
+
+
+
+
+     DrawFrameControl(hDC, rc, 4, nOr( 0x0004, if(::lFlat,0x4000,0), if(::lChecked,0x0400,0), if(::lActive,0,0x0100) ))
+   endif
+endif
+
+return nil
+
+
+
+
+
+      static FUNCTION TDsgnBtn_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnBtn := QSelf() AS CLASS TDsgnBtn
+
+local oMenu
+
+
+
+   MenuAddItem( "Flat",, .F.,, {|oMenuItem|::lFlat     := !::lFlat    , ::Refresh()},,,,,,, .F.,,, .F. )
+   if ::nTipo == 1
+      MenuAddItem( "Default",, .F.,, {|oMenuItem|::lDefault  := !::lDefault , ::Refresh()},,,,,,, .F.,,, .F. )
+   endif
+   if ::nTipo == 3 .OR. ::nTipo == 2
+      MenuAddItem( "Checked",, .F.,, {|oMenuItem|::lChecked  := !::lChecked , ::Refresh()},,,,,,, .F.,,, .F. )
+   endif
+
+   MenuAddItem()
+
+
+return nil
+
+
+  static FUNCTION TDsgnBtn_Inspect( cDataName, oInspector ) ; local Self AS CLASS TDsgnBtn := QSelf() AS CLASS TDsgnBtn
+
+
+local o := self
+local uVal
+
+   do case
+      case cDataName == "cAlign"
+           do case
+              case ::nTipo == 1
+                   return { "left","center","right" }
+              case ::nTipo == 3 .OR. ::nTipo == 2
+                   return { "left","right" }
+           endcase
+
+      case cDataName == "cAction"
+
+           if !empty( oInspector:aRectBtn )
+              aPoint := {oInspector:aRectBtn[3],oInspector:aRectBtn[4]}
+              aPoint := ClientToScreen( oInspector:hWnd, aPoint )
+           endif
+
+           return {|cDataName| oSend( self, "_" + cDataName, MemoEdit2( o:cAction ) ) }
+   endcase
+
+return ::TShape:Inspect( cDataName, oInspector )
+
+
+  static FUNCTION TDsgnBtn_GenPrg( lDialog, cFrom, cHeader, cFunciones ) ; local Self AS CLASS TDsgnBtn := QSelf() AS CLASS TDsgnBtn
+
+local cRet := ""
+local cObject
+local nNum
+local cVar
+
+cObject := ::cObjName
+
+If( lDialog == nil, lDialog := .T., ) ;
+If( cFrom == nil, cFrom := "oWnd", ) ;
+If( cHeader == nil, cHeader := "", ) ;
+If( cFunciones == nil, cFunciones := "", ) ;
+
+
+        do case
+           case ::nTipo == 1
+
+                cHeader += "local " + cObject + Chr(13)+Chr(10)
+
+
+
+
+                cRet += "        @ " + ::cStrTop(lDialog) + ", " + ::cStrLeft(lDialog) + " BUTTON " + cObject + ' PROMPT "' + alltrim( ::cCaption ) + '" ;' + Chr(13)+Chr(10) + "                 SIZE " + ::cStrWidth(lDialog) + ", " + ::cStrHeight(lDialog) + " PIXEL ; " + Chr(13)+Chr(10) + "                 ACTION " + GetFunctionName( ::cAction )  + " ;" + Chr(13)+Chr(10) + "                 OF " + cFrom + Chr(13)+Chr(10)
+
+                cFunciones += ::cAction + Chr(13)+Chr(10)
+
+           case ::nTipo == 3
+
+                cHeader += "local " + cObject + Chr(13)+Chr(10)
+                cVar    := "l" + substr( cObject, 2 )
+                cHeader += "local " + cVar + " := " + if( ::lChecked, ".T.",".F." ) + Chr(13)+Chr(10)
+
+
+
+                cRet += "        @ " + ::cStrTop(lDialog) + ", " + ::cStrLeft(lDialog) + " CHECKBOX " + cObject + " VAR " + cVar +' PROMPT "' + alltrim( ::cCaption ) + '" ;' + Chr(13)+Chr(10) + "                 SIZE " + ::cStrWidth(lDialog) + ", " + ::cStrHeight(lDialog) + " PIXEL ; " + Chr(13)+Chr(10) + "                 OF " + cFrom + Chr(13)+Chr(10)
+
+           case ::nTipo == 2
+
+                cHeader += "local " + cObject + Chr(13)+Chr(10)
+                cVar    := "n" + substr( cObject, 2 )
+                cHeader += "local " + cVar + " := 1"  + Chr(13)+Chr(10)
+
+                if ::lGroup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   cRet += "        @ " + ::cStrTop(lDialog) + ", " + ::cStrLeft(lDialog) + " RADIO " + cObject + " VAR " + cVar + " ;" + Chr(13)+Chr(10) + '                 PROMPT "' + alltrim( ::cCaption ) + '" ;' + Chr(13)+Chr(10) + "                 SIZE " + ::cStrWidth(lDialog) + ", " + ::cStrHeight(lDialog) + " PIXEL ; " + Chr(13)+Chr(10) + "                 OF " + cFrom + Chr(13)+Chr(10)
+
+                else
+
+
+
+                   cRet += "        @ " + ::cStrTop(lDialog) + ", " + ::cStrLeft(lDialog) + " RADIOITEM " + cObject + ' PROMPT "' + alltrim( ::cCaption ) + '" ;' + Chr(13)+Chr(10) + "                 SIZE " + ::cStrWidth(lDialog) + ", " + ::cStrHeight(lDialog) + " PIXEL ; " + Chr(13)+Chr(10) + "                 OF " + cFrom + Chr(13)+Chr(10)
+                endif
+
+        endcase
+
+return cRet
+
+
+
+   static FUNCTION TDsgnBtn_SetProps( oList ) ; local Self AS CLASS TDsgnBtn := QSelf() AS CLASS TDsgnBtn
+
+local nGroup
+local o := self
+
+nGroup := oList:AddGroup( "Appearence" )
+
+oList:AddItem( "cObjName","Name", ,nGroup )
+oList:AddItem( "lActive","Active","L" ,nGroup )
+oList:AddItem( "cCaption","Text",,nGroup )
+oList:AddItem( "lCanMove","Can move", "L",nGroup )
+oList:AddItem( "lCanSize","Can size", "L",nGroup )
+
+
+nGroup := oList:AddGroup(  "Position" )
+
+oList:AddItem( "nTop","Top", ,nGroup )
+oList:AddItem( "nLeft","Left", ,nGroup )
+oList:AddItem( "nWidth","Width", ,nGroup )
+oList:AddItem( "nHeight","Height", ,nGroup )
+
+
+
+
+
+return 0
+
+
+
+
+  function GetFunctionName( cAction )
+
+
+local nAt := at( "function", lower( cAction ) )
+local nIni
+local nEnd
+local cRet := ""
+
+if nAt <> 0
+   nEnd := at( ")", cAction)
+endif
+
+if nAt <> 0 .AND. nEnd <> 0
+   nIni := nAt + len( "function" )
+   cRet := substr( cAction, nIni, nEnd-nIni+1 )
+endif
+
+
+if empty( cRet )
+   cRet := 'MsgInfo( "Action" )'
+endif
+
+return cRet
+
+
+
+
+  function nGetNum( cStr )
+
+local n
+
+cStr := UPPER( cStr )
+
+for n := 65 to 90
+    cStr := strtran( cStr, chr( n ),"" )
+next
+
+return val( cStr )
+
+
+  function cGetStr( cStr )
+
+local n
+
+for n := 48 to 57
+    cStr := strtran( cStr, chr( n ),"" )
+next
+
+return alltrim(cStr)
+
+
+
+function MemoEdit2( cText, cTitle, nTop, nLeft, nBottom, nRight )
+
+   local oFont, oDlg, oMemo, oBtnOk, oBtnCancel, oBtnHelp
+
+   local uTemp := ""
+   local lOk   := .F.
+
+
+   If( nTop == nil, nTop := 9, ) ; If( nLeft == nil, nLeft := 9, ); If( nBottom == nil, nBottom := 23, ); If( nRight == nil, nRight := 68.5, ); If( cTitle == nil, cTitle := "MemoEdit", );
+
+   oFont := TFont():New( "Courier New", 0, -12,,,,,,,,,,,,,, )
+
+
+   oDlg = TDialog():New( nTop, nLeft, nBottom, nRight, cTitle,,, .F.,,,,,, .F.,, oFont,,,, .F., )
+
+      uTemp := cText
+      oMemo := TMultiGet():New( 4, 3, { | u | If( PCount()==0, uTemp, uTemp:= u ) }, oDlg, 100, 100, oFont, .F.,,,, .T.,, .F.,, .F., .F., .F.,,, .F.,, )
+
+
+
+
+
+
+   oBtnOk := TButton():New( 110, 134, "&Ok",, {|| ( cText := uTemp ,  lOk := .T., oDlg:End() )}, 36, 13,,, .F., .T., .F.,, .F.,,, .F. )
+
+
+   oBtnCancel := TButton():New( 78, 176, "&Cancel",, {|| oDlg:End()}, 36, 13,,, .F., .T., .F.,, .F.,,, .F. )
+
+
+
+
+
+
+
+
+
+
+   oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .T.,,, {|Self|(   oMemo:SetSize( oDlg:nWidth() - 17, oDlg:nHeight() - 77 ), oBtnOk:nTop      := oDlg:nHeight() - 64, oBtnOk:nLeft     := oDlg:nWidth() - 167, oBtnCancel:nTop  := oDlg:nHeight() - 64, oBtnCancel:nLeft := oDlg:nWidth() - 84 )}, oDlg:bRClicked,,, )
+
+
+
+
+   oFont:End()
+
+
+return cText

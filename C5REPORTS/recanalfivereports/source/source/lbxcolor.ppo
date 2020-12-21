@@ -1,0 +1,277 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 65 "source\lbxcolor.prg"
+_HB_CLASS TLbxSysColor ; function TLbxSysColor ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TLbxSysColor" , iif( .T., { @TListBox() }, { @HBObject() } ), @TLbxSysColor() ) ) ;
+
+; _HB_MEMBER { aSysColors } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aSysColors"}, .F. )
+
+      _HB_MEMBER New( nRow, nCol, nWidth, nHeight, oWnd) AS CLASS TLbxSysColor; oClass:AddMethod( "New", @TLbxSysColor_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Default(); oClass:AddMethod( "Default", @TLbxSysColor_Default(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PaintItem( hDC, nItem, ctext, rc, lFocus, lSelected, hBitmap); oClass:AddMethod( "PaintItem", @TLbxSysColor_PaintItem(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TLbxSysColor ;
+
+
+  static FUNCTION TLbxSysColor_New( nRow, nCol, nWidth, nHeight, oWnd ) ; local Self AS CLASS TLbxSysColor := QSelf() AS CLASS TLbxSysColor
+
+
+   local oFont
+   local o := self
+
+   ::bSetGet  := { || nil }
+   ::cCaption   := ""
+   ::nTop       := nRow
+   ::nLeft      := nCol
+   ::nBottom    := ::nTop  + nHeight - 1
+   ::nRight     := ::nLeft + nWidth - 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ::aItems     := {"3ddkshadow", "3dlight", "activeborder", "activecaption", "appworkspace", "background", "btnface", "btnhighlight", "btnshadow", "btntext", "captiontext", "gradientactivecaption", "gradientinactivecaption", "graytext", "highlight", "highlighttext", "hotlight", "inactiveborder", "inactivecaption", "inactivecaptiontext", "infobk", "infotext", "menu", "menutext", "scrollbar", "window", "windowframe", "windowtext" }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ::aSysColors := { 21, 22, 10, 2, 12, 1, 15, 20, 16, 18, 9, 27, 28, 17, 13, 14, 26, 11, 3, 19, 24, 23, 4, 7, 0, 5, 6, 8 }
+
+   ::oWnd       = oWnd
+   ::oFont      = oFont
+
+   ::lOwnerDraw = .T.
+
+   ::bDrawItem := {| hDC, nItem, cText, rc, lFocus, lSelected, hBitmap | o:PaintItem( hDC, nItem, ctext, rc, lFocus, lSelected, hBitmap ) }
+
+   ::nStyle     = nOR( 1 , 16 , 4096 , 1073741824 , 268435456 , 8388608 , 2097152 )
+
+   ::nId        = ::GetNewId()
+   ::lCaptured  = .F.
+
+   ::SetColor( 0, 16777215 )
+
+   if ! Empty( oWnd:hWnd )
+      ::Create( "LISTBOX" )
+      ::Default()
+      if oFont <> nil
+         ::SetFont( oFont )
+      endif
+      oWnd:AddControl( Self )
+   else
+      oWnd:DefControl( Self )
+   endif
+
+return Self
+
+
+  static FUNCTION TLbxSysColor_PaintItem( hDC, nItem, ctext, rc, lFocus, lSelected, hBitmap ) ; local Self AS CLASS TLbxSysColor := QSelf() AS CLASS TLbxSysColor
+
+
+  local rc0 := {rc[1]+3,rc[2]+3,rc[3]-3,rc[2]+25}
+  local hOldFont := SelectObject( hDC, GetStockObject( 17 ) )
+  local iMode := SetBkMode( hDC, 1 )
+
+  if lSelected
+     FillSolidRect( hDC, rc, GetSysColor( 13 ) )
+     SetTextColor( hDC, 16777215 )
+  else
+     FillSolidRect( hDC, rc, 16777215 )
+     SetTextColor( hDC, 0 )
+  endif
+
+
+  FillSolidRect( hDC, rc0, GetSysColor( ::aSysColors[ nItem ] ), 0 )
+
+  rc0 := {rc[1]  ,rc[2]+30,rc[3]  ,rc[4]}
+
+  DrawText( hDC, ::aItems[nItem], rc0, nOr( 0x00000004, 0x00000020 ) )
+
+  SelectObject( hDC, hOldFont )
+  SetBkMode( hDC, iMode )
+
+return 1
+
+static FUNCTION TLbxSysColor_Default( ) ; local Self AS CLASS TLbxSysColor := QSelf() AS CLASS TLbxSysColor
+
+   local nAt
+   local cStart := ::aItems[1]
+   local aFiles
+
+   If( cStart == nil, cStart := "", ) ;
+
+
+
+
+   AEval( ::aItems, { | cItem, nAt | If( cItem == nil, ::aItems[ nAt ] := "",), ::SendMsg( ( 383 +  1 ), 0, If( cItem == nil, "", cItem ) ) } )
+
+   if ValType( cStart ) <> "N"
+
+      nAt = AScan( ::aItems, { | cItem | Upper( AllTrim( cItem ) ) ==  Upper( AllTrim( cStart ) ) } )
+   else
+      nAt = cStart
+   endif
+
+   if nAt <> 0
+      ::SendMsg( ( 383 +  7 ), nAt - 1 )
+   else
+      ::SendMsg( ( 383 +  7 ), 0 )
+   endif
+
+return nil
+
+
+
+function LbxDrawItem( nPStruct, aBitmaps, aItems, nBmpWidth, bDrawItem )
+
+local aInfo := GetDrawItemStruct( nPStruct )
+local CtlType    := aInfo[1]
+local CtlID      := aInfo[2]
+local itemID     := aInfo[3]
+local itemAction := aInfo[4]
+local itemState  := aInfo[5]
+local hWndItem   := aInfo[6]
+local hDC        := aInfo[7]
+local nTop       := aInfo[8]
+local nLeft      := aInfo[9]
+local nBottom    := aInfo[10]
+local nRight     := aInfo[11]
+local rgbFore, rgbBack
+
+do case
+   case itemAction == 0x0001 .OR. itemAction == 0x0002
+
+        if lAnd( itemState, 0x0010 )
+           DrawFocusRect( hDC, nTop,nLeft,nBottom,nRight )
+        endif
+
+        if lAnd( itemState, 0x0001 )
+           rgbFore := SetTextColor( hDC, GetSysColor( 14 ) )
+           rgbBack := SetBkColor( hDC, GetSysColor( 13 ) )
+           FillSolidRect( hDC, {nTop, nLeft, nBottom, nRight}, GetSysColor( 13 ) )
+        else
+           FillSolidRect( hDC, {nTop, nLeft, nBottom, nRight}, 16777215     )
+        endif
+
+
+           DrawText( hDC, aItems[itemID + 1], {nTop, nLeft + 2, nBottom, nRight}, nOr( 0x00000004, 0x00000020 ) )
+
+
+        if lAnd( itemState, 0x0001 )
+           SetTextColor( hDC, rgbFore )
+           SetBkColor( hDC, rgbBack )
+        endif
+
+        if lAnd( itemState, 0x0010 )
+           DrawFocusRect( hDC, nTop, nLeft, nBottom, nRight )
+        endif
+
+        if bDrawItem <> nil
+           return eval( bDrawItem, hDC, itemID+1, aItems[itemID+1], {nTop, nLeft, nBottom, nRight}, lAnd( itemState, 0x0010 ),lAnd( itemState, 0x0001 ), if( len( abitmaps ) > 0, aBitmaps[itemID+1],0) )
+        endif
+
+endcase
+
+return nil
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma BEGINDUMP
+#include "windows.h"
+#include "hbapi.h"
+
+HB_FUNC( GETDRAWITEMSTRUCT )
+{
+   LPDRAWITEMSTRUCT lp = ( LPDRAWITEMSTRUCT ) hb_parnl( 1 );
+
+   hb_reta( 12 );
+
+   hb_storvni( lp->CtlType      ,    -1, 1  );
+   hb_storvni( lp->CtlID        ,    -1, 2  );
+   hb_storvni( lp->itemID       ,    -1, 3  );
+   hb_storvni( lp->itemAction   ,    -1, 4  );
+   hb_storvni( lp->itemState    ,    -1, 5  );
+   hb_storvni( ( LONG ) lp->hwndItem     ,    -1, 6  );
+   hb_storvni( ( LONG ) lp->hDC          ,    -1, 7  );
+   hb_storvni( lp->rcItem.top   ,    -1, 8  );
+   hb_storvni( lp->rcItem.left  ,    -1, 9  );
+   hb_storvni( lp->rcItem.bottom,    -1, 10 );
+   hb_storvni( lp->rcItem.right ,    -1, 11 );
+   hb_storvnd( lp->itemData     ,    -1, 12 );
+
+}
+
+
+
+
+#pragma ENDDUMP

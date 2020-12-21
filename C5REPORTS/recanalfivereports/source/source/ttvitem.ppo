@@ -1,0 +1,308 @@
+#line 38 "\fwh\include\FiveWin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\FiveWin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 11 "source\ttvitem.prg"
+static nID
+
+
+
+_HB_CLASS TTVItem ; function TTVItem ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TTVItem" , iif( .F., { }, { @HBObject() } ), @TTVItem() ) ) ;
+
+; _HB_MEMBER { hItem } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hItem"}, .F. )
+; _HB_MEMBER { oTree } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oTree"}, .F. )
+; _HB_MEMBER { aItems } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aItems"}, .F. )
+; _HB_MEMBER { cPrompt } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cPrompt"}, .F. )
+; _HB_MEMBER { nImage } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nImage"}, .F. )
+; _HB_MEMBER { nImage2 } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nImage2"}, .F. )
+; _HB_MEMBER { Cargo } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"Cargo"}, .F. )
+; _HB_MEMBER { nID } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nID"}, .F. )
+; _HB_MEMBER { oParent } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oParent"}, .F. )
+; _HB_MEMBER { oLastParent } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oLastParent"}, .F. )
+; _HB_MEMBER { bAction } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bAction"}, .F. )
+; _HB_MEMBER { Cargo2 } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"Cargo2"}, .F. )
+
+; _HB_MEMBER { AS CHARACTER cRuta } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cRuta"}, .F. )
+; _HB_MEMBER { cTipo } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cTipo"}, .F. )
+; _HB_MEMBER { lChgImage } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lChgImage"}, .F. )
+; _HB_MEMBER { lFolder } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFolder"}, .F. )
+; _HB_MEMBER { lMain } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lMain"}, .F. )
+
+   _HB_MEMBER { nInitID } ; oClass:AddMultiClsData(, 100, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nInitID"}, .F. )
+
+   _HB_MEMBER New( oTree, Cargo, cPrompt, nImage, lChecked, oParent, nImage2, cTipo, lFolder, lChgImage, cRuta) AS CLASS TTVItem; oClass:AddMethod( "New", @TTVItem_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER GetNewID(); oClass:AddMethod( "GetNewID", @TTVItem_GetNewID(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Add( cPrompt, nImage, Cargo, nImage2, lChecked); oClass:AddMethod( "Add", @TTVItem_Add(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER SetText(); oClass:AddInline( "SetText", {|Self, cText | ( ( Self ) ), TREEITEM_SetText( ::oTree:hWnd, ::hItem, cText ), ::cPrompt := cText }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER DeleteBranches(); oClass:AddMethod( "DeleteBranches", @TTVItem_DeleteBranches(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+   _HB_MEMBER Expand(); oClass:AddInline( "Expand", {|Self | ( ( Self ) ), SendMessage( ::oTree:hWnd, 4352 + 2, 2, ::hItem ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+   _HB_MEMBER Colapse(); oClass:AddInline( "Colapse", {|Self | ( ( Self ) ), SendMessage( ::oTree:hWnd, 4352 + 2, 1, ::hItem ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER DeleteItem( oItem); oClass:AddMethod( "DeleteItem", @TTVItem_DeleteItem(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER GetCheckState(); oClass:AddInline( "GetCheckState", {|Self | ( ( Self ) ), GetCheckState( ::oTree:hWnd, ::hItem ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SetCheckState(); oClass:AddInline( "SetCheckState", {|Self, bCheck | ( ( Self ) ), SetCheckState( ::oTree:hWnd, ::hItem, bCheck ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SetImage(); oClass:AddInline( "SetImage", {|Self, nImage | ( ( Self ) ), SetImage( ::oTree:hWnd, ::hItem, nImage ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Copy( lCut); oClass:AddMethod( "Copy", @TTVItem_Copy(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Paste( cInfo, oItem); oClass:AddMethod( "Paste", @TTVItem_Paste(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Save(); oClass:AddMethod( "Save", @TTVItem_Save(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER cFileName(); oClass:AddInline( "cFileName", {|Self | ( ( Self ) ), ::cRuta + if( left( ::cRuta, 1 ) == "\","","\" ) + ::cPrompt }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TTVItem ;
+
+
+
+static FUNCTION TTVItem_New( oTree, Cargo, cPrompt, nImage, lChecked, oParent, nImage2, cTipo, lFolder, lChgImage, cRuta ) ; local Self AS CLASS TTVItem := QSelf() AS CLASS TTVItem
+
+   If( nImage2 == nil, nImage2 := nImage, ) ;
+   If( lChecked == nil, lChecked := .T., ) ;
+   If( cRuta == nil, cRuta := "", ) ;
+   If( cTipo == nil, cTipo := "", ) ;
+   If( lChgImage == nil, lChgImage := .F., ) ;
+   If( lFolder == nil, lFolder := .F., ) ;
+
+   ::aItems  = {}
+
+   if oParent:ClassName() == "TTREEVIEW"
+      ::hItem   = TVInsertItem( oTree:hWnd, cPrompt ,, nImage, nImage2 )
+   else
+      ::hItem   = TVInsertItem( oTree:hWnd, cPrompt , oParent:hItem, nImage, nImage2 )
+   endif
+
+   ::oTree     := oTree
+   ::Cargo     := Cargo
+   ::cPrompt   := cPrompt
+   ::nImage    := nImage
+   ::nImage2   := nImage2
+   ::nID       := ::GetNewId()
+   ::oParent   := oParent
+   ::cRuta     := cRuta
+   ::cTipo     := cTipo
+   ::lChgImage := lChgImage
+   ::lFolder   := lFolder
+   ::lMain     := .F.
+
+   ::SetCheckState( lChecked )
+
+   aadd( oParent:aItems, self )
+
+return Self
+
+
+
+static FUNCTION TTVItem_Add( cPrompt, nImage, Cargo, nImage2, lChecked ) ; local Self AS CLASS TTVItem := QSelf() AS CLASS TTVItem
+
+   local oItem
+   local hItem := TVInsertItem( ::oTree:hWnd, cPrompt,::hItem, nImage, nImage2 )
+   If( nImage2 == nil, nImage2 := nImage, ) ;
+
+   oItem := TTVItem():New( hItem, ::oTree, Cargo, cPrompt, nImage, lChecked, self )
+   AAdd( ::aItems, oItem )
+
+return oItem
+
+
+
+static FUNCTION TTVItem_DeleteBranches( ) ; local Self AS CLASS TTVItem := QSelf() AS CLASS TTVItem
+
+   Aeval(::aItems, {|o| TVDeleteItem(::oTree:hWnd, o:hItem) } )
+
+   ::aItems  = {}
+
+return nil
+
+static FUNCTION TTVItem_GetNewID( ) ; local Self AS CLASS TTVItem := QSelf() AS CLASS TTVItem
+
+   If( ::nInitId == nil, ::nInitId := 100, ) ;
+
+   ::nInitId++
+
+return ::nInitId
+
+
+   static FUNCTION TTVItem_DeleteItem( ) ; local Self AS CLASS TTVItem := QSelf() AS CLASS TTVItem
+
+local n, nLen
+local nItem := 0
+
+nLen := len( ::oParent:aItems )
+
+for n := 1 to nLen
+    if ::nID == ::oParent:aItems[n]:nId
+       nItem := n
+       exit
+    endif
+next
+
+if nItem > 0
+   DeleteTreeItem( ::oTree:hWnd, ::hItem )
+   adel( ::oParent:aItems, nItem )
+   asize( ::oParent:aItems, nLen-1)
+endif
+
+return nil
+
+
+
+   static FUNCTION TTVItem_Save( ) ; local Self AS CLASS TTVItem := QSelf() AS CLASS TTVItem
+
+local cStr := ""
+local nLen := len( ::aItems )
+local n
+
+cStr += ::cPrompt                                             + Chr(13)+Chr(10)
+cStr += str(::nImage)                                         + Chr(13)+Chr(10)
+cStr += str(::nImage2)                                        + Chr(13)+Chr(10)
+cStr += if(::GetCheckState(),".t.",".f." )                    + Chr(13)+Chr(10)
+cStr += ::cRuta                                               + Chr(13)+Chr(10)
+cStr += ::cTipo                                               + Chr(13)+Chr(10)
+cStr += if(::lChgImage,".t.",".f.")                           + Chr(13)+Chr(10)
+cStr += if(::lFolder,".t.",".f.")                             + Chr(13)+Chr(10)
+cStr += if(IsExpanded( ::oTree:hWnd, ::hItem ),".t.",".f.")   + Chr(13)+Chr(10)
+cStr += alltrim( str( nLen ) )                                + Chr(13)+Chr(10)
+
+for n := 1 to nLen
+    cStr += ::aItems[n]:Save()
+next
+
+return cStr
+
+
+
+   static FUNCTION TTVItem_Copy( lCut ) ; local Self AS CLASS TTVItem := QSelf() AS CLASS TTVItem
+
+local cStr := ""
+local oClp
+
+If( lCut == nil, lCut := .F., ) ;
+
+if lCut
+   ::oTree:oCutItem := self
+else
+   ::oTree:oCutItem := nil
+endif
+
+oClp := TClipBoard():New( Upper("TEXT"), )
+
+cStr := ::Save(.T.)
+
+if oClp:Open()
+   oClp:Clear()
+   oClp:SetText( cStr )
+   oClp:End()
+else
+   MsgAlert( "El portapapeles no está disponible en este momento !" )
+endif
+
+
+
+return nil
+
+
+   static FUNCTION TTVItem_Paste( oParent ) ; local Self AS CLASS TTVItem := QSelf() AS CLASS TTVItem
+
+
+  local nProps := 8
+  local cPrompt, nImage, nImage2, lCheck, cRuta, cTipo, lChgImage, lFolder
+  local oItem
+  local oClp
+  local cInfo
+
+  oClp := TClipBoard():New(, )
+
+  cInfo := oClp:GetText()
+
+  if empty( cInfo )
+     MsgStop( "No se encuentra información en el portapapeles","Corrija")
+     return nil
+  endif
+
+
+  ::oTree:Load( cInfo, oParent )
+
+  ::oTree:Refresh()
+
+  if ::oTree:oCutItem <> nil
+     ::oTree:oCutItem:DeleteItem()
+  endif
+
+  ::oTree:oCutItem := nil
+
+return oItem
+
+
+#pragma BEGINDUMP
+
+#include "windows.h"
+#include "hbapi.h"
+#include <commctrl.h>
+
+
+
+HB_FUNC_STATIC( TREEITEM_SETTEXT ) // (hWndTV, hItem, cText)
+{
+   HWND hWnd = ( HWND ) hb_parnl( 1 );
+   TVITEM pitem;
+
+   pitem.hItem = ( HTREEITEM ) hb_parnl( 2 );
+   pitem.mask = TVIF_TEXT;
+   pitem.pszText = hb_parc( 3 );
+   pitem.cchTextMax = hb_parclen( 3 );
+
+   hb_retl( TreeView_SetItem( ( HWND ) hWnd, ( LPTVITEM )( &pitem ) ) );
+}
+HB_FUNC_STATIC( DELETETREEITEM )
+{
+   hb_retnl(TreeView_DeleteItem( ( HWND ) hb_parnl( 1 ), ( HTREEITEM ) hb_parnl( 2 )));
+}
+HB_FUNC_STATIC( GETCHECKSTATE )
+{
+   hb_retl( ( LONG ) TreeView_GetCheckState( ( HWND ) hb_parnl( 1 ), ( HTREEITEM ) hb_parnl( 2 ) ) );
+}
+
+HB_FUNC_STATIC( SETCHECKSTATE )
+{
+   TreeView_SetCheckState( ( HWND ) hb_parnl( 1 ), ( HTREEITEM ) hb_parnl( 2 ), hb_parl( 3 ) );
+   hb_ret();
+}
+
+HB_FUNC_STATIC( SETITEMIMAGE )
+{
+   HWND hWnd = ( HWND ) hb_parnl( 1 );
+   UINT iImage = hb_parni( 3 ) - 1;
+   TVITEM pitem;
+
+   pitem.hItem = ( HTREEITEM ) hb_parnl( 2 );
+   pitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+   pitem.iImage = iImage;
+   pitem.iSelectedImage = iImage;
+
+   hb_retl( TreeView_SetItem( ( HWND ) hWnd, ( LPTVITEM )( &pitem ) ) );
+}
+
+
+
+#pragma ENDDUMP

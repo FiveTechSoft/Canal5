@@ -1,0 +1,358 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 6 "source\dsgnbbmp.prg"
+_HB_CLASS TDsgnBtnBmp ; function TDsgnBtnBmp ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnBtnBmp" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnBtnBmp() ) ) ;
+
+; _HB_MEMBER { lFlat } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFlat"}, .F. )
+; _HB_MEMBER { lDefault } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lDefault"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { cAlign } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cAlign"}, .F. )
+; _HB_MEMBER { lPressed } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lPressed"}, .F. )
+; _HB_MEMBER { lHotTrack } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lHotTrack"}, .F. )
+; _HB_MEMBER { cFileName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFileName"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd, nTipo) AS CLASS TDsgnBtnBmp; oClass:AddMethod( "New", @TDsgnBtnBmp_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnBtnBmp_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PaintBtn( hDC); oClass:AddMethod( "PaintBtn", @TDsgnBtnBmp_PaintBtn(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnBtnBmp_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Inspect( cDataName); oClass:AddMethod( "Inspect", @TDsgnBtnBmp_Inspect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GenPrg( lDialog, cFrom); oClass:AddMethod( "GenPrg", @TDsgnBtnBmp_GenPrg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProps( oList); oClass:AddMethod( "SetProps", @TDsgnBtnBmp_SetProps(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnBtnBmp ;
+
+
+      static FUNCTION TDsgnBtnBmp_New( nTop, nLeft, nBottom, nRight, oWnd, nTipo ) ; local Self AS CLASS TDsgnBtnBmp := QSelf() AS CLASS TDsgnBtnBmp
+
+
+If( nTipo == nil, nTipo := 1, ) ;
+
+if nTop <> nil
+   if nBottom-nTop < 10 .OR. nRight-nLeft < 10
+      nBottom    := nTop + 60
+      nRight     := nLeft + 60
+   endif
+endif
+
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::lFlat        := .F.
+   ::lActive      := .T.
+   ::lBorder      := .T.
+   ::lDefault     := .F.
+   ::nClrBorder   := 0
+   ::cFileName    := ""
+   ::lPressed     := .F.
+   ::lHotTrack    := .F.
+
+   ::nClrPane := ( 222 + ( 207 * 256 ) + ( 198 * 65536 ) )
+   ::cAlign   := "center"
+   ::cCaption     := "boton"
+   ::bContextMenu := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+
+
+
+
+
+
+
+
+  ::aPropertiesPPC := { "cCaption"       , "cAlign"         , "cFileName"      , "nID"            , "nTop"           , "nLeft"          , "nWidth"         , "nHeight"        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ::aProperties :=    { "cCaption"       , "cFileName"      , "aDotsActives"   , "aRect"          , "lActive"        , "lBorder"        , "lCanSize"       , "lCanMove"       , "lEditable"      , "lFlat"          , "lVisible"       , "nClrBorder"     , "nClrPane"       , "nClrText"       , "nTop","nLeft","nBottom","nRight", "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      }
+
+  ::cObjName         := ::GetObjName()
+
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+
+return self
+
+
+  static FUNCTION TDsgnBtnBmp_Paint( hDC ) ; local Self AS CLASS TDsgnBtnBmp := QSelf() AS CLASS TDsgnBtnBmp
+
+
+  ::PaintBtn( hDC )
+
+if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+   ::DotsSelect( hDC )
+endif
+
+return nil
+
+
+
+  static FUNCTION TDsgnBtnBmp_PaintBtn( hDC ) ; local Self AS CLASS TDsgnBtnBmp := QSelf() AS CLASS TDsgnBtnBmp
+
+local hOldBrush, hOldPen
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local hTheme := nil
+local nClrPane := ::nClrPane
+local hFont, hOldFont, oFontPPC, oFont
+local nAlign
+local hBmp
+local szcy := 0
+local szcx := 0
+local nRow, nCol
+local xLayout := 0
+local yLayout := 0
+local iMode
+
+if nClrPane == nil ; nClrPane := ( 222 + ( 207 * 256 ) + ( 198 * 65536 ) ) ; endif
+
+   if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "BUTTON")
+
+      if hTheme <> nil
+
+         C5_DrawThemeBackground( hTheme, hDC, 1, nil , rc )
+         C5_CloseThemeData()
+
+      endif
+
+   else
+
+     FillSolidRect( hDC, rc, GetSysColor(15) )
+
+     if ::lFlat
+
+        DrawFrameControl(hDC, rc, 4, nOr(0x0010, 0x4000 ))
+        hOldBrush := SelectObject( hDC, GetStockObject( 5 ))
+        hOldPen   := SelectObject( hDC, GetStockObject( 6 ) )
+        Rectangle( hDC, rc[1]+1, rc[2]+1, rc[3]-1, rc[4]-1 )
+        SelectObject( hDC, hOldPen )
+        SelectObject( hDC, hOldBrush )
+
+     else
+
+        if ::lDefault
+
+           FillSolidRect( hDC, rc, GetSysColor(15), 0 )
+
+           rc[1]++
+           rc[2]++
+
+
+
+        endif
+
+        DrawFrameControl(hDC, rc, 4, 0x0010  )
+
+     endif
+  endif
+
+::cFileName := alltrim(::cFileName )
+
+if "." $ ::cFileName
+   hBmp := ReadBitmap( 0, ::cFileName )
+else
+   hBmp := LoadBitmap( GetResources(), ::cFileName )
+endif
+
+szcy := 12
+
+if !empty( ::cCaption )
+
+    oFont := ::oWnd:oForm:GetFontEx()
+    hFont := oFont:hFont
+    szcx := GetTextWidth( hDC, strtran(::cCaption,"&",""), hFont )
+    oFont:End()
+    hOldFont := SelectObject( hDC, hFont )
+    do case
+       case ::cAlign == "top"
+
+            yLayout := -szcy + 2
+            nRow := rc[3] - rc[1] - szcy - 4
+            nCol := ( ( rc[4] - rc[2] ) / 2 ) - ( szcx / 2 )
+
+       case ::cAlign == "left"
+
+            xLayout := -szcx + 4
+            nRow := ( ( rc[3] - rc[1] ) / 2 ) - ( szcy / 2 )
+            nCol := rc[4] - rc[2] - szcx - 8
+
+       case ::cAlign == "bottom"
+            yLayout := szcy - 2
+            nRow := 4
+            nCol := ( ( rc[4] - rc[2] ) / 2 ) - ( szcx / 2 )
+
+       case ::cAlign == "right"
+            xLayout := szcx - 4
+            nRow := ( ( rc[3] - rc[1] ) / 2 ) - ( szcy / 2 )
+            nCol := 8
+
+       otherwise
+
+            nRow := ( ( rc[3] - rc[1] ) / 2 ) - ( szcy / 2 )
+            nCol := ( ( rc[4] - rc[2] ) / 2 ) - ( szcx / 2 )
+
+    endcase
+
+    iMode := SetBkMode( hDC, 1 )
+    TextOut( hDC, rc[1]+nRow, rc[2]+nCol, ::cCaption )
+    hOldFont := SelectObject( hDC, hOldFont )
+    SetBkMode( hDC, iMode )
+
+endif
+
+if hBmp <> 0
+
+   DrawMasked( hDC, hBmp, (rc[1] + (( rc[3]-rc[1])/2) - nBmpHeight( hBmp )/2)+ yLayout , (rc[2] + (( rc[4]-rc[2])/2) - nBmpWidth ( hBmp )/2)+ xLayout )
+   DeleteObject( hBmp )
+endif
+
+
+
+
+
+
+
+
+
+
+
+return nil
+
+
+
+      static FUNCTION TDsgnBtnBmp_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnBtnBmp := QSelf() AS CLASS TDsgnBtnBmp
+
+local oMenu
+
+return nil
+
+
+  static FUNCTION TDsgnBtnBmp_Inspect( cDataName ) ; local Self AS CLASS TDsgnBtnBmp := QSelf() AS CLASS TDsgnBtnBmp
+
+
+local o := self
+local uVal
+
+   do case
+      case cDataName == "cAlign"
+           return { "top","left","bottom","right","center" }
+
+      case cDataName == "cFileName"
+           return {|| o:cGetFileName() }
+   endcase
+
+return nil
+
+
+  static FUNCTION TDsgnBtnBmp_GenPrg( lDialog, cFrom, cHeader, cFunciones ) ; local Self AS CLASS TDsgnBtnBmp := QSelf() AS CLASS TDsgnBtnBmp
+
+local cRet := ""
+local cObject := ::cObjName
+
+If( lDialog == nil, lDialog := .T., ) ;
+If( cFrom == nil, cFrom := "oWnd", ) ;
+If( cHeader == nil, cHeader := "", ) ;
+If( cFunciones == nil, cFunciones := "", ) ;
+
+        cHeader += "local " + cObject + Chr(13)+Chr(10)
+
+
+
+
+
+
+        cRet += "@ " + ::cStrTop(lDialog) + ", " + ::cStrLeft(lDialog) + " BUTTONBMP " + cObject + " ;" + Chr(13)+Chr(10) + "         SIZE " + ::cStrWidth(lDialog) + ", " + ::cStrHeight(lDialog) + " PIXEL ; " + Chr(13)+Chr(10) + '         ACTION MsgInfo( "action") ;' + Chr(13)+Chr(10) + "         BITMAP " + alltrim( ::cFileName) + " ; " + if( !empty(::cCaption), Chr(13)+Chr(10) + "         PROMPT " + '"' + alltrim( ::cCaption ) + '" ;' + Chr(13)+Chr(10),Chr(13)+Chr(10)) +  "         OF " + cFrom  + Chr(13)+Chr(10)
+
+
+return cRet
+
+
+
+
+
+   static FUNCTION TDsgnBtnBmp_SetProps( oList ) ; local Self AS CLASS TDsgnBtnBmp := QSelf() AS CLASS TDsgnBtnBmp
+
+local nGroup
+local o := self
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+nGroup := oList:AddGroup( "Appearence" )
+
+oList:AddItem( "cObjName","Name", ,nGroup )
+oList:AddItem( "lActive","Active","L" ,nGroup )
+oList:AddItem( "cCaption","Text",,nGroup )
+oList:AddItem( "cAlign"  ,"Image align", "A",nGroup,,,{||{"top","left","bottom","right","center"}} )
+oList:AddItem( "lCanMove","Can move", "L",nGroup )
+oList:AddItem( "lCanSize","Can size", "L",nGroup )
+oList:AddItem( "cFileName","Image", "B",nGroup,,,{|| cGetFile( "Imágenes (*.bmp *.gif *.jpg ) | *.bmp;*.gif;*.jpg; |", "Selecciona imagen" )} )
+
+nGroup := oList:AddGroup(  "Position" )
+
+oList:AddItem( "nTop","Top", ,nGroup )
+oList:AddItem( "nLeft","Left", ,nGroup )
+oList:AddItem( "nWidth","Width", ,nGroup )
+oList:AddItem( "nHeight","Height", ,nGroup )
+
+
+
+
+
+return 0

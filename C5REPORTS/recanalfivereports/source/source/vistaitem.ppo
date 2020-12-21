@@ -1,0 +1,375 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 10 "source\vistaitem.prg"
+_HB_CLASS TVistaMenuItem ; function TVistaMenuItem ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TVistaMenuItem" , iif( .F., { }, { @HBObject() } ), @TVistaMenuItem() ) ) ;
+
+      _HB_MEMBER { nInitID } ; oClass:AddMultiClsData(, 100, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nInitID"}, .F. )
+
+; _HB_MEMBER { oWnd } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oWnd"}, .F. )
+; _HB_MEMBER { cText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cText"}, .F. )
+; _HB_MEMBER { cImage } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cImage"}, .F. )
+; _HB_MEMBER { hBmp } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hBmp"}, .F. )
+; _HB_MEMBER { bAction } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bAction"}, .F. )
+; _HB_MEMBER { AS LOGICAL lLevel1 } ; oClass:AddMultiData( "LOGICAL", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lLevel1"}, .F. )
+; _HB_MEMBER { aItems } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aItems"}, .F. )
+
+; _HB_MEMBER { rcItem } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"rcItem"}, .F. )
+; _HB_MEMBER { rcItemL1 } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"rcItemL1"}, .F. )
+; _HB_MEMBER { nHText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nHText"}, .F. )
+
+; _HB_MEMBER { nId } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nId"}, .F. )
+; _HB_MEMBER { AS NUMERIC nHImage } ; oClass:AddMultiData( "NUMERIC", 0, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nHImage"}, .F. )
+; _HB_MEMBER { AS NUMERIC nWImage } ; oClass:AddMultiData( "NUMERIC", 0, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nWImage"}, .F. )
+; _HB_MEMBER { AS NUMERIC nAlphaLevel } ; oClass:AddMultiData( "NUMERIC", 255, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nAlphaLevel"}, .F. )
+; _HB_MEMBER { AS LOGICAL lEnable } ; oClass:AddMultiData( "LOGICAL", .T., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lEnable"}, .F. )
+; _HB_MEMBER { AS LOGICAL lHasAlpha } ; oClass:AddMultiData( "LOGICAL", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lHasAlpha"}, .F. )
+
+
+; _HB_MEMBER { cTHeader } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cTHeader"}, .F. )
+; _HB_MEMBER { AS CHARACTER cTooltip } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cTooltip"}, .F. )
+; _HB_MEMBER { cTFoot } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cTFoot"}, .F. )
+; _HB_MEMBER { cTBmpHeader } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cTBmpHeader"}, .F. )
+; _HB_MEMBER { cTBmpLeft } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cTBmpLeft"}, .F. )
+; _HB_MEMBER { cTBmpFoot } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cTBmpFoot"}, .F. )
+; _HB_MEMBER { cTBtnClose } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cTBtnClose"}, .F. )
+
+      _HB_MEMBER New( oWnd, cText, cImage, bAction) AS CLASS TVistaMenuItem; oClass:AddMethod( "New", @TVistaMenuItem_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER InsertItem( n, cText, cImage, bAction); oClass:AddMethod( "InsertItem", @TVistaMenuItem_InsertItem(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AddItem( cText, cImage, bAction); oClass:AddMethod( "AddItem", @TVistaMenuItem_AddItem(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER DelItem( nItem); oClass:AddMethod( "DelItem", @TVistaMenuItem_DelItem(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC, lSelected, lFocus); oClass:AddMethod( "Paint", @TVistaMenuItem_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IsOver(); oClass:AddInline( "IsOver", {|Self, nRow, nCol | ( ( Self ) ), PtInRect( nRow, nCol, ::rcItem ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetNewId(); oClass:AddInline( "GetNewId", {|Self | ( ( Self ) ), If( ::nInitId == nil, ::nInitId := 100,),++::nInitId }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER LoadImage( cImage); oClass:AddMethod( "LoadImage", @TVistaMenuItem_LoadImage(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nLen(); oClass:AddInline( "nLen", {|Self | ( ( Self ) ), len(::aItems) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Destroy(); oClass:AddMethod( "Destroy", @TVistaMenuItem_Destroy(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Enable(); oClass:AddMethod( "Enable", @TVistaMenuItem_Enable(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Disable(); oClass:AddMethod( "Disable", @TVistaMenuItem_Disable(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetTooltip( cTooltip, cBmpLeft, cHeader, cBmpHeader, cBody, cBmpBody, lBtnClose); oClass:AddMethod( "SetTooltip", @TVistaMenuItem_SetTooltip(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER oGetOver( nRow, nCol); oClass:AddMethod( "oGetOver", @TVistaMenuItem_oGetOver(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetText(); oClass:AddInline( "SetText", {|Self, cText | ( ( Self ) ), ::cText := cText, ::oWnd:Resize() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TVistaMenuItem ;
+
+
+  static FUNCTION TVistaMenuItem_New( oWnd, cText, cImage, bAction ) ; local Self AS CLASS TVistaMenuItem := QSelf() AS CLASS TVistaMenuItem
+
+
+   ::oWnd        := oWnd
+   ::cText       := cText
+   ::cImage      := cImage
+   ::bAction     := bAction
+   ::aItems      := {}
+   ::rcItem      := {0,0,0,0}
+   ::rcItemL1    := {0,0,0,0}
+   ::hBmp        := 0
+   ::nID         := ::GetNewID()
+
+   ::LoadImage( ::cImage )
+
+return self
+
+
+  static FUNCTION TVistaMenuItem_InsertItem( n, cText, cImage, bAction ) ; local Self AS CLASS TVistaMenuItem := QSelf() AS CLASS TVistaMenuItem
+
+
+local oItem := TVistaMenuItem():New( ::oWnd, cText, cImage, bAction, self )
+
+oItem:lEnable := ::lEnable
+
+aadd( ::aItems, nil )
+ains( ::aItems, n )
+::aItems[n] := oItem
+
+::oWnd:Resize()
+
+return oItem
+
+
+
+  static FUNCTION TVistaMenuItem_AddItem( cText, cImage, bAction ) ; local Self AS CLASS TVistaMenuItem := QSelf() AS CLASS TVistaMenuItem
+
+
+local oItem := TVistaMenuItem():New( ::oWnd, cText, cImage, bAction )
+
+oItem:lEnable := ::lEnable
+
+aadd(::aItems, oItem )
+
+return oItem
+
+
+   static FUNCTION TVistaMenuItem_DelItem( nItem ) ; local Self AS CLASS TVistaMenuItem := QSelf() AS CLASS TVistaMenuItem
+
+
+  if nItem < 1 .OR. nItem > ::nLen()
+     MsgStop( "Índice fuera de rango al borrar elementos","Atención")
+     return 0
+  endif
+
+  adel ( ::aItems,  nItem     )
+  asize( ::aItems, ::nLen()-1 )
+
+  ::oWnd:Resize()
+
+return 0
+
+
+  static FUNCTION TVistaMenuItem_LoadImage( cImage ) ; local Self AS CLASS TVistaMenuItem := QSelf() AS CLASS TVistaMenuItem
+
+local nFormat := 0
+
+if ::hBmp <> 0
+   DeleteObject( ::hBmp )
+   ::hBmp := 0
+endif
+
+::cImage := cImage
+
+if empty( ::cImage )
+   ::hBmp := 0
+   ::nHImage := 0
+   ::nWImage := 0
+   return 0
+endif
+
+if ValType( ::cImage ) == "C" .AND. "." $ ::cImage
+   if Lower( cFileExt( ::cImage ) ) == "bmp"
+      ::hBmp := ReadBitmap( 0, ::cImage )
+   else
+      ::hBmp := FILoadImg( ::cImage, @nFormat )
+   endif
+else
+   ::hBmp := LoadBitmap( GetResources(), ::cImage )
+endif
+
+if ::hBmp == 0
+   ::nHImage := 0
+   ::nWImage := 0
+   return 0
+endif
+
+::nHImage := nBmpHeight( ::hBmp )
+::nWImage := nBmpWidth ( ::hBmp )
+
+::lHasAlpha := HasAlpha(::hBmp)
+
+
+return ::hBmp
+
+
+  static FUNCTION TVistaMenuItem_Paint( hDC, lSelected, lFocus, nY, nX ) ; local Self AS CLASS TVistaMenuItem := QSelf() AS CLASS TVistaMenuItem
+
+local hFont, hOldFont
+local nClrText
+local nColor
+local nTop
+local nLeft
+local nBottom
+local nRight
+local lDelFont := .F.
+local hOldBrush, hPen, hOldPen, oBrush
+
+If( nY == nil, nY := 0, ) ;
+If( nX == nil, nX := 0, ) ;
+
+
+nTop     := ::rcItem[1] + nY
+nLeft    := ::rcItem[2] + nX
+nBottom  := ::rcItem[3] + nY
+nRight   := ::rcItem[4] + nX
+
+
+
+
+if ::lLevel1
+   hFont    := ::oWnd:oFont:hFont
+   nClrText := ::oWnd:nClrText
+else
+   hFont    := ::oWnd:oFont2:hFont
+   nClrText := ::oWnd:nClrText2
+endif
+
+if ::lEnable .AND. PtInRect( ::oWnd:nRow-nY, ::oWnd:nCol-nX, ::rcItem )
+   hFont := CreateFontUnderline( hFont )
+   lDelFont := .T.
+   if ::lLevel1
+      nClrText := ::oWnd:nClrTextOver1
+   else
+      nClrText := ::oWnd:nClrTextOver2
+   endif
+endif
+
+if lSelected .AND. ::lEnable
+   hPen    := CreatePen( 0, 1, ::oWnd:nClrBorderOver )
+   hOldPen := SelectObject( hDC, hPen )
+
+   oBrush := TBrushEx():New( 3, ::rcItemL1[3]-::rcItemL1[1] ,::oWnd:nClrPaneOver, ::oWnd:nClrPaneOver2, .T. )
+   hOldBrush := SelectObject( hDC, oBrush:hbrush)
+
+   SetBrushOrg( hDC, oBrush:hBrush, ::rcItemL1[2]+nX, ::rcItemL1[1]+nY )
+
+
+   RoundBox ( hDC, ::rcItemL1[2]+3+nX, ::rcItemL1[1]+1+nY, ::rcItemL1[4]-3+nX, ::rcItemL1[3]-1+nY, 6, 6, ::oWnd:nClrBorderOver2 )
+   RoundRect( hDC,  ::rcItemL1[2]+2+nX, ::rcItemL1[1]+nY,   ::rcItemL1[4]-2+nX, ::rcItemL1[3]+nY,  5, 5 )
+
+
+   SelectObject( hDC, hOldPen )
+   SelectObject( hDC, hOldBrush )
+   DeleteObject( hPen )
+   oBrush:End()
+
+endif
+
+if lFocus
+
+
+
+
+
+endif
+
+
+hOldFont := SelectObject( hDC, hFont )
+
+if !::lEnable
+   nColor   := SetTextColor( hDC, 12632256 )
+else
+   nColor   := SetTextColor( hDC, nClrText )
+endif
+
+
+
+if ::hBmp <> 0
+   if ::lHasAlpha
+      ABPaint( hDC, nLeft-::oWnd:nWLeftImage+10, nTop, ::hBmp, ::nAlphaLevel )
+   else
+      DrawMasked( hDC, ::hBmp, nTop, nLeft-::oWnd:nWLeftImage+10 )
+   endif
+endif
+
+
+
+
+
+if ::lLevel1 .OR. (!::lLevel1 .AND. ::oWnd:nType == 1 )
+   DrawMText( hDC, ::cText , {nTop,nLeft,nBottom,nRight} )
+else
+   DrawText( hDC, ::cText , {nTop,nLeft,nBottom,nRight}, 32 )
+
+endif
+
+
+SelectObject( hDC, hOldFont )
+SetTextColor( hDC, nColor   )
+
+
+if lDelFont
+   DeleteObject( hFont )
+endif
+
+return 0
+
+
+
+  static FUNCTION TVistaMenuItem_Destroy( ) ; local Self AS CLASS TVistaMenuItem := QSelf() AS CLASS TVistaMenuItem
+
+local nLen := ::nLen()
+local n
+
+if ::hBmp <> 0
+   DeleteObject( ::hBmp )
+endif
+
+if nLen > 0
+   for n := 1 to nLen
+       ::aItems[n]:Destroy()
+   next
+endif
+
+return 0
+
+
+  static FUNCTION TVistaMenuItem_SetTooltip( cTooltip, cBmp, cHeader, cBmpHeader, cFoot, cBmpFoot, cBtnClose ) ; local Self AS CLASS TVistaMenuItem := QSelf() AS CLASS TVistaMenuItem
+
+
+
+::cTHeader    := cHeader
+::cTooltip    := cTooltip
+::cTFoot      := cFoot
+::cTBmpHeader := cBmpHeader
+::cTBmpLeft   := cBmp
+::cTBmpFoot   := cBmpFoot
+::cTBtnClose  := cBtnClose
+
+return 0
+
+
+
+      static FUNCTION TVistaMenuItem_Enable( ) ; local Self AS CLASS TVistaMenuItem := QSelf() AS CLASS TVistaMenuItem
+
+local nLen := ::nLen()
+local n
+
+::lEnable := .T.
+
+if nLen > 0
+   for n := 1 to nLen
+       ::aItems[n]:lEnable := .T.
+   next
+endif
+
+::Refresh()
+
+return ::lEnable
+
+
+      static FUNCTION TVistaMenuItem_Disable( ) ; local Self AS CLASS TVistaMenuItem := QSelf() AS CLASS TVistaMenuItem
+
+local nLen := ::nLen()
+local n
+
+::lEnable := .F.
+
+if nLen > 0
+   for n := 1 to nLen
+       ::aItems[n]:lEnable := .F.
+   next
+endif
+
+::Refresh()
+
+return ::lEnable
+
+
+   static FUNCTION TVistaMenuItem_oGetOver( nRow, nCol ) ; local Self AS CLASS TVistaMenuItem := QSelf() AS CLASS TVistaMenuItem
+
+local n
+local nLen  := ::nLen()
+local oOver
+
+for n := 1 to nLen
+    if ::aItems[n]:lEnable .AND. PtInRect( nRow, nCol, ::aItems[n]:rcItemL1 )
+       oOver := ::aItems[n]
+       exit
+    endif
+next
+
+return oOver

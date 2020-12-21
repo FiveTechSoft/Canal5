@@ -1,0 +1,222 @@
+#line 38 "\fwh\include\FiveWin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\FiveWin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 12 "source\browse.prg"
+function Browse( cTitle, cListName, bNew, bModify, bDelete, bSearch, bList, aColSizes )
+
+   local oDlg, oLbx, oFont
+   local btnNew, btnModify, btnDelete, btnSearch, btnList, btnEnd
+   local n, cText
+
+
+
+
+
+   If( cTitle == nil, cTitle := "Browse", ) ; If( cListName == nil, cListName := "Fields", ); If( bNew == nil, bNew := { || oLbx:RecAdd(), oLbx:Refresh() }, ); If( bDelete == nil, bDelete := { || RecDelete( oLbx ) }, ); If( bModify == nil, bModify := { || RecModify( oLbx ) }, ); If( bList == nil, bList := { || Report( oLbx ) }, );
+
+   oDlg = TDialog():New( 3, 3, 26, 79, cTitle,,, .F.,,,,,, .F.,, oFont,,,, .F., )
+
+   TSay():New( 0.1, 1.4, {|| cListName}, oDlg,,, .F., .F., .F., .F.,,,,, .F., .F., .F., .F., .F., .F., .F. )
+
+
+   oLbx := TWBrowse():New( 1, 1, 284, 137,,,, oDlg,,,,,,,,,,,, .F.,, .F.,, .F.,,, )
+
+   oLbx:bLDblClick = { | nRow, nCol | btnList:Click() }
+   oLbx:bKeyDown   = { | nKey, nFlags | KeyDown( oLbx, nKey, nFlags ) }
+   oLbx:bKeyChar   = { | nKey, nFlags | KeyChar( oLbx, nKey, nFlags ) }
+   oLbx:aActions   = Array( ( Alias() )->( FCount() ) )
+
+   if aColSizes <> nil
+      oLbx:aColSizes = aColSizes
+   endif
+
+   for n = 1 to Len( oLbx:aActions )
+      oLbx:aActions[ n ] = { || MsgInfo( "Column action" ) }
+   next
+
+
+
+   btnNew := TButton():New( 8.7, 1.4, "&New", oDlg,, 40, 12,,, .F., .F., .F.,, .F.,,, .F. )
+   btnModify := TButton():New( 8.7, 9.5, "&Modify", oDlg,, 40, 12,,, .F., .F., .F.,, .F.,,, .F. )
+   btnDelete := TButton():New( 8.7, 17.6, "&Delete", oDlg,, 40, 12,,, .F., .F., .F.,, .F.,,, .F. )
+   btnSearch := TButton():New( 8.7, 25.7, "&Search", oDlg,, 40, 12,,, .F., .F., .F.,, .F.,,, .F. )
+   btnList := TButton():New( 8.7, 33.8, "S&elect", oDlg,, 40, 12,,, .F., .F., .F.,, .F.,,, .F. )
+   btnEnd := TButton():New( 8.7, 41.9, "E&xit", oDlg,, 40, 12,,, .F., .F., .F.,, .F.,,, .F. )
+
+
+
+
+
+
+
+
+
+
+
+
+
+   btnNew:bAction    = { || Eval( bNew, oDlg ), oLbx:GoBottom(), oLbx:SetFocus() }
+
+
+
+   btnModify:bAction = If( bModify <> nil, { || Eval( bModify, oDlg ), oLbx:Refresh(), oLbx:SetFocus() },)
+
+
+
+   btnDelete:bAction = If( bDelete <> nil, { || Eval( bDelete, oDlg ), oLbx:Refresh(), oLbx:SetFocus() },)
+
+
+
+   btnSearch:bAction = If( bSearch <> nil, { || Eval( bSearch, oDlg ), oLbx:Refresh(), oLbx:SetFocus() },)
+
+   btnList:bAction   = { || cText := ( Alias() )->Codigo, oDlg:End() }
+
+   btnEnd:bAction    = { || oDlg:End() }
+
+   oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .F.,,,, oDlg:bRClicked,,, )
+
+return cText
+
+
+
+function Report( oLbx )
+
+   local oRpt
+   local n
+   local cAlias := If( oLbx <> nil, oLbx:cAlias, Alias() )
+
+
+
+
+   oRpt := RptBegin({{|| "Report: " + cAlias}}, {{|| "Date: " + DToC( Date() ) + ", Time: " + Time()}}, {{|| "Page: " + Str( oRpt:nPage, 3 )}}, {}, {}, .F.,,,, .T.,,,,,, )
+
+      if Empty( oRpt ) .OR. oRpt:oDevice:hDC == 0
+         return nil
+      endif
+
+      for n = 1 to FCount()
+
+         oRpt:AddColumn( TrColumn():New( { FInfo1( cAlias, n ) },, { FInfo2( cAlias, n ) },,,,,,,,,, oRpt ) )
+      next
+
+   RptEnd()
+
+   oRpt:Activate(,,,,,,,,,,,,, )
+
+   dbGoTop()
+
+return nil
+
+
+
+static function FInfo1( cAlias, n )
+return { || ( cAlias )->( FieldName( n ) ) }
+
+static function FInfo2( cAlias, n )
+return { || ( cAlias )->( FieldGet( n ) ) }
+
+
+
+static function RecModify( oLbx )
+
+   local n := 1
+   local nCols := ( oLbx:cAlias )->( FCount() )
+   local u := ( oLbx:cAlias )->( FieldGet( 1 ) )
+
+   while n <= nCols .AND. oLbx:lEditCol( n, @u )
+      oLbx:DrawSelect()
+      SysRefresh()
+      if ( oLbx:cAlias )->( RLock() )
+         ( oLbx:cAlias )->( FieldPut( n, u ) )
+         dbUnlock()
+      else
+         MsgAlert( "DataBase non available" )
+         n = nCols + 1
+      endif
+      n++
+      if n <= nCols
+         u = ( oLbx:cAlias )->( FieldGet( n ) )
+      endif
+   end
+
+return nil
+
+
+
+static function EditCell( oLbx, nRow, nCol )
+
+   local nColumn := oLbx:nAtCol( nCol )
+   local u := ( oLbx:cAlias )->( FieldGet( nColumn ) )
+
+   if ValType( ( oLbx:cAlias )->( FieldGet( nColumn ) ) ) == "M"
+      if MemoEdit( @u )
+         if ( oLbx:cAlias )->( RLock() )
+            ( oLbx:cAlias )->( FieldPut( nColumn, u ) )
+            dbUnlock()
+            oLbx:DrawSelect()
+         else
+            MsgAlert( "DataBase non available" )
+         endif
+      endif
+   else
+      if oLbx:lEditCol( nColumn, @u )
+         if ( oLbx:cAlias )->( RLock() )
+            ( oLbx:cAlias )->( FieldPut( nColumn, u ) )
+            dbUnlock()
+            oLbx:DrawSelect()
+         else
+            MsgAlert( "DataBase non available" )
+         endif
+      endif
+   endif
+
+return nil
+
+
+
+static function KeyDown( oLbx, nKey, nFlags )
+
+   do case
+      case nKey == 46
+           RecDelete( oLbx )
+   endcase
+
+return nil
+
+
+
+static function KeyChar( oLbx, nKey, nFlags )
+
+   do case
+      case nKey == 13
+           RecModify( oLbx )
+   endcase
+
+return nil
+
+
+
+static function RecDelete( oLbx )
+
+   if MsgYesNo( "Delete this record ?", "Please, confirm" )
+      dbDelete()
+      __dbPack()
+      oLbx:Refresh()
+   endif
+
+return nil

@@ -1,0 +1,1444 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 9 "source\qftp.prg"
+static aCodes := {}
+static aDesc  := {}
+static oFtp
+
+
+
+_HB_CLASS qFTPClient ; function qFTPClient ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "qFTPClient" , iif( .F., { }, { @HBObject() } ), @qFTPClient() ) ) ;
+
+; _HB_MEMBER { AS OBJECT oSocket } ; oClass:AddMultiData( "OBJECT", nil, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oSocket"}, .F. )
+; _HB_MEMBER { AS OBJECT oTrnSocket } ; oClass:AddMultiData( "OBJECT", nil, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oTrnSocket"}, .F. )
+; _HB_MEMBER { AS CHARACTER cServer } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cServer"}, .F. )
+; _HB_MEMBER { AS CHARACTER cServerIP } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cServerIP"}, .F. )
+; _HB_MEMBER { AS CHARACTER cUser } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cUser"}, .F. )
+; _HB_MEMBER { AS CHARACTER cPass } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cPass"}, .F. )
+; _HB_MEMBER { AS CHARACTER cBuffer } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cBuffer"}, .F. )
+; _HB_MEMBER { AS CHARACTER cLastCmd } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cLastCmd"}, .F. )
+; _HB_MEMBER { AS CHARACTER cReply } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cReply"}, .F. )
+; _HB_MEMBER { AS CHARACTER cDirBuffer } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cDirBuffer"}, .F. )
+; _HB_MEMBER { AS CHARACTER cDataIP } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cDataIP"}, .F. )
+
+; _HB_MEMBER { AS NUMERIC nPort } ; oClass:AddMultiData( "NUMERIC", 21, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nPort"}, .F. )
+; _HB_MEMBER { AS NUMERIC nDataPort } ; oClass:AddMultiData( "NUMERIC", 21, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nDataPort"}, .F. )
+
+; _HB_MEMBER { AS NUMERIC nStatus } ; oClass:AddMultiData( "NUMERIC", 0, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nStatus"}, .F. )
+; _HB_MEMBER { AS NUMERIC nRetrHandle } ; oClass:AddMultiData( "NUMERIC", 0, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nRetrHandle"}, .F. )
+
+; _HB_MEMBER { AS CODEBLOCK bResolving } ; oClass:AddMultiData( "Codeblock", nil, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bResolving"}, .F. )
+; _HB_MEMBER { AS CODEBLOCK bResolved } ; oClass:AddMultiData( "Codeblock", nil, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bResolved"}, .F. )
+; _HB_MEMBER { AS CODEBLOCK bDump } ; oClass:AddMultiData( "Codeblock", nil, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bDump"}, .F. )
+; _HB_MEMBER { AS CODEBLOCK bAbort } ; oClass:AddMultiData( "Codeblock", nil, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bAbort"}, .F. )
+; _HB_MEMBER { AS CODEBLOCK bStorProg } ; oClass:AddMultiData( "Codeblock", nil, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bStorProg"}, .F. )
+
+; _HB_MEMBER { AS LOGICAL lResolved } ; oClass:AddMultiData( "Logical", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lResolved"}, .F. )
+; _HB_MEMBER { AS LOGICAL lConnected } ; oClass:AddMultiData( "Logical", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lConnected"}, .F. )
+; _HB_MEMBER { AS LOGICAL lClosed } ; oClass:AddMultiData( "Logical", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lClosed"}, .F. )
+; _HB_MEMBER { AS LOGICAL lSent } ; oClass:AddMultiData( "Logical", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lSent"}, .F. )
+; _HB_MEMBER { AS LOGICAL lSendFile } ; oClass:AddMultiData( "Logical", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lSendFile"}, .F. )
+; _HB_MEMBER { AS LOGICAL lPassive } ; oClass:AddMultiData( "Logical", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lPassive"}, .F. )
+; _HB_MEMBER { AS LOGICAL lSentUser } ; oClass:AddMultiData( "Logical", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lSentUser"}, .F. )
+
+; _HB_MEMBER { AS ARRAY acDir } ; oClass:AddMultiData( "Array",, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"acDir"}, .F. )
+; _HB_MEMBER { AS ARRAY acReply } ; oClass:AddMultiData( "Array",, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"acReply"}, .F. )
+; _HB_MEMBER { AS ARRAY acAllReply } ; oClass:AddMultiData( "Array",, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"acAllReply"}, .F. )
+
+; _HB_MEMBER { AS NUMERIC nRetrFSize } ; oClass:AddMultiData( "NUMERIC", 0, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nRetrFSize"}, .F. )
+; _HB_MEMBER { AS NUMERIC nRetrBRead } ; oClass:AddMultiData( "NUMERIC", 0, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nRetrBRead"}, .F. )
+
+; _HB_MEMBER { AS NUMERIC nTimeOut } ; oClass:AddMultiData( "NUMERIC", 20, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nTimeOut"}, .F. )
+
+; _HB_MEMBER { AS ARRAY aItems } ; oClass:AddMultiData( "Array",, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aItems"}, .F. )
+
+  _HB_MEMBER New( pcServer, pnPort, pbDump, bAbort, pcUser, pcPass) AS CLASS qFTPClient; oClass:AddMethod( "New", @qFTPClient_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER End(); oClass:AddMethod( "End", @qFTPClient_End(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Connect(); oClass:AddMethod( "Connect", @qFTPClient_Connect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER OnConnect(); oClass:AddMethod( "OnConnect", @qFTPClient_OnConnect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER OnRead(); oClass:AddMethod( "OnRead", @qFTPClient_OnRead(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER OnClose(); oClass:AddMethod( "OnClose", @qFTPClient_OnClose(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Port(); oClass:AddMethod( "Port", @qFTPClient_Port(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Cd( pcPath); oClass:AddMethod( "Cd", @qFTPClient_Cd(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Pwd(); oClass:AddMethod( "Pwd", @qFTPClient_Pwd(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER XfrType( pcType); oClass:AddMethod( "XfrType", @qFTPClient_XfrType(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Stor( pcLocal, pcRemote, pbStorProg, oMeter); oClass:AddMethod( "Stor", @qFTPClient_Stor(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER StorAccept(); oClass:AddMethod( "StorAccept", @qFTPClient_StorAccept(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER StorClose(); oClass:AddMethod( "StorClose", @qFTPClient_StorClose(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Dir( pcLoc); oClass:AddMethod( "Dir", @qFTPClient_Dir(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER DirAccept(); oClass:AddMethod( "DirAccept", @qFTPClient_DirAccept(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER DirRead(); oClass:AddMethod( "DirRead", @qFTPClient_DirRead(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER DirClose(); oClass:AddMethod( "DirClose", @qFTPClient_DirClose(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Dump(); oClass:AddMethod( "Dump", @qFTPClient_Dump(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Quit(); oClass:AddMethod( "Quit", @qFTPClient_Quit(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER DoWait(); oClass:AddMethod( "DoWait", @qFTPClient_DoWait(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Del( pcFile); oClass:AddMethod( "Del", @qFTPClient_Del(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Rename( pcFrom, pcTo); oClass:AddMethod( "Rename", @qFTPClient_Rename(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER MkDir( pcDir); oClass:AddMethod( "MkDir", @qFTPClient_MkDir(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER RmDir( pcDir); oClass:AddMethod( "RmDir", @qFTPClient_RmDir(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Retr( pcRemote, pcLocal); oClass:AddMethod( "Retr", @qFTPClient_Retr(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER RetrAccept(); oClass:AddMethod( "RetrAccept", @qFTPClient_RetrAccept(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER RetrRead(); oClass:AddMethod( "RetrRead", @qFTPClient_RetrRead(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER RetrClose(); oClass:AddMethod( "RetrClose", @qFTPClient_RetrClose(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Abort(); oClass:AddMethod( "Abort", @qFTPClient_Abort(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+  _HB_MEMBER Pasv(); oClass:AddMethod( "Pasv", @qFTPClient_Pasv(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+  _HB_MEMBER aItems(); oClass:AddMethod( "aItems", @qFTPClient_aItems(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS qFTPClient ;
+
+
+
+static FUNCTION qFTPClient_New( pcServer, pnPort, pbDump, bAbort, pcUser, pcPass ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+
+
+
+
+
+
+
+
+
+
+
+
+  If( pcServer == nil, pcServer := "10.1.1.2", ) ;
+  If( pnPort == nil, pnPort := 21, ) ;
+  If( bAbort == nil, bAbort := {|| .F.}, ) ;
+  If( pcUser == nil, pcUser := "anonymous", ) ;
+  If( pcPass == nil, pcPass := "fwuser@fivetech.com", ) ;
+
+  ::cServer    := pcServer
+  ::nPort      := pnPort
+  ::bAbort     := bAbort
+
+  ::bDump      := pbDump
+
+  ::acDir      := {}
+  ::acReply    := {}
+  ::acAllReply := {}
+
+  ::cUser      := pcUser
+  ::cPass      := pcPass
+
+  if empty( aCodes )
+     BuildCodeArrs()
+  endif
+
+return self
+
+
+
+static FUNCTION qFTPClient_Dump( pcMsg ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  if ValType(::bDump) == "B" .AND. ValType(pcMsg) == "C"
+    Eval(::bDump, pcMsg)
+  endif
+
+return nil
+
+
+
+static FUNCTION qFTPClient_Connect( ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local nReturn
+  LOCAL lOK     := .T.
+
+  ::lResolved := .F.
+
+  ::oSocket := TSocket():New(0)
+
+  if Val(::cServer) > 0
+    ::cServerIP := ::cServer
+    if ValType(::bResolved) == "B"
+      Eval(::bResolved, Self)
+    endif
+    ::lResolved := .T.
+
+  else
+    if ValType(::bResolving) == "B"
+      Eval(::bResolving, Self)
+    endif
+
+    ::lResolved := .F.
+
+    ::cServerIP := GetHostByName(Alltrim(::cServer))
+
+    if Val(::cServerIP) == 0
+
+
+    else
+      if ValType(::bResolved) == "B"
+        Eval(::bResolved, Self)
+      endif
+      ::lResolved := .T.
+    endif
+  endif
+
+  if ::lResolved
+
+    ::oSocket:bConnect := {|oSocket| ::OnConnect(oSocket)}
+    ::oSocket:bRead    := {|oSocket| ::OnRead(oSocket)}
+    ::oSocket:bClose   := {|oSocket| ::OnClose(oSocket)}
+
+    ::nStatus := 1
+
+    ::oSocket:Connect(::cServerIP, ::nPort)
+
+    ::DoWait(1)
+
+    lOK := ::nStatus == 2
+  endif
+
+return lOk
+
+
+
+static FUNCTION qFTPClient_OnConnect( poSocket ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  If Val(poSocket:ClientIP()) == 0
+    ::lConnected := .F.
+    ::nStatus := 3
+  endif
+
+return nil
+
+
+
+static FUNCTION qFTPClient_OnRead( poSocket ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local cData := ""
+  local nPos  := 0
+  local cCmd  := ""
+  local ni
+
+  cData := poSocket:GetData()
+
+  ::cBuffer += cData
+
+  nPos := At(Chr(13)+Chr(10), ::cBuffer)
+
+  while nPos > 0 .AND. !Eval(::bAbort)
+    AAdd(::acReply   , Left(::cBuffer, nPos - 1))
+    AAdd(::acAllReply, Left(::cBuffer, nPos - 1))
+    ::cBuffer := Substr(::cBuffer, nPos + 2)
+    nPos := At(Chr(13)+Chr(10), ::cBuffer)
+  Enddo
+
+  If Len(::acReply) > 0
+    cCmd := Left(::acReply[1], 3)
+  else
+    cCmd := "zzz"
+  endif
+
+  nPos := Ascan(::acReply, {| cReply | Left(cReply, 4) == cCmd + " "})
+
+  If nPos > 0
+
+
+
+
+
+    Aeval(::acReply, {| cReply | ::Dump("R:" + CodeDesc(::nStatus) + ":" + cReply)})
+
+    ::cReply := ATail(::acReply)
+    cCmd := Left(::acReply[1], 3)
+    ::acReply := {}
+
+    Do Case
+      Case ::nStatus == 1
+        Do Case
+          Case cCmd == "220"
+
+            poSocket:SendData("USER " + Alltrim(::cUser) + Chr(13)+Chr(10))
+            ::Dump("S:USER " + Alltrim(::cUser))
+            ::lSentUser := .T.
+          Case cCmd == "331"
+            poSocket:SendData("PASS " + Alltrim(::cPass) + Chr(13)+Chr(10))
+            ::Dump("S:PASS " + replicate("*",len( ::cPass) ))
+          Case cCmd == "230"
+            ::nStatus := 2
+            ::lConnected := .T.
+          Otherwise
+            ::nStatus := 3
+        EndCase
+      Case ::nStatus == 4
+        Do Case
+          Case cCmd == "250"
+            ::nStatus := 5
+          Otherwise
+            ::nStatus := 6
+        EndCase
+      Case ::nStatus == 20
+        Do Case
+          Case cCmd == "221"
+            ::nStatus := 21
+            ::lConnected := .F.
+          Otherwise
+            ::nStatus := 22
+        EndCase
+      Case ::nStatus == 36
+        Do Case
+          Case cCmd == "250"
+            ::nStatus := 37
+          Otherwise
+            ::nStatus := 38
+        EndCase
+
+      Case ::nStatus == 27
+        Do Case
+          Case cCmd == "257"
+            ::nStatus := 28
+          Otherwise
+            ::nStatus := 29
+        EndCase
+
+      Case ::nStatus == 10
+        Do Case
+          Case cCmd == "200"
+            ::nStatus := 11
+          Otherwise
+            ::nStatus := 12
+        EndCase
+
+      Case ::nStatus == 7
+        Do Case
+          Case cCmd == "200"
+            ::nStatus := 8
+          Otherwise
+            ::nStatus := 9
+        EndCase
+
+      Case ::nStatus == 13
+        Do Case
+          Case cCmd == "150"
+            ::nStatus := 14
+            ::lSendFile := .T.
+          Otherwise
+            ::nStatus := 15
+        EndCase
+
+      Case ::nStatus == 14
+        Do Case
+          Case cCmd == "226"
+            ::nStatus := 16
+          Otherwise
+            ::nStatus := 15
+        EndCase
+
+      Case ::nStatus == 17
+        Do Case
+          Case cCmd == "227"
+            ::nStatus := 18
+          Otherwise
+            ::nStatus := 19
+        EndCase
+      Case ::nStatus == 23
+        Do Case
+          Case cCmd == "150"
+            ::nStatus := 24
+          Otherwise
+            ::nStatus := 25
+        EndCase
+      Case ::nStatus == 24 .OR. ::nStatus == 126
+        Do Case
+          Case cCmd == "226"
+            ::nStatus := 26
+          Otherwise
+            ::nStatus := 25
+        EndCase
+      Case ::nStatus == 42
+        Do Case
+          Case cCmd == "150"
+            ::nStatus := 43
+          Otherwise
+            ::nStatus := 44
+        EndCase
+      Case ::nStatus == 43
+        Do Case
+          Case cCmd == "226"
+            ::nStatus := 45
+          Otherwise
+            ::nStatus := 44
+        EndCase
+      Case ::nStatus == 30
+        Do Case
+          Case cCmd == "350"
+            ::nStatus := 31
+          Otherwise
+            ::nStatus := 32
+        EndCase
+      Case ::nStatus == 33
+        Do Case
+          Case cCmd == "250"
+            ::nStatus := 34
+          Otherwise
+            ::nStatus := 35
+        EndCase
+      Case ::nStatus == 20
+        Do Case
+          Case cCmd == "221"
+            ::nStatus := 21
+          Otherwise
+            ::nStatus := 22
+        EndCase
+      Case ::nStatus == 39
+        Do Case
+          Case cCmd == "257"
+            ::nStatus := 40
+          Otherwise
+            ::nStatus := 41
+        EndCase
+      Case ::nStatus == 46
+        Do Case
+          Case cCmd  == "225"
+            ::nStatus := 47
+          Otherwise
+            ::nStatus := 48
+        EndCase
+      Case ::nStatus == 49
+        Do Case
+          Case cCmd == "250"
+            ::nStatus := 50
+          Otherwise
+            ::nStatus := 51
+        EndCase
+      Case cCmd == "530"
+        ::lConnected := .F.
+
+      Otherwise
+        ::Dump("E:Unknown exception on cmd " + cCmd + " status " + NTRIM(::nStatus))
+
+        ::Dump("E:All replys from server follow...")
+        ::Dump(" ")
+        FOR nI := 1 TO LEN(::acAllReply)
+            ::Dump("E:" + ::acAllReply[nI])
+        NEXT
+    EndCase
+
+    nPos := At(Chr(13)+Chr(10), ::cBuffer)
+
+  Endif
+
+
+return nil
+
+
+
+static FUNCTION qFTPClient_Dir( pcLoc ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local lOK       := .T.
+  local cPort     := ""
+  local nPos      := 0
+  local cLine     := ""
+  local cSepChar := ""
+
+  If( pcLoc == nil, pcLoc := "", ) ;
+
+  ::acDir := {}
+  ::cDirBuffer := ""
+
+  ::oTrnSocket := TSocket():New(0)
+
+  if !::lPassive
+    cPort := ::Port(::oTrnSocket)
+
+    ::oTrnSocket:bAccept := { | poSocket | ::DirAccept(poSocket:nSocket)}
+    ::oTrnSocket:Listen()
+
+    ::Dump("I:Listening on port " + NTRIM(::oTrnSocket:nPort))
+
+    ::nStatus := 10
+    ::Dump("S:" + cPort)
+
+    ::oSocket:SendData(cPort + Chr(13)+Chr(10))
+
+    while ::nStatus == 10 .AND. !::lClosed .AND. !Eval(::bAbort)
+      SysRefresh()
+    Enddo
+
+    if ::nStatus <> 11
+      ::Dump("737 from byron")
+      lOK := .F.
+    endif
+  else
+    if ::Pasv()
+      if ::nDataPort > 0
+        ::oTrnSocket:bConnect := { | poSocket | ::DirAccept(poSocket)}
+        ::oTrnSocket:bRead   := { | poSocket | ::DirRead  (poSocket)}
+        ::oTrnSocket:bClose  := { | poSocket | ::DirClose (poSocket)}
+        ::Dump("I:Connecting on ip:port " + ::cDataIP + ":" + NTRIM(::nDataPort))
+        ::oTrnSocket:Connect(::cDataIP, ::nDataPort)
+
+        lOK := .T.
+      else
+        ::Dump("751 from byron")
+        lOK := .F.
+      endif
+    endif
+  endif
+
+
+  if lOK
+    ::nStatus := 23
+    ::Dump("S:" + RTrim("LIST " + pcLoc) + Chr(13)+Chr(10))
+
+    ::oSocket:SendData(RTrim("LIST " + pcLoc) + Chr(13)+Chr(10))
+
+
+    ::DoWait(23)
+
+    ::DoWait(24)
+
+    if ::nStatus == 26 .OR. ::nStatus == 126
+      ::DoWait(26)
+      if ::nStatus == 126
+        ::Dump("I:Interpreting dir listing.")
+        cSepChar := Chr(13)+Chr(10)
+        nPos := At(cSepChar, ::cDirBuffer)
+        If nPos == 0
+          cSepChar := Chr(10)
+        Endif
+        ::acDir := {}
+        while nPos > 0 .AND. !Eval(::bAbort)
+
+          cLine := Alltrim(Left(::cDirBuffer, nPos - 1))
+          ::cDirBuffer := Substr(::cDirBuffer, nPos + Len(cSepChar))
+          cLine := Alltrim(StrTran(cLine, Chr(0), ""))
+
+          AAdd(::acDir, cLine)
+
+          nPos := At(cSepChar, ::cDirBuffer)
+          SysRefresh()
+        Enddo
+      else
+      ::Dump("791 from byron")
+        lOK := .F.
+        ::Abort()
+        ::oTrnSocket:End()
+      endif
+    else
+      ::Dump("797 from byron")
+      lOK := .F.
+      ::Abort()
+      ::oTrnSocket:End()
+    endif
+  endif
+
+return lOK
+
+
+  static FUNCTION qFTPClient_aItems( ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+local aItems := {}
+local cLine, n
+local cName
+local cSize
+local dDateTime
+local cAttributes
+
+
+if empty( ::acDir )
+   return nil
+endif
+
+aadd( aItems, {"..", 0, "", " ", "D"} )
+for n := 1 to len( ::acDir )
+    cLine       := ::acDir[n]
+    cName       := substr( cLine, 56 )
+    nSize       := val(substr( cLine, 55-23, 10 ))
+    dDateTime   := substr( cLine, 55-12, 12 )
+    cAttributes := if( left( cLine, 1 ) == "d","D"," ")
+    aadd( aItems, {cName, cSize, dDateTime, " ", cAttributes} )
+next
+
+return aItems
+
+
+
+
+static FUNCTION qFTPClient_DirAccept( pSocket ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+
+  local oSocket
+
+  if !::lPassive
+    oSocket := TSocket():Accept(pSocket)
+    oSocket:bRead   := { | poSocket | ::DirRead  (poSocket)}
+    oSocket:bClose  := { | poSocket | ::DirClose (poSocket)}
+  endif
+  ::Dump("I:Dir data connection established")
+
+return nil
+
+
+
+static FUNCTION qFTPClient_DirRead( poSocket ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local cData := poSocket:GetData()
+
+  ::cDirBuffer += cData
+
+  ::Dump("I:Dir data received")
+
+return nil
+
+
+
+static FUNCTION qFTPClient_DirClose( poSocket ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  ::Dump("I:Dir Data Socket closed")
+  ::nStatus := 126
+  ::Dump("R:" + Chr(13)+Chr(10) + ::cDirBuffer)
+  poSocket:Close()
+return nil
+
+
+
+
+static FUNCTION qFTPClient_OnClose( poSocket ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  ::Dump("I:Server closed down")
+
+  ::lClosed := .T.
+
+  ::nStatus := 0
+
+  ::oSocket:Close()
+
+  If ValType(::oTrnSocket) == "O"
+    ::oTrnSocket:Close()
+  endif
+
+return nil
+
+
+
+static FUNCTION qFTPClient_End( ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  ::oSocket:End()
+
+  If ValType(::oTrnSocket) == "O"
+    ::oTrnSocket:End()
+  endif
+
+return nil
+
+
+
+static FUNCTION qFTPClient_Port( oTransSocket ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+   local cIp := GetIp( ::oSocket:nSocket )
+   local nPort
+   local cPort
+   local cComplement
+
+   BindToPort( oTransSocket:nSocket, 0 )
+
+   nPort       := GetPort( oTransSocket:nSocket )
+   cPort       := AllTrim( Str( Int( nPort / 256 ), 3 ) )
+   cComplement := AllTrim( Str( Int( nPort % 256 ), 3 ) )
+
+   oTransSocket:nPort := nPort
+
+
+return ("PORT " + StrTran( AllTrim( StrTran( cIp, ".", "," ) ) +  "," + cPort + "," + cComplement, " ", "" ))
+
+
+
+static FUNCTION qFTPClient_Cd( pcPath ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local lOK := .T.
+
+  ::nStatus := 4
+
+  ::oSocket:SendData("CWD " + pcPath + Chr(13)+Chr(10))
+
+  ::Dump("S:CWD " + pcPath)
+
+  ::DoWait(4)
+
+  lOK := ::nStatus == 5
+
+return lOK
+
+
+
+static FUNCTION qFTPClient_XfrType( pcType ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local lOK := .T.
+
+  If( pcType == nil, pcType := "I", ) ;
+
+  ::nStatus := 7
+
+  ::oSocket:SendData("TYPE " + pcType + Chr(13)+Chr(10))
+
+  ::Dump("S:TYPE " + pcType)
+
+  ::DoWait(7)
+
+  lOK := ::nStatus == 8
+
+return lOK
+
+
+
+static FUNCTION qFTPClient_Stor( pcLocal, pcRemote, pbStorProgress,oMeter ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local cRemFile  := ""
+  local nPos      := 0
+  local cPort     := ""
+  local lOK       := .T.
+
+  If( pcRemote == nil, pcRemote := "", ) ;
+
+  If( pbStorProgress == nil, pbStorProgress := {|| nil }, ) ;
+
+  ::bStorProg := pbStorProgress
+
+  ::lSendFile := .F.
+  if Empty(pcRemote)
+    if (nPos := RAt("\", pcLocal)) > 0
+      cRemFile := Substr(pcLocal, nPos + 1)
+    else
+      cRemFile := pcLocal
+    endif
+  else
+    cRemFile := pcRemote
+  endif
+
+  if lOK
+    ::XfrType("I")
+
+    while ::nStatus == 7 .AND. !::lClosed .AND. !Eval(::bAbort)
+      SysRefresh()
+    Enddo
+
+    if ::nStatus <> 8
+      lOK := .F.
+    endif
+  endif
+
+  if lOK
+    ::oTrnSocket := TSocket():New(0)
+
+    if !::lPassive
+      cPort := ::Port(::oTrnSocket)
+      ::oTrnSocket:bAccept := { | poSocket | ::StorAccept(poSocket:nSocket, pcLocal,oMeter)}
+      ::oTrnSocket:Listen()
+      ::Dump("I:Listening on port " + NTRIM(::oTrnSocket:nPort))
+
+      ::nStatus := 10
+
+      ::oSocket:SendData(cPort + Chr(13)+Chr(10))
+      ::Dump("S:" + cPort)
+
+      while ::nStatus == 10 .AND. !::lClosed .AND. !Eval(::bAbort)
+        SysRefresh()
+      Enddo
+
+      if ::nStatus <> 11
+        lOK := .F.
+      endif
+    else
+      if ::Pasv()
+        if ::nDataPort > 0
+          ::oTrnSocket:bConnect := { | poSocket | ::StorAccept(poSocket, pcLocal,oMeter)}
+          ::oTrnSocket:bClose  := { | poSocket | ::StorClose (poSocket,oMeter)}
+          ::Dump("I:Connecting on ip:port " + ::cDataIP + ":" + NTRIM(::nDataPort))
+          ::oTrnSocket:Connect(::cDataIP, ::nDataPort)
+
+          lOK := .T.
+        else
+          lOK := .F.
+        endif
+      endif
+    endif
+  endif
+
+
+  if lOk
+    ::nStatus := 13
+    ::Dump("S:STOR " + cRemFile)
+    ::oSocket:SendData("STOR " + cRemFile + Chr(13)+Chr(10))
+
+    ::DoWait(13)
+    ::DoWait(14)
+
+    if ::nStatus <> 16
+      lOK := .F.
+      ::Abort()
+      ::oTrnSocket:End()
+    endif
+  endif
+
+return lOK
+
+
+
+static FUNCTION qFTPClient_StorAccept( pSocket, pcFile, oMeter ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local oSocket := NIL
+  local hFile   := 0
+  local cBuffer := ""
+  local nSent   := 0
+  local nTotal  := 0
+  local lClosed := .F.
+  local nNow      := 0
+  local nSize
+
+  IF !::lPassive
+     oSocket := TSocket():Accept(pSocket)
+     oSocket:bClose  := {| poSocket | ::StorClose(poSocket), lClosed := .T.}
+  else
+    oSocket := pSocket
+  Endif
+
+
+  while !::lSendFile .AND. !::lClosed .AND. !Eval(::bAbort)
+    SysRefresh()
+  Enddo
+
+
+  if ::lSendfile
+    ::Dump("I:Store data connection established")
+
+    nNow := Seconds()
+    hFile := FOpen(pcFile)
+    if hFile > 0
+      nSize := Directory(pcFile)[1,2]
+      while .T.
+        cBuffer := Space(1024)
+        nSent := FRead(hFile, @cBuffer, 1024)
+        cBuffer := Left(cBuffer, nSent)
+        oSocket:SendData(cBuffer)
+        nTotal += nSent
+
+        Eval(::bStorProg, Round(nTotal / nSize * 100, 2))
+
+        if nSent < 1024 .OR. lClosed .OR. Eval(::bAbort)
+          Exit
+        endif
+        SysRefresh()
+
+      Enddo
+      FClose(hFile)
+      ::Dump("I:" + NTRIM(nTotal) + " bytes of file sent in " + LTrim(Str(Seconds() - nNow, 16, 2)) + " seconds. Closing socket")
+      ::Dump("I:Waiting for acknowledgement ")
+
+      oSocket:Close()
+    else
+      oSocket:Close()
+      oSocket:End()
+    endif
+    SysRefresh()
+  endif
+
+return nil
+
+
+
+static FUNCTION qFTPClient_StorClose( poSocket ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  ::Dump("I:Store socket closed")
+  poSocket:Close()
+
+return nil
+
+
+
+static FUNCTION qFTPClient_Quit( ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local lRetVal := .T.
+
+  ::Dump("S:QUIT")
+  ::nStatus := 20
+  ::oSocket:SendData("QUIT" + Chr(13)+Chr(10))
+
+  ::DoWait(20)
+return lRetVal
+
+
+
+static FUNCTION qFTPClient_Pwd( ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local cRetVal := ""
+  local nPos := ""
+  local cReply
+
+  ::nStatus := 27
+
+  ::Dump(":SPWD")
+
+  ::oSocket:SendData("PWD" + Chr(13)+Chr(10))
+
+  ::DoWait(27)
+
+  cReply := ::cReply
+
+  nPos := At('"', cReply)
+
+  cReply := Substr(cReply, nPos + 1)
+
+  nPos := At('"', cReply)
+
+  cReply := Substr(cReply, 1, nPos - 1)
+
+  cRetVal := cReply
+
+return cRetVal
+
+
+
+static FUNCTION qFTPClient_Del( pcFile ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local lOK := .T.
+
+  If( pcFile == nil, pcFile := "", ) ;
+
+  ::nStatus := 36
+
+  if !Empty(pcFile)
+    ::Dump("S:DELE " + pcFile)
+    ::oSocket:SendData("DELE " + pcFile + Chr(13)+Chr(10))
+    ::DoWait(36)
+
+    lOK := ::nStatus == 37
+  else
+    lOK := .F.
+  endif
+
+return lOK
+
+
+
+static FUNCTION qFTPClient_Rename( pcFrom, pcTo ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local lOK := .T.
+
+  If( pcFrom == nil, pcFrom := "", ) ;
+  If( pcTo == nil, pcTo := "", ) ;
+
+  if Empty(pcFrom) .OR. Empty(pcTo)
+    lOK := .F.
+  else
+    ::nStatus := 30
+    ::Dump("S:RNFR " + pcFrom)
+    ::oSocket:SendData("RNFR " + pcFrom + Chr(13)+Chr(10))
+
+    ::DoWait(30)
+
+    if ::nStatus == 31
+      ::nStatus := 33
+      ::Dump("S:RNTO " + pcTo)
+      ::oSocket:SendData("RNTO " + pcTo + Chr(13)+Chr(10))
+
+      ::DoWait(33)
+
+      lOK := ::nStatus == 34
+    else
+      lOK := .F.
+    endif
+  endif
+
+return lOk
+
+
+
+static FUNCTION qFTPClient_MkDir( pcDir ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local lOK := .T.
+
+  ::nStatus := 39
+
+  ::Dump("S:MKD " + pcDir)
+
+  ::oSocket:SendData("MKD " + pcDir + Chr(13)+Chr(10))
+
+  ::DoWait(39)
+
+  lOK := ::nStatus == 40
+
+return lOK
+
+
+
+static FUNCTION qFTPClient_RmDir( pcDir ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local lOK := .T.
+
+  ::nStatus := 49
+
+  ::Dump("S:RMD " + pcDir)
+
+  ::oSocket:SendData("RMD " + pcDir + Chr(13)+Chr(10))
+
+  ::DoWait(49)
+
+  lOK := ::nStatus == 50
+
+return lOK
+
+
+
+static FUNCTION qFTPClient_Abort( ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local lOK := .T.
+
+  ::nStatus := 46
+
+  ::Dump("S:ABOR")
+
+  ::oSocket:SendData("ABOR" + Chr(13)+Chr(10))
+
+  ::DoWait(46)
+
+  lOK := ::nStatus == 47
+
+return lOK
+
+
+
+static FUNCTION qFTPClient_Pasv ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local lOK     := .T.
+  local cReply  := ""
+  local nPos    := 0
+
+  ::nStatus := 17
+
+  ::Dump("S:PASV")
+
+  ::oSocket:SendData("PASV" + Chr(13)+Chr(10))
+
+  ::DoWait(17)
+
+  if (lOK := ::nStatus == 18)
+    ::lPassive := .T.
+    cReply := ::cReply
+    nPos := At("(", cReply)
+
+    cReply := Substr(cReply, nPos + 1)
+
+    nPos := At(")", cReply)
+
+    cReply := Left(cReply, nPos - 1)
+
+    ::cDataIP := StrToken(cReply, 1, ",") + "."
+    ::cDataIP += StrToken(cReply, 2, ",") + "."
+    ::cDataIP += StrToken(cReply, 3, ",") + "."
+    ::cDataIP += StrToken(cReply, 4, ",")
+
+    ::nDataPort := 0
+
+    ::nDataPort += 256 * Val(StrToken(cReply, 5, ","))
+
+    ::nDataPort += Val(StrToken(cReply, 6, ","))
+    ::Dump("I: Server has opened connection on port " + NTRIM(::nDataport))
+
+  else
+    lOK := .F.
+  endif
+
+return lOK
+
+
+static FUNCTION qFTPClient_DoWait( pnState ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+local IniTime := Seconds()
+
+
+
+  while .T.
+
+     IF pnState = 43
+        IF ::lClosed .OR. Eval(::bAbort)
+           EXIT
+        ENDIF
+        IF ::nRetrFSize = ::nRetrBRead
+           EXIT
+        ENDIF
+      ELSEIF ::nStatus <> pnState .OR. ::lClosed .OR. Eval(::bAbort)
+        EXIT
+     ENDIF
+
+     if Seconds() - IniTime > ::nTimeOut
+        IF pnState <> 43
+           exit
+        ENDIF
+     endif
+
+     SysRefresh()
+  Enddo
+
+  if pnState <> 46
+    if Eval(::bAbort)
+      ::Abort()
+    endif
+  endif
+
+return nil
+
+
+
+FUNCTION NTRIM(n)
+    LOCAL cRV := ALLTRIM(STR(n))
+RETURN cRV
+
+static function CodeDesc(nCode)
+
+    local nEle := ascan(aCodes,nCode)
+    local cRV  := "N/A          "
+
+    if nEle > 0
+        cRV := aDesc[nEle]
+    endif
+
+return cRV
+
+static function BuildCodeArrs()
+
+    aadd(aDesc,"ST_CLOSED     ");aadd(aCodes,0)
+    aadd(aDesc,"ST_CONNECTING ");aadd(aCodes,1)
+    aadd(aDesc,"ST_CONNECTED  ");aadd(aCodes,2)
+    aadd(aDesc,"ST_CONNECTERR ");aadd(aCodes,3)
+
+    aadd(aDesc,"ST_DOCWD      ");aadd(aCodes,4)
+    aadd(aDesc,"ST_DONECWD    ");aadd(aCodes,5)
+    aadd(aDesc,"ST_CWDERROR   ");aadd(aCodes,6)
+
+    aadd(aDesc,"ST_DOTYPE     ");aadd(aCodes,7)
+    aadd(aDesc,"ST_TYPEOK     ");aadd(aCodes,8)
+    aadd(aDesc,"ST_TYPEBAD    ");aadd(aCodes,9)
+
+    aadd(aDesc,"ST_DOPORT     ");aadd(aCodes,0)
+    aadd(aDesc,"ST_PORTOK     ");aadd(aCodes,1)
+    aadd(aDesc,"ST_PORTBAD    ");aadd(aCodes,2)
+
+    aadd(aDesc,"ST_DOSTOR     ");aadd(aCodes,3)
+    aadd(aDesc,"ST_STOROK     ");aadd(aCodes,4)
+    aadd(aDesc,"ST_STORBAD    ");aadd(aCodes,5)
+    aadd(aDesc,"ST_STORDONE   ");aadd(aCodes,6)
+
+    aadd(aDesc,"ST_DOPASV     ");aadd(aCodes,7)
+    aadd(aDesc,"ST_PASVOK     ");aadd(aCodes,8)
+    aadd(aDesc,"ST_PASVBAD    ");aadd(aCodes,9)
+
+    aadd(aDesc,"ST_DOQUIT     ");aadd(aCodes,0)
+    aadd(aDesc,"ST_QUITOK     ");aadd(aCodes,1)
+    aadd(aDesc,"ST_QUITBAD    ");aadd(aCodes,2)
+
+    aadd(aDesc,"ST_DODIR      ");aadd(aCodes,3)
+    aadd(aDesc,"ST_DIROK      ");aadd(aCodes,4)
+    aadd(aDesc,"ST_DIRBAD     ");aadd(aCodes,5)
+    aadd(aDesc,"ST_DIRDONE    ");aadd(aCodes,6)
+    aadd(aDesc,"ST_DIRREADY   ");aadd(aCodes,2)
+
+    aadd(aDesc,"ST_DOPWD      ");aadd(aCodes,7)
+    aadd(aDesc,"ST_DONEPWD    ");aadd(aCodes,8)
+    aadd(aDesc,"ST_PWDERROR   ");aadd(aCodes,9)
+
+    aadd(aDesc,"ST_DORENFROM  ");aadd(aCodes,0)
+    aadd(aDesc,"ST_RENFROMOK  ");aadd(aCodes,1)
+    aadd(aDesc,"ST_RENFROMBAD ");aadd(aCodes,2)
+    aadd(aDesc,"ST_DORENTO    ");aadd(aCodes,3)
+    aadd(aDesc,"ST_RENTOOK    ");aadd(aCodes,4)
+    aadd(aDesc,"ST_RENTOBAD   ");aadd(aCodes,5)
+
+    aadd(aDesc,"ST_DODELETE   ");aadd(aCodes,6)
+    aadd(aDesc,"ST_DELETEOK   ");aadd(aCodes,7)
+    aadd(aDesc,"ST_DELETEBAD  ");aadd(aCodes,8)
+
+    aadd(aDesc,"ST_DOMKDIR    ");aadd(aCodes,9)
+    aadd(aDesc,"ST_MKDIROK    ");aadd(aCodes,0)
+    aadd(aDesc,"ST_MKDIRBAD   ");aadd(aCodes,1)
+
+    aadd(aDesc,"ST_DORETR     ");aadd(aCodes,2)
+    aadd(aDesc,"ST_RETROK     ");aadd(aCodes,3)
+    aadd(aDesc,"ST_RETRBAD    ");aadd(aCodes,4)
+    aadd(aDesc,"ST_RETRDONE   ");aadd(aCodes,5)
+
+    aadd(aDesc,"ST_DOABOR     ");aadd(aCodes,6)
+    aadd(aDesc,"ST_ABOROK     ");aadd(aCodes,7)
+    aadd(aDesc,"ST_ABORBAD    ");aadd(aCodes,8)
+
+    aadd(aDesc,"ST_DORMDIR    ");aadd(aCodes,9)
+    aadd(aDesc,"ST_RMDIROK    ");aadd(aCodes,0)
+    aadd(aDesc,"ST_RMDIRBAD   ");aadd(aCodes,1)
+return nil
+
+static FUNCTION qFTPClient_Retr( pcRemote, pcLocal, nRetrFsize, oMeter ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+
+  local lOK       := .T.
+  local cPort     := ""
+  local nPos      := 0
+  local cLine     := ""
+  local nNow      := 0
+
+
+
+  ::nRetrFsize := nRetrFsize
+
+  nPos := Rat("/", pcRemote)
+  if nPos == 0
+    If( pcLocal == nil, pcLocal := pcRemote, ) ;
+  else
+    If( pcLocal == nil, pcLocal := Substr(pcRemote, nPos + 1), ) ;
+  endif
+
+  ::nRetrHandle := FCreate(pcLocal)
+  if ::nRetrHandle > 0
+
+    lOK := ::XfrType("I")
+    if lOK
+      ::oTrnSocket := TSocket():New(0)
+
+      if !::lPassive
+        cPort := ::Port(::oTrnSocket)
+
+        ::oTrnSocket:bAccept := { | poSocket | ::RetrAccept(poSocket:nSocket,oMeter)}
+        ::oTrnSocket:Listen()
+
+        ::Dump("I:Listening on port " + NTRIM(::oTrnSocket:nPort))
+
+        ::nStatus := 10
+        ::Dump("S:" + cPort)
+
+        ::oSocket:SendData(cPort + Chr(13)+Chr(10))
+
+        ::DoWait(10)
+        if ::nStatus <> 11
+          lOK := .F.
+        endif
+      else
+        if ::Pasv()
+          if ::nDataPort > 0
+            ::oTrnSocket:bConnect := { | poSocket | ::RetrAccept(poSocket,oMeter)}
+            ::oTrnSocket:bRead   := { | poSocket | ::RetrRead  (poSocket,oMeter)}
+            ::oTrnSocket:bClose  := { | poSocket | ::RetrClose (poSocket,oMeter)}
+            ::Dump("I:Connecting on ip:port " + ::cDataIP + ":" + NTRIM(::nDataPort))
+            ::oTrnSocket:Connect(::cDataIP, ::nDataPort)
+            lOK := .T.
+          else
+            lOK := .F.
+          endif
+        endif
+      endif
+    endif
+  else
+    lOK := .F.
+  endif
+
+  if lOK
+    ::nStatus := 42
+    ::Dump("S:RETR " + pcRemote)
+
+    ::oSocket:SendData("RETR " + pcRemote + Chr(13)+Chr(10))
+    ::DoWait(42)
+
+    ::DoWait(43)
+
+    lOK := ::nStatus == 45
+    if !lOK
+      ::Abort()
+      ::oTrnSocket:End()
+    endif
+
+  endif
+
+return lOK
+
+
+
+
+
+static FUNCTION qFTPClient_RetrAccept( pSocket,oMeter ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+  local oSocket := nil
+  if !::lPassive
+    oSocket := TSocket():Accept(pSocket)
+    oSocket:bRead  := {| poSocket | ::RetrRead(poSocket,oMeter)}
+    oSocket:bClose  := {| poSocket | ::RetrClose(poSocket,oMeter)}
+  endif
+  ::Dump("I:Retr data connection established")
+return nil
+
+
+
+static FUNCTION qFTPClient_RetrRead( poSocket,oMeter ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+   local cData := poSocket:GetData()
+   if ::nRetrHandle > 0
+       ::nRetrBRead += len(cData)
+       FWrite(::nRetrHandle, cData)
+       oMeter:Set(::nRetrBRead)
+   endif
+return nil
+
+
+
+static FUNCTION qFTPClient_RetrClose( poSocket,oMeter ) ; local Self AS CLASS qFTPClient := QSelf() AS CLASS qFTPClient
+  ::Dump("I:Retr Data completed")
+  FClose(::nRetrHandle)
+
+  poSocket:Close()
+return nil
+
+
+
+
+function FindIniNWord( cText, nPalabra )
+local nLen
+local n := 0
+local nWord := 1
+local cChar
+local lEspacio := .F.
+local nEn := 0
+
+nLen := len( cText )
+
+for n := 1 to nLen
+
+    cChar := substr( cText, n, 1 )
+
+    if cChar == " "
+       lEspacio := .T.
+    else
+       if lEspacio
+          nWord++
+          lEspacio := .F.
+          if nWord == nPalabra
+             nEn := n
+             exit
+          endif
+       endif
+    endif
+next
+
+return nEn
+
+
+
+FUNCTION FtpGetFile(cRemote,cLocal,cMsg,cTitle, cServer, bFTP, cUser, cPassword )
+    If( cMsg == nil, cMsg := "Downloading " + cRemote + " to " + cLocal + "...", ) ;
+    If( cTitle == nil, cTitle := "FTP Get File", ) ;
+    MsgMeter({|oMeter,oText,oDlg,lEnd,oBtn| FTPGet(cRemote,cLocal,oMeter, cServer, bFTP, cUser, cPassword )},cMsg,cTitle)
+RETURN NIL
+
+FUNCTION FtpPutFile( cLocal,cRemote,cMsg,cTitle, cServer, bFTP, cUser, cPassword  )
+    If( cMsg == nil, cMsg := "Uploading " + cLocal + " to " + cRemote + "...", ) ;
+    If( cTitle == nil, cTitle := "FTP Put File", ) ;
+    MsgMeter({|oMeter,oText,oDlg,lEnd,oBtn| FTPPut(cLocal,cRemote,oMeter, cServer, bFTP, cUser, cPassword)},cMsg,cTitle)
+RETURN nil
+
+Function FtpFSize(cRemote, cServer, bFTP, cUser, cPassword )
+  local cLogFile  := "dirftp.txt"
+
+  local nSize     := 0
+  If( bFTP == nil, bFTP := {|cMessage| Logfile(cLogFile, {cMessage})}, ) ;
+  begin sequence
+    Ferase(cLogFile)
+    oFTP := qFTPClient():New(cServer, 21,bFTP ,,cUser, cPassword)
+
+    oFTP:lPassive := .F.
+    infstat("Connecting to FTP server...")
+
+    if oFTP:Connect()
+        infstat("Getting Directory " + cRemote)
+        oFTP:DIR(cRemote)
+        if len(oFTP:acDir) > 1
+            msgstop("This FTP transfer method only allows one file per transfer, no wildcards...","QFTP")
+            BREAK
+        elseif len(oFtp:acDir) < 1
+            msgstop("No valid files found to receive...","QFTP")
+            BREAK
+        else
+            nSize := val(alltrim(substr(oFTP:acDir[1],19,20)))
+        endif
+
+        oFTP:Quit()
+        oFTP:End()
+    else
+      Msginfo("Connect failed!")
+    endif
+  end
+return nSize
+
+
+Function FTPGet(cRemote,cLocal,oMeter, cServer, bFTP, cUser, cPassword )
+  local nFileSize := FtpFSize(cRemote, cServer, bFTP, cUser, cPassword)
+  local cLogFile  := "getftp.txt"
+  If( bFTP == nil, bFTP := {|cMessage| Logfile(cLogFile, {cMessage})}, ) ;
+
+  oMeter:SetTotal(nFileSize)
+
+  Ferase(cLogFile)
+  oFTP := qFTPClient():New(cServer, 21,bFTP ,,cUser, cPassword)
+
+  oFTP:lPassive := .F.
+
+  eval( bFTP, "Connecting to FTP server...")
+
+  if oFTP:Connect()
+
+      eval( bFTP, "Getting file " + cRemote)
+      oFTP:Retr(cRemote,cLocal,oMeter)
+      oFTP:Quit()
+      oFTP:End()
+  else
+    Msginfo("Connect failed!")
+  endif
+
+return nil
+
+Function FTPPut(cLocal,cRemote,oMeter, cServer, bFTP, cUser, cPassword )
+  local cLogFile  := "putftp.txt"
+
+
+  if oMeter <> nil
+     oMeter:SetTotal(100)
+  endif
+
+  Ferase(cLogFile)
+  oFTP := qFTPClient():New(cServer, 21,bFTP ,,cUser, cPassword)
+  oFtp:nTimeOut := 60
+  oFTP:lPassive := .T.
+
+  eval( bFTP, "Connecting to FTP server...")
+
+  if oFTP:Connect()
+      eval( bFTP, "Putting file " + cLocal)
+      oFTP:Stor(cLocal,cRemote,{|n| oMeter:Set(n),SysRefresh()},oMeter)
+      oFTP:Quit()
+      oFTP:End()
+  else
+    Msginfo("Connect failed!")
+  endif
+
+return nil
+
+FUNCTION InfStat(cMsg,oWnd)
+return nil
+
+
+    oWnd    := IIF(oWnd == NIL .OR. VALTYPE(oWnd) <> "O",GetWndFrame(),oWnd)
+
+
+
+    MsgPaint( oWnd:oMsgBar:hWnd, cMsg, oWnd:oMsgBar:cMsgDef, .T.,                                 oWnd:oMsgBar:lCentered, If( Len( oWnd:oMsgBar:aItem ) > 0, oWnd:oMsgBar:aItem[ 1 ]:nLeft(), 0 ), oWnd:oMsgBar:nClrText, oWnd:oMsgBar:nClrPane, oWnd:oMsgBar:oFont:hFont,                                     oWnd:oMsgBar:lInset )
+RETURN Nil

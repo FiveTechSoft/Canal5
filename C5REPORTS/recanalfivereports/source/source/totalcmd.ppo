@@ -1,0 +1,1532 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 53 "source\totalcmd.prg"
+static hWinINet
+static aSorts := { 1,0,0,0 }
+static nSort := 1
+
+
+
+
+function TotalCmd( oWnd )
+
+local oLbx, oLbx2, oSplit
+local cVar := ""
+local aItems1 := {}
+local aItems2 := {}
+local aAux
+local aFiles1[50]
+local aFiles2 := {}
+local n2
+local cName
+local oFont
+local oBar
+local cServer   := space( 30 )
+local cUser     := space( 30 )
+local cPassword := space( 30 )
+local cPath     := space( 30 )
+
+local oDirL1, oDirL2
+
+
+
+oFont := TFont():New( "Microsoft Sans Serif", 0, -11,,,,,,,,,,,,,, )
+
+
+
+       oBar := TBar():New( oWnd, 32, 32, .T.,,, .F., .F. )
+
+           TBtnBmp():NewBar(,,,,,, .F., oBar, .F.,,, .F.,,,,,,,,,,,,, .F. )
+           TBtnBmp():NewBar(,,,,,, .F., oBar, .F.,,, .F.,,,,,,,,,,,,, .F. )
+
+    oWnd:SetFont( oFont )
+
+
+    oDirL1 := TDirList():New( 32, 0, 500, 500, oWnd )
+    oDirL2 := TDirList():New(32,505,500, 500, oWnd )
+
+
+
+
+
+
+
+
+
+
+    oSplit := TSplitter():New( 32, 500, (!.F.) .OR. .T., {oDirL1:oLbx}, !.F., {oDirL2:oLbx}, !.F., {|| 100}, {|| 140}, oWnd,, 5, 1600, .T., .T.,, .F., .T., .F., )
+
+oWnd:bResized := {||Size(oDirL1:oLbx,oDirL2:oLbx,oSplit )}
+
+
+
+
+
+return oWnd
+
+
+
+
+
+function Size( oLbx, oLbx2, oSplit )
+local aRect := GetClientRect( oLbx:oWnd:hWnd )
+
+oLbx2:nWidth := aRect[4]-oSplit:nRight
+oLbx:nHeight := aRect[3]-32
+oLbx2:nHeight := aRect[3]-32
+
+
+return nil
+
+
+
+
+
+function conectar( oLbx, sServer, sUser, sPassword, cPath )
+local oInternet := TInternet():New()
+local oFtp, aAux, aFiles := {}
+local n
+
+oFtp := TFtp():New( sServer, oInternet, sUser, sPassword )
+
+if right( cPath, 1 ) <> "/"
+   cPath += "/"
+endif
+
+aAux := oFtp:Directory( "/" + cPath  )
+for n := 1 to len( aAux )
+    aadd( aFiles, aAux[n,1] )
+next
+
+oLbx:SetItems( aFiles )
+
+oInternet:End()
+
+
+RETURN .T.
+
+
+
+function FindIniNWord( cText, nPalabra )
+local nLen
+local n := 0
+local nWord := 1
+local cChar
+local lEspacio := .F.
+local nEn := 0
+
+nLen := len( cText )
+
+for n := 1 to nLen
+
+    cChar := substr( cText, n, 1 )
+
+    if cChar == " "
+       lEspacio := .T.
+    else
+       if lEspacio
+          nWord++
+          lEspacio := .F.
+          if nWord == nPalabra
+             nEn := n
+             exit
+          endif
+       endif
+    endif
+next
+
+return nEn
+
+
+function SubstrFrom( cText, nWord, nLen )
+local nEn
+
+nEn := FindIniNWord( cText, nWord )
+
+If( nLen == nil, nLen := len( cText ) - nEn + 1, ) ;
+
+return Substr( cText, nEn, nLen )
+
+#pragma BEGINDUMP
+#include "windows.h"
+#include "hbapi.h"
+#include "objbase.h"
+#include "Rpcdce.h"
+
+
+HB_FUNC( CREATEGUID )
+{
+ GUID guid;
+ unsigned char* str;
+ CoCreateGuid(&guid);
+ UuidToString((UUID*)&guid, &str);
+
+ hb_retc( (char*) str );
+}
+
+
+#pragma ENDDUMP
+
+
+
+
+
+
+_HB_CLASS TWBrowse2 ; function TWBrowse2 ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TWBrowse2" , iif( .T., { @TWBrowse() }, { @HBObject() } ), @TWBrowse2() ) ) ;
+
+
+      _HB_MEMBER { AS LOGICAL lRegistered } ; oClass:AddMultiClsData( "LOGICAL",, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRegistered"}, .F. )
+
+; _HB_MEMBER { oDirList } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oDirList"}, .F. )
+
+; _HB_MEMBER { AS NUMERIC nSort } ; oClass:AddMultiData( "NUMERIC", 1, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nSort"}, .F. )
+
+
+
+      _HB_MEMBER New( nRow, nCol, nWidth, nHeigth, bLine, aHeaders, aColSizes, oWnd, cField, uVal1, uVal2, bChange, bLDblClick, bRClick, oFont, oCursor, nClrFore, nClrBack, cMsg, lUpdate, cAlias, lPixel, bWhen, lDesign, bValid, bLClick, aActions) AS CLASS TWBrowse2; oClass:AddMethod( "New", @TWBrowse2_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Default(); oClass:AddMethod( "Default", @TWBrowse2_Default(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+
+
+
+
+
+      _HB_MEMBER DrawLine(); oClass:AddInline( "DrawLine", {|Self, nRow | ( ( Self ) ), wBrwLine( ::hWnd, ::hDC, If( nRow == nil, ::nRowPos, nRow ),  Eval( ::bLine, Self ), ::GetColSizes(), ::nColPos, ::nClrText, ::nClrPane, If( ::oFont <> nil, ::oFont:hFont, 0 ), ValType( ::aColSizes ) == "B", ::aJustify, nil, ::nLineStyle,,, ::oVScroll, ::bLogicLen  ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER DrawSelect(); oClass:AddMethod( "DrawSelect", @TWBrowse2_DrawSelect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint(); oClass:AddMethod( "Paint", @TWBrowse2_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MouseMove() ; oClass:AddVirtual( "MouseMove" )
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TWBrowse2 ;
+
+
+
+
+static FUNCTION TWBrowse2_New( nRow, nCol, nWidth, nHeigth, bLine, aHeaders, aColSizes, oWnd, cField, uVal1, uVal2, bChange, bLDblClick, bRClick, oFont, oCursor, nClrFore, nClrBack, cMsg, lUpdate, cAlias, lPixel, bWhen, lDesign, bValid, bLClick, aActions ) ; local Self AS CLASS TWBrowse2 := QSelf() AS CLASS TWBrowse2
+
+   local o := Self
+
+
+
+
+
+   If( nRow == nil, nRow := 0, ) ; If( nCol == nil, nCol := 0, ); If( nHeigth == nil, nHeigth := 100, ); If( nWidth == nil, nWidth := 100, ); If( oWnd == nil, oWnd := GetWndDefault(), ); If( oFont == nil, oFont := oWnd:oFont, ); If( nClrFore == nil, nClrFore := 0, ); If( nClrBack == nil, nClrBack := 16777215, ); If( lUpdate == nil, lUpdate := .F., ); If( cAlias == nil, cAlias := Alias(), ); If( lPixel == nil, lPixel := .F., ); If( lDesign == nil, lDesign := .F., );
+
+
+
+
+
+   ::cCaption   = ""
+   ::nTop       = nRow
+   ::nLeft      = nCol
+   ::nBottom    = ::nTop + nHeigth - 1
+   ::nRight     = ::nLeft + nWidth - 1
+   ::oWnd       = oWnd
+   ::lHitTop    = .F.
+   ::lHitBottom = .F.
+   ::lFocused   = .F.
+   ::lCaptured  = .F.
+   ::lMChange   = .T.
+   ::nRowPos    = 1
+   ::nColPos    = 1
+   ::nColAct    = 1
+
+   ::nStyle     = nOr( 1073741824, 2097152, 1048576, 8388608, 268435456, 65536, If( lDesign, 67108864, 0 ) )
+   ::nId        = ::GetNewId()
+   ::cAlias     = cAlias
+   ::bLine      = bLine
+   ::lAutoEdit  = .F.
+   ::lAutoSkip  = .F.
+   ::lIconView  = .F.
+   ::lCellStyle = .F.
+   ::nIconPos   = 0
+   ::SetFilter( cField, uVal1, uVal2 )
+
+
+
+   ::aHeaders   = aHeaders
+   ::aColSizes  = aColSizes
+   ::nLen       = 0
+   ::lDrag      = lDesign
+   ::lCaptured  = .F.
+   ::lMChange   = .T.
+   ::bChange    = bChange
+   ::bLClicked  = bLClick
+   ::bLDblClick = bLDblClick
+   ::bRClicked  = bRClick
+
+   ::oCursor    = oCursor
+
+
+   ::nLineStyle    := 2
+   ::nClrBackHead  := GetSysColor( 15 )
+   ::nClrForeHead  := GetSysColor( 18 )
+   ::nClrBackFocus := GetSysColor( 13 )
+   ::nClrForeFocus := 16777215
+
+   ::cMsg          = cMsg
+   ::lUpdate       = lUpdate
+   ::bWhen         = bWhen
+   ::bValid        = bValid
+   ::aActions      = aActions
+   ::nVScrollPos   = 0
+
+   oFont := TFont():New( "Tahoma", 0, -13,,,,,,,,,,,,,, )
+
+
+   ::SetColor( 0, 16777215 )
+
+   ::Register( nOr( 1, 2, 8 ) )
+
+   if ! Empty( oWnd:hWnd )
+      ::Create()
+      if oFont <> nil
+         ::SetFont( oFont )
+      endif
+
+      ::lVisible = .T.
+      oWnd:AddControl( Self )
+   else
+      ::oFont := oFont
+      oWnd:DefControl( Self )
+      ::lVisible = .F.
+   endif
+
+   if lDesign
+      ::CheckDots()
+   endif
+
+
+return Self
+
+static FUNCTION TWBrowse2_DrawSelect( ) ; local Self AS CLASS TWBrowse2 := QSelf() AS CLASS TWBrowse2
+
+   if ::lCellStyle
+      ::DrawLine()
+
+
+
+
+
+      WBrwLine( ::hWnd, ::hDC, ::nRowPos, Eval( ::bLine, Self ), ::GetColSizes(), ::nColPos, ::nClrForeFocus, If( ::lFocused, ::nClrBackFocus, 8421504 ), If( ::oFont <> nil, ::oFont:hFont, 0 ), ValType( ::aColSizes ) == "B", ::aJustify,, ::nLineStyle, ::nColAct, ::lFocused, ::oVScroll, ::bLogicLen )
+   else
+
+
+
+
+
+      WBrwLine( ::hWnd, ::hDC, ::nRowPos, Eval( ::bLine, Self ), ::GetColSizes(), ::nColPos, ::nClrForeFocus, If( ::lFocused, ::nClrBackFocus, 8421504 ), If( ::oFont <> nil, ::oFont:hFont, 0 ), ValType( ::aColSizes ) == "B", ::aJustify,, ::nLineStyle, nil, ::lFocused, ::oVScroll, ::bLogicLen )
+   endif
+
+return nil
+
+
+static FUNCTION TWBrowse2_Default( ) ; local Self AS CLASS TWBrowse2 := QSelf() AS CLASS TWBrowse2
+
+   local n, aFields
+   local cAlias := Alias()
+   local nElements, nTotal := 0
+
+   If( ::aHeaders == nil, ::aHeaders := {}, ) ; If( ::aColSizes == nil, ::aColSizes := {}, );
+
+
+   If( nElements == nil, nElements := Len( Eval( ::bLine, Self ) ), ) ;
+
+
+   if lAnd( GetWindowLong( ::hWnd, -16 ), 2097152 ) .OR.  GetClassName( ::hWnd ) == "ListBox"
+      ::oVScroll := TScrollBar():WinNew(,,, (!.F.) .OR. .T., Self,,,,,,,,, .F.,, )
+      ::nLen := Eval( ::bLogicLen, Self )
+      ::oVScroll:SetPage( Min( ::nRowCount(), ::nLen - 1 ) )
+      ::VSetRange()
+   endif
+
+   if lAnd( GetWindowLong( ::hWnd, -16 ), 1048576 )
+      if ::Cargo == nil
+
+         ::oHScroll := TScrollBar():WinNew( 1, Len( ::GetColSizes() ),, (!.T.), Self,,,,,,,,, .F.,, )
+         AEval( ::GetColSizes(), { | nSize | nTotal += nSize } )
+         ::oHScroll:SetPage( nTotal / ::nWidth() )
+      endif
+   endif
+
+   if ::uValue1 <> nil
+      Eval( ::bGoTop, Self )
+   endif
+   if ::bChange <> nil
+      Eval( ::bChange, Self )
+   endif
+
+return nil
+
+static FUNCTION TWBrowse2_Paint( ) ; local Self AS CLASS TWBrowse2 := QSelf() AS CLASS TWBrowse2
+
+   local n := 1, nSkipped := 1, nLines
+   local aInfo := ::DispBegin()
+
+   FillRect( ::hDC, GetClientRect( ::hWnd ), ::oBrush:hBrush )
+
+   if ::lIconView
+      ::DrawIcons()
+      return 0
+   endif
+
+
+   if ::nRowPos == 1 .AND. ! Empty( ::cAlias ) .AND.  Upper( ::cAlias ) <> "ARRAY"
+      if ! ( ::cAlias )->( EoF() )
+         ( ::cAlias )->( DbSkip( -1 ) )
+         if ! ( ::cAlias )->( BoF() )
+            ( ::cAlias )->( DbSkip() )
+         endif
+      endif
+   endif
+
+
+
+
+   WBrwLine( ::hWnd, ::hDC, 0, ::aHeaders, ::GetColSizes(), ::nColPos, ::nClrForeHead, ::nClrBackHead, If( ::oFont <> nil, ::oFont:hFont, 0 ),.F., ::aJustify, nil, ::nLineStyle,,, ::oVScroll, ::bLogicLen )
+
+   if ( ::nLen := Eval( ::bLogicLen, Self ) ) > 0
+
+      ::Skip( 1 - ::nRowPos )
+
+
+         nLines = ::nRowCount()
+         while n <= nLines .AND. nSkipped == 1
+            ::DrawLine( n )
+            nSkipped = ::Skip( 1 )
+            if nSkipped == 1
+               n++
+            endif
+         end
+         ::Skip( ::nRowPos - n )
+
+
+
+
+
+
+
+
+
+      if ::nLen < ::nRowPos
+         ::nRowPos = ::nLen
+      endif
+
+      ::DrawSelect()
+   endif
+
+   if ! Empty( ::cAlias ) .AND. Upper( ::cAlias ) <> "ARRAY"
+      ::lHitTop    = ( ::cAlias )->( BoF() )
+      ::lHitBottom = ( ::cAlias )->( EoF() )
+   endif
+
+   ::DispEnd( aInfo )
+
+return 0
+
+
+
+
+
+
+static function wBrwLine( hWnd, hDC, nRowPos, aValues, aColSizes, nColPos, nClrText, nClrPane, hFont, lTree, aJustify, nPressed, nLineStyle, nColAct, lFocused, oVScroll, bLogicLen )
+   local nTxtHeight, hOldFont
+   local nColStart  := -1
+
+
+   local nWidth     := WndWidth( hWnd ) - If( oVScroll <> nil .AND.  Eval( bLogicLen ) > 1, GetSysMetrics( 3 ) + 3, 0 )
+   local nRow := nRowPos, nTop, nBottom, nLeft, nRight, n
+   local lReleaseDC := .F.
+   local nForeColor, nBackColor
+   local  hPen, hOld, hBrush
+
+   If( lTree == nil, lTree := .F., ) ;
+
+   if Empty( hDC )
+      hDC = GetDC( hWnd )
+      lReleaseDC = .T.
+   endif
+
+   hOldFont   = SelectObject( hDC, hFont )
+   nTxtHeight = GetTextHeight( hWnd, hDC ) + 1
+
+   nTop    = nTxtHeight * nRow
+   nBottom = nTop + nTxtHeight - 1
+
+
+   SetTextColor( hDC, If( ValType( nClrText ) == "B", nClrText := Eval( nClrText ), nClrText ) )
+
+   SetBkColor( hDC, If( ValType( nClrPane ) == "B", nClrPane := Eval( nClrPane ), nClrPane ) )
+
+   for n := nColPos to Len( aValues )
+      nLeft   = nColStart + 1
+      nRight  = Min( nColStart := ( nLeft + aColSizes[ n ] - 1 ), nWidth )
+      if nLeft > nWidth
+         exit
+      endif
+      if n == Len( aValues )
+         nRight = nWidth
+      endif
+
+      if ValType( aValues[ n ] ) == "N"
+         hBrush = CreateSolidBrush( GetBkColor( hDC ) )
+         hOld   = SelectObject( hBrush )
+
+
+         FillRect( hDC, { nTop, nLeft, nBottom, nRight + If( ( nLineStyle ==  0 .OR. nLineStyle == 8 .OR. nLineStyle ==  7 ) .AND. nRowPos <> 0, 2, 0 ) }, hBrush )
+         DrawMasked( hDC, aValues[ n ], nTop, nLeft + 0 )
+         DeleteObject( aValues[n] )
+         SelectObject( hOld )
+         DeleteObject( hBrush )
+      else
+         if nColAct <> nil .AND. n == nColAct
+            SetTextColor( hDC, nClrText )
+            SetBkColor( hDC, nClrPane )
+         else
+            if nRowPos <> 0
+
+               SetTextColor( hDC, If( nColAct <> nil, GetSysColor( 18 ), nClrText ) )
+
+               SetBkColor( hDC, If( nRowPos == 0, GetSysColor( 15 ), If( nColAct == nil, nClrPane, GetSysColor( 5 ) ) ) )
+            endif
+         endif
+         if ! lTree
+            if nRowPos == 0 .AND. IsAppThemed()
+
+               DrawHeader( hWnd, hDC, nTop - 1, nLeft, nBottom, nRight, aValues[ n ] )
+            else
+            if aJustify <> nil .AND. aJustify[ n ]
+               SetTextAlign( hDC, 2 )
+
+
+
+
+               ExtTextOut( hDC, nTop, nRight - 2, { nTop, nLeft, nBottom, nRight + If( (nLineStyle ==  0 .OR. nLineStyle == 8 .OR.  nLineStyle == 7 ) .AND. nRowPos <> 0, 2, 0 ) }, cValToChar( aValues[ n ] ) )
+            else
+               SetTextAlign( hDC, 0 )
+
+
+
+
+               ExtTextOut( hDC, nTop, nLeft + 2, { nTop, nLeft, nBottom, nRight + If( ( nLineStyle ==  0 .OR. nLineStyle == 8 .OR.  nLineStyle == 7 ) .AND. nRowPos <> 0, 2, 0 ) }, cValToChar( aValues[ n ] ) )
+            endif
+            endif
+         else
+
+            DrawText( hDC, cValToChar( aValues[ n ] ), { nTop, nLeft + 4, nBottom, nRight } )
+         endif
+      endif
+      if ! lTree
+         if nRowPos == 0
+            if ! IsAppThemed()
+               WndBox( hDC, nTop - 1, nLeft - 1, nBottom, nRight )
+               WndBoxRaised( hDC, nTop, nLeft, nBottom - 1, nRight - 1 )
+            endif
+         else
+            do case
+               case nLineStyle == 1
+                    WndBox( hDC, nTop - 1, nLeft - 1, nBottom, nRight )
+
+               case nLineStyle == 2
+                    hPen = CreatePen( 0, 1, 8421504 )
+                    hOld = SelectObject( hDC, hPen )
+                    MoveTo( hDC, nLeft - 2, nTop - 2 )
+                    LineTo( hDC, nLeft - 2, nBottom )
+                    LineTo( hDC, nRight , nBottom )
+                    SelectObject( hDC, hOld )
+                    DeleteObject( hPen )
+
+               case nLineStyle == 3
+                    WndBoxRaised( hDC, nTop, nLeft, nBottom, nRight )
+
+               case nLineStyle == 4
+                    SetTextColor( hDC, 0 )
+                    FrameDot( hDC, nTop - 1, nLeft - 1, nBottom, nRight )
+
+               case nLineStyle == 5
+                    hPen = CreatePen( 0, 1, 0 )
+                    hOld = SelectObject( hDC, hPen )
+                    MoveTo( hDC, nLeft - 1, nTop - 2 )
+                    LineTo( hDC, nLeft - 1, nBottom )
+                    SelectObject( hDC, hOld )
+                    DeleteObject( hPen )
+
+               case nLineStyle == 6
+                    hPen = CreatePen( 0, 1, 8421504 )
+                    hOld = SelectObject( hDC, hPen )
+                    MoveTo( hDC, nLeft - 1, nTop - 2 )
+                    LineTo( hDC, nLeft - 1, nBottom )
+                    SelectObject( hDC, hOld )
+                    DeleteObject( hPen )
+
+               case nLineStyle == 7
+                    hPen = CreatePen( 0, 1, 0 )
+                    hOld = SelectObject( hDC, hPen )
+                    MoveTo( hDC, nLeft - 2, nBottom )
+                    LineTo( hDC, nRight , nBottom )
+                    SelectObject( hDC, hOld )
+                    DeleteObject( hPen )
+
+               case nLineStyle == 8
+                    hPen = CreatePen( 0, 1, 8421504 )
+                    hOld = SelectObject( hDC, hPen )
+                    MoveTo( hDC, nLeft - 2, nBottom )
+                    LineTo( hDC, nRight , nBottom )
+                    SelectObject( hDC, hOld )
+                    DeleteObject( hPen )
+            endcase
+         endif
+      endif
+
+      if nColPos > nWidth
+         exit
+      endif
+   next
+
+   SelectObject( hDC, hOldFont )
+
+   if lReleaseDC
+      ReleaseDC( hWnd, hDC )
+   endif
+
+return nil
+
+
+
+_HB_CLASS TDirList ; function TDirList ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDirList" , iif( .F., { }, { @HBObject() } ), @TDirList() ) ) ;
+
+; _HB_MEMBER { aAux } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aAux"}, .F. )
+; _HB_MEMBER { aFtPs } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aFtPs"}, .F. )
+; _HB_MEMBER { aItems } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aItems"}, .F. )
+; _HB_MEMBER { bAction } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bAction"}, .F. )
+; _HB_MEMBER { bChange } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bChange"}, .F. )
+; _HB_MEMBER { cMask } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cMask"}, .F. )
+; _HB_MEMBER { cPath } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cPath"}, .F. )
+; _HB_MEMBER { lActionDef } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActionDef"}, .F. )
+; _HB_MEMBER { lCarpetas } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lCarpetas"}, .F. )
+; _HB_MEMBER { lDrives } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lDrives"}, .F. )
+; _HB_MEMBER { lFTPs } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFTPs"}, .F. )
+; _HB_MEMBER { lFicheros } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFicheros"}, .F. )
+; _HB_MEMBER { lInfoExtend } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lInfoExtend"}, .F. )
+; _HB_MEMBER { nIniName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nIniName"}, .F. )
+; _HB_MEMBER { oLbx } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oLbx"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nWidth, nHeight, oWnd, lDrives, lCarpetas, lFicheros, lFTPs, cMask, lActionDef, bAction) AS CLASS TDirList; oClass:AddMethod( "New", @TDirList_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+      _HB_MEMBER cFullName(); oClass:AddInline( "cFullName", {|Self, n | ( ( Self ) ), ::cPath + ::cFile() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cFile( n); oClass:AddMethod( "cFile", @TDirList_cFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cName( n); oClass:AddMethod( "cName", @TDirList_cName(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cExt( n); oClass:AddMethod( "cExt", @TDirList_cExt(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cSize( n); oClass:AddMethod( "cSize", @TDirList_cSize(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cDate( n); oClass:AddMethod( "cDate", @TDirList_cDate(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cTime( n); oClass:AddMethod( "cTime", @TDirList_cTime(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cAttrib( n); oClass:AddMethod( "cAttrib", @TDirList_cAttrib(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER Sort( nCol); oClass:AddMethod( "Sort", @TDirList_Sort(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Reload(); oClass:AddMethod( "Reload", @TDirList_Reload(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Pulsa( nKey); oClass:AddMethod( "Pulsa", @TDirList_Pulsa(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MiDir( cPath); oClass:AddMethod( "MiDir", @TDirList_MiDir(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IniName( lIsDir, cLine); oClass:AddMethod( "IniName", @TDirList_IniName(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetBmpDrive( cDrive); oClass:AddMethod( "GetBmpDrive", @TDirList_GetBmpDrive(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AdjTop(); oClass:AddMethod( "AdjTop", @TDirList_AdjTop(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AdjClient(); oClass:AddMethod( "AdjClient", @TDirList_AdjClient(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDirList ;
+
+static FUNCTION TDirList_New( nTop, nLeft, nWidth, nHeight, oWnd, lDrives, lCarpetas, lFicheros, lInfoExtend, lFTPs, cMask, lActionDef, bAction ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+   local o := self
+
+   If( lDrives == nil, lDrives := .T., ) ;
+   If( lCarpetas == nil, lCarpetas := .T., ) ;
+   If( lFicheros == nil, lFicheros := .T., ) ;
+   If( lInfoExtend == nil, lInfoExtend := .F., ) ;
+   If( lFTPs == nil, lFTPs := .T., ) ;
+   If( lActionDef == nil, lActionDef := .T., ) ;
+
+
+
+    ::aAux          := {}
+    ::cPath         := "G:\"
+    ::aItems        := {}
+    ::nIniName      := 0
+    ::lDrives       := lDrives
+    ::lCarpetas     := lCarpetas
+    ::lFicheros     := lFicheros
+    ::lInfoExtend   := lInfoExtend
+    ::lFTPs         := lFtps
+    ::lActionDef    := lActionDef
+    ::bAction       := bAction
+
+    ::aFTPS       := {}
+
+
+
+
+
+    ::oLbx := TWBrowse2():New( nTop, nLeft, nWidth, nHeight, {|| {0,"","","","","","" } }, {" ","Nombre","Tamaño","Fecha","Hora","Atributos"}, {20,150,50,100,100,40},oWnd,,,,,,,,,0,12632256,,.F.,,.T.,,.F.,,,)
+    ::oLbx:oDirList := self
+
+
+    ::cMask := cMask
+
+   if ::lInfoExtend
+      ::oLbx:aActions := { {||.T.},{||o:Sort(1)},{||o:Sort(2)} ,{||o:Sort(3)} ,{||o:Sort(4)} }
+   else
+      ::oLbx:aHeaders  := {" ","Nombre"}
+      ::oLbx:aColSizes := {20,150}
+      ::oLbx:aActions  := { {||.T.},{||o:Sort(1)} }
+   endif
+
+
+
+    ::oLbx:nLineStyle := 0
+    ::oLbx:SetArray( ::aItems )
+
+    ::Reload()
+
+    ::oLbx:Default()
+
+    ::oLbx:bLdblClick  := {|| o:Pulsa()}
+    ::oLbx:bKeyDown    := {|nKey| o:Pulsa( nKey ) }
+    ::oLbx:aJustify    := AFill( Array( 6 ), .F. )
+    ::oLbx:aJustify[3] := .T.
+
+
+return self
+
+
+
+
+   static FUNCTION TDirList_GetBmpDrive( cDrive ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+
+
+
+
+
+local aBmpDrives := { "empty"   , "carpeta" , "hddisk"  , "cdrom"   , "netdrive", "ftp2" }
+
+local hBmp := 0
+local nType
+
+if at( "ftp.", lower(::aItems[::oLbx:nAt,1] )) <> 0
+   hBmp := LoadBitmap( GetResources(), aBmpDrives[6] )
+else
+   if at( "D", ::aItems[::oLbx:nAt,5] ) <> 0
+      hBmp := LoadBitmap( GetResources(), aBmpDrives[2] )
+   else
+      nType := DriveType( alltrim(::aItems[::oLbx:nAt,1])  )
+      if nType == 3
+         hBmp := LoadBitmap( GetResources(), aBmpDrives[3] )
+      else
+         if nType == 4
+            hBmp := LoadBitmap( GetResources(), aBmpDrives[4] )
+         else
+            hBmp := GetBmpIconExt(::cPath+::aItems[::oLbx:nAt,1])
+         endif
+      endif
+   endif
+endif
+if hBmp == 0
+   hBmp := LoadBitmap( GetResources(), aBmpDrives[1] )
+endif
+
+return hBmp
+
+
+   static FUNCTION TDirList_Reload( ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+
+local cName, n
+local o := self
+local aDrives
+local oFtp
+local bFTP
+local cPath := ""
+LOCAL cExt
+
+asize( ::aAux, 0         )
+
+aDrives := aDrives()
+
+if at( "ftp.", lower(::cPath) ) <> 0
+
+   CursorWait()
+
+   nFTP := ascan( ::aFtps, {|x| lower(x[1]) == lower(substr(::cPath, 1, at("/",::cPath)-1 )) } )
+
+   if nFtp <> 0
+      oFTP := qFTPClient():New(::aFtps[nFTp,1], 21,bFTP,,::aFtps[nFtp,2],::aFtps[nFtp,3] )
+      oFTP:lPassive := .F.
+      oFTP:nTimeOut := 60
+      if oFTP:Connect()
+         cPath := substr( ::cPath, at( "/", ::cPath ) )
+         oFTP:DIR(cPath)
+         oFTP:Quit()
+         ::aAux := oFtp:aItems()
+      else
+          WQout( { "No se pudo conectar" } )
+      endif
+   else
+       WQout( { "no se pudo conectar" } )
+   endif
+   oFTP:End()
+else
+   ::aAux := Directory( ::cPath + "*.*", "DA" )
+endif
+
+asize( ::aItems, 0 )
+
+if len( ::aAux ) > 0
+   for n := 1 to len( ::aAux )
+       if len( ::aAux[n,1] ) == 1 .AND. ::aAux[n,1] == "."
+          loop
+       endif
+       if ::lCarpetas
+          if at( "D",::aAux[n,5]) <> 0
+
+
+
+
+             aadd( ::aItems, { ::aAux[n,1], if( ::aAux[n,2]== 0,"",cValToChar(::aAux[n,2])), cValToChar(::aAux[n,3]), cValToChar(::aAux[n,4]), cValToChar(::aAux[n,5])} )
+          endif
+       endif
+   next
+
+   for n := 1 to len( ::aAux )
+       if len( ::aAux[n,1] ) == 1 .AND. ::aAux[n,1] == "."
+          loop
+       endif
+       if ::lFicheros
+          if at( "D",::aAux[n,5]) == 0
+             if ::cMask <> nil
+                cExt := lower(cFileExt(::aAux[n,1]))
+                if empty( cExt ) .OR. At( "." + cExt , lower(::cMask ) ) == 0
+                   loop
+                endif
+             endif
+
+
+
+
+             aadd( ::aItems, { ::aAux[n,1], if( ::aAux[n,2]== 0,"",cValToChar(::aAux[n,2])), cValToChar(::aAux[n,3]), cValToChar(::aAux[n,4]), cValToChar(::aAux[n,5]) } )
+          endif
+       endif
+   next
+endif
+
+
+if ::lDrives
+   for n := 1 to len( aDrives )
+       aadd( ::aItems, { aDrives[n]+"\", "", "","","" } )
+   next
+endif
+
+
+if ::lFtps
+   for n := 1 to len( ::aFtps )
+       aadd( ::aItems, { ::aFtps[n,1], "", "","","" } )
+   next
+endif
+
+
+
+if ::lInfoExtend
+
+
+
+
+   ::oLbx:bLine := {||{ o:GetBmpDrive(),upper(left(o:aItems[o:oLbx:nAt, 1],1))+ lower(substr(o:aItems[o:oLbx:nAt, 1],2)), transform(o:aItems[o:oLbx:nAt, 2],"@E 999,999,999,999,999"), o:aItems[o:oLbx:nAt, 3], o:aItems[o:oLbx:nAt, 4], o:aItems[o:oLbx:nAt, 5]}}
+else
+
+   ::oLbx:bLine := {||{ o:GetBmpDrive(), upper(left(o:aItems[o:oLbx:nAt, 1],1))+ lower(substr(o:aItems[o:oLbx:nAt, 1],2))}}
+
+endif
+::oLbx:nAt := 1
+::oLbx:SetArray( ::aItems )
+::oLbx:Refresh()
+::oLbx:GoTop()
+
+return nil
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  static FUNCTION TDirList_cFile( n ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+
+If( n == nil, n := ::oLbx:nAt, ) ;
+
+return ::aItems[n,1]
+
+
+
+
+  static FUNCTION TDirList_cName( n ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+local o := self
+
+if ::aAux[n,5]
+   return "["+::aAux[n,1]+"]"
+endif
+
+return cFileNoExt( ::aAux[n,1] )
+
+
+
+  static FUNCTION TDirList_cExt( n ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+
+if ::aAux[n,5]
+   return "<DIR>"
+endif
+
+return substr(::aAux[n,1], rat(".", ::aAux[n,1])+1)
+
+
+
+  static FUNCTION TDirList_cSize( n ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+
+if ::aAux[n,5]
+   return ""
+endif
+
+return transform(::aAux[n,2],"@E 999,999,999,999,999")
+
+
+  static FUNCTION TDirList_cDate( n ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+
+return ::aAux[n,3]
+
+
+  static FUNCTION TDirList_cTime( n ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+
+return ::aAux[n,4]
+
+
+
+  static FUNCTION TDirList_cAttrib( n ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+
+return ::aAux[n,5]
+
+
+  static FUNCTION TDirList_Pulsa( nKey ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+
+local cItem := ::aItems[::oLbx:nAt,1]
+local cExt  := ::aItems[::oLbx:nAt,2]
+
+if nKey <> nil
+   do case
+      case nKey == 116
+           return ::Reload()
+
+      case nKey <> 13
+           return nil
+   endcase
+endif
+
+if at( ":\", cItem ) <> 0
+   ::cPath := alltrim(cItem)
+
+   return ::Reload()
+endif
+
+if at( "ftp.", lower(::aItems[::oLbx:nAt,1] ) ) <> 0 .AND. cItem <> ".."
+
+   ::cPath := ::aItems[::oLbx:nAt,1] + "/"
+
+else
+
+   if at( "D", ::aItems[::oLbx:nAt,5] ) == 0
+      if ::lActionDef
+         ShellExecute( GetActiveWindow() ,nil, ::cPath + cItem ,"","",5)
+      else
+         if ::bAction <> nil
+            return eval( ::bAction, self )
+         endif
+      endif
+
+      return nil
+   endif
+
+
+   cItem := strtran(cItem,"[","")
+   cItem := strtran(cItem,"]","")
+
+   if At( "..", cItem ) <> 0
+      if at( "ftp.",lower(::cPath) ) <> 0
+         if len( ::cPath ) - len( strtran( ::cPath, "/","") ) > 1
+            ::cPath := left( ::cPath, rat( "/", substr( ::cPath, 1, len( ::cPath) - 1 ) ) )
+         else
+            return nil
+         endif
+      else
+         if len( ::cPath ) - len( strtran( ::cPath, "\","") ) > 1
+            ::cPath := left( ::cPath, rat( "\", substr( ::cPath, 1, len( ::cPath) - 1 ) ) )
+         else
+            return nil
+         endif
+      endif
+   else
+      if at( "ftp.",lower(::cPath) ) <> 0
+         ::cPath += cItem + "/"
+      else
+         ::cPath += cItem + "\"
+      endif
+   endif
+
+   ::cPath := alltrim( ::cPath )
+
+
+endif
+
+::Reload()
+
+if ::bChange <> nil
+   eval( ::bChange, ::aItems )
+endif
+
+return nil
+
+
+static FUNCTION TDirList_MiDir( cPath ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+local cstrdir, n
+local lIsDir
+local cDate, cTime, cName, nSize
+local nLines
+local cLine
+local aDir := {}
+local h
+local cSort
+local aDrives := aDrives()
+
+If( cPath == nil, cPath := "G:\", ) ;
+
+
+cSort := "/O:" + if( aSorts[nSort] == 1,"-","") + "G"+ substr( "NESD",nSort,1)
+
+h := fcreate( "b.bat" ) ; fwrite( h, "mode con cols=320" + Chr(13)+Chr(10) + 'dir "' + cPath  + '" ' + cSort + " /4 /-c /o:g > files.txt" ); fclose( h )
+WAITRUN( "b.bat",0 )
+
+cStrDir := memoread( "files.txt" )
+nLines  := mlcount( cStrDir )
+
+for n := 1 to nLines
+
+    cLine  := memoline( cStrDir, 400,n )
+    lIsDir := at( "<DIR>", cLine ) <> 0
+
+    if !isdigit(left( cLine,1))
+       loop
+    endif
+
+    if ::nIniName == 0
+       ::nIniName := ::IniName( lIsDir, cLine )
+    endif
+
+    cDate := alltrim(substr( cLine,  1, 10 ))
+    cTime := alltrim(substr( cLine, 13,  5 ))
+    cName := AnsiToOem(alltrim(substr( cLine, ::nIniName )))
+    nSize := 0
+    if at( "<DIR>", cLine ) == 0
+       lIsDir := .F.
+       nSize := val(substr( cLine, 18, 21 ))
+    endif
+    if lIsDir
+       aadd( aDir, { cName, nSize, cDate, cTime, lIsDir } )
+    endif
+
+next
+
+for n := 1 to nLines
+
+    cLine  := memoline( cStrDir, 400,n )
+    lIsDir := at( "<DIR>", cLine ) <> 0
+
+    if !isdigit(left( cLine,1))
+       loop
+    endif
+
+    if ::nIniName == 0
+       ::nIniName := ::IniName( lIsDir, cLine )
+    endif
+
+    cDate := alltrim(substr( cLine,  1, 10 ))
+    cTime := alltrim(substr( cLine, 13,  5 ))
+    cName := AnsiToOem(alltrim(substr( cLine, ::nIniName )))
+    nSize := 0
+    if at( "<DIR>", cLine ) == 0
+       lIsDir := .F.
+       nSize := val(substr( cLine, 18, 21 ))
+    endif
+    if !lIsDir
+       aadd( aDir, { cName, nSize, cDate, cTime, lIsDir } )
+    endif
+
+next
+
+
+return aDir
+
+static FUNCTION TDirList_Sort( nSort0 ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+nSort := nSort0
+
+aSorts[nSort0] := if( aSorts[nSort0] == 1,0,1)
+
+::Reload()
+
+return nil
+
+
+ static FUNCTION TDirList_IniName( lIsDir, cLine ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+ local nLen := len( cLine )
+ local n
+ local nEn
+ local cLetra
+
+
+ if lIsDir
+    nEn := AT( "<DIR>",cLine )
+    for n := nEn + 5 to nLen
+        if substr( cLine, n, 1 ) <> " "
+           return  n - 1
+        endif
+    next
+ else
+    for n := 18 to nLen
+        cLetra := substr( cLine, n, 1 )
+        if cLetra <> " "
+           nEn := n
+           exit
+        endif
+    next
+    for n := nEn to nLen
+        cLetra := substr( cLine, n, 1 )
+        if cLetra == " "
+           return n + 1
+        endif
+    next
+ endif
+
+return 1
+
+static FUNCTION TDirList_AdjTop( ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+return WndAdjTop( ::oLbx:hWnd )
+
+static FUNCTION TDirList_AdjClient( ) ; local Self AS CLASS TDirList := QSelf() AS CLASS TDirList
+
+return WndAdjClient( ::oLbx:hWnd )
+
+
+_HB_CLASS TImageBrw ; function TImageBrw ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TImageBrw" , iif( .T., { @TControl() }, { @HBObject() } ), @TImageBrw() ) ) ;
+
+      _HB_MEMBER { AS LOGICAL lRegistered } ; oClass:AddMultiClsData( "LOGICAL",, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRegistered"}, .F. )
+
+; _HB_MEMBER { aItems } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aItems"}, .F. )
+; _HB_MEMBER { nOption } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nOption"}, .F. )
+; _HB_MEMBER { nFirst } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nFirst"}, .F. )
+; _HB_MEMBER { nSizeItem } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nSizeItem"}, .F. )
+; _HB_MEMBER { bChange } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bChange"}, .F. )
+; _HB_MEMBER { nRows } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nRows"}, .F. )
+; _HB_MEMBER { nCols } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nCols"}, .F. )
+; _HB_MEMBER { nLen } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nLen"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nWidth, nHeight, oWnd, aItems) AS CLASS TImageBrw; oClass:AddMethod( "New", @TImageBrw_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Display(); oClass:AddInline( "Display", {|Self | ( ( Self ) ), ::BeginPaint(),::Paint(),::EndPaint(),0 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint(); oClass:AddMethod( "Paint", @TImageBrw_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER VScroll( nWParam, nLParam); oClass:AddMethod( "VScroll", @TImageBrw_VScroll(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER KeyDown( nKey, nFlags); oClass:AddMethod( "KeyDown", @TImageBrw_KeyDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER LButtonDown( nRow, nCols, nKeyFlags); oClass:AddMethod( "LButtonDown", @TImageBrw_LButtonDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Destroy(); oClass:AddInline( "Destroy", {|Self | ( ( Self ) ), TerminateGdiPlus(), ::TControl:Destroy() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TImageBrw ;
+
+
+
+  static FUNCTION TImageBrw_New( nTop, nLeft, nWidth, nHeight, oWnd, aItems ) ; local Self AS CLASS TImageBrw := QSelf() AS CLASS TImageBrw
+
+
+   ::nTop         := nTop
+   ::nLeft        := nLeft
+   ::nBottom      := ::nTop + nHeight - 1
+   ::nRight       := ::nLeft + nWidth - 1
+   ::oWnd         := oWnd
+   ::nStyle       := nOR( 8388608, 1073741824, 268435456, 67108864, 33554432, 65536, 2097152 )
+   ::nId          := ::GetNewId()
+   ::nOption      := 4
+   ::nFirst       := 1
+   ::lCaptured    := .F.
+   ::nSizeItem    := 100
+   ::aItems       := {}
+
+   ::SetColor( 0, 16777215 )
+
+   ::Register( nOr( 1, 2 ) )
+
+   if ! Empty( oWnd:hWnd )
+      ::Create()
+      ::lVisible = .T.
+      oWnd:AddControl( Self )
+   else
+
+      oWnd:DefControl( Self )
+      ::lVisible = .F.
+   endif
+   InitGdiPlus()
+
+   ::oVScroll := TScrollBar():WinNew(,,, (!.F.) .OR. .T., Self,,,,,,,,, .F.,, )
+
+return Self
+
+
+   static FUNCTION TImageBrw_Paint( ) ; local Self AS CLASS TImageBrw := QSelf() AS CLASS TImageBrw
+
+
+   local hImage := 0
+   local nHItem := 4 + 5 + ::nSizeItem + 20
+   local nWItem := 4 + 5 + ::nSizeItem + 5
+   local n, n2
+   local nCols, nColumna
+   local nRows, nFila
+   local aRect   := GetClientRect( ::hWnd )
+   local nWidth  := aRect[4]-aRect[2]
+   local nHeight := aRect[3]-aRect[1]
+   local nTop, nLeft, nBottom, nRight
+   local rc
+   local nLen := len( ::aItems )
+   local cExt := ""
+   local cFile
+   local nHImage
+   local nWImage
+   local nFactor
+   local hOldFont :=  SelectObject( ::hDC, GetStockObject( 17 ) )
+   local color
+
+   nFila    := 0
+   nColumna := 0
+
+   ::nCols := int( nWidth  / nWItem )
+   ::nRows := int( nHeight / nHItem )
+   ::nLen  := nLen
+
+   nCols := ::nCols
+   nRows := ::nRows
+
+   if empty( ::aItems )
+      return nil
+   endif
+
+   for n := ::nFirst to nLen
+
+       cFile  := ::aItems[n]
+       cExt   := lower( right( cFile, 3 ) )
+       hImage := 0
+
+       do case
+          case cExt == "ico"
+               hImage := ExtractIcon(cFile)
+
+          case cExt == "bmp"
+               hImage := ReadBitmap( ::hDC, cFile )
+
+          case cExt == "jpg" .OR. cExt == "gif" .OR. cExt == "png" .OR. cExt == "wmf" .OR. cExt == "emf"
+               hImage := LoadJPG( cFile )
+
+       endcase
+
+       if hImage == 0
+          loop
+       endif
+
+       if nColumna >= nCols
+          nFila++
+          if nFila >= nRows
+             exit
+          endif
+          nColumna := 0
+       endif
+
+       nTop    := nFila       * nHItem
+       nLeft   := nColumna    * nWItem
+       nBottom := nTop  + nHItem
+       nRight  := nLeft + nWItem
+
+       nColumna++
+
+       rc := {nTop, nLeft, nBottom, nRight}
+
+       if n == ::nOption
+          FillSolidRect( ::hDC, {nTop+5, nLeft+5, nBottom-20, nRight-5}, if( GetFocus()==::hwnd,( 49 + ( 106 * 256 ) + ( 197 * 65536 ) ),12632256) )
+          FillSolidRect( ::hDC, {nTop+5+3, nLeft+5+3, nBottom-20-3, nRight-5-3}, 16777215 )
+       else
+          Box( ::hDC, {nTop+5, nLeft+5, nBottom-20, nRight-5}, 12632256 )
+       endif
+
+       do case
+          case cExt == "ico"
+
+               DrawIcon( ::hDC, nTop + 4 + 5 + ::nSizeItem/2 - 32/2, nLeft + 4 + 5 + ::nSizeItem/2 - 32/2, hImage )
+               DestroyIcon( hImage )
+
+          case cExt == "bmp" .OR. cExt == "jpg"
+
+               nHImage := nBmpHeight( hImage )
+               nWImage := nBmpWidth( hImage )
+
+               if nHImage > nWImage
+                  nFactor := ::nSizeItem / nHImage
+               else
+                  nFactor := ::nSizeItem /  nWImage
+               endif
+
+               if nFactor >= 1
+                  nFactor := 1
+               endif
+
+               nHImage :=  min( nHImage  * nFactor, ::nSizeItem - 3 )
+               nWImage :=  min( nWImage  * nFactor, ::nSizeItem - 5 )
+
+
+
+               DrawBitmapEx( ::hDC, hImage, nTop + 4 + 5 + ::nSizeItem/2 - nHImage/2, nLeft + 4 + 5 + ::nSizeItem/2 - nWImage/2, nWImage, nHImage, 13369376 )
+
+               DeleteObject( hImage )
+
+       endcase
+
+       if hImage <> 0
+          rc[1] += ::nSizeItem + 10
+          rc[3] := rc[1] + 18
+          SetBkMode( ::hDC, 1 )
+          cFile := left( cFileName( cFile ), 1 ) + lower(substr( cFileName( cFile ), 2 ) )
+          if n == ::nOption
+             rc[2] += 4 ; rc[4] -= 4
+             FillSolidRect( ::hDC, rc, if( GetFocus()==::hwnd,( 49 + ( 106 * 256 ) + ( 197 * 65536 ) ),12632256) )
+             color := SetTextColor( ::hDC, 16777215 )
+             rc[2] -= 4 ; rc[4] += 4
+          endif
+          DrawText( ::hDC, cFile , rc, nOr( 0x00000020, 0x00000004, 0x00000001 ) )
+          if n == ::nOption
+             SetTextColor( ::hDC, color )
+          endif
+          SetBkMode( ::hDC, 0 )
+       endif
+
+   next
+   SelectObject( ::hDC, hOldFont )
+
+
+return nil
+
+
+  static FUNCTION TImageBrw_KeyDown( nKey, nFlags ) ; local Self AS CLASS TImageBrw := QSelf() AS CLASS TImageBrw
+
+
+  do case
+     case nKey == 38
+          ::nOption := max( ::nOption - ::nCols, 1 )
+     case nKey == 40
+          ::nOption := min( ::nOption + ::nCols, ::nLen )
+     case nKey == 37
+          ::nOption := max( ::nOption -1, 1 )
+     case nKey == 39
+          ::nOption := min( ::nOption + 1, ::nLen )
+     otherwise
+          return ::TControl:keyDown( nKey, nFlags )
+  endcase
+  ::Refresh()
+
+return 0
+
+
+
+  static FUNCTION TImageBrw_LButtonDown( nRow, nCols, nKeyFlags ) ; local Self AS CLASS TImageBrw := QSelf() AS CLASS TImageBrw
+
+
+ SetFocus( ::hWnd )
+
+return ::TControl:LButtonDown( nRow, nCols, nKeyFlags )
+
+
+  static FUNCTION TImageBrw_VScroll( nWParam, nLParam ) ; local Self AS CLASS TImageBrw := QSelf() AS CLASS TImageBrw
+
+
+   local nLen
+   local nScrHandle  := nLParam
+   local nScrollCode := nLoWord( nWParam )
+   local nPos        := nHiWord( nWParam )
+   local nFirst      := ::nFirst
+
+   if GetFocus() <> ::hWnd
+      SetFocus( ::hWnd )
+   endif
+
+   if nScrHandle == 0
+      if ::oVScroll <> nil
+         do case
+            case nScrollCode == 0
+                    ::nFirst -= 4
+                    ::nFirst := max( 1, ::nFirst )
+
+            case nScrollCode == 1
+                    ::nFirst += 4
+                    ::nFirst := min( len( ::aItems ), ::nFirst )
+
+         endcase
+         if nFirst <> ::nFirst
+            ::Refresh()
+         endif
+       endif
+   endif
+
+return 0
+
+
+
+
+#pragma BEGINDUMP
+#include <windows.h>
+
+#include "hbapi.h"
+
+
+HINSTANCE hLib;
+
+LPWSTR A2W( LPSTR cAnsi )
+{
+   WORD wLen;
+   LPWSTR cString;
+
+   wLen  = MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, cAnsi, -1, 0, 0 );
+
+   cString = (LPWSTR) hb_xgrab( wLen * 2 );
+   MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, cAnsi, -1, cString, wLen );
+
+   return ( cString );
+}
+
+
+HB_FUNC( INITGDIPLUS )
+{
+    typedef void (*MYPROC2)();
+    MYPROC2 pFunc2;
+    hLib = LoadLibrary( "testdll2.dll" );
+    if( pFunc2 = ( MYPROC2 ) GetProcAddress( hLib, "InitGdiPlus" ) )
+        pFunc2();
+    hb_ret();
+}
+
+
+
+HB_FUNC( TERMINATEGDIPLUS )
+{
+    typedef void (*MYPROC2)();
+    MYPROC2 pFunc2;
+    if( pFunc2 = ( MYPROC2 ) GetProcAddress( hLib, "TerminateGdiPlus" ) )
+        pFunc2();
+    FreeLibrary( hLib );
+    hb_ret();
+
+}
+
+
+
+HB_FUNC( SAVEFILE )
+{
+    typedef void (*MYPROC)(HBITMAP, LPWSTR, int);
+
+    MYPROC pFunc;
+
+    if( hLib )
+    {
+       if( pFunc = ( MYPROC ) GetProcAddress( hLib, "SaveFile" ) )
+	{
+
+           pFunc( (HBITMAP) hb_parnl( 1 ), A2W( hb_parc( 2 ) ), hb_parni( 3 ) );
+
+        }
+    }
+    hb_ret();
+}
+
+HB_FUNC( LOADJPG )
+{
+
+    typedef HBITMAP (*MYPROC)(LPWSTR);
+
+
+    MYPROC pFunc;
+
+
+    HBITMAP bmp;
+
+    if( hLib )
+    {
+       if( pFunc = ( MYPROC ) GetProcAddress( hLib, "LoadJPG" ) )
+	{
+
+           bmp = pFunc( A2W( hb_parc( 1 ) ) );
+
+        }
+    }
+    hb_retnl( (LONG) bmp );
+}
+
+
+HB_FUNC( DRAWIMAGE )
+{
+
+    typedef void (*MYPROC)(HDC, HBITMAP, int, int);
+
+    MYPROC pFunc;
+
+    if( hLib )
+    {
+       if( pFunc = ( MYPROC ) GetProcAddress( hLib, "DrawImage2" ) )
+	{
+
+           pFunc( (HDC) hb_parnl( 1 ), (HBITMAP) hb_parnl( 2 ), hb_parni(3), hb_parni(4) );
+
+        }
+    }
+}
+
+#pragma ENDDUMP
