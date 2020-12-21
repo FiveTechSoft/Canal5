@@ -1,0 +1,826 @@
+#line 38 "\fwh\include\Fivewin.Ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\Fivewin.Ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 12 "source\rc2prg.prg"
+Function Rc2prg()
+
+   cFile := cGetFile("Fichero rc | *.rc", "Selecciona fichero rc" )
+
+   if file( cFile )
+      Analiza( cFile )
+   else
+      MsgInfo( "No encontrado " + cFile + ". Por favor, corrija","Atención" )
+   endif
+
+return nil
+
+
+
+Function xCo(c,x)
+if x == NIL
+   return Ltrim(str((Val(c)*14)/8,6,0))
+endif
+return Ltrim(str(val(c)+(((Val(c)+Val(x))*14)/8),6,0))
+
+
+Function yCo(c,x)
+if x == NIL
+   return Ltrim(str((Val(c)*7)/4,6, 0))
+endif
+return Ltrim(str(val(c)+(((Val(c)+Val(x))*7)/4),6,0))
+
+
+function analiza( cFile )
+
+   local nSize, buffer, h
+   local n, nLines, nEn, cToken, nEn2, nLen
+   local n2
+   local cId := ""
+   local nFind            := 0
+   local oDlg
+   local oControl
+   local cStr             := ""
+   local aTokens          := {}
+   local nItem            := 1
+
+   local aDlgs            := {}
+   local aBmps            := {}
+   local cBitmap          := ""
+   local aIcons           := {}
+   local aCursors         := {}
+   local aMenus           := {}
+   local lVale
+
+   local oTree, oItem1, oItem2, oItem3, oItem4
+   local oImageList
+   local oWnd := Aplicacion():oWnd
+   local oBrush
+   local oRC
+   local oBar
+
+
+
+
+
+
+
+
+   local aInfoDlgs := {"CAPTION", "CHARACTERISTICS", "CLASS", "EXSTYLE", "FONT", "LANGUAGE", "MENU", "STYLE", "VERSION"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   local aControles := {"AUTO3STATE", "AUTOCHECKBOX", "AUTORADIOBUTTON", "CHECKBOX", "COMBOBOX", "CONTROL", "CTEXT", "DEFPUSHBUTTON", "EDITTEXT", "GROUPBOX", "ICON", "LISTBOX", "LTEXT", "PUSHBOX", "PUSHBUTTON", "RADIOBUTTON", "RTEXT", "SCROLLBAR", "STATE3"}
+
+   nSize  := fsize( cFile )
+   buffer := space( nSize )
+   h      := fopen( cFile, 0 )
+   fread( h, @buffer, nSize )
+   fclose( h )
+
+   buffer := " " + strtran( buffer, Chr(13)+Chr(10), " " ) + " "
+   buffer := strtran( buffer, "{", " BEGIN" )
+   buffer := strtran( buffer, "}", " END" )
+   while .T.
+      nLen := len( buffer )
+      buffer := strtran( buffer, " ,","" )
+      if nLen == len( buffer )
+         exit
+      endi
+   enddo
+   buffer := strtran( buffer, ",", ", " )
+
+   while .T.
+      nLen := len( buffer )
+      buffer := strtran( buffer, " |","|" )
+      buffer := strtran( buffer, "| ","|" )
+      if nLen == len( buffer )
+         exit
+      endif
+   enddo
+
+while .T.
+
+   nEn := at( " DIALOG ", buffer )
+
+   if nEn == 0
+      exit
+   else
+      cId := PrevItem( buffer, nEn )
+   endif
+
+   buffer := substr( buffer, nEn + 8 )
+
+   nEn2 := at( " BEGIN", buffer )
+   cStr := substr( buffer, 1, nEn2 )+ " "
+   aTokens := GetTokens( cStr )
+   if empty( aTokens )
+      loop
+   endif
+
+   nFind := 0
+   for n2 := 1 to len( aTokens )
+       if ascan( aInfoDlgs, aTokens[n2] ) <> 0
+          nFind := n2
+          exit
+       endif
+   next
+
+   if nFind == 0
+      loop
+   endif
+
+   oDlg := TRCDialog():New()
+   oDlg:nID  := cId
+
+   nLen := len( aTokens )
+   n := 2
+
+   cToken := aTokens[n]
+   while isalpha( left( alltrim(cToken), 1 ) )
+      n++
+      cToken := aTokens[n]
+   enddo
+
+   oDlg:nLeft := strtran( cToken,",","")
+
+   n++
+   cToken := aTokens[n]
+   oDlg:nTop := strtran( cToken,",","")
+
+   n++
+   cToken := aTokens[n]
+   oDlg:nWidth := strtran( cToken,",","")
+
+   n++
+   cToken := aTokens[n]
+   oDlg:nHeight := strtran( cToken,",","")
+
+   while n < nLen
+
+      n++
+      cToken := aTokens[n]
+
+      do case
+         case cToken == "CAPTION"
+
+              n++
+              cToken := aTokens[n]
+              oDlg:cCaption := cToken
+
+         case cToken == "CHARACTERISTICS"
+
+              n++
+              cToken := aTokens[n]
+              oDlg:nCharacteristics := cToken
+
+         case cToken == "CLASS"
+
+              n++
+              cToken := aTokens[n]
+              oDlg:cClass := cToken
+
+         case cToken == "EXSTYLE"
+
+              n++
+              cToken := aTokens[n]
+              oDlg:cExStyle := cToken
+
+         case cToken == "FONT"
+
+              n++
+              cToken := aTokens[n]
+              oDlg:nPointSize := cToken
+              n++
+              cToken := aTokens[n]
+              oDlg:cFaceName := cToken
+
+         case cToken == "LANGUAGE"
+
+              n++
+              cToken := aTokens[n]
+              oDlg:cLanguage := cToken
+
+         case cToken == "MENU"
+
+              n++
+              cToken := aTokens[n]
+              oDlg:cMenuName := cToken
+
+         case cToken == "STYLE"
+
+              n++
+              cToken := aTokens[n]
+              oDlg:cStyle := cToken
+
+         case cToken == "VERSION"
+
+              n++
+              cToken := aTokens[n]
+              oDlg:nVersion := cToken
+
+         case cToken == "DIALOG"
+
+
+      endcase
+
+   enddo
+
+   nEn     := at( "BEGIN", buffer )
+   nEn2    := at( " END", buffer )
+   cStr    := substr( buffer, nEn, nEn2-nEn ) + " "
+
+   aTokens := GetTokens( cStr )
+   nLen    := len( aTokens )
+   cStr    := ""
+   n       := 1
+   nFind   := 0
+   nItem   := 1
+
+   while nItem <= nLen
+
+      cToken := aTokens[nItem]
+      nFind := ascan( aControles, cToken )
+
+      if nFind > 0
+         oControl := TRCControl():New()
+         do case
+            case nFind == 6
+
+                 oControl:cClass   := strtran(cToken,",","")
+                 oControl:cCaption := strtran(aTokens[nItem+1],",","")
+                 oControl:nId      := strtran(aTokens[nItem+2],",","")
+                 oControl:cType    := strtran(aTokens[nItem+3],",","")
+                 oControl:cStyle   := strtran(aTokens[nItem+4],",","")
+                 oControl:nLeft    := strtran(aTokens[nItem+5],",","")
+                 oControl:nTop     := strtran(aTokens[nItem+6],",","")
+                 oControl:nWidth   := strtran(aTokens[nItem+7],",","")
+                 oControl:nHeight  := strtran(aTokens[nItem+8],",","")
+                 nItem += 8
+
+                 if right( oControl:nHeight, 1 ) == ","
+                    oControl:cExStyle   := strtran(aTokens[nItem+1],",","")
+                    nItem++
+                 endif
+
+            otherwise
+
+                 oControl:cClass   := strtran(cToken,",","")
+
+                 if nFind <> 5 .AND. nFind <> 9 .AND. nFind <> 12
+                    oControl:cCaption := strtran(aTokens[nItem+1],",","")
+                    nItem++
+                 endif
+
+                 oControl:nId      := strtran(aTokens[nItem+1],",","")
+                 oControl:nLeft    := strtran(aTokens[nItem+2],",","")
+                 oControl:nTop     := strtran(aTokens[nItem+3],",","")
+                 oControl:nWidth   := strtran(aTokens[nItem+4],",","")
+                 oControl:nHeight  := strtran(aTokens[nItem+5],",","")
+                 nItem += 5
+
+                 if right( oControl:nHeight, 1 ) == ","
+                    oControl:cStyle   := strtran(aTokens[nItem+1],",","")
+                    nItem++
+                    if right( oControl:cStyle, 1 ) == ","
+                       oControl:cExStyle   := strtran(aTokens[nItem+1],",","")
+                       nItem++
+                    endif
+                 endif
+
+         endcase
+         aadd( oDlg:aControls, oControl )
+      endif
+      nItem++
+   enddo
+
+   aadd( aDlgs, oDlg )
+
+enddo
+
+nSize  := fsize( cFile )
+buffer := space( nSize )
+h      := fopen( cFile, 0 )
+fread ( h, @buffer, nSize )
+fclose( h )
+
+buffer := " " + strtran( buffer, Chr(13)+Chr(10), " " ) + " "
+nEn := at( " BITMAP ", buffer )
+
+while .T.
+
+   if nEn == 0
+      exit
+   else
+      cId := PrevItem( buffer, nEn )
+      aTokens := GetTokens( substr( buffer, nEn, 300 ) )
+      lVale := .T.
+      nLen := min( 10, len( aTOkens ))
+      for n := 1 to nLen
+          if aTokens[n] == "{"
+             lVale := .F.
+             exit
+          endif
+      next
+      if lVale
+         cBitmap := GetNextString( buffer, nEn )
+         aadd( aBmps, { cId, cBitmap } )
+      endif
+   endif
+
+   buffer := substr( buffer, nEn + 8 )
+   nEn := at( " BITMAP ", buffer )
+
+enddo
+
+
+nSize  := fsize( cFile )
+buffer := space( nSize )
+h      := fopen( cFile, 0 )
+fread ( h, @buffer, nSize )
+fclose( h )
+
+
+buffer := " " + strtran( buffer, Chr(13)+Chr(10), " " ) + " "
+nEn := at( " ICON ", buffer )
+while .T.
+
+   if nEn == 0
+      exit
+   else
+      cId := PrevItem( buffer, nEn )
+      aTokens := GetTokens( substr( buffer, nEn, 300 ) )
+      lVale := .T.
+      nLen := min( 6, len( aTOkens ))
+      for n := 1 to nLen
+          if aTokens[n] == "{"
+             lVale := .F.
+             exit
+          endif
+      next
+      nLen := min( 3, len( aTOkens ))
+      for n := 1 to nLen
+          if at( ",", aTokens[n]) <> 0
+             lVale := .F.
+             exit
+          endif
+
+      next
+      if lVale
+         aadd( aIcons, { cId, GetNextString( buffer, nEn ) } )
+      endif
+
+   endif
+   buffer := substr( buffer, nEn + 8 )
+   nEn := at( " ICON ", buffer )
+enddo
+
+nSize  := fsize( cFile )
+buffer := space( nSize )
+h      := fopen( cFile, 0 )
+fread ( h, @buffer, nSize )
+fclose( h )
+
+
+buffer := " " + strtran( buffer, Chr(13)+Chr(10), " " ) + " "
+nEn := at( " CURSOR ", buffer )
+while .T.
+
+   if nEn == 0
+      exit
+   else
+      cId := PrevItem( buffer, nEn )
+      aTokens := GetTokens( substr( buffer, nEn, 300 ) )
+      lVale := .T.
+      nLen := min( 6, len( aTOkens ))
+      for n := 1 to nLen
+
+          if aTokens[n] == "{"
+             lVale := .F.
+             exit
+          endif
+      next
+      if lVale
+         aadd( aCursors, { cId, GetNextString( buffer, nEn ) } )
+      endif
+   endif
+   buffer := substr( buffer, nEn + 8 )
+   nEn := at( " CURSOR ", buffer )
+
+enddo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     oImageList = TImageList():New(16,16,"toolbar\image2.bmp")
+
+     oBrush := TBrush():New( Upper("NULL"),,,,, )
+
+     oRC := TMdiChild():New(,,,, cFile,,, oWnd,, .F.,,,, obrush, .F., .F.,,, !.F., !.F., !.F., !.F., )
+
+            oBar := TBar():New( oRC, 25, 25, .T.,,, .F., .F. )
+
+                   TBtnBmp():NewBar( "plus",,,,, {|This|oTree:ExpandAll()}, .F., oBar, .F.,, "Expandir", .F.,, "oTree:ExpandAll()",,,,,, !.T.,,,,, .F. )
+                   TBtnBmp():NewBar( "minus",,,,, {|This|oTree:ColapseAll()}, .F., oBar, .F.,, "Contraer", .F.,, "oTree:ColapseAll()",,,,,, !.T.,,,,, .F. )
+                   TBtnBmp():NewBar( "props",,,,,, .F., oBar, .F.,, "Propiedades", .F.,,,,,,,, !.T.,,,,, .F. )
+
+            oTree := TTreeView():New( oBar:nHeight, 1, oRC, 0, 16777215,.T., .F., 200, 1000 )
+
+            oTree:SetImageList( oImageList )
+
+            if len( aDlgs ) > 0
+               oItem1 := TTVItem():New( oTree,, "Dialogos", 0, .T., oTree,,"",.T. )
+
+               for n := 1 to len( aDlgs )
+                   oItem2 := TTVItem():New( oTree,, aDlgs[n]:nID, 0, .T., oItem1,0,"",.T. )
+               next
+            endif
+
+            if len( aBmps ) > 0
+               oItem1 := TTVItem():New( oTree,, "Bitmaps", 9, .T., oTree,,"",.T. )
+               for n := 1 to len( aBmps )
+                   oItem2 := TTVItem():New( oTree,, aBmps[n,1] , 9, .T., oItem1,,"",.T. )
+                   oItem2:Cargo := aBmps[n,2]
+               next
+            endif
+            if len( aIcons ) > 0
+               oItem1 := TTVItem():New( oTree,, "Iconos", 16, .T., oTree,,"",.T. )
+               for n := 1 to len( aIcons )
+                   oItem2 := TTVItem():New( oTree,, aIcons[n,1], 16, .T., oItem1,,"",.T. )
+                   oItem2:Cargo := aIcons[n,2]
+               next
+            endif
+
+            if len( aCursors ) > 0
+               oItem1 := TTVItem():New( oTree,, "Cursores", 9, .T., oTree,,"",.T. )
+               for n := 1 to len( aCursors )
+                   oItem2 := TTVItem():New( oTree,, aCursors[n,1], 9, .T., oItem1,,"",.T. )
+                   oItem2:Cargo := aCursors[n,2]
+               next
+            endif
+
+            oRC:oClient := oTree
+
+      oRC:Activate(, oRC:bLClicked, oRC:bRClicked, oRC:bMoved, oRC:bResized, oRC:bPainted, oRC:bKeyDown, oRC:bInit := { | Self | oRC:Resize() },,,,,,,,, {||( oRC := nil, oImageList:End(),.T.)},, oRC:bLButtonUp )
+
+
+   return nil
+
+
+
+
+
+return nil
+
+function GetDibu( cDibu, cStyle )
+local nDibu := 15
+
+cDibu := upper( cDibu )
+
+do case
+   case at( "PUSHBUTTON", cDibu ) <> 0
+        nDibu := 1
+
+   case at( "EDIT", cDibu ) <> 0
+        nDibu := 2
+
+   case at( "TEXT", cDibu ) <> 0
+        nDibu := 3
+
+   case at( "LISTBOX", cDibu ) <> 0
+        nDibu := 4
+
+   case at( "COMBO", cDibu ) <> 0
+        nDibu := 5
+
+   case at( "CONTROL", cDibu ) <> 0
+
+
+        do case
+           case at( "CHECKBOX", cStyle ) <> 0
+                nDibu := 8
+           case at( "RADIO", cStyle )    <> 0
+                nDibu := 7
+           case at( "GROUPBOX", cStyle ) <> 0
+                nDibu := 6
+           case at( "CBS", cStyle )      <> 0
+                nDibu := 5
+           case at( "LBX", cStyle )      <> 0
+                nDibu := 4
+           case at( "ES_", cStyle )      <> 0
+                nDibu := 2
+           case at( "SS_", cStyle )      <> 0
+                nDibu := 3
+           case at( "FOLDER", cStyle )   <> 0
+                nDibu := 14
+           otherwise
+                nDibu := 15
+        endcase
+
+endcase
+
+
+return nDibu
+
+
+
+
+
+
+
+
+
+
+ static function GetTokens( cStr )
+
+local cToken  := ""
+local c       := ""
+local aTokens := {}
+local nLen    := len( cStr )
+local n       := 1
+local nState  := 0
+local lFirst  := .T.
+
+while n <= nLen
+
+   c := substr( cStr, n, 1 )
+
+   do case
+      case nState == 0
+
+           if c == '"'
+             cToken += c
+             nState := 2
+           else
+             if c <> " "
+                nState := 1
+                cToken += c
+             endif
+           endif
+
+      case nState == 1
+
+           if c == " "
+              if cToken <> ","
+                 aadd( aTokens, alltrim(cToken) )
+              endif
+              cToken := ""
+              nState := 0
+           else
+              cToken += c
+           endif
+
+      case nState == 2
+
+           cToken += c
+
+           if c == '"'
+              if cToken <> ","
+                 aadd( aTokens, alltrim(cToken) )
+              endif
+              cToken := ""
+              nState := 0
+           endif
+
+   endcase
+
+   n++
+
+enddo
+
+return aTokens
+
+
+
+  static function PrevItem( cString, nPos )
+
+local cStr := ""
+local n := 1
+local c
+
+while .T.
+   c := substr( cString, nPos-n, 1 )
+   if c == " "
+      n++
+   else
+      exit
+   endif
+enddo
+
+cStr += c
+n++
+while .T.
+   c := substr( cString, nPos-n, 1 )
+   if c <> " "
+      n++
+      cStr := c + cStr
+   else
+      exit
+   endif
+enddo
+
+return cStr
+
+
+  static function GetNextString( cString, nPos )
+
+local cStr := ""
+local n := nPos
+local c
+
+while n < len( cString )
+   c := substr( cString, n, 1 )
+   if c <> '"'
+      n++
+   else
+      exit
+   endif
+enddo
+cStr += c
+n++
+while n < len( cString )
+   c := substr( cString, n, 1 )
+   if c <> '"'
+      n++
+      cStr += c
+   else
+      cStr += c
+      exit
+   endif
+enddo
+
+return cStr
+
+
+
+_HB_CLASS TRCDialog ; function TRCDialog ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TRCDialog" , iif( .F., { }, { @HBObject() } ), @TRCDialog() ) ) ;
+
+; _HB_MEMBER { nId } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nId"}, .F. )
+; _HB_MEMBER { nTop } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nTop"}, .F. )
+; _HB_MEMBER { nLeft } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nLeft"}, .F. )
+; _HB_MEMBER { nWidth } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nWidth"}, .F. )
+; _HB_MEMBER { nHeight } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nHeight"}, .F. )
+; _HB_MEMBER { cCaption } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cCaption"}, .F. )
+; _HB_MEMBER { nCharacteristics } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nCharacteristics"}, .F. )
+; _HB_MEMBER { cClass } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cClass"}, .F. )
+; _HB_MEMBER { cExStyle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cExStyle"}, .F. )
+; _HB_MEMBER { nPointSize } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nPointSize"}, .F. )
+; _HB_MEMBER { cFaceName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFaceName"}, .F. )
+; _HB_MEMBER { cLanguage } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cLanguage"}, .F. )
+; _HB_MEMBER { cSubLanguage } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cSubLanguage"}, .F. )
+; _HB_MEMBER { cMenuName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cMenuName"}, .F. )
+; _HB_MEMBER { cStyle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cStyle"}, .F. )
+; _HB_MEMBER { nVersion } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nVersion"}, .F. )
+
+; _HB_MEMBER { aControls } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aControls"}, .F. )
+
+      _HB_MEMBER New() AS CLASS TRCDialog; oClass:AddMethod( "New", @TRCDialog_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TRCDialog ;
+
+
+  static FUNCTION TRCDialog_New( ) ; local Self AS CLASS TRCDialog := QSelf() AS CLASS TRCDialog
+
+
+  ::aControls         := {}
+  ::nId               := ""
+  ::nTop              := ""
+  ::nLeft             := ""
+  ::nWidth            := ""
+  ::nHeight           := ""
+  ::cCaption          := ""
+  ::nCharacteristics  := ""
+  ::cClass            := ""
+  ::cExStyle          := ""
+  ::nPointSize        := ""
+  ::cFaceName         := ""
+  ::cLanguage         := ""
+  ::cSubLanguage      := ""
+  ::cMenuName         := ""
+  ::cStyle            := ""
+  ::nVersion          := ""
+
+
+
+return self
+
+
+_HB_CLASS TRCControl ; function TRCControl ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TRCControl" , iif( .F., { }, { @HBObject() } ), @TRCControl() ) ) ;
+
+; _HB_MEMBER { cType } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cType"}, .F. )
+; _HB_MEMBER { nId } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nId"}, .F. )
+; _HB_MEMBER { nTop } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nTop"}, .F. )
+; _HB_MEMBER { nLeft } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nLeft"}, .F. )
+; _HB_MEMBER { nWidth } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nWidth"}, .F. )
+; _HB_MEMBER { nHeight } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nHeight"}, .F. )
+; _HB_MEMBER { cCaption } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cCaption"}, .F. )
+; _HB_MEMBER { cStyle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cStyle"}, .F. )
+; _HB_MEMBER { cExStyle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cExStyle"}, .F. )
+; _HB_MEMBER { cClass } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cClass"}, .F. )
+      _HB_MEMBER New() AS CLASS TRCControl; oClass:AddMethod( "New", @TRCControl_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TRCControl ;
+
+
+  static FUNCTION TRCControl_New( ) ; local Self AS CLASS TRCControl := QSelf() AS CLASS TRCControl
+
+
+  ::cType     := ""
+  ::nId       := ""
+  ::nTop      := ""
+  ::nLeft     := ""
+  ::nWidth    := ""
+  ::nHeight   := ""
+  ::cCaption  := ""
+  ::cStyle    := " "
+  ::cExStyle  := ""
+  ::cClass    := ""
+
+
+
+return self
+
+
+
+
+function OInspect( oObject )
+
+   local oDlg, oLbx, oSay, oGet
+   local cProp := ""
+   local aObjData, cData, uData
+   local n
+
+   oDlg = TDialog():New(,,,,, "Inspector",, .F.,,,,,, .F.,,,,,, .F., )
+
+   oSay := TSay():ReDefine( 110,, oDlg,,,, .F.,, .F., .F. )
+
+   aObjData = aOData( oObject )
+   for n = 1 to Len( aObjData )
+      cData = aObjData[ n ]
+      uData = OSend( oObject, cData )
+
+      aObjData[ n ] = PadR( cChr2Data( cData ), 17 ) + Chr( 9 ) +  ValType( uData ) + "  " + cValToChar( uData )
+   next
+
+   uData = OSend( oObject, aObjData[ 1 ] )
+   oGet := TGet():ReDefine( 120, { | u | If( PCount()==0, uData, uData:= u ) }, oDlg,,,,,,,,, .F.,,, .F., .F.,,,,,,, "uData", )
+
+
+
+
+   oLbx := TListBox():ReDefine( 130, { | u | If( PCount()==0, cProp, cProp:= u ) }, aObjData, {||( oSay:cTitle := cProp, oGet:VarPut( OSend( oObject, cProp ) ), oGet:Refresh() )}, oDlg,,,,,,,,, .F.,, )
+
+   oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .T.,,,, oDlg:bRClicked,,, )
+
+return nil

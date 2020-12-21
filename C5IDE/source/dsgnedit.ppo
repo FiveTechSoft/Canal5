@@ -1,0 +1,397 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 6 "source\dsgnedit.prg"
+_HB_CLASS TDsgnEdit ; function TDsgnEdit ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnEdit" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnEdit() ) ) ;
+
+; _HB_MEMBER { lFlat } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFlat"}, .F. )
+; _HB_MEMBER { lxMultiline } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxMultiline"}, .F. )
+; _HB_MEMBER { lRightVScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRightVScroll"}, .F. )
+; _HB_MEMBER { lDownHScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lDownHScroll"}, .F. )
+; _HB_MEMBER { lxVScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxVScroll"}, .F. )
+; _HB_MEMBER { lHScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lHScroll"}, .F. )
+; _HB_MEMBER { nAlign } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nAlign"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+; _HB_MEMBER { lModalFrame } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lModalFrame"}, .F. )
+; _HB_MEMBER { lClientEdge } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lClientEdge"}, .F. )
+; _HB_MEMBER { lStaticEdge } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lStaticEdge"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd) AS CLASS TDsgnEdit; oClass:AddMethod( "New", @TDsgnEdit_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnEdit_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnEdit_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMinWidth( nVal); _HB_MEMBER _nMinWidth( nVal); oClass:AddMethod( "nMinWidth", @TDsgnEdit_nMinWidth(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMinWidth", @TDsgnEdit_nMinWidth(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMinHeight( nVal); _HB_MEMBER _nMinHeight( nVal); oClass:AddMethod( "nMinHeight", @TDsgnEdit_nMinHeight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMinHeight", @TDsgnEdit_nMinHeight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GenPrg( lDialog, cFrom, cHeader); oClass:AddMethod( "GenPrg", @TDsgnEdit_GenPrg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProps( oList); oClass:AddMethod( "SetProps", @TDsgnEdit_SetProps(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lMultiline( lNewValue); _HB_MEMBER _lMultiline( lNewValue); oClass:AddMethod( "lMultiline", @TDsgnEdit_lMultiline(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lMultiline", @TDsgnEdit_lMultiline(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lVScroll( lNewValue); _HB_MEMBER _lVScroll( lNewValue); oClass:AddMethod( "lVScroll", @TDsgnEdit_lVScroll(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lVScroll", @TDsgnEdit_lVScroll(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnEdit ;
+
+
+      static FUNCTION TDsgnEdit_New( nTop, nLeft, nBottom, nRight, oWnd ) ; local Self AS CLASS TDsgnEdit := QSelf() AS CLASS TDsgnEdit
+
+
+   if nTop <> nil
+      if nBottom-nTop < 10 .OR. nRight-nLeft < 10
+         nBottom := nTop + 23
+         nRight  := nLeft + 60
+      endif
+   endif
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::lFlat         := .F.
+   ::nClrText      := 0
+   ::nClrBorder    := 0
+   ::nClrPane      := 16777215
+   ::nAlign        := nOr(0x00000020,0x00000004)
+   ::lActive       := .T.
+   ::lxMultiline    := .F.
+   ::lRightVScroll := .T.
+   ::lDownHScroll  := .T.
+   ::lxVScroll      := .F.
+   ::lHScroll      := .F.
+   ::lModalFrame   := .F.
+   ::lClientEdge   := .F.
+   ::lStaticEdge   := .F.
+   ::lBorder       := .T.
+  ::cObjName         := ::GetObjName()
+
+
+   ::cCaption     := ""
+   ::bContextMenu := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ::aProperties :=  { "aDotsActives"   , "aRect"          , "cCaption"       , "lActive"        , "lBorder"        , "lCanSize" , "lCanMove"       , "lDownHScroll"   , "lEditable"      , "lHScroll"       , "lxMultiline"     , "lRightVScroll"  , "lStaticEdge"    , "lxVScroll"       , "lVisible"       , "nAlign"         , "nClrBorder"     , "nClrPane"       , "nClrText"       , "nOption"        , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      }
+
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+return self
+
+
+
+
+  static FUNCTION TDsgnEdit_Paint( hDC ) ; local Self AS CLASS TDsgnEdit := QSelf() AS CLASS TDsgnEdit
+
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local rc2
+local rcText
+local iMode
+local color, nClr
+local hOldFont
+local hTheme, nState, oFontPPC
+
+iMode := SetBkMode( hDC, 1 )
+color := SetTextColor( hDC, ::nClrText )
+
+
+if ::oWnd:lPocketPc()
+
+   FillSolidRect( hDC, rc, ::nClrPane, 0 )
+
+
+
+
+
+
+
+
+   rc[2] += 3
+   DrawText( hDC, ::cCaption, rc, ::nAlign )
+
+
+
+
+
+else
+
+   if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "EDIT")
+
+      if hTheme <> nil
+
+         nState := if(::lActive, 1, 4)
+
+         C5_DrawThemeBackground( hTheme, hDC, 1, nState , rc )
+         rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+         rc[2] += 2
+
+          DrawText(hDC, ::cCaption, rc, nOr( 0x00000000, 0x00000020, 0x00000004 )  )
+         C5_CloseThemeData()
+
+
+      endif
+
+   else
+
+
+
+
+      if ::lxMultiline
+
+          iMode := SetBkMode(hDC,1)
+
+          FillSolidRect(hDC, rc, if(::lActive,::nClrPane,GetSysColor(15)) )
+
+          rcText := {rc[1],rc[2],rc[3],rc[4]}
+
+          if !::lActive
+             rc[1]++; rc[2]++; rc[3]++; rc[4]++
+
+             color := SetTextColor( hDC,  ( 255 + ( 255 * 256 ) + ( 255 * 65536 ) ) )
+             DrawText( hDC, ::cCaption, rcText, nOr(0x00000000, 0x00000000, 0x00000010 ) )
+             rc[1]--; rc[2]--; rc[3]--; rc[4]--
+             SetTextColor( hDC, color )
+             color := SetTextColor( hDC, GetSysColor( 17 ) )
+          else
+             rcText[1]+=3; rcText[2]+=3
+          endif
+
+          DrawText( hDC, ::cCaption, rcText, nOr(0x00000000, 0x00000000, 0x00000010 ))
+
+
+          if ::lHScroll
+             ::PaintHScroll( hDC, ::lDownHScroll ,::lxVScroll, ::lRightVScroll )
+          endif
+
+      else
+
+          rc2 := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+
+          FillSolidRect(hDC, rc, if(::lActive,::nClrPane,GetSysColor(15)) )
+
+          iMode  := SetBkMode(hDC, 1)
+
+          rc2[2] += 2
+          rc2[1] += 1
+          rc2[4] -= 2
+
+          if !::lActive
+             rc2[1]++; rc2[2]++; rc2[3]++; rc2[4]++
+             color := SetTextColor( hDC, ( 255 + ( 255 * 256 ) + ( 255 * 65536 ) ) )
+             DrawText( hDC, ::cCaption, rc2, nOr( 0x00000000, 0x00000020, 0x00000004 ))
+             rc2[1]--; rc2[2]--; rc2[3]--; rc2[4]--
+             SetTextColor( hDC, color )
+             color := SetTextColor( hDC, GetSysColor( 17 ) )
+          else
+             rc2[2]+= 2
+          endif
+
+          DrawText(hDC, ::cCaption, rc2, nOr( 0x00000000, 0x00000020 )  )
+
+      endif
+
+
+
+      if ::lModalFrame
+         DrawEdge( hDC, rc, 0x0001, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+         rc[1]++; rc[2]++; rc[3]--; rc[4]--
+         DrawEdge( hDC, rc, 0x0004, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+         rc[1]--; rc[2]--; rc[3]++; rc[4]++
+      endif
+
+      if ::lClientEdge .OR. ::lBorder
+
+              if ::lModalFrame
+                 rc[1]++; rc[2]++; rc[3]--; rc[4]--
+              endif
+              DrawEdge( hDC, rc, 0x0002, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+              rc[1]++; rc[2]++; rc[3]--; rc[4]--
+              DrawEdge( hDC, rc, 0x0008, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+              rc[1]--; rc[2]--; rc[3]++; rc[4]++
+              if ::lModalFrame
+                 rc[1]-=2; rc[2]-=2; rc[3]+=2; rc[4]+=2
+              endif
+      endif
+
+      if ::lStaticEdge
+         DrawEdge( hDC, rc, 0x0002, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+      endif
+
+      if ::lFlat
+         DrawEdge( hDC, rc, 0x0002, nOr(nOr(0x0001 , 0x0002 , 0x0004 , 0x0008),0x4000) )
+      endif
+
+   endif
+   if ::lxVScroll
+      ::PaintVScroll( hDC, ::lRightVScroll,::lHScroll, ::lDownHScroll )
+   endif
+
+endif
+
+SetBkMode(hDC, iMode)
+SetTextColor( hDC, color )
+
+if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+   ::DotsSelect( hDC )
+endif
+
+return nil
+
+
+
+      static FUNCTION TDsgnEdit_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnEdit := QSelf() AS CLASS TDsgnEdit
+
+local oMenu
+local o := self
+
+
+    MenuAddItem("Flat"         ,,o:lFlat         ,,{|oMenuItem|::lFlat          := !::lFlat         ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lBorder"      ,,o:lBorder       ,,{|oMenuItem|::lBorder        := !::lBorder       ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lxMultiline"   ,,o:lxMultiline    ,,{|oMenuItem|::lxMultiline     := !::lxMultiline    ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lxVScroll"     ,,o:lxVScroll      ,,{|oMenuItem|::lxVScroll       := !::lxVScroll      ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lHScroll"     ,,o:lHScroll      ,,{|oMenuItem|::lHScroll       := !::lHScroll      ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lRightVScroll",,o:lRightVScroll ,,{|oMenuItem|::lRightVScroll  := !::lRightVScroll ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lDownHScroll" ,,o:lDownHScroll  ,,{|oMenuItem|::lDownHScroll   := !::lDownHScroll  ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lActive"      ,,o:lActive       ,,{|oMenuItem|::lActive        := !::lActive       ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lModalFrame"  ,,o:lModalFrame   ,,{|oMenuItem|::lModalFrame    := !::lModalFrame   ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lClientEdge"  ,,o:lClientEdge   ,,{|oMenuItem|::lClientEdge    := !::lClientEdge   ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lStaticEdge"  ,,o:lStaticEdge   ,,{|oMenuItem|::lStaticEdge    := !::lStaticEdge   ,::Refresh()},,,,,,,.F.,,,.F. )
+
+   MenuAddItem()
+
+
+return nil
+
+
+  static FUNCTION TDsgnEdit_nMinWidth( nVal ) ; local Self AS CLASS TDsgnEdit := QSelf() AS CLASS TDsgnEdit
+
+
+if pcount() > 0
+   ::xMinWidth := nVal
+endif
+
+return if( ::lHScroll .OR. ::lxVScroll, max( 22, ::xMinWidth ), ::xMinWidth )
+
+
+  static FUNCTION TDsgnEdit_nMinHeight( nVal ) ; local Self AS CLASS TDsgnEdit := QSelf() AS CLASS TDsgnEdit
+
+
+if pcount() > 0
+   ::xMinHeight := nVal
+endif
+
+return if( ::lxVScroll .OR. ::lHScroll , max( 22, ::xMinHeight ), ::xMinHeight )
+
+
+
+  static FUNCTION TDsgnEdit_GenPrg( lDialog, cFrom, cHeader, cFunciones ) ; local Self AS CLASS TDsgnEdit := QSelf() AS CLASS TDsgnEdit
+
+local cRet := ""
+local   cObject := ::cObjName
+local   cVar    := "c" + substr( cObject, 2 )
+
+If( lDialog == nil, lDialog := .T., ) ;
+If( cFrom == nil, cFrom := "oWnd", ) ;
+If( cHeader == nil, cHeader := "", ) ;
+If( cFunciones == nil, cFunciones := "", ) ;
+
+   cHeader += "local " + cObject + Chr(13)+Chr(10)
+   cHeader += "local " + cVar + ' := "' + alltrim( ::cCaption ) + '"' + Chr(13)+Chr(10)
+
+
+
+   cRet += "        @ " + ::cStrTop(lDialog) + ", " + ::cStrLeft(lDialog) + " GET "  + cObject +  " VAR " + cVar + " ;" + Chr(13)+Chr(10) + "                 SIZE " + ::cStrWidth(lDialog) + ", " + ::cStrHeight(lDialog) + " PIXEL ; " + Chr(13)+Chr(10) + "                 OF " + cFrom + " FONT oFont" + Chr(13)+Chr(10)
+
+return cRet
+
+
+
+
+   static FUNCTION TDsgnEdit_SetProps( oList ) ; local Self AS CLASS TDsgnEdit := QSelf() AS CLASS TDsgnEdit
+
+local nGroup
+local o := self
+
+nGroup := oList:AddGroup( "Appearence" )
+
+oList:AddItem( "cObjName","Name", ,nGroup )
+oList:AddItem( "lBorder","Border","L",nGroup )
+oList:AddItem( "lActive","Active", ,nGroup )
+oList:AddItem( "cCaption","Text",,nGroup )
+oList:AddItem( "lCanMove","Can move", ,nGroup )
+oList:AddItem( "lCanSize","Can size", ,nGroup )
+oList:AddItem( "lMultiline" ,"Multiline","L" ,nGroup )
+oList:AddItem( "lVScroll" ,"Vertical Scrollbar","L",nGroup )
+oList:AddItem( "nClrText"    ,"Text Color", "B",nGroup,,,{|| ChooseColor( o:nClrText )} )
+oList:AddItem( "nClrPane"    ,"Back Color", "B",nGroup,,,{|| ChooseColor( o:nClrPane )} )
+
+nGroup := oList:AddGroup(  "Position" )
+
+oList:AddItem( "nTop","Top", ,nGroup )
+oList:AddItem( "nLeft","Left", ,nGroup )
+oList:AddItem( "nWidth","Width", ,nGroup )
+oList:AddItem( "nHeight","Height", ,nGroup )
+
+
+
+
+
+return 0
+
+
+
+  static FUNCTION TDsgnEdit_lMultiline( lNewValue ) ; local Self AS CLASS TDsgnEdit := QSelf() AS CLASS TDsgnEdit
+
+
+if pcount() > 0
+   ::lxMultiline := lNewValue
+   ::Refresh()
+endif
+
+return ::lxMultiline
+
+
+
+  static FUNCTION TDsgnEdit_lVScroll( lNewValue ) ; local Self AS CLASS TDsgnEdit := QSelf() AS CLASS TDsgnEdit
+
+
+if pcount() > 0
+   ::lxVScroll := lNewValue
+   ::Refresh()
+endif
+
+return ::lxVScroll

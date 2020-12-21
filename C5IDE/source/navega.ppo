@@ -1,0 +1,97 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 4 "source\navega.prg"
+static oCombo, oActivex
+
+
+function Navega( cURL )
+
+   local oWnd,  oBar
+   local aItems := {}
+   local cItem
+
+   if empty( cURL )
+      cItem := space( 500 )
+   else
+      cItem := cURl
+      aadd( aItems, cUrl )
+   endif
+
+   If( cURL == nil, cURL := "http://www.canalfive.com/foro", ) ;
+
+
+
+   oWnd := TMdiChild():New(,,,, "WebBrowser",,, Aplicacion():oWnd,, .F.,,,,, .F., .F.,,, !.F., !.F., !.F., !.F., )
+
+      oBar := TBar():New( oWnd, 30, 32, .T.,,, .F., .F. )
+
+         TBtnBmp():NewBar( "left",,,,, {|This|oActivex:Do( "GoBack"  )}, .F., oBar, .F.,,, .F.,, 'oActivex:Do( "GoBack"  )',,,,,, !.T.,,,,, .F. )
+         TBtnBmp():NewBar( "right",,,,, {|This|oActivex:Do( "GoForward"  )}, .F., oBar, .F.,,, .F.,, 'oActivex:Do( "GoForward"  )',,,,,, !.T.,,,,, .F. )
+         TBtnBmp():NewBar( "stop",,,,, {|This|oActivex:Do( "Stop"    )}, .F., oBar, .F.,,, .F.,, 'oActivex:Do( "Stop"    )',,,,,, !.T.,,,,, .F. )
+         TBtnBmp():NewBar( "refresh",,,,, {|This|oActivex:Do( "Refresh" )}, .F., oBar, .F.,,, .F.,, 'oActivex:Do( "Refresh" )',,,,,, !.T.,,,,, .F. )
+         TBtnBmp():NewBar( "home",,,,, {|This|oActivex:Do( "GoHome"  )}, .F., oBar, .F.,,, .F.,, 'oActivex:Do( "GoHome"  )',,,,,, !.T.,,,,, .F. )
+
+
+         oCombo := TComboBox():New( 5, 200, { | u | If( PCount()==0, cItem, cItem:= u ) }, aItems, 300, 400, oBar,, {|Self|GoWeb()},,,, .T., oWnd:oFont,, .F.,, .F.,,, 2,, )
+
+                 oCombo:oGet:bChange := {|nKey, nFlags, Self | GoEdit( nKey, nFlags, Self ) }
+
+
+
+         TBtnBmp():New( 4, 520,,, "ir",,,, {|Self|GoWeb( )}, oBar,,, .F., .F.,,,,, !.T.,, .F.,,, .F.,, !.F.,, .T., .F. )
+
+   oActiveX = TActiveX():New( oWnd, "Shell.Explorer" )
+
+   oWnd:oClient = oActiveX
+
+
+   oActiveX:Do( "Navigate", cURl )
+
+   oWnd:Activate( Upper("MAXIMIZED"), oWnd:bLClicked, oWnd:bRClicked, oWnd:bMoved, oWnd:bResized, oWnd:bPainted, oWnd:bKeyDown, oWnd:bInit,,,,,,,,,,, oWnd:bLButtonUp )
+
+return nil
+
+
+static function GoWeb()
+
+local cUrl := oCombo:VarGet()
+local nEn
+local ret
+
+if empty( cUrl ) .OR. len( cUrl ) < 8
+   return nil
+endif
+nEn := oCombo:FindString( cUrl )
+if nEn == 0
+   oCombo:Add( cUrl )
+   ret := oActiveX:Do( "Navigate", cUrl )
+endif
+
+
+return ret
+
+static function GoEdit( nKey, nFlags, Self )
+
+if nKey <> nil .AND. nKey == 13
+
+   GoWeb()
+
+endif
+
+return .T.

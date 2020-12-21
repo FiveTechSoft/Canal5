@@ -1,0 +1,2630 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 6 "source\shape.prg"
+static nIdItem := 1
+static cWindow := ""
+static cHeader := ""
+static aVarNames := {}
+
+_HB_CLASS TShape ; function TShape ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TShape" , iif( .F., { }, { @HBObject() } ), @TShape() ) ) ;
+
+; _HB_MEMBER { hWnd } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hWnd"}, .F. )
+; _HB_MEMBER { hDC } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hDC"}, .F. )
+
+      _HB_MEMBER { cInfo } ; oClass:AddMultiClsData(,, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cInfo"}, .F. )
+      _HB_MEMBER { AS ARRAY acInfos } ; oClass:AddMultiClsData( "ARRAY", {}, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"acInfos"}, .F. )
+
+; _HB_MEMBER { nID } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nID"}, .F. )
+; _HB_MEMBER { nItemID } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nItemID"}, .F. )
+
+; _HB_MEMBER { aDots } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aDots"}, .F. )
+; _HB_MEMBER { aDotsActives } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aDotsActives"}, .F. )
+; _HB_MEMBER { aOldPos } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aOldPos"}, .F. )
+; _HB_MEMBER { aPages } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aPages"}, .F. )
+; _HB_MEMBER { aPropBase } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aPropBase"}, .F. )
+; _HB_MEMBER { aProperties } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aProperties"}, .F. )
+; _HB_MEMBER { aPropertiesPPC } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aPropertiesPPC"}, .F. )
+; _HB_MEMBER { aRect } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aRect"}, .F. )
+; _HB_MEMBER { aRelPos } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aRelPos"}, .F. )
+; _HB_MEMBER { aShapes } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aShapes"}, .F. )
+; _HB_MEMBER { bContextMenu } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bContextMenu"}, .F. )
+; _HB_MEMBER { bKeyChar } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bKeyChar"}, .F. )
+; _HB_MEMBER { bKeyDown } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bKeyDown"}, .F. )
+; _HB_MEMBER { bLClicked } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bLClicked"}, .F. )
+; _HB_MEMBER { bLostFocus } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bLostFocus"}, .F. )
+; _HB_MEMBER { cxCaption } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cxCaption"}, .F. )
+; _HB_MEMBER { cFileName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFileName"}, .F. )
+; _HB_MEMBER { cObjName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cObjName"}, .F. )
+; _HB_MEMBER { cVarName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cVarName"}, .F. )
+
+; _HB_MEMBER { AS CHARACTER oFont } ; oClass:AddMultiData( "CHARACTER", "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oFont"}, .F. )
+; _HB_MEMBER { cFaceName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFaceName"}, .F. )
+; _HB_MEMBER { nWidthFont } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nWidthFont"}, .F. )
+; _HB_MEMBER { nHeightFont } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nHeightFont"}, .F. )
+; _HB_MEMBER { lBold } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lBold"}, .F. )
+; _HB_MEMBER { lItalic } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lItalic"}, .F. )
+; _HB_MEMBER { lUnderline } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lUnderline"}, .F. )
+; _HB_MEMBER { lStrikeOut } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lStrikeOut"}, .F. )
+
+; _HB_MEMBER { lBorder } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lBorder"}, .F. )
+; _HB_MEMBER { lCanMove } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lCanMove"}, .F. )
+; _HB_MEMBER { lCanSize } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lCanSize"}, .F. )
+; _HB_MEMBER { lCaption } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lCaption"}, .F. )
+; _HB_MEMBER { lContainer } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lContainer"}, .F. )
+; _HB_MEMBER { lEditable } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lEditable"}, .F. )
+; _HB_MEMBER { lFilled } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFilled"}, .F. )
+; _HB_MEMBER { lForm } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lForm"}, .F. )
+; _HB_MEMBER { lLocked } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lLocked"}, .F. )
+; _HB_MEMBER { lModalFrame } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lModalFrame"}, .F. )
+; _HB_MEMBER { lMultiline } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lMultiline"}, .F. )
+; _HB_MEMBER { lPaintBorderDsgn } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lPaintBorderDsgn"}, .F. )
+; _HB_MEMBER { lSelected } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lSelected"}, .F. )
+; _HB_MEMBER { lVisible } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lVisible"}, .F. )
+; _HB_MEMBER { lVisibleInForm } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lVisibleInForm"}, .F. )
+; _HB_MEMBER { nClrBorder } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrBorder"}, .F. )
+; _HB_MEMBER { AS NUMERIC nClrDot } ; oClass:AddMultiData( "NUMERIC", 8388608, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrDot"}, .F. )
+; _HB_MEMBER { nClrPane } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrPane"}, .F. )
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+; _HB_MEMBER { nEnPage } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nEnPage"}, .F. )
+; _HB_MEMBER { nIdentifier } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nIdentifier"}, .F. )
+; _HB_MEMBER { nOption } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nOption"}, .F. )
+; _HB_MEMBER { oParent } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oParent"}, .F. )
+; _HB_MEMBER { oWnd } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oWnd"}, .F. )
+; _HB_MEMBER { xMaxHeight } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"xMaxHeight"}, .F. )
+; _HB_MEMBER { xMaxWidth } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"xMaxWidth"}, .F. )
+; _HB_MEMBER { xMinHeight } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"xMinHeight"}, .F. )
+; _HB_MEMBER { xMinWidth } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"xMinWidth"}, .F. )
+
+; _HB_MEMBER { nTabIndex } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nTabIndex"}, .F. )
+; _HB_MEMBER { cFileName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFileName"}, .F. )
+; _HB_MEMBER { lGroup } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lGroup"}, .F. )
+; _HB_MEMBER { AS LOGICAL lCaptured } ; oClass:AddMultiData( "LOGICAL", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lCaptured"}, .F. )
+
+      _HB_MEMBER { aVarNames } ; oClass:AddMultiClsData(,, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aVarNames"}, .F. )
+
+ ; ; ; ;; _HB_MEMBER { oTop, oLeft, oBottom, oRight, oClient } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oTop", "oLeft", "oBottom", "oRight", "oClient"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd) AS CLASS TShape; oClass:AddMethod( "New", @TShape_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER AddShape( oShape) ; oClass:AddVirtual( "AddShape" )
+      _HB_MEMBER Copy( nRow, nCol); oClass:AddMethod( "Copy", @TShape_Copy(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER CheckSelecteds(); oClass:AddInline( "CheckSelecteds", {|Self, aRect | ( ( Self ) ), .F. }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ChooseFont(); oClass:AddMethod( "ChooseFont", @TShape_ChooseFont(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ResetSelecteds(); oClass:AddMethod( "ResetSelecteds", @TShape_ResetSelecteds(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER DeleteChild( o) ; oClass:AddVirtual( "DeleteChild" )
+      _HB_MEMBER Destroy() ; oClass:AddVirtual( "Destroy" )
+      _HB_MEMBER Distintos( oShape); oClass:AddMethod( "!=", @TShape_Distintos(), nScope + iif( .F., 2048, 0 ) )
+      _HB_MEMBER DotsSelect( hDC); oClass:AddMethod( "DotsSelect", @TShape_DotsSelect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Edit( nKey); oClass:AddMethod( "Edit", @TShape_Edit(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER EditDlg(); oClass:AddMethod( "EditDlg", @TShape_EditDlg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cGenVar() ; oClass:AddVirtual( "cGenVar" )
+      _HB_MEMBER GetClientRect(); oClass:AddInline( "GetClientRect", {|Self | ( ( Self ) ), {::aRect[1],::aRect[2],::aRect[3],::aRect[4]} }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetContainer( aRect); oClass:AddMethod( "GetContainer", @TShape_GetContainer(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetFontEx(); oClass:AddMethod( "GetFontEx", @TShape_GetFontEx(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetNewId(); oClass:AddInline( "GetNewId", {|Self | ( ( Self ) ), ++nIdItem }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetRect(); oClass:AddInline( "GetRect", {|Self | ( ( Self ) ), {::aRect[1],::aRect[2],::aRect[3],::aRect[4]} }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GotoX( nRow); oClass:AddMethod( "GotoX", @TShape_GotoX(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GotoY( nCol); oClass:AddMethod( "GotoY", @TShape_GotoY(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Hide(); oClass:AddMethod( "Hide", @TShape_Hide(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Iguales( oShape); oClass:AddMethod( "==", @TShape_Iguales(), nScope + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IntersectRect( aRect); oClass:AddMethod( "IntersectRect", @TShape_IntersectRect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Load( cInfo); oClass:AddMethod( "Load", @TShape_Load(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER LoadFile( cFileName); oClass:AddMethod( "LoadFile", @TShape_LoadFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER MenuContex( nRow, nCol) ; oClass:AddVirtual( "MenuContex" )
+      _HB_MEMBER MouseWheel( nKeys, nDelta, nXPos, nYPos) ; oClass:AddVirtual( "MouseWheel" )
+      _HB_MEMBER MoveTo( aPos, lRefresh); oClass:AddMethod( "MoveTo", @TShape_MoveTo(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER OffSet( nRows, nCols); oClass:AddMethod( "OffSet", @TShape_OffSet(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TShape_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint() ; oClass:AddVirtual( "Paint" )
+      _HB_MEMBER PaintContour( hDC); oClass:AddMethod( "PaintContour", @TShape_PaintContour(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PaintHScroll( hDC, lRight, lVScroll, lRight, lFull); oClass:AddMethod( "PaintHScroll", @TShape_PaintHScroll(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER PaintVScroll( hDC, lRight, lHScroll, lDown,  lFull); oClass:AddMethod( "PaintVScroll", @TShape_PaintVScroll(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paste( nTop, nLeft, oWnd); oClass:AddMethod( "Paste", @TShape_Paste(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Refresh(); oClass:AddInline( "Refresh", {|Self | ( ( Self ) ), if( ::oWnd <> nil,::oWnd:Refresh(),nil) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Resize() ; oClass:AddVirtual( "Resize" )
+      _HB_MEMBER Save(); oClass:AddMethod( "Save", @TShape_Save(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SaveFile( cFileName); oClass:AddMethod( "SaveFile", @TShape_SaveFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Save2RC( cFileName); oClass:AddMethod( "Save2RC", @TShape_Save2RC(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Save2PRG( cFileName); oClass:AddMethod( "Save2PRG", @TShape_Save2PRG(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Save2Ini( cFileName) ; oClass:AddVirtual( "Save2Ini" )
+      _HB_MEMBER SetFocus( lUpdate); oClass:AddMethod( "SetFocus", @TShape_SetFocus(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetSize( nWidth, nHeight); oClass:AddMethod( "SetSize", @TShape_SetSize(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ShapeOver( nRow, nCol); oClass:AddMethod( "ShapeOver", @TShape_ShapeOver(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Show(); oClass:AddMethod( "Show", @TShape_Show(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER StorePos(); oClass:AddInline( "StorePos", {|Self | ( ( Self ) ), ::aOldPos := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]} }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER StoreRelPos(); oClass:AddMethod( "StoreRelPos", @TShape_StoreRelPos(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ToBottom( nInc); oClass:AddMethod( "ToBottom", @TShape_ToBottom(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ToLeft( nInc); oClass:AddMethod( "ToLeft", @TShape_ToLeft(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ToRight( nInc); oClass:AddMethod( "ToRight", @TShape_ToRight(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ToTop( nInc); oClass:AddMethod( "ToTop", @TShape_ToTop(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cCaption( cNewVal); _HB_MEMBER _cCaption( cNewVal); oClass:AddMethod( "cCaption", @TShape_cCaption(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_cCaption", @TShape_cCaption(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lIsMovingSel(); oClass:AddMethod( "lIsMovingSel", @TShape_lIsMovingSel(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nAbsBottom(); oClass:AddInline( "nAbsBottom", {|Self | ( ( Self ) ), ::nBottom - ::oWnd:oForm:nHCaption }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nAbsLeft(); oClass:AddInline( "nAbsLeft", {|Self | ( ( Self ) ), ::nLeft   - ::oWnd:oForm:nBorder }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nAbsRight(); oClass:AddInline( "nAbsRight", {|Self | ( ( Self ) ), ::nRight  - ::oWnd:oForm:nBorder }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nAbsTop(); oClass:AddInline( "nAbsTop", {|Self | ( ( Self ) ), ::nTop    - ::oWnd:oForm:nHCaption }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nBottom( nNewVal); _HB_MEMBER _nBottom( nNewVal); oClass:AddMethod( "nBottom", @TShape_nBottom(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nBottom", @TShape_nBottom(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nHeight( nNewVal); _HB_MEMBER _nHeight( nNewVal); oClass:AddMethod( "nHeight", @TShape_nHeight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nHeight", @TShape_nHeight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nLeft( nNewVal); _HB_MEMBER _nLeft( nNewVal); oClass:AddMethod( "nLeft", @TShape_nLeft(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nLeft", @TShape_nLeft(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMaxHeight( nVal); _HB_MEMBER _nMaxHeight( nVal); oClass:AddMethod( "nMaxHeight", @TShape_nMaxHeight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMaxHeight", @TShape_nMaxHeight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMaxWidth( nVal); _HB_MEMBER _nMaxWidth( nVal); oClass:AddMethod( "nMaxWidth", @TShape_nMaxWidth(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMaxWidth", @TShape_nMaxWidth(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMinHeight( nVal); _HB_MEMBER _nMinHeight( nVal); oClass:AddMethod( "nMinHeight", @TShape_nMinHeight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMinHeight", @TShape_nMinHeight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMinWidth( nVal); _HB_MEMBER _nMinWidth( nVal); oClass:AddMethod( "nMinWidth", @TShape_nMinWidth(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMinWidth", @TShape_nMinWidth(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nRight( nNewVal); _HB_MEMBER _nRight( nNewVal); oClass:AddMethod( "nRight", @TShape_nRight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nRight", @TShape_nRight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nTop( nNewVal); _HB_MEMBER _nTop( nNewVal); oClass:AddMethod( "nTop", @TShape_nTop(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nTop", @TShape_nTop(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nWidth( nNewVal); _HB_MEMBER _nWidth( nNewVal); oClass:AddMethod( "nWidth", @TShape_nWidth(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nWidth", @TShape_nWidth(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER xPaste( oWnd, cInfo); oClass:AddMethod( "xPaste", @TShape_xPaste(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER PropCount(); oClass:AddInline( "PropCount", {|Self | ( ( Self ) ), Len( if( ::oWnd:lPocketPC(),::aPropertiesPPC,::aProperties ) ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Property(); oClass:AddInline( "Property", {|Self, n | ( ( Self ) ), if( ::oWnd:lPocketPC(),::aPropertiesPPC,::aProperties )[n] }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Inspect( cDataName); oClass:AddMethod( "Inspect", @TShape_Inspect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetColor( nDataName, uVal); oClass:AddMethod( "GetColor", @TShape_GetColor(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProp( nDataName, uVal); oClass:AddMethod( "SetProp", @TShape_SetProp(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cGetFileName(); oClass:AddMethod( "cGetFileName", @TShape_cGetFileName(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER GenRc(); oClass:AddMethod( "GenRc", @TShape_GenRc(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GenRcManifest(); oClass:AddMethod( "GenRcManifest", @TShape_GenRcManifest(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GenPrg(); oClass:AddMethod( "GenPrg", @TShape_GenPrg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cStrID(); oClass:AddMethod( "cStrID", @TShape_cStrID(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cStrLeft(); oClass:AddMethod( "cStrLeft", @TShape_cStrLeft(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cStrTop(); oClass:AddMethod( "cStrTop", @TShape_cStrTop(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cStrRight(); oClass:AddMethod( "cStrRight", @TShape_cStrRight(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cStrBottom(); oClass:AddMethod( "cStrBottom", @TShape_cStrBottom(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cStrWidth(); oClass:AddMethod( "cStrWidth", @TShape_cStrWidth(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cStrHeight(); oClass:AddMethod( "cStrHeight", @TShape_cStrHeight(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER YPix2Dlg( nPix); oClass:AddMethod( "YPix2Dlg", @TShape_YPix2Dlg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER XPix2Dlg( nPix); oClass:AddMethod( "XPix2Dlg", @TShape_XPix2Dlg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER cGetVarName(); oClass:AddMethod( "cGetVarName", @TShape_cGetVarName(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetObjName(); oClass:AddMethod( "GetObjName", @TShape_GetObjName(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetObjNames(); oClass:AddMethod( "GetObjNames", @TShape_GetObjNames(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetObjFromName( cName); oClass:AddMethod( "GetObjFromName", @TShape_GetObjFromName(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProps( oObject) ; oClass:AddVirtual( "SetProps" )
+
+      _HB_MEMBER DestroyTooltip() ; oClass:AddVirtual( "DestroyTooltip" )
+      _HB_MEMBER CheckToolTip() ; oClass:AddVirtual( "CheckToolTip" )
+      _HB_MEMBER KeyDown( nKey, nFlags) ; oClass:AddVirtual( "KeyDown" )
+      _HB_MEMBER LButtonDown( nRow, nCol) ; oClass:AddVirtual( "LButtonDown" )
+      _HB_MEMBER MouseMove( nRow, nCol) ; oClass:AddVirtual( "MouseMove" )
+      _HB_MEMBER LButtonUp( nRow, nCol) ; oClass:AddVirtual( "LButtonUp" )
+      _HB_MEMBER Capture(); oClass:AddInline( "Capture", {|Self | ( ( Self ) ), SetCapture( ::oWnd:hWnd ), ::lCaptured := .T. }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ShowToolTip2() ; oClass:AddVirtual( "ShowToolTip2" )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TShape ;
+
+static FUNCTION TShape_New( nTop, nLeft, nBottom, nRight, oWnd ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local oContainer := nil
+local lIs
+
+If( nTop == nil, nTop := 0, ) ; If( nLeft == nil, nLeft := 0, ); If( nBottom == nil, nBottom := 0, ); If( nRight == nil, nRight := 0, );
+
+  ::aDots            := array(8)
+  ::aDotsActives     := {1,1,1,1,1,1,1,1}
+  ::aPages           := {}
+  ::aShapes          := {}
+  ::aRect            := {nTop, nLeft, nBottom, nRight}
+  ::bContextMenu     := nil
+  ::bLClicked        := nil
+  ::lBorder          := .T.
+  ::lCaption         := .T.
+  ::lCanSize         := .T.
+  ::lCanMove         := .T.
+  ::lContainer       := .F.
+  ::lEditable        := .T.
+  ::lForm            := .F.
+  ::lLocked          := .F.
+  ::lModalFrame      := .F.
+  ::lMultiline       := .F.
+  ::lPaintBorderDsgn := .T.
+  ::lSelected        := .F.
+  ::lVisible         := .T.
+  ::lVisibleInForm   := .T.
+  ::nClrBorder       := 0
+  ::nClrPane         := 12632256
+  ::nClrText         := 0
+  ::nItemId          := ::GetNewId()
+  ::nOption          := 1
+  ::oWnd             := oWnd
+  ::xMaxHeight       := 3000
+  ::xMaxWidth        := 3000
+  ::xMinHeight       := 1
+  ::xMinWidth        := 1
+
+  ::cFaceName        := ""
+  ::nWidthFont       := 0
+
+  ::lBold            := nil
+  ::lItalic          := nil
+  ::lUnderline       := nil
+  ::lStrikeOut       := nil
+  ::aVarNames        := {}
+  ::nTabIndex        := 0
+
+
+  if ::oWnd <> nil
+     oContainer := ::oWnd:GetContainer( ::aRect )
+     if oContainer <> nil
+        oContainer:AddShape( self )
+        ::oParent := oContainer
+     else
+        ::oWnd:AddShape( self )
+     endif
+  endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ::aPropertiesPPC := { "cCaption"      , "lBorder"       , "nID"           , "nTop"          , "nLeft"         , "nWidth"        , "nHeight"       , "nClrPane"      , "nClrText"      , "cFaceName"     , "nHeightFont"   , "lBold"         , "lItalic"       , "lUnderline"    , "lStrikeOut"    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ::aPropBase := {"aDots"            , "aDotsActives"     , "aPages"           , "aShapes"          , "cCaption"         , "cFaceName"        , "nHeightFont"      , "cObjName"         , "lActive"          , "lBold"            , "lBorder"          , "lCanMove"         , "lCanSize"         , "lEditable"        , "lFilled"          , "lItalic"          , "lModalFrame"      , "lMultiline"       , "lPaintBorderDsgn" , "lStrikeOut"       , "lUnderline"       , "lVisible"         , "lVisible"         , "lVisibleInForm"   , "nClrBorder"       , "nClrPane"         , "nClrText"         , "nHeight"          , "nHeightFont"      , "nLeft"            , "nOption"          , "nTop"             , "nWidth"           , "nWidthFont"       , "xMaxHeight"       , "xMaxWidth"        , "xMinHeight"       , "xMinWidth"        }
+
+return self
+
+
+
+      static FUNCTION TShape_nTop( nNewVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local nHeight
+
+if nNewVal <> nil
+   nHeight := ::aRect[3] - ::aRect[1]
+   ::aRect[1] := nNewVal
+   ::aRect[3] := ::aRect[1] + nHeight
+endif
+
+return ::aRect[1]
+
+
+      static FUNCTION TShape_nLeft( nNewVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local nWidth
+
+if nNewVal <> nil
+   nWidth := ::aRect[4] - ::aRect[2]
+   ::aRect[2] := nNewVal
+   ::aRect[4] := ::aRect[2] + nWidth
+endif
+
+return ::aRect[2]
+
+
+      static FUNCTION TShape_nBottom( nNewVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+if nNewVal <> nil
+   ::aRect[3] := nNewVal
+endif
+
+return ::aRect[3]
+
+
+      static FUNCTION TShape_nRight( nNewVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+if nNewVal <> nil
+   ::aRect[4] := nNewVal
+endif
+
+return ::aRect[4]
+
+
+      static FUNCTION TShape_nWidth( nNewVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+if nNewVal <> nil
+   ::aRect[4] := ::aRect[2] + nNewVal
+endif
+
+return ::aRect[4] - ::aRect[2]
+
+
+
+      static FUNCTION TShape_nHeight( nNewVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+if nNewVal <> nil
+   ::aRect[3] := ::aRect[1] + nNewVal
+endif
+
+return ::aRect[3] - ::aRect[1]
+
+
+  static FUNCTION TShape_Paint( hDC ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+local nHCaption
+local aRect2
+local aRcBtn
+local nW
+
+  if ::lIsMovingSel()
+     return ::PaintContour( hDC )
+  endif
+
+  if ::lBorder
+     FillSolidRect( hDC, ::aRect, ::nClrPane, ::nClrBorder )
+  else
+     FillSolidRect( hDC, ::aRect, ::nClrPane )
+  endif
+
+  if ::oWnd:oSelected <> nil .AND. ::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected
+     ::DotsSelect( hDC )
+  endif
+
+
+return nil
+
+
+  static FUNCTION TShape_PaintContour( hDC ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local hPen := ExtCreatePen( 2, 0 )
+local hOldPen := SelectObject( hDC, hPen )
+
+
+Moveto( hDC, ::nLeft, ::nTop )
+Lineto( hDC, ::nRight, ::nTop )
+Lineto( hDC, ::nRight, ::nBottom )
+Lineto( hDC, ::nLeft, ::nBottom )
+Lineto( hDC, ::nLeft, ::nTop )
+
+SelectObject( hDC, hOldPen )
+DeleteObject( hPen )
+
+
+return nil
+
+
+
+  static FUNCTION TShape_DotsSelect( hDC ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local aRect := {0,0,6,6}
+local nClrBorder
+local nClrPane
+local lFocused := .F.
+
+  if ( ::oWnd:lMoviendo .OR. ::oWnd:lKeyDown ) .AND. ::oWnd:oForm:nItemId <> ::nItemId
+     return nil
+  endif
+
+
+  nClrBorder := 0
+  nClrPane   := 16777215
+
+  do case
+     case ::lSelected
+
+          if ::oWnd:oSelected == self
+             nClrBorder := 16777215
+             nClrPane   := 0
+          else
+             nClrBorder := 0
+             nClrPane   := 16777215
+          endif
+          if ::oWnd:oFocused <> nil .AND. ::oWnd:oFocused:nID == ::nID
+             lFocused := .T.
+             nClrBorder := 0
+             nClrPane := 16777215
+
+
+          endif
+
+     case !::lCanSize
+
+          nClrBorder := 0
+          nClrPane   := 16777215
+
+  endcase
+
+  if ::lPaintBorderDsgn
+     DrawFocusRect( hDC,::aRect[1]-4, ::aRect[2]-4, ::aRect[3]+4, ::aRect[4]+4 )
+  endif
+
+  ::aDots := array( 8 )
+
+  aRect := OffsetRect( aRect, ::nLeft-7, ::nTop-7 )
+  ::aDots[1] := {aRect[1],aRect[2],aRect[3],aRect[4]}
+
+
+
+     Ellipse( hDC, aRect[2], aRect[1],aRect[4], aRect[3])
+
+
+  aRect := {0,0,6,6}
+  aRect := OffsetRect( aRect, ::nLeft + int((::nRight - ::nLeft)/2)-3, ::nTop-7 )
+  ::aDots[2] := {aRect[1],aRect[2],aRect[3],aRect[4]}
+
+
+
+     Ellipse( hDC, aRect[2], aRect[1],aRect[4], aRect[3])
+
+
+  aRect := {0,0,6,6}
+  aRect := OffsetRect( aRect, ::nRight+1, ::nTop-7 )
+  ::aDots[3] := {aRect[1],aRect[2],aRect[3],aRect[4]}
+
+
+
+     Ellipse( hDC, aRect[2], aRect[1],aRect[4], aRect[3])
+
+
+  aRect := {0,0,6,6}
+  aRect := OffsetRect( aRect, ::nRight+1 , ::nTop + int((::nBottom - ::nTop)/2)-3)
+  ::aDots[4] := {aRect[1],aRect[2],aRect[3],aRect[4]}
+
+
+
+     Ellipse( hDC, aRect[2], aRect[1],aRect[4], aRect[3])
+
+
+  aRect := {0,0,6,6}
+  aRect := OffsetRect( aRect, ::nRight+1, ::nBottom+1 )
+  ::aDots[5] := {aRect[1],aRect[2],aRect[3],aRect[4]}
+
+
+
+     Ellipse( hDC, aRect[2], aRect[1],aRect[4], aRect[3])
+
+
+  aRect := {0,0,6,6}
+  aRect := OffsetRect( aRect, ::nLeft + int((::nRight - ::nLeft)/2)-3, ::nBottom+1 )
+  ::aDots[6] := {aRect[1],aRect[2],aRect[3],aRect[4]}
+
+
+
+     Ellipse( hDC, aRect[2], aRect[1],aRect[4], aRect[3])
+
+
+  aRect := {0,0,6,6}
+  aRect := OffsetRect( aRect, ::nLeft-7, ::nBottom+1 )
+  ::aDots[7] := {aRect[1],aRect[2],aRect[3],aRect[4]}
+
+
+
+     Ellipse( hDC, aRect[2], aRect[1],aRect[4], aRect[3])
+
+
+  aRect := {0,0,6,6}
+  aRect := OffsetRect( aRect, ::nLeft-7, ::nTop + int((::nBottom - ::nTop)/2)-3 )
+  ::aDots[8] := {aRect[1],aRect[2],aRect[3],aRect[4]}
+
+
+
+     Ellipse( hDC, aRect[2], aRect[1],aRect[4], aRect[3])
+
+
+return nil
+
+
+
+
+  static FUNCTION TShape_GotoX( nCol, lUndo ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local nWidth := ::nWidth
+
+If( lUndo == nil, lUndo := .F., ) ;
+
+if !lUndo
+   ::oWnd:AddUndo( self, "MoveTo", { ::aRect[1],::aRect[2],::aRect[3],::aRect[4]}, .T. )
+endif
+
+::aRect[2] := nCol
+::aRect[4] := ::aRect[2] + nWidth
+
+::StorePos()
+
+if lUndo
+   ::oWnd:Refresh()
+endif
+
+
+return nil
+
+
+  static FUNCTION TShape_GotoY( nRow, lUndo ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local nHeight := ::nHeight
+
+If( lUndo == nil, lUndo := .F., ) ;
+
+if !lUndo
+   ::oWnd:AddUndo( self, "MoveTo", { ::aRect[1],::aRect[2],::aRect[3],::aRect[4]}, .T. )
+endif
+
+::aRect[1] := nRow
+::aRect[3] := ::aRect[1] + nHeight
+
+::StorePos()
+
+if lUndo
+   ::oWnd:Refresh()
+endif
+
+return nil
+
+
+
+
+  static FUNCTION TShape_OffSet( nRows, nCols ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+local oShape, oPage
+
+
+
+
+   ::aRect := { ::aOldPos[1]+nRows,  ::aOldPos[2]+nCols,  ::aOldPos[3]+nRows,  ::aOldPos[4]+nCols  }
+
+   if !empty(::aPages)
+      for each oPage in ::aPages
+          for each oShape in oPage:aShapes
+              oShape:OffSet( nRows, nCols )
+          next
+      next
+   endif
+
+
+
+return nil
+
+
+      static FUNCTION TShape_MoveTo( aPos, lRefresh ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+If( lRefresh == nil, lRefresh := .F., ) ;
+
+::aRect := { aPos[1],aPos[2],aPos[3],aPos[4] }
+
+::StorePos()
+
+if lRefresh
+   ::oWnd:Refresh()
+endif
+
+return nil
+
+
+   static FUNCTION TShape_SetFocus( lUpdate ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+If( lUpdate == nil, lUpdate := .T., ) ;
+
+::oWnd:oSelected := self
+
+if lUpdate
+   ::oWnd:Inspect( self )
+endif
+
+
+
+
+
+
+
+return self
+
+
+
+   static FUNCTION TShape_SetSize( nWidth, nHeight, lUndo ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local lChange := .T.
+
+
+if nWidth  == nil; nWidth  := ::nWidth ; endif
+if nHeight == nil; nHeight := ::nHeight; endif
+if lUndo   == nil; lUndo   := .F.      ; endif
+
+if nWidth < ::nMinWidth
+   nWidth := ::nMinWidth
+   lChange := .F.
+endif
+
+if nHeight < ::nMinHeight
+   nHeight := ::nMinHeight
+   lChange := .F.
+endif
+
+if !lUndo .AND. lChange
+   ::oWnd:AddUndo( self, "SetSize", ::nWidth, ::nHeight, .T. )
+endif
+
+::aRect[4] := ::aRect[2] + nWidth
+::aRect[3] := ::aRect[1] + nHeight
+
+::StorePos()
+
+if lUndo
+   ::oWnd:Refresh()
+endif
+
+return nil
+
+
+
+  static FUNCTION TShape_ToLeft( nInc ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+ ::GotoX( ::nLeft - nInc )
+
+ ::StorePos()
+
+ ::oWnd:Refresh()
+
+return nil
+
+
+
+  static FUNCTION TShape_ToRight( nInc ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+ ::GotoX( ::nLeft + nInc )
+
+ ::StorePos()
+
+ ::oWnd:Refresh()
+
+return nil
+
+
+  static FUNCTION TShape_ToTop( nInc ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+ ::GotoY( ::nTop - nInc )
+
+ ::StorePos()
+
+ ::oWnd:Refresh()
+
+return nil
+
+
+
+  static FUNCTION TShape_ToBottom( nInc ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+ ::GotoY( ::nTop + nInc )
+
+ ::StorePos()
+
+ ::oWnd:Refresh()
+
+return nil
+
+
+  static FUNCTION TShape_PaintVScroll( hDC, lRight, lHasHScroll, lDown, lFull, nCaption ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local nH, rc
+local nLeft, nTop, nRight, nBottom
+local aRect  := ::aRect
+local nBorde := if(::lModalFrame,2,0)
+local hTheme
+local nClrPane := ( 222 + ( 207 * 256 ) + ( 198 * 65536 ) )
+local hBmp
+local nW
+local n
+
+If( lDown == nil, lDown := .F., ) ;
+If( lRight == nil, lRight := .T., ) ;
+If( lHasHScroll == nil, lHasHScroll := .F., ) ;
+If( lFull == nil, lFull := .F., ) ;
+If( nCaption == nil, nCaption := 0, ) ;
+
+if ::oWnd:lPocketPc()
+   nW := 14
+else
+   nW := 20
+endif
+
+if lFull
+   nTop    := ::aRect[1]
+   nLeft   := ::aRect[2]
+   nBottom := ::aRect[3]
+   nRight  := ::aRect[4]
+else
+   if lRight
+      nTop    := ::aRect[1] + if( lHasHScroll, if( lDown, nBorde, nW-1 ), nBorde ) + nCaption+1
+      nLeft   := ::aRect[4] - nW+1
+      nBottom := ::aRect[3] - if( lHasHScroll, if( lDown, nW-1, nBorde ), nBorde ) -1
+      nRight  := ::aRect[4] - nBorde-1
+   else
+      nTop    := ::aRect[1] + if( lHasHScroll, if( lDown, nBorde, nW-1 ), nBorde )
+      nLeft   := ::aRect[2] + nBorde
+      nBottom := ::aRect[3] - if( lHasHScroll, if( lDown, nW-1, nBorde ), nBorde )
+      nRight  := nLeft      + nW-1
+   endif
+endif
+
+nH := nBottom - nTop
+
+if ::oWnd:lPocketPc()
+
+   FillSolidRect( hDC, {nTop, nLeft, nBottom, nRight}, 16777215, 0 )
+
+   FillSolidRect( hDC, {nTop,       nLeft, nTop+min(19, nH/2),   nRight}, nClrPane, 0 )
+
+   hBmp := LoadBitmap( GetResources(), "arrowup" )
+   DrawMasked( hDC, hBmp, nTop + min(6, nH/2), nLeft+1  )
+   DeleteObject( hBmp )
+
+   if nH > 19*3
+      FillSolidRect( hDC, {nTop+19,    nLeft, nTop+19*2, nRight}, nClrPane, 0 )
+      hBmp := LoadBitmap( GetResources(), "gripver" )
+      DrawMasked( hDC, hBmp, nTop + 19 +6, nLeft + 2+1 )
+      DeleteObject( hBmp )
+   endif
+
+   FillSolidRect( hDC, {nBottom-min(19, nH/2), nLeft, nBottom,   nRight}, nClrPane, 0 )
+   hBmp := LoadBitmap( GetResources(), "arrow" )
+   DrawMasked( hDC, hBmp, nBottom - min(13, nH/2), nLeft+1  )
+   DeleteObject( hBmp )
+
+else
+
+   if lTemas() .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "SCROLLBAR")
+
+      if hTheme <> nil
+         rc := { nTop, nLeft, nBottom, nRight }
+         C5_DrawThemeBackground( hTheme, hDC, 6,1 , rc )
+
+
+         n := min(19, nH/2)
+         rc := { nTop+1, nLeft+1, nTop + n , nRight }
+         C5_DrawThemeBackground( hTheme, hDC, 1,1 , rc )
+
+         if nH > 57
+            rc := { nTop+20,nLeft+1,nTop+37,nRight}
+            C5_DrawThemeBackground( hTheme, hDC, 3,1 , rc )
+            C5_DrawThemeBackground( hTheme, hDC, 9,1 , rc )
+         endif
+
+         rc := { nBottom - min(19, nH/2),nLeft+1,nBottom,nRight}
+         C5_DrawThemeBackground( hTheme, hDC, 1,5 , rc )
+
+         C5_CloseThemeData()
+
+      endif
+
+   else
+
+
+
+
+
+      DrawFrameControl(hDC, { nTop        , nLeft       , nBottom     , nRight        }, 4, nOr( 0x0010, 0x4000 ))
+
+
+
+
+
+      DrawFrameControl(hDC, { nTop    +  1  , nLeft   +  1, nTop    + min(19, nH/2) , nRight        }, 3, 0x0000 )
+
+      if nH > 57
+
+
+
+         DrawFrameControl(hDC, { nTop    + 20, nLeft   +  1, nTop    + 37, nRight        }, 4, 0x0010)
+      endif
+
+
+
+
+      DrawFrameControl(hDC, { nBottom - min(19, nH/2) , nLeft   +  1, nBottom     , nRight        }, 3, 0x0001)
+
+   endif
+
+endif
+
+return nil
+
+
+  static FUNCTION TShape_PaintHScroll( hDC, lDown, lHasVScroll, lRight, lFull ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local nW, nH, rc
+local nLeft, nTop, nRight, nBottom
+local aRect  := ::aRect
+local nBorde := if(::lModalFrame,2,0)
+local hTheme
+local nClrPane := ( 222 + ( 207 * 256 ) + ( 198 * 65536 ) )
+local hBmp
+If( lDown == nil, lDown := .T., ) ;
+If( lRight == nil, lRight := .T., ) ;
+If( lHasVScroll == nil, lHasVScroll := .F., ) ;
+If( lFull == nil, lFull := .F., ) ;
+
+if ::oWnd:lPocketPc()
+   nH := 14
+else
+   nH := 20
+endif
+
+if lFull
+   nTop    := ::aRect[1]
+   nLeft   := ::aRect[2]
+   nBottom := ::aRect[3]
+   nRight  := ::aRect[4]
+else
+
+   aRect := ::aRect
+
+   if lDown
+      nTop    := aRect[3] - nH -1
+      nLeft   := aRect[2] + if( lHasVScroll, if( lRight, nBorde, nH ), nBorde )-1
+      nBottom := aRect[3] -  nBorde -1
+      nRight  := aRect[4] - if( lHasVScroll, if( lRight, nH, nBorde ), nBorde )-1
+   else
+      nTop    := aRect[1] +  nBorde
+      nLeft   := aRect[2] + if( lHasVScroll, if( lRight, nBorde, nH ), nBorde )
+      nBottom := aRect[1] + nH
+      nRight  := aRect[4] - if( lHasVScroll, if( lRight, nH, nBorde ), nBorde )
+   endif
+endif
+
+nW := nRight - nLeft
+
+if ::oWnd:lPocketPc()
+
+   FillSolidRect( hDC, {nTop, nLeft, nBottom, nRight}, 16777215, 0 )
+
+   FillSolidRect( hDC, {nTop,       nLeft, nBottom, nLeft+ min(19, nW/2)  }, nClrPane, 0 )
+
+   hBmp := LoadBitmap( GetResources(), "arrowle" )
+   DrawMasked( hDC, hBmp, nTop+2, nLeft + min(6, nW/2)+1 )
+   DeleteObject( hBmp )
+
+   if nW > 19*3
+      FillSolidRect( hDC, {nTop, nLeft+19, nBottom, nLeft+19*2}, nClrPane, 0 )
+      hBmp := LoadBitmap( GetResources(), "griphor" )
+      DrawMasked( hDC, hBmp, nTop + 2, nLeft + 19 +6+1 )
+      DeleteObject( hBmp )
+   endif
+
+   FillSolidRect( hDC, {nTop, nRight-min(19, nW/2), nBottom,   nRight}, nClrPane, 0 )
+   hBmp := LoadBitmap( GetResources(), "arrowri" )
+   DrawMasked( hDC, hBmp, nTop+2, nRight- min(13, nW/2+1)  )
+   DeleteObject( hBmp )
+
+else
+
+
+   if lTemas() .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+      hTheme := C5_OpenThemeData(::oWnd:hWnd, "SCROLLBAR")
+
+      if hTheme <> nil
+         rc := { nTop, nLeft, nBottom, nRight }
+         C5_DrawThemeBackground( hTheme, hDC, 4,1 , rc )
+
+
+         rc := { nTop + 1, nLeft + 1, nBottom, nLeft   + min(19, nW/2) }
+         C5_DrawThemeBackground( hTheme, hDC, 1,9 , rc )
+
+         if nW > 57
+            rc := { nTop + 1, nLeft + 21, nBottom, nLeft + 37  }
+            C5_DrawThemeBackground( hTheme, hDC, 2,1 , rc )
+            C5_DrawThemeBackground( hTheme, hDC, 8,1 , rc )
+         endif
+
+         rc := { nTop + 1, nRight  - min(19, nW/2), nBottom, nRight }
+         C5_DrawThemeBackground( hTheme, hDC, 1,13 , rc )
+
+         C5_CloseThemeData()
+
+      endif
+
+   else
+
+
+
+
+      DrawFrameControl(hDC, { nTop         , nLeft        , nBottom      , nRight        }, 4, nOr( 0x0010, 0x4000 ))
+
+
+
+
+
+      DrawFrameControl(hDC, { nTop + 1    , nLeft + 1   , nBottom     , nLeft   + min(19, nW/2) }, 3, 0x0002 )
+
+      if nW > 57
+
+
+
+         DrawFrameControl(hDC, { nTop + 1    , nLeft   + 21, nBottom     , nLeft   + 37  }, 4, 0x0010)
+      endif
+
+
+
+
+      DrawFrameControl(hDC, { nTop + 1                  , nRight  - min(19, nW/2), nBottom     , nRight        }, 3, 0x0003)
+   endif
+
+endif
+
+return nil
+
+
+
+  static FUNCTION TShape_nMinWidth( nVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+if pcount() > 0
+   ::xMinWidth := nVal
+endif
+
+return ::xMinWidth
+
+
+  static FUNCTION TShape_nMinHeight( nVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+if pcount() > 0
+   ::xMinHeight := nVal
+endif
+
+return ::xMinHeight
+
+
+
+  static FUNCTION TShape_nMaxWidth( nVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+if pcount() > 0
+   ::xMaxWidth := nVal
+endif
+
+return ::xMaxWidth
+
+
+  static FUNCTION TShape_nMaxHeight( nVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+if pcount() > 0
+   ::xMaxHeight := nVal
+endif
+
+return ::xMaxHeight
+
+
+
+  static FUNCTION TShape_IntersectRect( aRect ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local lIntersect := .F.
+
+if IntersectRect( aRect, ::aRect )
+   lIntersect := .T.
+endif
+
+return lInterSect
+
+
+
+  static FUNCTION TShape_lIsMovingSel( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local lIs := .F.
+
+if ::oWnd:lMoviendo
+   if ::oWnd:IsInSelecteds( self ) .OR.( ::oWnd:oSelected <> nil .AND. ::oWnd:oSelected:nItemId == ::nItemId )
+      return .T.
+   endif
+endif
+
+return lIs
+
+
+
+static FUNCTION TShape_StoreRelPos( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+::aRelPos := ::GetRect()
+
+if ::oParent <> nil
+   ::aRelPos[1] -= ::oParent:nTop
+   ::aRelPos[2] -= ::oParent:nLeft
+   ::aRelPos[3] -= ::oParent:nBottom
+   ::aRelPos[4] -= ::oParent:nRight
+endif
+
+return nil
+
+
+
+      static FUNCTION TShape_Hide( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local o
+
+::lVisibleInform := .F.
+
+if len( ::aPages ) > 0
+   if len( ::aPages[::nOption] ) > 0
+      for each o in ::aPages[::nOption]
+          o:Hide()
+      next
+   endif
+endif
+
+return 0
+
+
+
+      static FUNCTION TShape_Show( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local o
+
+::lVisibleInform := .T.
+
+if len( ::aPages ) > 0
+   if len( ::aPages[::nOption] ) > 0
+      for each o in ::aPages[::nOption]
+          o:Show()
+      next
+   endif
+endif
+
+return 0
+
+
+
+
+  static FUNCTION TShape_cCaption( cNewVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+if cNewVal <> nil
+
+   if lMetoEnUndo()
+      ::oWnd:AddUndo( self, "cCaption", ::cxCaption , .T. )
+   endif
+
+   ::cxCaption := cNewVal
+
+   if lFromUndo()
+      ::oWnd:Refresh()
+   endif
+
+endif
+
+return ::cxCaption
+
+
+
+   static FUNCTION TShape_Iguales( oShape ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+return oShape:nItemId == ::nItemID
+
+
+
+   static FUNCTION TShape_Distintos( oShape ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+return oShape:nItemId <> ::nItemID
+
+
+
+   static FUNCTION TShape_Edit( nKey ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local oFont
+local bValid := {||.T.}
+local oShape := self
+local uVar := padr(oShape:cCaption, 100)
+
+
+
+
+
+
+
+
+oFont := ::oWnd:oForm:GetFontEx()
+
+if oShape:lEditable
+
+   if nKey <> nil
+      uVar := padr(chr( nKey ), 100)
+   endif
+
+   ::oWnd:oGet := TGet():New(oShape:nTop+1,oShape:nLeft+1,{ | u | If( PCount()==0, uVar, uVar:= u ) },oShape:oWnd,oShape:nWidth-2,oShape:nHeight-1,,,0,16777215,oFont,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,.T.,)
+
+   if nKey <> nil
+      ::oWnd:oGet:SetPos(2,2)
+   endif
+
+
+
+   ::oWnd:nLastKey := 0
+   ::oWnd:oGet:SetFocus()
+
+   if Upper( ::oWnd:oGet:ClassName() ) <> "TGET"
+      ::oWnd:oGet:Refresh()
+   endif
+
+
+   ::oWnd:oGet:bValid := {|| .T. }
+
+
+
+
+
+
+
+
+
+   ::oWnd:oGet:bLostFocus := {|| (oShape:oWnd:oGet:Assign(), oShape:oWnd:oGet:VarPut( oShape:oWnd:oGet:oGet:VarGet()), oShape:cCaption := if( oShape:oWnd:nLastKey <> 27, (EnableUndo(),alltrim(oShape:oWnd:oGet:oGet:VarGet())), oShape:cCaption) , If( oShape:oWnd:nLastKey <> 27, Eval( bValid, uVar, oShape:oWnd:nLastKey, Self ), Eval( bValid, nil, oShape:oWnd:nLastKey, Self ) ), oShape:oWnd:oGet:End(), DisableUndo()) }
+
+
+   ::oWnd:oGet:bKeyDown := { | nKey | If( nKey == 13 .OR. nKey == 27, ( oShape:oWnd:nLastKey := nKey, SetFocus(oShape:oWnd:hWnd)), ) }
+
+endif
+
+return nil
+
+
+  static FUNCTION TShape_EditDlg( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local oWnd
+local oIcon1
+
+
+
+ oWnd = TDialog():New( 0, 0, 0, 0, "Form",,, .F.,,,,,, .F.,,,, 118, 79, .F., )
+
+
+
+
+        oIcon1 := TImage():New( 10.00, 20.50, 16.00, 16.00,, "", .T., oWnd,,, .F., .F.,,, .F.,, .T.,, .F. )
+
+
+oWnd:lHelpIcon := .F.
+
+oWnd:Activate( oWnd:bLClicked, oWnd:bMoved, oWnd:bPainted, .T.,,,, oWnd:bRClicked,,, )
+
+return nil
+
+
+return nil
+
+
+  static FUNCTION TShape_Save( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+   local n
+   local cType, cInfo := "", cMethod
+   local oWnd  := &( ::ClassName() + "()" )
+   local uData, nProps := 0
+
+   oWnd = oWnd:New()
+
+   for n = 1 to Len( ::aProperties )
+       uData := OSend( Self, ::aProperties[ n ] )
+
+       cInfo += ( I2Bin( Len( ::aProperties[ n ] ) ) +  ::aProperties[ n ] )
+       nProps++
+       cType = ValType( uData )
+       do case
+          case cType == "A"
+               cInfo += ASave( uData )
+
+          case cType == "O"
+               cInfo += uData:Save()
+
+          otherwise
+
+               cInfo += ( cType + I2Bin( Len( uData := cValToChar( uData ) ) ) +  uData )
+       endcase
+   next
+
+   oWnd := nil
+
+
+
+return "O" + I2Bin( 2 + Len( ::ClassName() ) + 2 + Len( cInfo ) ) +  I2Bin( Len( ::ClassName() ) ) +  ::ClassName() + I2Bin( nProps ) + cInfo
+
+
+
+
+  static FUNCTION TShape_Load( cInfo ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+
+   local nPos := 1, nProps, n, nLen
+   local cData, cType, cBuffer
+   local obj
+   local aArray
+
+   nProps = Bin2I( SubStr( cInfo, nPos, 2 ) )
+   nPos += 2
+
+   for n = 1 to nProps
+      nLen  = Bin2I( SubStr( cInfo, nPos, 2 ) )
+      nPos += 2
+      cData = SubStr( cInfo, nPos, nLen )
+      nPos += nLen
+      cType = SubStr( cInfo, nPos++, 1 )
+      nLen  = Bin2I( SubStr( cInfo, nPos, 2 ) )
+      nPos += 2
+      cBuffer = SubStr( cInfo, nPos, nLen )
+      nPos += nLen
+      do case
+         case cType == "A"
+              OSend( Self, "_" + cData, ARead( cBuffer ) )
+
+         case cType == "O"
+              OSend( Self, "_" + cData, ORead( cBuffer ) )
+
+         case cType == "C"
+              OSend( Self, "_" + cData, cBuffer )
+
+         case cType == "L"
+              OSend( Self, "_" + cData, cBuffer == ".T." )
+
+         case cType == "N"
+              OSend( Self, "_" + cData, Val( cBuffer ) )
+      endcase
+   next
+
+return nil
+
+function ARead( cInfo )
+
+   local nPos := 1, nLen, n
+   local aArray, cType, cBuffer
+
+   nLen   = Bin2I( SubStr( cInfo, nPos, 2 ) )
+   nPos  += 2
+   aArray = Array( nLen )
+
+   for n = 1 to Len( aArray )
+      cType = SubStr( cInfo, nPos++, 1 )
+      nLen  = Bin2I( SubStr( cInfo, nPos, 2 ) )
+      nPos += 2
+      cBuffer = SubStr( cInfo, nPos, nLen )
+      nPos += nLen
+
+      do case
+         case cType == "A"
+              aArray[ n ] = ARead( "A" + I2Bin( nLen ) + cBuffer )
+
+         case cType == "O"
+              aArray[ n ] = ORead( cBuffer )
+
+         case cType == "C"
+              aArray[ n ] = cBuffer
+
+         case cType == "D"
+              aArray[ n ] = CToD( cBuffer )
+
+         case cType == "L"
+              aArray[ n ] = ( cBuffer == ".T." )
+
+         case cType == "N"
+              aArray[ n ] = Val( cBuffer )
+      endcase
+   next
+
+return aArray
+
+function ASave( aArray )
+
+   local n, cType, uData
+   local cInfo := ""
+
+   for n = 1 to Len( aArray )
+      cType = ValType( aArray[ n ] )
+      do case
+         case cType == "A"
+              cInfo += ASave( aArray[ n ] )
+
+         case cType == "O"
+              cInfo += aArray[ n ]:Save()
+
+         otherwise
+              cInfo += ( cType + I2Bin( Len( uData := cValToChar( aArray[ n ] ) ) ) +  uData )
+      endcase
+   next
+
+return "A" + I2Bin( 2 + Len( cInfo ) ) + I2Bin( Len( aArray ) ) + cInfo
+
+
+   static FUNCTION TShape_SaveFile( cFileName ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+ If( cFileName == nil, cFileName := cNewFileName( "Test", "ffm" ), ) ;
+
+return MemoWrit( cFileName, ::Save() )
+
+
+   static FUNCTION TShape_Save2RC( cFileName ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local h
+
+   If( cFileName == nil, cFileName := cNewFileName( "Test", "rc" ), ) ;
+
+ h := fcreate( cFileName )
+ fwrite( h, ::GenRC() )
+ fclose( h )
+
+return 0
+
+
+   static FUNCTION TShape_Save2PRG( cFileName ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local h
+local a :={}
+local n
+local cCurPath  := cFilePath( GetModuleFileName( GetInstance() ) )
+local cPrg
+
+if right( cCurPath,1) <> "\";     cCurPath += "\";   endif
+
+
+   If( cFileName == nil, cFileName := cNewFileName( "Test", "prg" ), ) ;
+
+::cFileName := cFileName
+
+ h := fcreate( cFileName )
+
+ for n := 1 to len( ::oWnd:aShapes )-1
+     aadd( a, ::oWnd:aShapes[n] )
+ next
+
+ a := asort( a,,,{|x,y| x:nTop < y:nTop .AND. if( x:nTop == y:nTop, x:nLeft < y:nLeft, .T. ) } )
+
+ for n := 1 to len( a )
+     ::oWnd:aShapes[n] := a [n]
+ next
+
+ cPrg := ::GenPRG(.F.)
+
+ fwrite( h, cPrg )
+ fclose( h )
+
+
+
+ if !file( "WindowsXP.Manifest" )
+    h := fcreate( "WindowsXP.Manifest" )
+    fwrite( h, ::GenRcManifest() )
+    fclose( h )
+ endif
+
+ if !file( cFileNoExt( cFileName ) + ".rc" )
+    h := fcreate( cFileNoExt( cFileName ) + ".rc" )
+    fwrite( h,   '1 24 "WinXP/WindowsXP.Manifest"' )
+    fclose( h )
+ endif
+
+
+return 0
+
+
+
+  static FUNCTION TShape_LoadFile( cFileName, oWnd ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+   local cInfo, nPos := 4
+   local nLenName
+   local cClassName
+   local oObj
+
+   If( cFileName == nil, cFileName := "", ) ;
+
+   if ! File( cFileName )
+      MsgStop( "File not found: " + cFileName )
+      return nil
+   endif
+
+   cInfo  = MemoRead( cFileName )
+   nLenName := bin2I( substr( cInfo, nPos, 2 ) )
+   cClassName := substr( cInfo, 6, nLenName )
+   oObj       := &( cClassName + "()" )
+   oObj:New()
+   oObj:oWnd := oWnd
+   oWnd:AddShape( oObj )
+
+   nPos := 1
+   cInfo := substr( cInfo, 6 + nLenName )
+   oObj:Load( SubStr( cInfo, nPos ) )
+   oWnd:Refresh()
+
+return nil
+
+
+
+
+  static FUNCTION TShape_Copy( nRow, nCol ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local oShape
+::cInfo := ""
+asize( ::acInfos, 0 )
+if len(::oWnd:aSelecteds) > 1
+
+   for each oShape in ::oWnd:aSelecteds
+       aadd( ::acInfos, oShape:Save() )
+   next
+
+else
+
+   ::cInfo := ::Save()
+
+endif
+
+return ::cInfo
+
+
+  static FUNCTION TShape_Paste( nTop, nLeft, oWnd ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cStr
+local oObj
+local nWidth, nHeight
+
+if !empty( ::cInfo )
+   oObj := ::xPaste( oWnd )
+   nWidth  := oObj:nWidth
+   nHeight := oObj:nHeight
+
+   oObj:aRect[1] := nTop
+   oObj:aRect[2] := nLeft
+   oObj:aRect[3] := nTop + nHeight
+   oObj:aRect[4] := nLeft + nWidth
+else
+   ::oWnd:ResetSelecteds()
+   if len( ::acInfos ) > 0
+      for each cStr in ::acInfos
+          oObj := ::xPaste( oWnd, cStr )
+          oObj:aRect[1] += 10
+          oObj:aRect[2] += 10
+          oObj:aRect[3] += 10
+          oObj:aRect[4] += 10
+          aadd( ::oWnd:aSelecteds, oObj )
+          oObj:StorePos()
+          oObj:lSelected := .T.
+      next
+      ::oWnd:oSelected := ::oWnd:aSelecteds[1]
+   endif
+endif
+
+oWnd:Refresh()
+
+return 0
+
+
+
+
+
+  static FUNCTION TShape_xPaste( oWnd, cInfo ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local nPos := 4
+local nLenName
+local cClassName
+local oObj
+
+If( cInfo == nil, cInfo := ::cInfo, ) ;
+
+
+   if empty( ::cInfo ) .AND. len( ::acInfos ) == 0
+      MsgInfo( "No hay datos" )
+      return nil
+   endif
+
+   nLenName := bin2I( substr( cInfo, nPos, 2 ) )
+   cClassName := substr( cInfo, 6, nLenName )
+   oObj       := &( cClassName + "()" )
+   oObj:New()
+
+   oObj:oWnd := oWnd
+   oWnd:AddShape( oObj )
+
+   if lower(cClassName) == "tdsgnmenubar"
+      oWnd:oForm:oMenu := oObj
+   endif
+
+   if lower(cClassName) == "tdsgnbar"
+      oWnd:oForm:oBar := oObj
+   endif
+
+   nPos := 1
+   cInfo := substr( cInfo, 6 + nLenName )
+   oObj:Load( SubStr( cInfo, nPos ) )
+
+
+return oObj
+
+
+
+  static FUNCTION TShape_ShapeOver( nRow, nCol ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local oShape
+
+if ::lContainer
+   for each oShape in ::aShapes
+       if oShape:ShapeOver( nRow, nCol ) <> nil
+          return oShape
+       endif
+   next
+else
+   if PtInRect( nRow, nCol, {::aRect[1]-5,::aRect[2]-5,::aRect[3]+5,::aRect[4]+5} )
+      return self
+   endif
+endif
+
+return nil
+
+
+  static FUNCTION TShape_GetContainer( aRect ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local oContainer
+
+   if ::lContainer
+      if EsMayor( ::aRect, aRect )
+         return self
+      endif
+   endif
+
+return oContainer
+
+
+  static FUNCTION TShape_Inspect( cDataName, oInspector ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+local o := self
+local uVal
+local hDC, aFonts
+local aPoint := {0,0}
+
+   do case
+      case left( cDataName, 4 ) == "nClr"
+
+           if !empty( oInspector:aRectBtn )
+              aPoint := {oInspector:aRectBtn[3],oInspector:aRectBtn[4]}
+              aPoint := ClientToScreen( oInspector:hWnd, aPoint )
+           endif
+
+           return { | cDataName | o:GetColor( cDataName ) }
+
+      case cDataName == "cFaceName"
+
+           if !empty( oInspector:aRectBtn )
+              aPoint := {oInspector:aRectBtn[3],oInspector:aRectBtn[4]}
+              aPoint := ClientToScreen( oInspector:hWnd, aPoint )
+           endif
+           return { | cDataName | oSend( self, "_" + cDataName, xSelFont( aPoint[1], aPoint[2]-155, OSend( Self, cDataName ))),o:Refresh(),oInspector:Refresh() }
+
+      case cDataName == "oFont"
+
+           if !empty( oInspector:aRectBtn )
+              aPoint := {oInspector:aRectBtn[3],oInspector:aRectBtn[4]}
+              aPoint := ClientToScreen( oInspector:hWnd, aPoint )
+           endif
+           return { | cDataName | ::ChooseFont( ) }
+
+
+
+
+   endcase
+
+return nil
+
+
+  static FUNCTION TShape_SetProp( cDataName, uVal ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+     OSend( Self, "_" + cDataName, uVal )
+     ::Refresh()
+
+return nil
+
+
+  static FUNCTION TShape_GetColor( cDataName ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+local nColor := oSend( self, cDataName )
+
+   nColor := ChooseColor( nColor )
+
+   oSend( self, "_" + cDataName, nColor )
+
+   ::Refresh()
+
+return nil
+
+
+      static FUNCTION TShape_cGetFileName( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cFiltro := "Imágenes (*.bmp *.gif *.jpg *.ico *.cur ) | *.bmp;*.gif;*.jpg;*.ico;*.cur; |"
+local cFiles := cGetFile( cFiltro, "Selecciona imagen" )
+
+::cFileName := cFiles
+
+::oWnd:Refresh()
+
+return ::cFileName
+
+
+
+   static FUNCTION TShape_GenRc( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cClass := ::ClassName()
+local cRet := ""
+local oControl
+local n, nLen
+
+
+do case
+   case cClass == "TWNDDSGN"
+        cRet += "#include <windows.h>" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+
+
+
+        cRet += ::cStrID() + " DIALOG " + ::cStrLeft() + ", "    + ::cStrTop() + ", "     + ::cStrWidth() + ", "   + ::cStrHeight() + Chr(13)+Chr(10)
+
+
+        if ::lCaption
+           cRet += "CAPTION " + '"' + alltrim( ::cCaption )  + '"' + Chr(13)+Chr(10)
+           cRet += "STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU"  + Chr(13)+Chr(10)
+        endif
+
+
+        cRet += "FONT 8"  +", " +  '"' + alltrim(::cFaceName) + '"' + Chr(13)+Chr(10)
+        if ::oMenu <> nil
+           cRet += "MENU " + ::oMenu:cStrId() + Chr(13)+Chr(10)
+        endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+        cRet += "BEGIN" + Chr(13)+Chr(10)
+        nLen := len( ::oWnd:aShapes )
+        for n := 1 to nLen - 1
+            oControl := ::oWnd:aShapes[n]
+            if oControl:ClassName() <> "TDSGNMENUBAR"
+               cRet += oControl:GenRc()
+            endif
+        next
+        cRet += "END" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+        if ::oMenu <> nil
+           cRet += ::oMenu:cStrID() + " MENU" + Chr(13)+Chr(10)
+           cRet += "{" + Chr(13)+Chr(10)
+                for n := 1 to len( ::oMenu:aShapes )
+                    cRet += ::oMenu:aShapes[n]:GenRc( 1 )
+                next
+           cRet += "}" + Chr(13)+Chr(10)
+        endif
+
+   case cClass == "TDSGNBTN"
+
+        do case
+           case ::nTipo == 1
+
+
+
+
+
+
+
+                cRet += "  CONTROL " + '"' + alltrim( ::cCaption ) + '", ' + ::cStrID() + ", " + '"Button", ' + "WS_TABSTOP , "                  + ::cStrLeft() + ", "              + ::cStrTop() + ", "               + ::cStrWidth() + ", "             + ::cStrHeight() + Chr(13)+Chr(10)
+
+           case ::nTipo == 3
+
+
+
+
+
+
+
+                cRet += "  CONTROL " + '"' + alltrim( ::cCaption ) + '", ' + ::cStrID() + ", " + '"Button", ' + "BS_CHECKBOX | WS_TABSTOP , " + ::cStrLeft() + ", "           + ::cStrTop() + ", "            + ::cStrWidth() + ", "          + ::cStrHeight() + Chr(13)+Chr(10)
+
+           case ::nTipo == 2
+
+
+
+
+
+
+
+                cRet += "  CONTROL " + '"' + alltrim( ::cCaption ) + '", ' + ::cStrID() + ", " + '"Button", ' + "BS_RADIOBUTTON , " + ::cStrLeft() + ", "  + ::cStrTop() + ", "   + ::cStrWidth() + ", " + ::cStrHeight() + Chr(13)+Chr(10)
+        endcase
+
+   case cClass == "TDSGNSAY"
+
+
+
+
+
+
+
+        cRet += "  CONTROL " + '"' + alltrim( ::cCaption ) + '", ' + ::cStrID() + ", " +  '"Static", ' + "WS_GROUP , " + ::cStrLeft() + ", "          + ::cStrTop() + ", "           + ::cStrWidth() + ", "         + ::cStrHeight() + Chr(13)+Chr(10)
+
+   case cClass == "TDSGNEDIT"
+
+
+
+
+
+
+
+        cRet += "  CONTROL " + '"' + alltrim( ::cCaption ) + '", ' + ::cStrID() + ", " +  '"Edit", ES_AUTOHSCROLL|WS_BORDER|WS_TABSTOP , ' + ::cStrLeft() + ", "    + ::cStrTop() + ", "     + ::cStrWidth() + ", "   + ::cStrHeight() + Chr(13)+Chr(10)
+
+   case cClass == "TDSGNGRP"
+
+
+
+
+
+
+
+        cRet += "  CONTROL " + '"' + alltrim( ::cCaption ) + '", ' + ::cStrID() + ", " +  '"Button", BS_GROUPBOX , ' + ::cStrLeft() + ", "        + ::cStrTop() + ", "         + ::cStrWidth() + ", "       + ::cStrHeight() + Chr(13)+Chr(10)
+
+   case cClass == "TDSGNCBX"
+
+
+        cRet += "  CONTROL " + '"' + alltrim( ::cCaption ) + '", ' + ::cStrID() + ", "
+                do case
+                   case ::nTipo == "DropDownList"
+                        cRet += '"ComboBox", WS_BORDER|CBS_DROPDOWNLIST|WS_VSCROLL|WS_TABSTOP , '
+                   case ::nTipo == "Simple"
+                        cRet += '"ComboBox", WS_BORDER|CBS_SIMPLE|WS_VSCROLL|WS_TABSTOP , '
+                   otherwise
+                        cRet += '"ComboBox", WS_BORDER|CBS_DROPDOWN|WS_VSCROLL|WS_TABSTOP , '
+                endcase
+
+
+
+
+                cRet += ::cStrLeft()  + ", "  + ::cStrTop()   + ", "  + ::cStrWidth() + ", "  + ::cStrHeight() + Chr(13)+Chr(10)
+
+   case cClass == "TDSGNLBX"
+
+
+        cRet += "  CONTROL " + '"' + alltrim( ::cCaption ) + '", ' + ::cStrID() + ", "
+
+                cRet += '"ListBox", LBS_NOTIFY|WS_VSCROLL|WS_BORDER|WS_TABSTOP , '
+
+
+
+
+                cRet += ::cStrLeft() + ", "   + ::cStrTop() + ", "    + ::cStrWidth() + ", "  + ::cStrHeight() + Chr(13)+Chr(10)
+
+   case cClass == "TDSGNSCROLL"
+
+
+        cRet += "  CONTROL " + '"' + alltrim( ::cCaption ) + '", ' + ::cStrID() + ", "
+
+                cRet += '"ScrollBar", ' + if( ::lVertical,"0x00000001","0x00000000") + ", "
+
+
+
+
+                cRet += ::cStrLeft() + ", "    + ::cStrTop() + ", "     + ::cStrWidth() + ", "   + ::cStrHeight() + Chr(13)+Chr(10)
+
+   case cClass == "TDSGNBTNBMP"
+
+
+        cRet += "  CONTROL " + '"' + alltrim( ::cCaption ) + '", ' + ::cStrID() + ", "
+
+                cRet += '"TBTNBMP", ' + "0 | WS_CHILD | WS_VISIBLE | WS_TABSTOP, "
+
+
+
+
+                cRet += ::cStrLeft() + ", "    + ::cStrTop() + ", "     + ::cStrWidth() + ", "   + ::cStrHeight() + Chr(13)+Chr(10)
+
+   case cClass == "TDSGNBROWSE"
+
+
+        cRet += "  CONTROL " + '"' + alltrim( ::cCaption ) + '", ' + ::cStrID() + ", "
+
+                cRet += '"TWBROWSE", ' + "0 | WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_VSCROLL | WS_VSCROLL, "
+
+
+
+
+                cRet += ::cStrLeft() + ", "    + ::cStrTop() + ", "     + ::cStrWidth() + ", "   + ::cStrHeight() + Chr(13)+Chr(10)
+
+   case cClass == "TDSGNIMG"
+
+
+        cRet += "  CONTROL " + '"", ' + ::cStrID() + ", "
+
+                cRet += '"TBITMAP", ' + "0 | WS_CHILD | WS_VISIBLE, "
+
+
+
+
+                cRet += ::cStrLeft() + ", "    + ::cStrTop() + ", "     + ::cStrWidth() + ", "   + ::cStrHeight() + Chr(13)+Chr(10)
+
+   case cClass == "TDSGNUSER"
+
+
+        cRet += "  CONTROL " + '"' + alltrim(::cCaption) + '", ' + ::cStrID() + ", "
+
+                cRet += '"' + alltrim( ::cClassName )+ '", ' +  alltrim( ::cStyle )+  ", "
+
+
+
+
+                cRet += ::cStrLeft() + ", "    + ::cStrTop() + ", "     + ::cStrWidth() + ", "   + ::cStrHeight() + Chr(13)+Chr(10)
+
+
+endcase
+
+return cRet
+
+
+   static FUNCTION TShape_GenRcManifest( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local c := ""
+
+c += '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+c += '<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">'
+c += "<assemblyIdentity"
+c += '    version="1.0.0.0"'
+c += '    processorArchitecture="X86"'
+c += '    name="FiveTech Software.FiveWin.32bits"'
+c += '    type="win32"'
+c += "/>"
+c += "<description>Your application description here.</description>"
+c += "<dependency>"
+c += "    <dependentAssembly>"
+c += "         <assemblyIdentity"
+c += '          type="win32"'
+c += '          name="Microsoft.Windows.Common-Controls"'
+c += '          version="6.0.0.0"'
+c += '          processorArchitecture="X86"'
+c += '          publicKeyToken="6595b64144ccf1df"'
+c += '          language="*"'
+c += "         />"
+c += "        </dependentAssembly>"
+c += "</dependency>"
+c += "</assembly>"
+
+return c
+
+
+   static FUNCTION TShape_GenPrg( lDialog ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cClass := ::ClassName()
+local cRet := ""
+local oControl
+local n, nLen
+local cObject
+local cVar
+local caItems
+local o := self
+local cFunciones := ""
+
+
+
+If( lDialog == nil, lDialog := .T., ) ;
+
+
+do case
+   case cClass == "TWNDDSGN"
+
+        aVarNames := {}
+
+        cHeader := '#include "fivewin.ch"' + Chr(13)+Chr(10) + Chr(13)+Chr(10) + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+        cHeader += "static oWnd" + Chr(13)+Chr(10)
+        cHeader += "function main()" + Chr(13)+Chr(10)
+
+
+        cWindow := " DEFINE DIALOG oWnd FROM " + ::cStrTop(.F.) + ", " + ::cStrLeft(.F.) + " TO 0,0  SIZE " + ::cStrWidth(.F.) + ", " + ::cStrHeight(.F.) + " ;" + Chr(13)+Chr(10)
+        cWindow += "        TITLE " + '"' + alltrim( ::cCaption )  + '"' + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+        nLen := len( ::oWnd:aShapes )
+        for n := 1 to nLen - 1
+
+            oControl := ::oWnd:aShapes[n]
+
+            cRet += oControl:GenPRG( lDialog, "oWnd", @cHeader, @cFunciones ) + Chr(13)+Chr(10)
+
+        next
+
+        cRet += Chr(13)+Chr(10)
+
+        cRet += "oWnd:lHelpIcon := .f." + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+        cRet += "ACTIVATE DIALOG oWnd CENTERED" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+        cRet += "return nil" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+        cRet := cHeader + Chr(13)+Chr(10) + Chr(13)+Chr(10) + cWindow + Chr(13)+Chr(10) + cRet
+
+        if ::oMenu <> nil
+           cWindow += " ;" + Chr(13)+Chr(10)
+           cWindow += "        MENU BuildMenu() "
+
+           cRet += "function BuildMenu()" + Chr(13)+Chr(10)
+           cRet += "local oMenu" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+                for n := 1 to len( ::oMenu:aShapes )
+                    cRet += ::oMenu:aShapes[n]:GenPrg( 1 )
+                next
+           cRet += "return oMenu" + Chr(13)+Chr(10)
+        endif
+
+        if !empty( cFunciones )
+           cRet += Chr(13)+Chr(10)
+           cRet += cFunciones
+        endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+endcase
+
+return cRet
+
+
+
+  static FUNCTION TShape_cStrID( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cRet := allstr( ::nItemID )
+
+
+return cRet
+
+
+  static FUNCTION TShape_cStrLeft( lRc ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cRet := ""
+local nLeft := ::nLeft
+
+If( lRc == nil, lRc := .T., ) ;
+
+if ::oParent <> nil
+   nLeft := nLeft - ::oParent:nLeft
+endif
+
+
+cRet := allstr( if(lRC,::XPix2Dlg(nLeft),nLeft) )
+
+return cRet
+
+
+  static FUNCTION TShape_cStrTop( lRc ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cRet := ""
+local nTop := ::nTop
+If( lRc == nil, lRc := .T., ) ;
+
+if ::ClassName() <> "TWNDDSGN"
+   nTop -= ::oWnd:oForm:nHCaption
+endif
+
+if ::oParent <> nil
+   nTop := nTop - ::oParent:nTop
+endif
+
+
+cRet := allstr( if(lRC,::YPix2Dlg(nTop),nTop) )
+
+return cRet
+
+
+  static FUNCTION TShape_cStrRight( lRc ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cRet := ""
+local nRight := ::nRight
+If( lRc == nil, lRc := .T., ) ;
+
+cRet := allstr( if(lRC,::YPix2Dlg(nRight),nRight) )
+
+return cRet
+
+
+  static FUNCTION TShape_cStrBottom( lRc ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cRet := ""
+local nBottom := ::nBottom
+If( lRc == nil, lRc := .T., ) ;
+
+
+cRet := allstr( if(lRC,::YPix2Dlg(nBottom),nBottom) )
+
+return cRet
+
+
+
+
+  static FUNCTION TShape_cStrWidth( lRc ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cRet := ""
+local nWidth := ::nWidth()
+If( lRc == nil, lRc := .T., ) ;
+
+if ::ClassName() == "TWNDDSGN"
+   nWidth := ::oWnd:nWidth()
+endif
+
+cRet := allstr( if( lRC, ::XPix2Dlg(nWidth),nWidth) )
+
+return cRet
+
+
+  static FUNCTION TShape_cStrHeight( lRC ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cRet := ""
+local nHeight := ::nHeight()
+
+If( lRC == nil, lRC := .T., ) ;
+
+if ::ClassName() == "TWNDDSGN"
+   nHeight := ::oWnd:nHeight()-::oWnd:oForm:nHCaption
+endif
+
+cRet := allstr( if( lRC, ::YPix2Dlg(nHeight),nHeight) )
+
+return cRet
+
+
+
+      static FUNCTION TShape_YPix2Dlg( nPix ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+
+
+
+
+
+
+
+
+
+
+return (4 / nLoWord( GetDlgBaseUnits() )) * nPix
+
+
+      static FUNCTION TShape_XPix2Dlg( nPix ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+
+
+
+
+
+
+
+
+return (8 / nHiWord( GetDlgBaseUnits() )) * nPix
+
+
+function allstr( n ) ; return alltrim( str( n ) )
+
+
+
+  static FUNCTION TShape_ResetSelecteds( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local oShape
+local n, nLen
+
+nLen := len( ::aShapes ) - 1
+
+for n := 1 to nLen
+
+    oShape := ::aShapes[n]
+
+    if ::oWnd:oSelected <> nil .AND. ::oWnd:oSelected == oShape
+    else
+       oShape:lSelected := .F.
+    endif
+
+next
+
+::oWnd:aSelecteds := {}
+::oWnd:Refresh()
+
+return nil
+
+
+
+
+   static FUNCTION TShape_GetObjName( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local cName := "oUsr"
+local nAt
+
+do case
+   case ::ClassName() == "TDSGNBAR"
+        cName := "oBar"
+
+   case ::ClassName() == "TDSGNBROWSE"
+        cName := "oBrw"
+
+   case ::ClassName() == "TDSGNBTN"
+
+        do case
+           case ::nTipo == 1
+                cName := "oBtn"
+
+           case ::nTipo == 3
+                cName := "oChk"
+
+           case ::nTipo == 2
+                if ::lGroup
+                   cName := "oRadMenu"
+                else
+                   cName := "oRadio"
+                endif
+        endcase
+
+   case ::ClassName() == "TDSGNBTNBMP"
+        cName := "oBtnBmp"
+
+   case ::ClassName() == "TDSGNCBX"
+        cName := "oCbx"
+
+   case ::ClassName() == "TDSGNEDIT"
+        cName := "oGet"
+
+   case ::ClassName() == "TDSGNFOLDER"
+        cName := "oFolder"
+
+   case ::ClassName() == "TDSGNGRP"
+        cName := "oGroup"
+
+   case ::ClassName() == "TDSGNIMG"
+        if ::lIcon
+           cName := "oIcon"
+        else
+           cName := "oImg"
+        endif
+
+   case ::ClassName() == "TDSGNLBX"
+        cName := "oLbx"
+
+   case ::ClassName() == "TDSGNLISTVIEW"
+        cName := "oLview"
+
+   case ::ClassName() == "TDSGNMENUBAR"
+        cName := "oMenu"
+
+   case ::ClassName() == "TDSGNPANEL"
+        cName := "oPanel"
+
+   case ::ClassName() == "TDSGNPRGBAR"
+        cName := "oMtr"
+
+   case ::ClassName() == "TDSGNSAY"
+        cName := "oSay"
+
+   case ::ClassName() == "TDSGNSCROLL"
+        if ::lVertical
+           cName := "oVScroll"
+        else
+           cName := "oHScroll"
+        endif
+
+   case ::ClassName() == "TDSGNSLIDER"
+        cName := "oSlider"
+
+   case ::ClassName() == "TDSGNTREEVIEW"
+        cName := "oTree"
+
+   case ::ClassName() == "TDSGNUSER"
+        cName := "oUser"
+
+endcase
+
+if empty( ::cObjName )
+
+   if !empty( aVarNames ) .AND. ( nAt := AScan( aVarNames, { | a | Upper( cName ) == Upper( a[1] ) } ) ) <> 0
+      aVarNames[nAt,2] := aVarNames[nAt,2] + 1
+   else
+      aadd( aVarNames, {cName, 1} )
+      nAt := len( aVarNames )
+   endif
+
+   ::cObjName := cName + alltrim(str(aVarNames[nAt,2] ))
+
+endif
+
+::cObjName := strtran( ::cObjName, " ", "")
+
+
+return ::cObjName
+
+
+
+  static FUNCTION TShape_GetObjNames( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local n
+local aCtrls := {""}
+
+  for n := 1 to len( ::oWnd:aShapes ) -1
+      aadd( aCtrls, ::oWnd:aShapes[n]:GetObjName() )
+  next
+
+return  aCtrls
+
+
+  static FUNCTION TShape_cGetVarName( cFrom ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local n
+local nLen := len( ::aVarNames )
+local nCount := 0
+local cName
+
+  for n := 1 to nLen
+      if substr(::aVarNames[n],1,len(cFrom)) == cFrom
+         nCount ++
+      endif
+  next
+  nCount++
+
+  cName := cFrom+alltrim(str(nCount))
+  aadd( ::aVarNames, cName )
+
+return cName
+
+
+
+
+
+  static FUNCTION TShape_GetObjFromName( cName ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+local n, c
+
+
+for n := 1 to len( ::oWnd:aShapes )
+    c := ::oWnd:aShapes[n]:GetObjName()
+    if c == cName
+       return ::oWnd:aShapes[n]
+    endif
+next
+
+return nil
+
+
+
+
+  static FUNCTION TShape_ChooseFont( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+local oFont
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+oFont := TFont():New( ::cFaceName, ::nWidthFont, ::nHeightFont, .F., ::lBold, 0, 0, 0, ::lItalic, ::lUnderline, ::lStrikeOut )
+
+oFont := oFont:Choose( @::nClrPane )
+
+::cFaceName   := oFont:cFaceName
+::nWidthFont  := oFont:nWidth
+::nHeightFont := oFont:nHeight
+::lBold       := oFont:lBold
+::lItalic     := oFont:lItalic
+::lUnderline  := oFont:lUnderline
+::lStrikeOut  := oFont:lStrikeOut
+
+::oWnd:Refresh()
+
+return nil
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  static FUNCTION TShape_GetFontEx( ) ; local Self AS CLASS TShape := QSelf() AS CLASS TShape
+
+
+local cFaceName := ::cFaceName
+local oFontPPC
+
+local nHeight := ::nHeightFont
+
+If( nHeight == nil, nHeight := GetDefaultFontHeight(), ) ;
+
+
+
+
+
+cFaceName := ::cFaceName
+
+
+
+nHeight := -1 * abs(nHeight)
+
+oFontPPC := TFont():New( cFaceName, 0, nHeight , .F.,::lBold,,,,::lItalic,::lUnderline,::lStrikeOut )
+
+
+
+return oFontPPC
+
+
+#pragma BEGINDUMP
+
+#include "windows.h"
+#include <stdio.h>
+#include <hbapi.h>
+
+HB_FUNC( FREOPEN_STDERR )
+{
+   hb_retnl( ( HB_LONG ) freopen( hb_parc( 1 ), hb_parc( 2 ), stderr ) );
+}
+
+HB_FUNC( GETDEFAULTFONTNAME )
+{
+   LOGFONT lf;
+   GetObject( ( HFONT ) GetStockObject( DEFAULT_GUI_FONT ) , sizeof( LOGFONT ), &lf );
+   hb_retc( lf.lfFaceName );
+}
+
+
+#pragma ENDDUMP

@@ -1,0 +1,717 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 3 "source\newproj.prg"
+function NewProj()
+local oPrj
+local oDlg
+local oHB,oBCC, oFindHB, oFindBCC, oFindPrgs, oFindIncs, oFindLibs
+local cHB  := padr("c:\prg\harbour",300)
+local cBCC := padr("c:\prg\bcc55",300)
+local oPrgs, oIncludes, oLibs
+local cPrgs, cIncludes, cLibs
+local lOk := .F.
+local cOutDir := space( 300 )
+local oK, oC
+local oOutDir
+
+
+oPrj := TProyecto2():New()
+oPrj:cOutName := "prueba"
+oPrj:Load()
+
+cOutDir   := oPrj:cPrgDir
+cPrgs     := oPrj:cPrgs()
+cIncludes := oPrj:cIncludes()
+cLibs     := oPrj:cLibs()
+
+oDlg = TDialog():New(,,,,, "CONFIGDIR",, .F.,,,,,, .F.,,,,,, .F., )
+
+   oHb := TGet():ReDefine( 101, { | u | If( PCount()==0, cHB, cHB:= u ) }, oDlg,,,,,,,,, .F.,,, .F., .F.,,,,,,, "cHB", )
+   oFindHB := TButton():ReDefine( 102, {||SelDir( oHb, cHB )}, oDlg,,, .F.,,,, .F. )
+
+   oBCC := TGet():ReDefine( 103, { | u | If( PCount()==0, cBcc, cBcc:= u ) }, oDlg,,,,,,,,, .F.,,, .F., .F.,,,,,,, "cBcc", )
+   oFindBCC := TButton():ReDefine( 104, {||SelDir( oBCC, cBCC )}, oDlg,,, .F.,,,, .F. )
+
+   oOutDir := TGet():ReDefine( 113, { | u | If( PCount()==0, cOutDir, cOutDir:= u ) }, oDlg,,,,,,,,, .F.,,, .F., .F.,,,,,,, "cOutDir", )
+   oFindBCC := TButton():ReDefine( 114, {||SelDir( oOutDir, cOutDIr )}, oDlg,,, .F.,,,, .F. )
+
+
+   oPrgs := TMultiGet():ReDefine( 105, { | u | If( PCount()==0, cPrgs, cPrgs:= u ) }, oDlg,,,,,,, .F.,, .F.,, )
+   oFindPrgs := TButton():ReDefine( 110, {||AddFile( oPrgs, "*.prg" )}, oDlg,,, .F.,,,, .F. )
+   oIncludes := TMultiGet():ReDefine( 106, { | u | If( PCount()==0, cIncludes, cIncludes:= u ) }, oDlg,,,,,,, .F.,, .F.,, )
+   oFindIncs := TButton():ReDefine( 111, {||AddDir( oIncludes )}, oDlg,,, .F.,,,, .F. )
+   oLibs := TMultiGet():ReDefine( 107, { | u | If( PCount()==0, cLibs, cLibs:= u ) }, oDlg,,,,,,, .F.,, .F.,, )
+   oFindLibs := TButton():ReDefine( 112, {||AddFile( oLibs, "lib" )}, oDlg,,, .F.,,,, .F. )
+
+   oK := TButton():ReDefine( 108, {||(lOk := .T., oDlg:End())}, oDlg,,, .F.,,,, .F. )
+   oC := TButton():ReDefine( 109, {||(lOk := .F., oDlg:End())}, oDlg,,, .F.,,,, .F. )
+
+oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .T.,,,, oDlg:bRClicked,,, )
+
+if !lOk
+   return nil
+endif
+
+oPrj:cPrgToA( cPrgs )
+oPrj:cIncToA( cIncludes )
+oPrj:cLibToA( cLibs )
+
+
+
+
+oPrj:cPrgDir := cOutDir
+
+
+oPrj:GenMake()
+oPrj:Save()
+
+
+return nil
+
+static function AddFile( oGet, cMask )
+local cPrg := cGetFile( cMask, "Selecciona fichero")
+oGet:Append( lower(LFN2SFN(cPrg)) )
+oGet:Refresh()
+
+return nil
+
+function AddDir( oGet )
+local cNewDir := cGetDir( "Seleccione directorio" )
+oGet:Append( cNewDir )
+oGet:Refresh()
+
+return nil
+
+
+function SelDir( oGet, cDir )
+local cNewDir
+
+WQout( { cDir } )
+WQout( { "eo" } )
+cNewDir := cGetDir( "Seleccione directorio", alltrim(cDir)  )
+
+if !empty( cNewDir )
+   oGet:cText := cNewDir
+   oGet:Refresh()
+endif
+
+return nil
+
+
+
+
+
+
+_HB_CLASS TProyecto2 ; function TProyecto2 ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TProyecto2" , iif( .F., { }, { @HBObject() } ), @TProyecto2() ) ) ;
+
+; _HB_MEMBER { aFiles } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aFiles"}, .F. )
+; _HB_MEMBER { cDir } ; oClass:AddMultiData(, "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cDir"}, .F. )
+; _HB_MEMBER { cDriver } ; oClass:AddMultiData(, "DBFCDX", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cDriver"}, .F. )
+
+; _HB_MEMBER { cBCDir } ; oClass:AddMultiData(, "c:\prg\bcc55", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cBCDir"}, .F. )
+; _HB_MEMBER { cHbDir } ; oClass:AddMultiData(, "c:\prg\harbour", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cHbDir"}, .F. )
+
+; _HB_MEMBER { cObjDir } ; oClass:AddMultiData(, "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cObjDir"}, .F. )
+; _HB_MEMBER { cOutDir } ; oClass:AddMultiData(, "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cOutDir"}, .F. )
+; _HB_MEMBER { cOutExt } ; oClass:AddMultiData(, "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cOutExt"}, .F. )
+; _HB_MEMBER { cOutName } ; oClass:AddMultiData(, "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cOutName"}, .F. )
+; _HB_MEMBER { cPrgDir } ; oClass:AddMultiData(, "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cPrgDir"}, .F. )
+; _HB_MEMBER { cResFile } ; oClass:AddMultiData(, "", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cResFile"}, .F. )
+
+; _HB_MEMBER { cType } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cType"}, .F. )
+
+; _HB_MEMBER { aLibs } ; oClass:AddMultiData(, {}, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aLibs"}, .F. )
+; _HB_MEMBER { aIncs } ; oClass:AddMultiData(, {}, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aIncs"}, .F. )
+; _HB_MEMBER { AS LOGICAL lxResFile } ; oClass:AddMultiData( "LOGICAL", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxResFile"}, .F. )
+; _HB_MEMBER { AS LOGICAL lxMapFile } ; oClass:AddMultiData( "LOGICAL", .F., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxMapFile"}, .F. )
+
+
+; _HB_MEMBER { cHbFlags } ; oClass:AddMultiData(, "-n -m -w -es2 -gc0", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cHbFlags"}, .F. )
+; _HB_MEMBER { cCCmpFlags } ; oClass:AddMultiData(, "-c -O2", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cCCmpFlags"}, .F. )
+; _HB_MEMBER { cCLnkFlags } ; oClass:AddMultiData(, "-Gn -aa -Tpe -s ", nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cCLnkFlags"}, .F. )
+
+
+    _HB_MEMBER New( cFileName) AS CLASS TProyecto2; oClass:AddMethod( "New", @TProyecto2_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER Open( cFileName) AS CLASS TProyecto2; oClass:AddMethod( "Open", @TProyecto2_Open(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER Load( cFileName); oClass:AddMethod( "Load", @TProyecto2_Load(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER LoadDef(); oClass:AddMethod( "LoadDef", @TProyecto2_LoadDef(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER Save(); oClass:AddMethod( "Save", @TProyecto2_Save(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER SaveAs( cFileName); oClass:AddMethod( "SaveAs", @TProyecto2_SaveAs(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+    _HB_MEMBER AddFile( cFileName); oClass:AddMethod( "AddFile", @TProyecto2_AddFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER DelFile( cFileName); oClass:AddMethod( "DelFile", @TProyecto2_DelFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER DelTypes( cExt); oClass:AddMethod( "DelTypes", @TProyecto2_DelTypes(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER RenFile( cFileName, cNewFile); oClass:AddMethod( "RenFile", @TProyecto2_RenFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER Reset(); oClass:AddMethod( "Reset", @TProyecto2_Reset(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+    _HB_MEMBER aGetFiles( cExt); oClass:AddMethod( "aGetFiles", @TProyecto2_aGetFiles(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER cGetPaths( aInfo); oClass:AddMethod( "cGetPaths", @TProyecto2_cGetPaths(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER GenMake(); oClass:AddMethod( "GenMake", @TProyecto2_GenMake(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER lResFile(); oClass:AddInline( "lResFile", {|Self, lValue | ( ( Self ) ), if( empty( ::cResFile ), .F., .T. ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER lMapFile( lValue); _HB_MEMBER _lMapFile( lValue); oClass:AddMethod( "lMapFile", @TProyecto2_lMapFile(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lMapFile", @TProyecto2_lMapFile(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+    _HB_MEMBER cPrgs(); oClass:AddMethod( "cPrgs", @TProyecto2_cPrgs(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER cIncludes(); oClass:AddMethod( "cIncludes", @TProyecto2_cIncludes(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER cLibs(); oClass:AddMethod( "cLibs", @TProyecto2_cLibs(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+    _HB_MEMBER cPrgToA( cPrgs); oClass:AddMethod( "cPrgToA", @TProyecto2_cPrgToA(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER cIncToA( cIncs); oClass:AddMethod( "cIncToA", @TProyecto2_cIncToA(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+    _HB_MEMBER cLibToA( cLibs); oClass:AddMethod( "cLibToA", @TProyecto2_cLibToA(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TProyecto2 ;
+
+
+  static FUNCTION TProyecto2_New( cType ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+
+  If( cType == nil, cType := "EXE", ) ;
+
+  ::aFiles    := {}
+  ::cType     := cType
+
+return self
+
+
+  static FUNCTION TProyecto2_Open( cFileName ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+
+  ::cFileName  := cFileName
+
+  ::Load( cFileName )
+
+return self
+
+
+  static FUNCTION TProyecto2_Load( cFileName ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local oIni
+local nLen
+local n
+local cVal := space(255)
+local cFile := ::cOutName+".prj"
+WQout( { cFile } )
+
+if !file( cFile )
+   ::LoadDef()
+   return nil
+endif
+
+oIni := TIni():New( ".\" + cFile )
+    ::cHBDir := oIni:Get( "DIRS", "HBDIR", "", ::cHBDir )
+    ::cBcDir := oIni:Get( "DIRS", "BCCDIR", "", ::cBcDir )
+    ::cPrgDir := oIni:Get( "DIRS", "OUTDIR", "", ::cPrgDir )
+
+    nLen := oIni:Get( "PRGS", "LENGTH", 0, nLen )
+    for n=1 to nLen
+      cVal := oIni:Get( "PRGS", "FILE" + alltrim(str( n ) ), "", cVal )
+      ::AddFile( cVal )
+    next
+
+    nLen := oIni:Get( "INCLUDES", "LENGTH", 0, nLen )
+    for n=1 to nLen
+      cVal := oIni:Get( "INCLUDES", "DIR" + alltrim(str( n ) ), "", cVal )
+      aadd( ::aIncs, cVal )
+    next
+
+    nLen := oIni:Get( "LIBS", "LENGTH", 0, nLen )
+    for n=1 to nLen
+      cVal := oIni:Get( "LIBS", "LIB" + alltrim( str( n ) ), "", cVal )
+      aadd( ::aLibs, cVal )
+    next
+
+
+
+return nil
+
+
+  static FUNCTION TProyecto2_Save( ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local oIni
+local n
+local aPrgs := ::aGetFiles( "prg" )
+
+
+
+
+oIni := TIni():New( ".\"+::cOutName+".prj" )
+    oIni:Set( "DIRS", "HBDIR", ::cHBDir )
+    oIni:Set( "DIRS", "BCCDIR", ::cBcDir )
+    oIni:Set( "DIRS", "OUTDIR", alltrim(::cPrgDir) )
+    oIni:Set( "PRGS", "LENGTH", len( aPrgs ) )
+    for n=1 to Len(aPrgs)
+      oIni:Set( "PRGS", "FILE" + alltrim(str( n ) ), aPrgs[n] )
+    next
+    oIni:Set( "INCLUDES", "LENGTH", len( ::aIncs ) )
+    for n=1 to Len(::aIncs)
+      oIni:Set( "INCLUDES", "DIR" + alltrim(str( n ) ), ::aIncs[n] )
+    next
+    oIni:Set( "LIBS", "LENGTH", len( ::aLibs ) )
+    for n=1 to Len(::aLibs)
+      oIni:Set( "LIBS", "LIB" + alltrim( str( n ) ), ::aLibs[n] )
+    next
+
+
+return nil
+
+
+
+  static FUNCTION TProyecto2_SaveAs( cFileName ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+
+::cFileName := cFileName
+
+
+::Save()
+
+
+return nil
+
+
+
+  static FUNCTION TProyecto2_DelFile( cFileName ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local n, nLen
+
+nLen := len( ::aFiles )
+
+for n := 1 to nLen
+    if ::aFiles[n]:cFileName == cFileName
+       adel ( ::aFiles, n )
+       asize( ::aFiles, nLen-1 )
+       exit
+    endif
+next
+
+return nil
+
+
+  static FUNCTION TProyecto2_DelTypes( cExt ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local n, nLen
+
+nLen := len( ::aFiles )
+
+for n := 1 to nLen
+    if lower(cFileExt(::aFiles[n]:cFileName)) == lower(cExt)
+       adel ( ::aFiles, n )
+       asize( ::aFiles, nLen-1 )
+       exit
+    endif
+next
+
+return nil
+
+
+
+
+  static FUNCTION TProyecto2_AddFile( cFileName ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local n, nLen
+local lFind := .F.
+nLen := len( ::aFiles )
+
+for n := 1 to nLen
+    if ::aFiles[n]:cFileName == cFileName
+       lFind := .T.
+       exit
+    endif
+next
+
+
+if !lFind
+   aadd( ::aFiles, TItemPrj():New( self, cFileName ) )
+else
+   MsgAlert( "Atención","Ya existe el fichero: " + cFileName )
+endif
+
+return lFind
+
+
+  static FUNCTION TProyecto2_RenFile( cFileName, cNewFile ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local n, nLen
+nLen := len( ::aFiles )
+
+for n := 1 to nLen
+    if ::aFiles[n]:cFileName == cFileName
+       ::aFiles[n]:cFileName := cNewFile
+       exit
+    endif
+next
+
+return nil
+
+
+
+
+  static FUNCTION TProyecto2_aGetFiles( cExt ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+
+local n, nLen
+local aItems := {}
+nLen := len( ::aFiles )
+
+for n := 1 to nLen
+    if cFileExt(upper(::aFiles[n]:cFileName)) == upper( cExt )
+       aadd( aItems, ::aFiles[n]:cFileName )
+    endif
+next
+
+return aItems
+
+
+  static FUNCTION TProyecto2_cGetPaths( aInfo ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+
+local n, nLen
+local aItems := {}
+local cItems := ""
+local cPath
+nLen := len( aInfo )
+
+for n := 1 to nLen
+    cPath := cFilePath( aInfo[n] )
+    cPath := substr( cPath, 1, len( cPath )-1 )
+    if ascan( aItems, cPath ) == 0
+       aadd( aItems, cPath )
+       cItems += lower(cPath) + ";"
+    endif
+next
+
+return substr( cItems, 1, len( cItems ) - 1 )
+
+
+
+  static FUNCTION TProyecto2_Reset( ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+::cFileName := ""
+::aFiles    := {}
+::cDir      := ""
+return nil
+
+
+  static FUNCTION TProyecto2_lMapFile( lValue ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+if pcount() > 0
+   ::lxMapFile := lValue
+endif
+
+return ::lxMapFile
+
+
+  static FUNCTION TProyecto2_LoadDef( ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+
+
+  ::aIncs     := {"c:\prg\bcc55\include","c:\prg\harbour\include","c:\prg\fwh24b\include"}
+  ::cOutDir   := ""
+  ::cPrgDir   := ""
+  ::cObjDir   := "."
+  ::cOutName  := ""
+  ::cResFile  := ""
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ::aLibs     := {"c:\prg\fwh24b\lib\fiveH.lib"    , "c:\prg\fwh24b\lib\fiveHC.lib"   , "c:\prg\harbour\lib\rtl.lib"     , "c:\prg\harbour\lib\vm.lib"      , "c:\prg\harbour\lib\gtwin.lib"   , "c:\prg\harbour\lib\lang.lib"    , "c:\prg\harbour\lib\macro.lib"   , "c:\prg\harbour\lib\rdd.lib"     , "c:\prg\harbour\lib\dbfntx.lib"  , "c:\prg\harbour\lib\dbfcdx.lib"  , "c:\prg\harbour\lib\common.lib"  , "c:\prg\harbour\lib\pp.lib"      , "c:\prg\bcc55\lib\cw32.lib"      , "c:\prg\bcc55\lib\import32.lib"}
+
+
+return nil
+
+
+    static FUNCTION TProyecto2_cPrgs( ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local cPrgs := ""
+local aPrgs := ::aGetFiles( "prg" )
+local n, nLen
+
+nLen := len( aPrgs )
+
+for n := 1 to nLen
+    cPrgs += lower(aPrgs[n]) + Chr(13)+Chr(10)
+next
+
+return cPrgs
+
+
+    static FUNCTION TProyecto2_cIncludes( ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local cIncludes := ""
+
+local n, nLen
+
+nLen := len( ::aIncs )
+
+for n := 1 to nLen
+    cIncludes += lower(::aIncs[n]) + Chr(13)+Chr(10)
+next
+
+return cIncludes
+
+    static FUNCTION TProyecto2_cLibs( ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local cLibs := ""
+
+local n, nLen
+
+nLen := len( ::aLibs )
+
+for n := 1 to nLen
+    cLibs += lower(::aLibs[n]) + Chr(13)+Chr(10)
+next
+
+return cLibs
+
+
+
+    static FUNCTION TProyecto2_cPrgToA( cPrgs ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local n, nLines
+
+
+::DelTypes( "prg" )
+nLines := mlcount(cPrgs)
+if nLines == 0
+   return nil
+endif
+
+for n := 1 to nLines
+    ::AddFile( lower(rtrim(memoline( cPrgs,,n))) )
+next
+
+return nil
+
+
+    static FUNCTION TProyecto2_cIncToA( cIncs ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local n, nLines
+
+nLines := mlcount(cIncs)
+if nLines == 0
+   return nil
+endif
+asize(::aIncs, 0 )
+
+for n := 1 to nLines
+    aadd( ::aIncs, lower(rtrim(memoline( cIncs,,n))) )
+next
+
+return nil
+
+    static FUNCTION TProyecto2_cLibToA( cLibs ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local n, nLines
+
+
+nLines := mlcount(cLibs)
+if nLines == 0
+   return nil
+endif
+asize(::aLibs, 0 )
+
+for n := 1 to nLines
+    aadd( ::aLibs, lower(rtrim(memoline( cLibs,,n))) )
+next
+
+return nil
+
+
+  static FUNCTION TProyecto2_GenMake( ) ; local Self AS CLASS TProyecto2 := QSelf() AS CLASS TProyecto2
+
+local cStr   := ""
+local aPrgs  := ::aGetFiles( "prg" )
+local aLibs  := ::aLibs
+local h
+local n, nLen
+
+cStr += "# Make directives ############################################################" + Chr(13)+Chr(10)
+
+cStr += ".autodepend"                                                                    + Chr(13)+Chr(10)
+cStr += ".swap"                                                                          + Chr(13)+Chr(10)
+cStr += ".suffixes: .prg .hrb"                                                           + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "# Flags for modules to include: YES | NO (must be UPPERCASE)##################" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "RES_FILE      = " + if( ::lResFile(),"YES","NO")                                + Chr(13)+Chr(10)
+cStr += "LNK_DBFNTX    = " + if( ::cDriver == "DBFNTX","YES","NO")                       + Chr(13)+Chr(10)
+cStr += "LNK_DBFCDX    = " + if( ::cDriver == "DBFCDX","YES","NO")                       + Chr(13)+Chr(10)
+cStr += "LNK_DEBUG     = NO"                                                             + Chr(13)+Chr(10)
+cStr += "LNK_ADVANTAGE = " + if( ::cDriver == "ADS","YES","NO")                          + Chr(13)+Chr(10)
+cStr += "LNK_ODBC      = " + if( ::cDriver == "ODBC","YES","NO")                         + Chr(13)+Chr(10)
+cStr += "MAP_FILE      = " + if( ::lMapFile(),"YES","NO")                                + Chr(13)+Chr(10)
+
+
+
+cStr += "# Application directories & filenames ########################################" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "APP_NAME         = " + ::cOutName                                               + Chr(13)+Chr(10)
+cStr += "APP_PRG_DIR      = " + ::cPrgDir                                                + Chr(13)+Chr(10)
+cStr += "APP_OBJ_DIR      = " + ::cObjDir                                                + Chr(13)+Chr(10)
+cStr += "APP_EXE_DIR      = $(APP_PRG_DIR)"                                              + Chr(13)+Chr(10)
+cStr += "APP_RES_DIR      = $(APP_PRG_DIR)"                                              + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "APP_EXE  = $(APP_EXE_DIR)\$(APP_NAME).exe"                                      + Chr(13)+Chr(10)
+cStr += "APP_RC   = $(APP_RES_DIR)\$(APP_NAME).rc"                                       + Chr(13)+Chr(10)
+cStr += "APP_RES  = $(APP_RES_DIR)\$(APP_NAME).res"                                      + Chr(13)+Chr(10)
+cStr += "APP_MAP  = $(APP_RES_DIR)\$(APP_NAME).map"                                      + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "# Paths for dependent files ##################################################" + Chr(13)+Chr(10)
+
+cStr += ".path.prg = " + ::cGetPaths( aPrgs ) + Chr(13)+Chr(10)
+
+cStr += ".path.hrb = $(APP_OBJ_DIR)"                                                     + Chr(13)+Chr(10)
+cStr += ".path.obj = $(APP_OBJ_DIR)"                                                     + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "# Application PRG files (your PRG files go here) #############################" + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "APP_PRG_LIST = "
+
+nLen := len( aPrgs )
+for n := 1 to nLen
+    cStr += if(n==1,"",space( 15 )) + lower(cFileNoPath(rtrim(aPrgs[n]))) + if( n < nLen .AND. nLen > 1," \",Chr(13)+Chr(10) )                       + Chr(13)+Chr(10)
+next
+
+cStr += Chr(13)+Chr(10) + "# Contruction of the rest dependency lists ###################################"   + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "APP_PRGS = $(APP_PRG_LIST)"                                                       + Chr(13)+Chr(10)
+cStr += "APP_HRBS = $(APP_PRG_LIST:.prg=.hrb)"                                             + Chr(13)+Chr(10)
+cStr += "APP_OBJS = $(APP_PRG_LIST:.prg=.obj)"                                             + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "# Harbour directories & flags ################################################"   + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "HARBOUR_DIR          = " +::cHbDir                                                     + Chr(13)+Chr(10)
+cStr += "HARBOUR_FLAGS        = " +::cHbFlags
+
+nLen := len( ::aIncs )
+if nLen > 0
+   cStr += " -i"
+endif
+for n := 1 to nLen
+    cStr += ::aIncs[n] + if( n < nLen, ";","")
+next
+cStr += Chr(13)+Chr(10)
+
+cStr += "HARBOUR_EXE          = $(HARBOUR_DIR)\bin\harbour.exe"                             + Chr(13)+Chr(10)
+cStr += "BORLANDC_DIR         = " + ::cBCDir                                                + Chr(13)+Chr(10)
+
+cStr += "BORLANDC_COMP_FLAGS  = " + ::cCCmpFlags
+
+nLen := len( ::aIncs )
+if nLen > 0
+   cStr += " -I"
+endif
+for n := 1 to nLen
+    cStr += ::aIncs[n] + if( n < nLen, ";","")
+next
+cStr += Chr(13)+Chr(10)
+
+cStr += "BORLANDC_COMP_EXE    = $(BORLANDC_DIR)\bin\bcc32.exe"                             + Chr(13)+Chr(10)
+cStr += "BORLANDC_LINK_FLAGS  = " + ::cCLnkFlags
+
+cStr += " -L" + ::cGetPaths( ::aLibs ) + Chr(13)+Chr(10)
+
+cStr += "BORLANDC_LINK_EXE    = $(BORLANDC_DIR)\bin\ilink32.exe"                           + Chr(13)+Chr(10)
+cStr += "BORLANDC_RES_EXE     = $(BORLANDC_DIR)\bin\brc32.exe"                             + Chr(13)+Chr(10)
+
+cStr += "!if $(MAP_FILE) != YES"                                                           + Chr(13)+Chr(10)
+cStr += "   BORLANDC_LINK_FLAGS = $(BORLANDC_LINK_FLAGS) -x"                               + Chr(13)+Chr(10)
+cStr += "!endif"                                                                           + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "# Dependencies ###############################################################"   + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "all: $(APP_OBJS) $(APP_HRBS) $(APP_EXE)"                                          + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "!if $(RES_FILE) == YES"                                                           + Chr(13)+Chr(10)
+cStr += "all: $(APP_RES)"                                                                  + Chr(13)+Chr(10)
+cStr += "!endif"                                                                           + Chr(13)+Chr(10)
+
+cStr += "# Implicit Rules #############################################################"   + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += ".prg.hrb:"                                                                        + Chr(13)+Chr(10)
+cStr += "   $(HARBOUR_EXE) $(HARBOUR_FLAGS) $** -o$@"                                      + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += ".hrb.obj:"                                                                        + Chr(13)+Chr(10)
+cStr += "   $(BORLANDC_COMP_EXE) $(BORLANDC_COMP_FLAGS) -o$@ $**"                          + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "# Explicit Rules #############################################################"   + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "!if $(RES_FILE) == YES"                                                           + Chr(13)+Chr(10)
+cStr += "$(APP_RES) : $(APP_RC)"                                                           + Chr(13)+Chr(10)
+cStr += "   $(BORLANDC_RES_EXE) -r $**"                                                    + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "$(APP_EXE) :: $(APP_RES)"                                                         + Chr(13)+Chr(10)
+cStr += "   @if exist $(APP_EXE) del $(APP_EXE) > nul"                                     + Chr(13)+Chr(10)
+cStr += "!endif"                                                                           + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+cStr += "$(APP_EXE) :: $(APP_OBJS)"                                                        + Chr(13)+Chr(10)
+cStr += "   @echo $(BORLANDC_DIR)\lib\c0w32.obj + > make.tmp"                              + Chr(13)+Chr(10)
+cStr += "   @echo $(**), + >> make.tmp"                                                    + Chr(13)+Chr(10)
+cStr += "   @echo $(APP_EXE), + >> make.tmp"                                               + Chr(13)+Chr(10)
+cStr += "   @echo $(APP_MAP), + >> make.tmp"                                               + Chr(13)+Chr(10)
+
+nLen := len( aLibs )
+for n := 1 to nLen
+    cStr += "   @echo " + lower(aLibs[n]) + " + >> make.tmp"                               + Chr(13)+Chr(10)
+next
+
+cStr += "!if $(RES_FILE) == YES"                                                           + Chr(13)+Chr(10)
+cStr += "   @echo ,$(APP_RES) >> make.tmp"                                                 + Chr(13)+Chr(10)
+cStr += "!endif"                                                                           + Chr(13)+Chr(10)
+cStr += "   $(BORLANDC_LINK_EXE) $(BORLANDC_LINK_FLAGS) @make.tmp"                         + Chr(13)+Chr(10)
+cStr += "   @del $(APP_EXE_DIR)\$(APP_NAME).tds"                                           + Chr(13)+Chr(10)
+
+
+
+h := fcreate( ::cOutName + ".mak" )
+fwrite( h, cStr )
+fclose( h )
+
+
+return nil
+
+
+
+_HB_CLASS TItemPrj ; function TItemPrj ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TItemPrj" , iif( .F., { }, { @HBObject() } ), @TItemPrj() ) ) ;
+
+; _HB_MEMBER { oProject } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oProject"}, .F. )
+; _HB_MEMBER { cFileName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFileName"}, .F. )
+
+      _HB_MEMBER New( oProject, cFileName) AS CLASS TItemPrj; oClass:AddMethod( "New", @TItemPrj_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TItemPrj ;
+
+static FUNCTION TItemPrj_New( oProject, cFileName ) ; local Self AS CLASS TItemPrj := QSelf() AS CLASS TItemPrj
+
+    ::oProject   := oProject
+    ::cFileName  := cFileName
+
+
+
+return self

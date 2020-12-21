@@ -1,0 +1,547 @@
+#line 38 "\fwh\include\FiveWin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\FiveWin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 21 "source\imgedit.prg"
+static hLib
+
+function ImageEditor( cFileName )
+local oWnd
+local oImage := nil
+local aClient := GetClientRect( Aplicacion():oWnd:hWnd )
+
+If( cFileName == nil, cFileName := cGetFile( "Imágenes (*.bmp *.gif *.jpg *.ico *.png *.tif ) | *.bmp;*.gif;*.jpg;*.ico;*.png;*.tif; |", "Selecciona fichero" ), ) ;
+if empty( cFileName ) .OR. !file( cFileName )
+   MsgStop( "Fichero no encontrado")
+   return 0
+endif
+
+
+
+  oWnd := TWindow():New( 0, 200, aClient[3]-Aplicacion():oWnd:oBar:nHeight, aClient[4], "Editor de imágenes - [" + cFileName + "]",,,,,,,,,,,, !.F., !.F., !.F., !.F., .T. )
+
+
+
+         if file( cFileName )
+            oImage := TImage():New( 10, 10,,,, cFileName, .F., oWnd,,, .F., .F.,,, .F.,, .T.,, .F. )
+            oImage:oBrush := TBrush():New( Upper("NULL"),,,,, )
+            WndFold()
+            Aplicacion():oImgFocus := oImage
+
+
+            oWnd:bGotFocus := {|| Aplicacion():oImgFocus := oImage, Aplicacion():oToolBox:cargo:SetOption( 1 ), Aplicacion():oToolBox:cargo:cargo[1]:SetOption( 4 ) }
+         endif
+
+
+
+
+  oWnd:Activate(, oWnd:bLClicked, oWnd:bRClicked, oWnd:bMoved, oWnd:bResized, oWnd:bPainted, oWnd:bKeyDown, oWnd:bInit := { | Self | if( oImage <> nil, oImage:SetSize( nBmpWidth( oImage:hBitmap ), nBmpHeight( oImage:hBitmap ) ),) },,,,,,,,,,, oWnd:bLButtonUp )
+
+return nil
+
+
+_HB_CLASS TImage ; function TImage ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TImage" , iif( .T., { @TBitmap() }, { @HBObject() } ), @TImage() ) ) ;
+
+; _HB_MEMBER { nProgress } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nProgress"}, .F. )
+; _HB_MEMBER { hDib } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hDib"}, .F. )
+; _HB_MEMBER { cBmpFile } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cBmpFile"}, .F. )
+
+   _HB_MEMBER { AS LOGICAL lRegistered } ; oClass:AddMultiClsData( "LOGICAL",, nScope + iif( .F., 16, 0 ) + iif( .T., 32, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRegistered"}, .F. )
+
+
+
+   _HB_MEMBER New( nTop, nLeft, nWidth, nHeight, cResName, cBmpFile, lNoBorder, oWnd, bLClicked, bRClicked, lScroll, lStretch, oCursor, cMsg, lUpdate, bWhen, lPixel, bValid, lDesign) AS CLASS TImage; oClass:AddMethod( "New", @TImage_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Define( cResName, cBmpFile, oWnd) AS CLASS TImage; oClass:AddMethod( "Define", @TImage_Define(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Destroy(); oClass:AddMethod( "Destroy", @TImage_Destroy(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER LoadImage( cResName, cBmpFile); oClass:AddMethod( "LoadImage", @TImage_LoadImage(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER LoadImage2( cBmpFile); oClass:AddMethod( "LoadImage2", @TImage_LoadImage2(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Progress( lProgress); oClass:AddMethod( "Progress", @TImage_Progress(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER SaveImage( cFile, nFormat, nFlag); oClass:AddMethod( "SaveImage", @TImage_SaveImage(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER LoadImage2( cFileName); oClass:AddMethod( "LoadImage2", @TImage_LoadImage2(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Zoom( nZoom); oClass:AddMethod( "Zoom", @TImage_Zoom(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER UnZoom( nZoom); oClass:AddMethod( "UnZoom", @TImage_UnZoom(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Rotar( nAngle); oClass:AddMethod( "Rotar", @TImage_Rotar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER FlipV(); oClass:AddMethod( "FlipV", @TImage_FlipV(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER FlipH(); oClass:AddMethod( "FlipH", @TImage_FlipH(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Save(); oClass:AddInline( "Save", {|Self | ( ( Self ) ), ::SaveImage() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SaveAsJPG(); oClass:AddMethod( "SaveAsJPG", @TImage_SaveAsJPG(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SaveAsTIF(); oClass:AddMethod( "SaveAsTIF", @TImage_SaveAsTIF(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SaveAsPNG(); oClass:AddMethod( "SaveAsPNG", @TImage_SaveAsPNG(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SaveAsBMP(); oClass:AddMethod( "SaveAsBMP", @TImage_SaveAsBMP(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SaveAsGIF(); oClass:AddMethod( "SaveAsGIF", @TImage_SaveAsGIF(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SaveAsICO(); oClass:AddMethod( "SaveAsICO", @TImage_SaveAsICO(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TImage ;
+
+
+
+
+
+static FUNCTION TImage_New( nTop, nLeft, nWidth, nHeight, cResName, cBmpFile, lNoBorder, oWnd, bLClicked, bRClicked, lScroll, lStretch, oCursor, cMsg, lUpdate, bWhen, lPixel, bValid, lDesign ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+
+
+
+
+
+   ::nProgress := 1
+   ::hDib      := 0
+
+   hLib := hLib()
+
+
+
+   ::TBitmap:New( nTop, nLeft, nWidth, nHeight, cResName, cBmpFile, lNoBorder,  oWnd, bLClicked, bRClicked, lScroll, lStretch, oCursor,       cMsg, lUpdate, bWhen, lPixel, bValid, lDesign )
+
+
+
+return Self
+
+
+ static FUNCTION TImage_Destroy( ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+
+
+ FreeFreeImage()
+
+ return ::TBitmap:Destroy()
+
+
+
+
+static FUNCTION TImage_Define( cResName, cBmpFile, oWnd ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+
+   local aBmpPal
+
+   If( oWnd == nil, oWnd := GetWndDefault(), ) ;
+
+   ::oWnd     = oWnd
+   ::nZoom    = 1
+   ::hWnd     = 0
+   ::hBitmap  = 0
+   ::hPalette = 0
+
+   if ! Empty( cResName )
+      aBmpPal    = PalBmpLoad( cResName )
+      ::hBitmap  = aBmpPal[ 1 ]
+      ::hPalette = aBmpPal[ 2 ]
+      cBmpFile  = nil
+   elseif File( cBmpFile )
+      ::hBitmap = ::loadimage2( AllTrim( cBmpFile ), ::nProgress )
+      cResName  := nil
+   endif
+
+   if ::hBitmap <> 0
+      PalBmpNew( 0, ::hBitmap, ::hPalette )
+   endif
+
+   if hLib == nil
+      hLib := LoadLibrary( "freeimage.dll" )
+   endif
+   nInstance++
+
+
+return Self
+
+
+
+static FUNCTION TImage_LoadImage( cResName, cBmpFile ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+
+   local lChanged := .F.
+   local hOldBmp  := ::hBitmap
+   local hOldPal  := ::hPalette
+   local aBmpPal
+
+   If( cResName == nil, cResName := ::cResName, ) ; If( cBmpFile == nil, cBmpFile := ::cBmpFile, );
+
+   if ! Empty( cResName )
+      aBmpPal    = PalBmpLoad( cResName )
+      ::hBitmap  = aBmpPal[ 1 ]
+      ::hPalette = aBmpPal[ 2 ]
+      lChanged   = .T.
+      cBmpFile   = nil
+   elseif File( cBmpFile )
+       ::hBitmap = ::loadimage2( AllTrim( cBmpFile ), ::nProgress )
+       lChanged  := .T.
+       cResName  := nil
+   endif
+
+   if lChanged
+
+      ::cResName = cResName
+      ::cBmpFile = cBmpFile
+
+      if ! Empty( hOldBmp )
+         PalBmpFree( hOldBmp, hOldPal )
+      endif
+
+      PalBmpNew( ::hWnd, ::hBitmap, ::hPalette )
+
+   endif
+
+return lChanged
+
+
+  static FUNCTION TImage_LoadImage2( cFile ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+
+
+   local nFormat, hInfoH, hInfo, hBits, hWnd, hDC, hBmp
+
+   if hLib <= 32
+      MsgStop( "Cannot load Freeimage.dll" )
+      return 0
+   endif
+
+   ::cBmpFile := cFile
+   nFormat   := fiGetFileType( cFile, 0 )
+   ::hDib    := fiLoad( nFormat, cFile, 0 )
+   hInfoH    := fiGetInfoHeader( ::hDib )
+   hInfo     := fiGetInfo( ::hDib )
+   hBits     := fiGetBits( ::hDib )
+   hWnd      := GetDskTp32()
+   hDC       := GetDC32( hWnd )
+   ::hBitmap := CreateDIBitmap( hDC, hInfoH, 4, hBits, hInfo,0 )
+
+   ReleaseDC32( hWnd, hDC )
+
+return ::hBitmap
+
+
+
+
+
+static FUNCTION TImage_Zoom( nZoom ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+local aClient := GetClientRect( ::hWnd )
+local nWidth, nHeight
+
+If( nZoom == nil, nZoom := 25, ) ;
+
+nWidth := aClient[4]
+nHeight := aClient[3]
+
+::lStretch := .T.
+
+
+::SetSize( nWidth + ( nWidth *  nZoom / 100 ) , nHeight + ( nHeight *  nZoom / 100 ),.T. )
+
+return nil
+
+
+static FUNCTION TImage_UnZoom( nZoom ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+local aClient := GetClientRect( ::hWnd )
+local nWidth, nHeight
+
+If( nZoom == nil, nZoom := 25, ) ;
+
+nWidth  := aClient[4]
+nHeight := aClient[3]
+
+::lStretch := .T.
+
+
+::SetSize( nWidth - ( nWidth *  nZoom / 100 ) , nHeight - ( nHeight *  nZoom / 100 ), .T. )
+
+
+return nil
+
+
+static FUNCTION TImage_Progress( lProgress ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+
+   if ValType( lProgress ) == "L"
+      if lProgress
+         ::nProgress = 1
+      else
+         ::nProgress = 0
+      endif
+   endif
+
+return nil
+
+
+
+
+
+   static FUNCTION TImage_SaveAsJPG( ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+   local cFileName := cGetFile( "*.jpg","Guardar imagen como...", 1, , .T. )
+   if empty( cFileName )
+      MsgStop( "Operación cancelada" )
+      return 0
+   endif
+   if file( cFileName )
+
+      if !MsgYesNo( "Fichero ya existe." + Chr(13)+Chr(10) + "Desea sobre escribirlo?","Atención")
+          MsgStop( "Operación cancelada" )
+          return 0
+      endif
+   endif
+   WQout( { ::SaveImage( cFileName, 2 ) } )
+
+   return 0
+
+   static FUNCTION TImage_SaveAsTIF( ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+   local cFileName := cGetFile( "*.tif","Guardar imagen como...", 1, , .T. )
+   if empty( cFileName )
+      MsgStop( "Operación cancelada" )
+      return 0
+   endif
+   if file( cFileName )
+
+      if !MsgYesNo( "Fichero ya existe." + Chr(13)+Chr(10) + "Desea sobre escribirlo?","Atención")
+          MsgStop( "Operación cancelada" )
+          return 0
+      endif
+   endif
+   WQout( { ::SaveImage( cFileName, 18 ) } )
+
+   return 0
+
+   static FUNCTION TImage_SaveAsPNG( ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+   local cFileName := cGetFile( "*.png","Guardar imagen como...", 1, , .T. )
+   if empty( cFileName )
+      MsgStop( "Operación cancelada" )
+      return 0
+   endif
+   if file( cFileName )
+
+      if !MsgYesNo( "Fichero ya existe." + Chr(13)+Chr(10) + "Desea sobre escribirlo?","Atención")
+          MsgStop( "Operación cancelada" )
+          return 0
+      endif
+   endif
+   WQout( { ::SaveImage( cFileName, 13 ) } )
+
+   return 0
+
+   static FUNCTION TImage_SaveAsBMP( ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+   local cFileName := cGetFile( "*.bmp","Guardar imagen como...", 1, , .T. )
+   if empty( cFileName )
+      MsgStop( "Operación cancelada" )
+      return 0
+   endif
+   if file( cFileName )
+
+      if !MsgYesNo( "Fichero ya existe." + Chr(13)+Chr(10) + "Desea sobre escribirlo?","Atención")
+          MsgStop( "Operación cancelada" )
+          return 0
+      endif
+   endif
+
+   WQout( { ::SaveImage( cFileName, 0 ) } )
+
+   return 0
+
+   static FUNCTION TImage_SaveAsICO( ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+   local cFileName := cGetFile( "*.ico","Guardar imagen como...", 1, , .T. )
+   if empty( cFileName )
+      MsgStop( "Operación cancelada" )
+      return 0
+   endif
+   if file( cFileName )
+
+      if !MsgYesNo( "Fichero ya existe." + Chr(13)+Chr(10) + "Desea sobre escribirlo?","Atención")
+          MsgStop( "Operación cancelada" )
+          return 0
+      endif
+   endif
+
+   WQout( { ::SaveImage( cFileName, 1 ) } )
+
+   return 0
+
+   static FUNCTION TImage_SaveAsGIF( ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+   local cFileName := cGetFile( "*.gif","Guardar imagen como...", 1, , .T. )
+   if empty( cFileName )
+      MsgStop( "Operación cancelada" )
+      return 0
+   endif
+   if file( cFileName )
+
+      if !MsgYesNo( "Fichero ya existe." + Chr(13)+Chr(10) + "Desea sobre escribirlo?","Atención")
+          MsgStop( "Operación cancelada" )
+          return 0
+      endif
+   endif
+
+   WQout( { ::SaveImage( cFileName, 25 ) } )
+
+   return 0
+
+
+static FUNCTION TImage_SaveImage( cFile, nFormat, nFlag ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+
+   local lOk
+
+
+
+
+
+
+
+   If( nFormat == nil, nFormat := fiGetFileType( ::cBmpFile, 0 ), ) ;
+   If( cFile == nil, cFile := ::cBmpFile, ) ;
+
+   if ::hDib == 0
+      MsgStop( "No image loaded" )
+      return nil
+   endif
+
+   lOk := fiSave( nFormat, ::hDib, cFile, nFlag )
+
+   if !lOk
+      MsgInfo( "Can't not save file" )
+   endif
+
+return Nil
+
+
+ static FUNCTION TImage_Rotar( nAngle ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+
+   local nFormat, hInfoH, hInfo, hBits, hWnd, hDC, hBmp
+
+   if hLib <= 32
+      MsgStop( "Cannot load Freeimage.dll" )
+      return 0
+   endif
+
+   ::hDib    := RotateClassic( ::hDib, nAngle )
+   hInfoH    := fiGetInfoHeader( ::hDib )
+   hInfo     := fiGetInfo( ::hDib )
+   hBits     := fiGetBits( ::hDib )
+
+   hWnd      := GetDskTp32()
+   hDC       := GetDC32( hWnd )
+   hBmp      := CreateDIBitmap( hDC, hInfoH, 4, hBits, hInfo,0 )
+
+   if hBmp <> 0
+      DeleteObject( ::hBitmap )
+      ::hBitmap := hBmp
+      ::SetSize( nBmpWidth( ::hBitmap ), nBmpHeight( ::hBitmap ), .T. )
+      ::Refresh()
+   endif
+
+   ReleaseDC32( hWnd, hDC )
+
+return ::hBitmap
+
+
+ static FUNCTION TImage_FlipV( ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+
+   local nFormat, hInfoH, hInfo, hBits, hWnd, hDC, hBmp
+
+   if hLib <= 32
+      MsgStop( "Cannot load Freeimage.dll" )
+      return 0
+   endif
+
+   FREEIMAGE_FLIPVERTICAL( @::hDib )
+   hInfoH    := fiGetInfoHeader( ::hDib )
+   hInfo     := fiGetInfo( ::hDib )
+   hBits     := fiGetBits( ::hDib )
+
+   hWnd      := GetDskTp32()
+   hDC       := GetDC32( hWnd )
+   hBmp      := CreateDIBitmap( hDC, hInfoH, 4, hBits, hInfo,0 )
+
+   if hBmp <> 0
+      DeleteObject( ::hBitmap )
+      ::hBitmap := hBmp
+      ::Refresh()
+   endif
+
+   ReleaseDC32( hWnd, hDC )
+
+return ::hBitmap
+
+
+
+ static FUNCTION TImage_FlipH( ) ; local Self AS CLASS TImage := QSelf() AS CLASS TImage
+
+   local nFormat, hInfoH, hInfo, hBits, hWnd, hDC, hBmp
+
+   if hLib <= 32
+      MsgStop( "Cannot load Freeimage.dll" )
+      return 0
+   endif
+
+   FREEIMAGE_FLIPHORIZONTAL( @::hDib )
+   hInfoH    := fiGetInfoHeader( ::hDib )
+   hInfo     := fiGetInfo( ::hDib )
+   hBits     := fiGetBits( ::hDib )
+
+   hWnd      := GetDskTp32()
+   hDC       := GetDC32( hWnd )
+   hBmp      := CreateDIBitmap( hDC, hInfoH, 4, hBits, hInfo,0 )
+
+   if hBmp <> 0
+      DeleteObject( ::hBitmap )
+      ::hBitmap := hBmp
+      ::Refresh()
+   endif
+
+   ReleaseDC32( hWnd, hDC )
+
+return ::hBitmap
+
+
+
+
+
+
+
+
+
+
+
+STATIC function FIGETFILETYPE( cFileName,nSize ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_GetFileType@8" ) == .T., "FIGETFILETYPE", "_FreeImage_GetFileType@8" ), .T., 7,9,7 ) ; uResult = FWCallDLL( cFarProc,cFileName,nSize ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FILOAD( nFormat,cFileName,nFlags ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_Load@12" ) == .T., "FILOAD", "_FreeImage_Load@12" ), .T., 7,7,9,7 ) ; uResult = FWCallDLL( cFarProc,nFormat,cFileName,nFlags ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FIGETINFOHEADER( hDib ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_GetInfoHeader@4" ) == .T., "FIGETINFOHEADER", "_FreeImage_GetInfoHeader@4" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hDib ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FIGETINFO( hDib ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_GetInfo@4" ) == .T., "FIGETINFO", "_FreeImage_GetInfo@4" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hDib ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FIGETBITS( hDib ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_GetBits@4" ) == .T., "FIGETBITS", "_FreeImage_GetBits@4" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hDib ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function GETDSKTP32( hWnd ) ; local _hDLL := If( ValType( "user32.dll" ) == "N", "user32.dll", LoadLibrary( "user32.dll" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "GetDesktopWindow" ) == .T., "GETDSKTP32", "GetDesktopWindow" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hWnd ) ; If( ValType( "user32.dll" ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( "user32.dll" ) == "C", "user32.dll", Str( "user32.dll" ) ) ) ; end ; return uResult
+
+
+STATIC function GETDC32( hWnd ) ; local _hDLL := If( ValType( "user32.dll" ) == "N", "user32.dll", LoadLibrary( "user32.dll" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "GetDC" ) == .T., "GETDC32", "GetDC" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hWnd ) ; If( ValType( "user32.dll" ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( "user32.dll" ) == "C", "user32.dll", Str( "user32.dll" ) ) ) ; end ; return uResult
+
+
+STATIC function RELEASEDC32( hWnd ) ; local _hDLL := If( ValType( "user32.dll" ) == "N", "user32.dll", LoadLibrary( "user32.dll" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "ReleaseDC" ) == .T., "RELEASEDC32", "ReleaseDC" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hWnd ) ; If( ValType( "user32.dll" ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( "user32.dll" ) == "C", "user32.dll", Str( "user32.dll" ) ) ) ; end ; return uResult
+
+
+STATIC function CREATEDIBITMAP( hDC,hInfoH,nFlags,hBits,hInfo,nUsage ) ; local _hDLL := If( ValType( "gdi32.dll" ) == "N", "gdi32.dll", LoadLibrary( "gdi32.dll" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "CreateDIBitmap" ) == .T., "CREATEDIBITMAP", "CreateDIBitmap" ), .T., 7,7,7,7,7,7,7 ) ; uResult = FWCallDLL( cFarProc,hDC,hInfoH,nFlags,hBits,hInfo,nUsage ) ; If( ValType( "gdi32.dll" ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( "gdi32.dll" ) == "C", "gdi32.dll", Str( "gdi32.dll" ) ) ) ; end ; return uResult
+
+
+STATIC function FISAVE( nFormat,hDib,cFileName,nFlags ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_Save@16" ) == .T., "FISAVE", "_FreeImage_Save@16" ), .T., 5,7,7,9,7 ) ; uResult = FWCallDLL( cFarProc,nFormat,hDib,cFileName,nFlags ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+
+STATIC function ROTATECLASSIC( hDib,angle ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_RotateClassic@12" ) == .T., "ROTATECLASSIC", "_FreeImage_RotateClassic@12" ), .T., 7,7,11 ) ; uResult = FWCallDLL( cFarProc,hDib,angle ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+STATIC function FREEIMAGE_FLIPHORIZONTAL( hDib ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_FlipHorizontal@4" ) == .T., "FREEIMAGE_FLIPHORIZONTAL", "_FreeImage_FlipHorizontal@4" ), .T., 5,7 ) ; uResult = FWCallDLL( cFarProc,hDib ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+STATIC function FREEIMAGE_FLIPVERTICAL( hDib ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_FlipVertical@4" ) == .T., "FREEIMAGE_FLIPVERTICAL", "_FreeImage_FlipVertical@4" ), .T., 5,7 ) ; uResult = FWCallDLL( cFarProc,hDib ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult

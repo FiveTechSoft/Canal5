@@ -1,0 +1,677 @@
+#line 38 "\fwh\include\FiveWin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\FiveWin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 100 "source\re.prg"
+static oWnd, oImageList, oTree
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static aStyles := { { "ES_LEFT",           0 }, { "ES_CENTER",         0x0001 }, { "ES_RIGHT",          2 }, { "ES_MULTILINE",      4 }, { "ES_UPPERCASE",      0x0008 }, { "ES_LOWERCASE",      0x0010 }, { "ES_PASSWORD",       0x0020 }, { "ES_AUTOVSCROLL",    0x0040 }, { "ES_AUTOHSCROLL",    128 }, { "ES_NOHIDESEL",      0x0100 }, { "ES_OEMCONVERT",     0x0400 }, { "ES_READONLY",       2048 }, { "ES_WANTRETURN",     4096 }, { "ES_NUMBER",         0x2000 }, { "WS_CHILD",          1073741824 }, { "WS_VISIBLE",        268435456 }, { "WS_GROUP",          131072 }, { "WS_BORDER",         8388608 }, { "WS_VSCROLL",        2097152 }, { "WS_HSCROLL",        1048576 }, { "WS_TABSTOP",        65536 }, { "WS_DISABLED",       134217728 }, { "SS_LEFT",           0  }, { "SS_CENTER",         0x00000001 }, { "SS_RIGHT",          0x00000002 }, { "SS_ICON",           0x00000003 }, { "SS_BLACKRECT",      4 }, { "SS_GRAYRECT",       0x00000005 }, { "SS_WHITERECT",      6 }, { "SS_BLACKFRAME",     0x00000007 }, { "SS_GRAYFRAME",      0x00000008 }, { "SS_WHITEFRAME",     9 }, { "SS_USERITEM",       0x0000000A }, { "SS_SIMPLE",         11 }, { "SS_LEFTNOWORDWRAP", 0x0000000C }, { "SS_OWNERDRAW",      0x0000000D }, { "SS_BITMAP",         0x0000000E }, { "SS_ENHMETAFILE",    0x0000000F }, { "SS_ETCHEDHORZ",     0x00000010 }, { "SS_ETCHEDVERT",     0x00000011 }, { "SS_ETCHEDFRAME",    0x00000012 }, { "SS_TYPEMASK",       0x0000001F }, { "SS_NOPREFIX",       0x00000080 }, { "SS_NOTIFY",         0x00000100 }, { "SS_CENTERIMAGE",    0x00000200 }, { "SS_RIGHTJUST",      0x00000400 }, { "SS_REALSIZEIMAGE",  0x00000800 }, { "SS_SUNKEN",         0x00001000 }, { "SS_ENDELLIPSIS",    0x00004000 }, { "SS_PATHELLIPSIS",   0x00008000 }, { "SS_WORDELLIPSIS",   0x0000C000 }, { "SS_ELLIPSISMASK",   0x0000C000 }, { "CBS_SIMPLE",            1 }, { "CBS_DROPDOWN",          2 }, { "CBS_DROPDOWNLIST",      3 }, { "CBS_OWNERDRAWFIXED",    16 }, { "CBS_OWNERDRAWVARIABLE", 0x0020 }, { "CBS_AUTOHSCROLL",       64 }, { "CBS_OEMCONVERT",        128 }, { "CBS_SORT",              256 }, { "CBS_HASSTRINGS",        0x0200 }, { "CBS_NOINTEGRALHEIGHT",  0x0400 }, { "CBS_DISABLENOSCROLL",   2048 }, { "CBS_UPPERCASE",         0x2000 }, { "CBS_LOWERCASE",         0x4000 }, { "BS_PUSHBUTTON",             0 }, { "BS_DEFPUSHBUTTON",        1 }, { "BS_CHECKBOX",             2 }, { "BS_AUTOCHECKBOX",         3 }, { "BS_RADIOBUTTON",          0x00000004 }, { "BS_3STATE",               0x00000005 }, { "BS_AUTO3STATE",           0x00000006 }, { "BS_GROUPBOX",             7 }, { "BS_USERBUTTON",           0x00000008 }, { "BS_AUTORADIOBUTTON",      9 }, { "BS_OWNERDRAW",            0x0000000B }, { "BS_LEFTTEXT",             0x00000020 }, { "BS_TEXT",                 0x00000000 }, { "BS_ICON",                 0x00000040 }, { "BS_BITMAP",               0x00000080 }, { "BS_LEFT",                 0x00000100 }, { "BS_RIGHT",                0x00000200 }, { "BS_CENTER",               0x00000300 }, { "BS_TOP",                  0x00000400 }, { "BS_BOTTOM",               0x00000800 }, { "BS_VCENTER",              0x00000C00 }, { "BS_PUSHLIKE",             0x00001000 }, { "BS_MULTILINE",            0x00002000 }, { "BS_NOTIFY",               0x00004000 }, {    "BS_FLAT",                 0x00008000 }, {    "BS_RIGHTBUTTON",          0x00000020 }, { "LBS_NOTIFY",              1 }, { "LBS_SORT",                2 }, { "LBS_NOREDRAW",            0x0004 }, { "LBS_MULTIPLESEL",         8 }, { "LBS_OWNERDRAWFIXED",      16 }, { "LBS_OWNERDRAWVARIABLE",   0x0020 }, { "LBS_HASSTRINGS",          0x0040 }, { "LBS_USETABSTOPS",         128 }, { "LBS_NOINTEGRALHEIGHT",    256 }, { "LBS_MULTICOLUMN",         0x0200 }, { "LBS_WANTKEYBOARDINPUT",   1024 }, { "LBS_EXTENDEDSEL",         0x0800 }, { "LBS_DISABLENOSCROLL",     4096 }, { "LBS_NODATA",              0x2000 }, { "LBS_NOSEL",               0x4000 }, { "LBS_STANDARD",            10485763 }, { "DTS_UPDOWN",              0x0001 }, { "DTS_SHOWNONE",            0x0002 }, { "DTS_SHORTDATEFORMAT",     0x0000 }, { "DTS_LONGDATEFORMAT",      0x0004 }, { "DTS_SHORTDATECENTURYFORMAT", 0x000C }, { "DTS_TIMEFORMAT",          0x0009 }, { "DTS_APPCANPARSE",         0x0010 }, { "DTS_RIGHTALIGN",          0x0020 }, { "1", 1 }, { "2", 2 }, { "3", 3 }, { "0", 0 } }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static aDlgStyles := { { "WS_BORDER",      8388608 }, { "WS_CAPTION",     12582912 }, { "WS_MINIMIZEBOX", 131072 }, { "WS_POPUP",       2147483648 }, { "WS_DLGFRAME",    4194304 }, { "WS_SYSMENU",     524288 }, { "WS_CHILD",       1073741824 }, { "WS_OVERLAPPED",  0 }, { "WS_VISIBLE",     268435456 }, { "WS_THICKFRAME",  262144 }, { "0x4L",           4 }, { "4",              4 }, { "DS_MODALFRAME",  128 }, { "DS_3DLOOK",      0x0004 } }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function OpenRCFile()
+
+   local oWndRC, oTree, oMemo, oSplit
+   local cRCFile := cGetFile( "*.rc", "Select a resources file" )
+   local cTxtFile, cLine, nFrom := 1, cItemText := "", cText
+   local oItem, oBmpItem, oDlgItem, oIcoItem, oMnuItem, oMnuString
+
+   oWndRC := TWindow():New( 100, 300, 400, 700, cRCFile,,,,,,,,,,,, !.F., !.F., !.F., !.F., .T. )
+
+
+
+   oTree = TTreeView():New( 2, 0, oWndRC, , , .T., .F., 200, 300 )
+
+
+   oTree:bChanged = { | oItem | oItem := oTree:GetSelected(), If( oItem <> nil, oMemo:SetText( oItem:Cargo ),) }
+   oTree:bLDblClick = { || ShowDialog( oTree:GetSelected() ) }
+
+   oImageList = TImageList():New()
+
+
+   oImageList:Add( TBitmap():Define( "folder",,  oWnd ), TBitmap():Define( "fldmask",, oWnd ) )
+
+   oImageList:Add( TBitmap():Define( "dialog",,  oWnd ), TBitmap():Define( "dlgmask",, oWnd ) )
+
+   oImageList:Add( TBitmap():Define( "icon",,    oWnd ), TBitmap():Define( "icomask",, oWnd ) )
+
+   oImageList:Add( TBitmap():Define( "bitmap",,  oWnd ), TBitmap():Define( "bmpmask",, oWnd ) )
+
+
+   oTree:SetImageList( oImageList )
+
+   oMemo := TMultiGet():New( 0, 25.7, { | u | If( PCount()==0, cItemText, cItemText:= u ) }, oWndRC, 300, 100,, .F.,,,, .F.,, .F.,, .F., .F., .F.,,, .F.,, )
+
+
+
+
+
+
+   oSplit := TSplitter():New( 0, 200, (!.F.) .OR. .T., {oTree}, !.F., {oMemo}, !.F.,,, oWndRC,, 4, 200, .T., .T.,, .F., .F., .F., )
+
+   oSplit:AdjClient()
+
+   if ! Empty( cRCFile )
+      cTxtFile = MemoRead( cRCFile )
+
+      while nFrom < Len( cTxtFile )
+         cLine = ExtractLine( cTxtFile, @nFrom )
+         SysRefresh()
+
+         if Upper( StrToken( cLine, 2 ) ) == "BITMAP"
+            if oBmpItem == nil
+               oBmpItem = oTree:Add( "Bitmaps" )
+            endif
+            oBmpItem:Add( StrToken( cLine, 1 ), 3, StrToken( cLine, 3 ) )
+         endif
+
+         if Upper( StrToken( cLine, 2 ) ) == "DIALOG"
+            if oDlgItem == nil
+               oDlgItem = oTree:Add( "Dialogs" )
+            endif
+            oItem = oDlgItem:Add( StrToken( cLine, 1 ), 1 )
+            cText = cLine + Chr(13)+Chr(10)
+
+            while ( SubStr( cLine, 1, 1 ) <> "}" .AND. SubStr( cLine, 1, 3 ) <> "END" ) .AND.  nFrom <= Len( cTxtFile )
+               cLine = ExtractLine( cTxtFile, @nFrom )
+               cText += cLine + Chr(13)+Chr(10)
+               SysRefresh()
+            end
+            oItem:Cargo = cText
+         endif
+
+         if Upper( StrToken( cLine, 2 ) ) == "ICON"
+            if oIcoItem == nil
+               oIcoItem = oTree:Add( "Icons" )
+            endif
+            oIcoItem:Add( StrToken( cLine, 1 ), 2, StrToken( cLine, 3 ) )
+         endif
+
+         if Upper( StrToken( cLine, 2 ) ) == "MENU"
+            if oMnuItem == nil
+               oMnuItem = oTree:Add( "Menus" )
+            endif
+            oMnuItem:Add( StrToken( cLine, 1 ), 2 )
+         endif
+
+         if Upper( StrToken( cLine, 1 ) ) == "STRINGTABLE"
+            if oMnuString == nil
+               oMnuString = oTree:Add( "Strings" )
+            endif
+            oMnuString:Add( StrToken( cLine, 2 ), 2 )
+         endif
+
+      end
+   endif
+
+   oWndRC:bResized := {||oSplit:AdjClient()}
+
+   oWndRC:Show()
+
+return nil
+
+
+
+function ShowDialog( oItem )
+
+   local cText, cLine, nFrom := 1
+   local cCaption := "", nTop, nLeft, nWidth, nHeight, nStyle, nFontSize, cFontName
+   local oDlg, cResource := "", cFirst, nControls := 0
+   local oFnt
+
+   if oItem == nil
+      return nil
+   endif
+
+   cText = oItem:Cargo
+   if Empty( cText )
+      return nil
+   endif
+   cLine = ExtractLine( cText, @nFrom )
+
+   nTop    = Val( SubStr( StrToken( cLine, 1, "," ), RAt( " ", StrToken( cLine, 1, "," ) ) + 1 ) )
+   nLeft   = Val( StrToken( cLine, 2, "," ) )
+   nWidth  = Val( StrToken( cLine, 3, "," ) )
+   nHeight = Val( StrToken( cLine, 4, "," ) )
+
+   while nFrom < Len( cText )
+      cLine = ExtractLine( cText, @nFrom )
+      cLine = StrTran( cLine, Chr( 9 ), "   " )
+      cFirst = Upper( AllTrim( StrToken( cLine, 1 ) ) )
+
+      do case
+           case cFirst == "CAPTION"
+              cCaption = StrToken( cLine, 2, '"' )
+
+         case cFirst == "STYLE"
+              nStyle = ParseDlgStyle( AllTrim( SubStr( cLine, 6 ) ) )
+              if lAnd( nStyle, 1073741824 )
+                 nStyle = nXor( nStyle, 1073741824 )
+              endif
+              if nAnd( nStyle, 12582912 ) <> 12582912
+                 nStyle = nOr( nStyle, 12582912 )
+              endif
+
+         case cFirst == "FONT"
+              nFontSize = Val( StrToken( StrToken( cLine, 1, "," ), 2 ) )
+              cFontName = StrToken( cLine, 2, '"' )
+
+         case cFirst == "CONTROL"
+              cResource += ParseControl( cLine )
+              nControls++
+
+         case cFirst $ "PUSHBUTTON,DEFPUSHBUTTON,LISTBOX,EDITTEXT,LTEXT,RTEXT,GROUPBOX,CHECKBOX,COMBOBOX,RADIOBUTTON"
+              cResource += ParseStdControl( cLine )
+              nControls++
+      endcase
+   end
+
+   If( nFontSize == nil, nFontSize := 8, ) ; If( cFontName == nil, cFontName := "Ms Sans Serif", );
+
+
+   cResource = cDlg2Chr( nControls, nTop, nLeft, nTop + nHeight, nLeft + nWidth, cCaption, nStyle, nFontSize, cFontName ) + cResource
+
+   oDlg = TDialog():New(,,,,,,, .F.,,,,,, .F.,,,,,, .F., )
+
+   oDlg:cResData = cResource
+
+
+
+   oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted := {|hDC,cPS|DrawGrid( oDlg:hWnd, hDC, cPS, 8, 8 )}, .F.,,, {|Self|InitControls( oDlg )}, oDlg:bRClicked,,, )
+
+return nil
+
+
+
+function ParseDlgStyle( cStyle )
+
+   local nStyle := nOr( 0x40, (0 + 12582912 + 524288 + 262144 + 131072 + 65536) ), cToken, nAt
+
+   while ! Empty( cStyle )
+      cToken = AllTrim( StrToken( cStyle, 1, "|" ) )
+
+      if ( nAt := AScan( aDlgStyles, { | a | cToken == a[ 1 ] } ) ) <> 0
+            nStyle = nOr( nStyle, aDlgStyles[ nAt ][ 2 ] )
+      else
+
+         MsgAlert( "Dialog style not found: " + cToken, "Please report this to FiveTech Software" )
+      endif
+      if At( "|", cStyle ) <> 0
+         cStyle = SubStr( cStyle, At( "|", cStyle ) + 1 )
+      else
+         cStyle = ""
+      endif
+   end
+
+return nStyle
+
+
+
+function ParseControl( cLine )
+
+   local nTop, nLeft, nWidth, nHeight, nId, nAt
+   local cClassName, cStyle, nStyle := nOr( 268435456, 1073741824, 65536 ), cCaption, cToken
+
+   cCaption = StrToken( cLine, 2, '"' )
+
+   cLine = StrToken( cLine, 1, '"' ) + '"-"' + StrToken( cLine, 3, '"' ) + '"' +  StrToken( cLine, 4, '"' ) + '"' + StrToken( cLine, 5, '"' )
+   nId     = Val( StrToken( cLine, 1, "," ) )
+   nLeft   = Val( StrToken( cLine, 5, "," ) )
+   nTop    = Val( StrToken( cLine, 6, "," ) )
+   nWidth  = Val( StrToken( cLine, 7, "," ) )
+   nHeight = Val( StrToken( cLine, 8, "," ) )
+   cClassName = StrToken( cLine, 4, '"' )
+   cStyle  = StrToken( cLine, 4, "," )
+
+   if cClassName == "EDIT"
+      cClassName = "edit"
+   endif
+   if Upper( cClassName ) == "TFOLDER"
+      cClassName = "SysTabControl32"
+   endif
+
+   while ! Empty( cStyle )
+      cToken = AllTrim( StrToken( cStyle, 1, "|" ) )
+
+      if ( nAt := AScan( aStyles, { | a | cToken == a[ 1 ] } ) ) <> 0
+            nStyle = nOr( nStyle, aStyles[ nAt ][ 2 ] )
+      else
+         if SubStr( cToken, 1, 3 ) <> "NOT"
+
+            MsgAlert( "Style not found: " + cToken, "Please report this to FiveTech Software" )
+         endif
+      endif
+      if At( "|", cStyle ) <> 0
+         cStyle = SubStr( cStyle, At( "|", cStyle ) + 1 )
+      else
+         cStyle = ""
+      endif
+   end
+
+
+return cCtrl2Chr( nTop, nLeft, nTop + nHeight, nLeft + nWidth, nId, nStyle, cClassName, cCaption )
+
+
+
+function ParseStdControl( cLine )
+
+   local nTop, nLeft, nWidth, nHeight, nId, nAt
+   local cClassName, cStyle, nStyle := nOr( 268435456, 1073741824, 65536 ), cCaption, cToken
+
+   cClassName = StrToken( cLine, 1 )
+
+   do case
+         case cClassName == "PUSHBUTTON"
+              cClassName = "Button"
+           cCaption = StrToken( cLine, 2, '"' )
+           cLine = StrToken( cLine, 1, '"' ) + '"-"' + SubStr( cLine, RAt( '"', cLine ) + 1 )
+              nId  = Val( StrToken( cLine, 2, "," ) )
+           nTop = Val( StrToken( cLine, 3, "," ) )
+           nLeft = Val( StrToken( cLine, 4, "," ) )
+           nHeight = Val( StrToken( cLine, 5, "," ) )
+           nWidth  = Val( StrToken( cLine, 6, "," ) )
+
+         case cClassName == "DEFPUSHBUTTON"
+              cClassName = "Button"
+           cCaption = StrToken( cLine, 2, '"' )
+           cLine = StrToken( cLine, 1, '"' ) + '"-"' + SubStr( cLine, RAt( '"', cLine ) + 1 )
+              nId  = Val( StrToken( cLine, 2, "," ) )
+           nTop = Val( StrToken( cLine, 3, "," ) )
+           nLeft = Val( StrToken( cLine, 4, "," ) )
+           nHeight = Val( StrToken( cLine, 5, "," ) )
+           nWidth  = Val( StrToken( cLine, 6, "," ) )
+           nStyle = nOr( nStyle, 1 )
+
+         case cClassName == "LISTBOX"
+              cClassName = "ListBox"
+              nId  = Val( StrToken( StrToken( cLine, 2 ), 1, "," ) )
+           nTop = Val( StrToken( cLine, 2, "," ) )
+           nLeft   = Val( StrToken( cLine, 3, "," ) )
+           nHeight  = Val( StrToken( cLine, 4, "," ) )
+           nWidth   = Val( StrToken( cLine, 5, "," ) )
+           cCaption = ""
+           cStyle  = StrToken( cLine, 6, "," )
+
+         case cClassName == "EDITTEXT"
+              cClassName = "Edit"
+              nId  = Val( StrToken( cLine, 2 ) )
+           nTop = Val( StrToken( cLine, 2, "," ) )
+           nLeft   = Val( StrToken( cLine, 3, "," ) )
+           nHeight  = Val( StrToken( cLine, 4, "," ) )
+           nWidth   = Val( StrToken( cLine, 5, "," ) )
+           cStyle = StrToken( cLine, 6, "," )
+           if Empty( cStyle )
+              cStyle = "WS_BORDER"
+           endif
+           cCaption = ""
+
+         case cClassName == "LTEXT"
+              cClassName = "static"
+           cCaption = StrToken( cLine, 2, '"' )
+           cLine = StrToken( cLine, 1, '"' ) + '"-"' + SubStr( cLine, RAt( '"', cLine ) + 1 )
+              nId  = Val( StrToken( StrToken( cLine, 2, "," ) ) )
+           nTop = Val( StrToken( cLine, 3, "," ) )
+           nLeft   = Val( StrToken( cLine, 4, "," ) )
+           nHeight  = Val( StrToken( cLine, 5, "," ) )
+           nWidth   = Val( StrToken( cLine, 6, "," ) )
+           cStyle = "ES_LEFT"
+
+         case cClassName == "RTEXT"
+              cClassName = "static"
+           cCaption = StrToken( cLine, 2, '"' )
+           cLine = StrToken( cLine, 1, '"' ) + '"-"' + SubStr( cLine, RAt( '"', cLine ) + 1 )
+              nId  = Val( StrToken( StrToken( cLine, 2, "," ) ) )
+           nTop = Val( StrToken( cLine, 3, "," ) )
+           nLeft   = Val( StrToken( cLine, 4, "," ) )
+           nHeight  = Val( StrToken( cLine, 5, "," ) )
+           nWidth   = Val( StrToken( cLine, 6, "," ) )
+           cStyle = "ES_RIGHT"
+
+         case cClassName == "GROUPBOX"
+              cClassName = "button"
+           cCaption = StrToken( cLine, 2, '"' )
+           cLine = StrToken( cLine, 1, '"' ) + '"-"' + SubStr( cLine, RAt( '"', cLine ) + 1 )
+              nId  = Val( StrToken( StrToken( cLine, 2, "," ) ) )
+           nTop = Val( StrToken( cLine, 3, "," ) )
+           nLeft   = Val( StrToken( cLine, 4, "," ) )
+           nHeight  = Val( StrToken( cLine, 5, "," ) )
+           nWidth   = Val( StrToken( cLine, 6, "," ) )
+           cStyle = StrToken( cLine, 7, "," )
+
+         case cClassName == "CHECKBOX"
+              cClassName = "Button"
+           cCaption = StrToken( cLine, 2, '"' )
+           cLine = StrToken( cLine, 1, '"' ) + '"-"' + SubStr( cLine, RAt( '"', cLine ) + 1 )
+              nId  = Val( StrToken( cLine, 2, "," ) )
+           nTop = Val( StrToken( cLine, 3, "," ) )
+           nLeft = Val( StrToken( cLine, 4, "," ) )
+           nHeight = Val( StrToken( cLine, 5, "," ) )
+           nWidth  = Val( StrToken( cLine, 6, "," ) )
+           cStyle = StrToken( cLine, 7, "," )
+
+         case cClassName == "COMBOBOX"
+              cClassName = "ComboBox"
+              nId  = Val( StrToken( StrToken( cLine, 2 ), 1, "," ) )
+           nTop = Val( StrToken( cLine, 2, "," ) )
+           nLeft   = Val( StrToken( cLine, 3, "," ) )
+           nHeight  = Val( StrToken( cLine, 4, "," ) )
+           nWidth   = Val( StrToken( cLine, 5, "," ) )
+           cCaption = ""
+           cStyle  = StrToken( cLine, 6, "," )
+
+         case cClassName == "RADIOBUTTON"
+              cClassName = "Button"
+           cCaption = StrToken( cLine, 2, '"' )
+           cLine = StrToken( cLine, 1, '"' ) + '"-"' + SubStr( cLine, RAt( '"', cLine ) + 1 )
+              nId  = Val( StrToken( cLine, 2, "," ) )
+           nTop = Val( StrToken( cLine, 3, "," ) )
+           nLeft = Val( StrToken( cLine, 4, "," ) )
+           nHeight = Val( StrToken( cLine, 5, "," ) )
+           nWidth  = Val( StrToken( cLine, 6, "," ) )
+           cStyle = StrToken( cLine, 7, "," )
+
+   endcase
+
+   while ! Empty( cStyle )
+      cToken = AllTrim( StrToken( cStyle, 1, "|" ) )
+
+      if ( nAt := AScan( aStyles, { | a | cToken == a[ 1 ] } ) ) <> 0
+            nStyle = nOr( nStyle, aStyles[ nAt ][ 2 ] )
+      else
+         if SubStr( cToken, 1, 3 ) <> "NOT"
+            MsgAlert( "Style not found: " + cToken, "Please report this to FiveTech Software" )
+         endif
+      endif
+      if At( "|", cStyle ) <> 0
+         cStyle = SubStr( cStyle, At( "|", cStyle ) + 1 )
+      else
+         cStyle = ""
+      endif
+   end
+
+
+return cCtrl2Chr( nLeft, nTop, nLeft + nWidth, nTop + nHeight, nId, nStyle, cClassName, cCaption )
+
+
+
+function InitFWHControls()
+
+   local oDlg, oCtrl
+
+   oDlg = TDialog():New(,,,,,,, .F.,,,,,, .F.,,,,,, .F., )
+
+   oCtrl := TWBrowse():New( 2, 2,,, {|| {"" } },,, oDlg,,,,,,,,,,,, .F.,, .F.,, .F.,,, )
+
+   oCtrl := TBtnBmp():New( 2, 2,,,,,,,, oDlg,,, .F., .F.,,,,, !.F.,, .F.,,, .F.,, !.F.,, .F., .F. )
+
+   oCtrl := TBitmap():New( 2, 2,,,,, .F., oDlg,,, .F., .F.,,, .F.,, .F.,, .F. )
+
+   oCtrl := TTabs():New( 2, 2,,, oDlg,,,, .F., .F.,,,, )
+
+   oCtrl := TCBrowse():New( 2, 2,,,,,, oDlg,,,,,,,,,,,, .F.,, .F.,, .F., )
+
+
+   oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .F.,,, {|Self|oDlg:End()}, oDlg:bRClicked,,, )
+
+return nil
+
+
+
+function BWCCRegister( hInst ) ; local _hDLL := If( ValType( "BWCC32.DLL" ) == "N", "BWCC32.DLL", LoadLibrary( "BWCC32.DLL" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( .T., "BWCCRegister", ), .T., 3,7 ) ; uResult = FWCallDLL( cFarProc,hInst ) ; If( ValType( "BWCC32.DLL" ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( "BWCC32.DLL" ) == "C", "BWCC32.DLL", Str( "BWCC32.DLL" ) ) ) ; end ; return uResult
+
+
+
+function InitControls( oDlg )
+
+   local hDlg := oDlg:hWnd, hCtrl := GetWindow( hDlg, 5 ), oCtrl
+
+   if hCtrl <> 0
+      oCtrl = TControl()
+      oCtrl:oWnd = oDlg
+      oCtrl:hWnd = hCtrl
+      oCtrl:Link()
+      AAdd( oDlg:aControls, oCtrl )
+      oCtrl:lDrag = .T.
+      oCtrl:bGotFocus = { || oCtrl:ShowDots() }
+   endif
+
+   while hCtrl <> 0
+      hCtrl = GetWindow( hCtrl, 2    )
+      if hCtrl <> 0
+         oCtrl = TControl()
+         oCtrl:oWnd = oDlg
+         oCtrl:hWnd = hCtrl
+         oCtrl:Link()
+         AAdd( oDlg:aControls, oCtrl )
+         oCtrl:lDrag = .T.
+         oCtrl:bGotFocus = { || oCtrl:ShowDots() }
+      endif
+   end
+
+return nil

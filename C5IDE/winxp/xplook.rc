@@ -1,0 +1,10 @@
+// Add this to your resources RC file
+
+#ifdef __FLAT__
+   1 24 "WindowsXP.Manifest"
+#endif
+
+#ifdef __64__
+   1 24 "WinXP/WindowsXP.Manifest64"
+#endif 
+

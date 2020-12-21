@@ -1,0 +1,280 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 6 "source\dsgngrp.prg"
+_HB_CLASS TDsgnGrp ; function TDsgnGrp ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnGrp" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnGrp() ) ) ;
+
+; _HB_MEMBER { nAlign } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nAlign"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd) AS CLASS TDsgnGrp; oClass:AddMethod( "New", @TDsgnGrp_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnGrp_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnGrp_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ShapeOver( nRow, nCol); oClass:AddMethod( "ShapeOver", @TDsgnGrp_ShapeOver(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IntersectRect( aRect); oClass:AddMethod( "IntersectRect", @TDsgnGrp_IntersectRect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GenPrg( lDialog, cFrom, cHeader); oClass:AddMethod( "GenPrg", @TDsgnGrp_GenPrg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProps( oList); oClass:AddMethod( "SetProps", @TDsgnGrp_SetProps(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnGrp ;
+
+
+      static FUNCTION TDsgnGrp_New( nTop, nLeft, nBottom, nRight, oWnd ) ; local Self AS CLASS TDsgnGrp := QSelf() AS CLASS TDsgnGrp
+
+
+   if nTop <> nil .AND. (nBottom-nTop < 10 .OR. nRight-nLeft < 10)
+      nBottom := nTop + 65
+      nRight  := nLeft + 72
+   endif
+
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+  ::cObjName         := ::GetObjName()
+
+   ::nClrText      := 0
+   ::lActive       := .T.
+
+   ::cCaption     := "GroupBox"
+   ::bContextMenu := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ::aProperties := { "cCaption"       , "lActive"        , "lBorder"        , "lCanSize" , "lCanMove"       , "lEditable"      , "lVisible"       , "nAlign"         , "nClrBorder"     , "nClrText"       , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      , "aDotsActives"   , "aRect"          }
+
+
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+return self
+
+
+
+      static FUNCTION TDsgnGrp_ShapeOver( nRow, nCol ) ; local Self AS CLASS TDsgnGrp := QSelf() AS CLASS TDsgnGrp
+
+ local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+
+ if PtInRect( nRow, nCol, {rc[1]-5,rc[2]-5,rc[3]+5,rc[4]+5} )
+    rc := {::aRect[1]+15,::aRect[2]+5,::aRect[3]-5,::aRect[4]-5}
+    if !PtInRect( nRow, nCol, rc )
+       return self
+    endif
+ endif
+
+ return nil
+
+
+
+
+  static FUNCTION TDsgnGrp_Paint( hDC ) ; local Self AS CLASS TDsgnGrp := QSelf() AS CLASS TDsgnGrp
+
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local color, iMode, colortext
+local hTheme := nil
+local nClrText := 0
+local cCaption := if( ::cCaption == "" , ::cCaption, " " + ::cCaption + " " )
+local hFont, hOldFont, oFontPPC
+
+if ::oWnd:lPocketPc()
+
+   rc[1] += 6
+   Box(hdc, rc, 0 )
+   if !empty( ::cCaption )
+
+
+
+
+
+      color := SetTextColor( hDC, 0 )
+      iMode    := SetBkMode( hDC, 2 )
+      TextOut( hDC,  rc[1]-6, rc[2]+4, cCaption )
+      SetBkMode( hDC, iMode )
+
+      SetTextColor(hDC, color)
+
+   endif
+
+
+else
+
+
+
+
+    color    := SetBkColor( hDC, GetSysColor(15))
+    iMode    := SetBkMode( hDC, 2 )
+
+    if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+       hTheme := C5_OpenThemeData(::oWnd:hWnd, "BUTTON")
+
+       if hTheme <> nil
+
+          rc[1]+=6
+          C5_DrawThemeBackground   ( hTheme, hDC, 4, if(::lActive, 1,2 ) , rc )
+          nClrText := SetTextColor( hDC, GetThemeColor( hTheme,4,1, 3803 ) )
+
+          TextOut( hDC,  rc[1]-6, rc[2]+4, cCaption )
+
+          C5_CloseThemeData()
+
+       endif
+
+    else
+       rc[1] += 6
+       DrawEdge(hDC, rc, nOr(0x0002 , 0x0004) , nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+       TextOut( hDC,  rc[1]-6, rc[2]+4, cCaption )
+    endif
+
+    SetTextColor( hDC, nClrText )
+
+    SetBkMode( hDC, iMode )
+    SetBkColor( hDC, color )
+
+endif
+
+if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+   ::DotsSelect( hDC )
+endif
+
+return nil
+
+
+
+      static FUNCTION TDsgnGrp_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnGrp := QSelf() AS CLASS TDsgnGrp
+
+local oMenu
+local o := self
+
+
+
+
+
+
+
+
+
+
+
+
+
+   MenuAddItem()
+
+
+return nil
+
+
+  static FUNCTION TDsgnGrp_IntersectRect( aRect ) ; local Self AS CLASS TDsgnGrp := QSelf() AS CLASS TDsgnGrp
+
+local lIntersect := .F.
+
+
+
+
+if aRect[1] > ::aRect[1] .AND. aRect[2] > ::aRect[2] .AND. aRect[3] < ::aRect[3] .AND. aRect[4] < ::aRect[4]
+   return .F.
+endif
+
+if IntersectRect( aRect, ::aRect )
+   lIntersect := .T.
+endif
+
+return lInterSect
+
+
+  static FUNCTION TDsgnGrp_GenPrg( lDialog, cFrom, cHeader, cFunciones ) ; local Self AS CLASS TDsgnGrp := QSelf() AS CLASS TDsgnGrp
+
+local cRet := ""
+local cObject
+local cVar
+
+If( lDialog == nil, lDialog := .T., ) ;
+If( cFrom == nil, cFrom := "oWnd", ) ;
+If( cHeader == nil, cHeader := "", ) ;
+If( cFunciones == nil, cFunciones := "", ) ;
+
+
+  cObject := ::cObjName
+  cVar    := "c" + substr( cObject, 2 )
+
+  cHeader += "local " + cObject + Chr(13)+Chr(10)
+
+
+
+
+  cRet += "        @ " + ::cStrTop(lDialog) + ", " + ::cStrLeft(lDialog) + " GROUP " + cObject + " TO " + ::cStrBottom(lDialog) + ", " + ::cStrRight(lDialog) + " ;" + Chr(13)+Chr(10) + '                 PROMPT "' + alltrim( ::cCaption ) + '" ;' + Chr(13)+Chr(10) + "                 PIXEL ; " + Chr(13)+Chr(10) + "                 OF " + cFrom + " TRANSPARENT" + Chr(13)+Chr(10)
+
+return cRet
+
+
+
+   static FUNCTION TDsgnGrp_SetProps( oList ) ; local Self AS CLASS TDsgnGrp := QSelf() AS CLASS TDsgnGrp
+
+local nGroup
+local o := self
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ::aProperties := { "cCaption"       , "lActive"        , "lBorder"        , "lCanSize" , "lCanMove"       , "lEditable"      , "lVisible"       , "nAlign"         , "nClrBorder"     , "nClrText"       , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      , "aDotsActives"   , "aRect"          }
+
+nGroup := oList:AddGroup( "Appearence" )
+
+oList:AddItem( "cObjName","Name", ,nGroup )
+oList:AddItem( "lActive","Active", ,nGroup )
+oList:AddItem( "cCaption","Text",,nGroup )
+oList:AddItem( "nClrText"    ,"Text Color", "B",nGroup,,,{|| ChooseColor( o:nClrText )} )
+oList:AddItem( "nClrPane"    ,"Back Color", "B",nGroup,,,{|| ChooseColor( o:nClrPane )} )
+
+nGroup := oList:AddGroup(  "Position" )
+
+oList:AddItem( "nTop","Top", ,nGroup )
+oList:AddItem( "nLeft","Left", ,nGroup )
+oList:AddItem( "nWidth","Width", ,nGroup )
+oList:AddItem( "nHeight","Height", ,nGroup )
+
+
+
+
+
+return 0

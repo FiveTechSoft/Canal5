@@ -1,0 +1,540 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 5 "source\dsgnsay.prg"
+_HB_CLASS TDsgnSay ; function TDsgnSay ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnSay" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnSay() ) ) ;
+
+
+; _HB_MEMBER { lFlat } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFlat"}, .F. )
+; _HB_MEMBER { lMultiline } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lMultiline"}, .F. )
+; _HB_MEMBER { cAlign } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cAlign"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+; _HB_MEMBER { lModalFrame } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lModalFrame"}, .F. )
+; _HB_MEMBER { lClientEdge } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lClientEdge"}, .F. )
+; _HB_MEMBER { lStaticEdge } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lStaticEdge"}, .F. )
+; _HB_MEMBER { lSunken } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lSunken"}, .F. )
+; _HB_MEMBER { lStaticFrame } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lStaticFrame"}, .F. )
+; _HB_MEMBER { hBmp } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hBmp"}, .F. )
+; _HB_MEMBER { hIcon } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hIcon"}, .F. )
+
+; _HB_MEMBER { lxAdjust } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxAdjust"}, .F. )
+; _HB_MEMBER { aLastSize } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aLastSize"}, .F. )
+; _HB_MEMBER { aRealSize } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aRealSize"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd) AS CLASS TDsgnSay; oClass:AddMethod( "New", @TDsgnSay_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnSay_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnSay_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ShapeOver( nRow, nCol); oClass:AddMethod( "ShapeOver", @TDsgnSay_ShapeOver(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER IntersectRect( aRect); oClass:AddMethod( "IntersectRect", @TDsgnSay_IntersectRect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lAdjust( lNuevoValor); _HB_MEMBER _lAdjust( lNuevoValor); oClass:AddMethod( "lAdjust", @TDsgnSay_lAdjust(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lAdjust", @TDsgnSay_lAdjust(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Save2INI(); oClass:AddMethod( "Save2INI", @TDsgnSay_Save2INI(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GenPrg( lDialog, cFrom, cHeader); oClass:AddMethod( "GenPrg", @TDsgnSay_GenPrg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProps( oList); oClass:AddMethod( "SetProps", @TDsgnSay_SetProps(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnSay ;
+
+
+      static FUNCTION TDsgnSay_New( nTop, nLeft, nBottom, nRight, oWnd ) ; local Self AS CLASS TDsgnSay := QSelf() AS CLASS TDsgnSay
+
+
+   if nTop <> nil .AND. (nBottom-nTop < 10 .OR. nRight-nLeft < 10)
+      nBottom := nTop + 16
+      nRight  := nLeft + 79
+   endif
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::lFlat         := .F.
+   ::nClrText      := 0
+   ::nClrBorder    := 0
+   ::cCaption      := "Text"
+   ::nClrPane      := nil
+   ::cAlign        := "left"
+   ::lActive       := .T.
+   ::lMultiline    := .F.
+   ::lModalFrame   := .F.
+   ::lClientEdge   := .F.
+   ::lStaticEdge   := .F.
+   ::lStaticFrame  := .F.
+   ::lSunken       := .F.
+   ::lBorder       := .F.
+   ::hIcon         := nil
+   ::nMinHeight    := 1
+   ::nMinWidth     := 1
+   ::lxAdjust      := .F.
+  ::cObjName         := ::GetObjName()
+
+   ::bContextMenu := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+
+
+
+
+
+
+
+
+
+  ::aPropertiesPPC := { "cCaption"      , "lBorder"       , "nID"           , "nTop"          , "nLeft"         , "nWidth"        , "nHeight"       , "nClrPane"      , "nClrText"      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ::aProperties := { "cCaption"       , "aDotsActives"   , "aRect"          , "lActive"        , "lBorder"        , "lCanSize" , "lCanMove"       , "lClientEdge"    , "lStaticEdge"    , "lStaticFrame"   , "lSunken"        , "lEditable"      , "lFlat"          , "lModalFrame"    , "lMultiline"     , "lVisible"       , "nAlign"         , "nClrBorder"     , "nClrPane"       , "nClrText"       , "nOption"        , "oFont"          , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      }
+
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+return self
+
+
+
+
+  static FUNCTION TDsgnSay_Paint( hDC ) ; local Self AS CLASS TDsgnSay := QSelf() AS CLASS TDsgnSay
+
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local rc2
+local rcText
+local iMode
+local color
+local nAlign
+local aVal := { 0x00000000, 0x00000004, 0x00000008 }
+local aHal := { 0x00000000, 0x00000001, 0x00000002 }
+local oFont, hOldFont
+local rcSize
+local nHeight
+
+
+
+if ::lAdjust .AND. !empty( ::aRealSize )
+   ::aRect[4]  := ::aRect[2] + ::aRealSize[1]
+   ::aRect[3]  := ::aRect[1] + ::aRealSize[2]
+endif
+
+   if !empty( ::cFaceName ) .AND. ::cFaceName <> ::oWnd:oForm:cFaceName
+      oFont := TFont():New( ::cFaceName, 0, -1 * abs(::nHeightFont) , .F.,::lBold,,,,::lItalic,::lUnderline,::lStrikeOut )
+      hOldFont := SelectObject( hDC, oFont:hFont )
+   endif
+
+   if ::lStaticFrame
+      Box( hDC, rc, 16777215 )
+      rc[1]++;rc[2]++
+      Box( hDC, rc, 16777215 )
+      rc[1]--;rc[2]--
+      rc[3]--;rc[4]--
+      Box( hDC, rc, 8421504 )
+      rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+   endif
+
+   nAlign := nOr({0x00000000,0x00000001,0x00000002}[ ascan( {"LEFT","CENTER","RIGHT"}, upper(::cAlign))], 0x00000000, 0x00000010)
+
+   if !::lActive
+      rc2 := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+      rc2[1]++;rc2[2]++;rc2[3]++;rc2[4]++
+      color := SetTextColor( hDC, ( 255 + ( 255 * 256 ) + ( 255 * 65536 ) ) )
+      DrawText( hDC, ::cCaption, rc2, nAlign )
+      rc2[1]--;rc2[2]--;rc2[3]--;rc2[4]--
+      SetTextColor( hDC, color )
+      color = SetTextColor( hDC, GetSysColor( 17 ) )
+   else
+      rc2 := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+      color = SetTextColor( hDC,  ::nClrText )
+   endif
+
+   if ::nClrPane <> nil
+      FillSolidRect( hDC, rc, ::nClrPane )
+   endif
+
+   SetBkMode(hDC, 1)
+
+   if ::hBmp == nil .AND. ::hIcon == nil
+
+      rcSize := { rc2[1], rc2[2], rc2[3], rc2[4] }
+      ::aRealSize := StrSize( hDC, ::cCaption, rcSize, nAlign )
+
+      DrawText( hDC, ::cCaption, rc2, nAlign )
+
+   endif
+
+   SetTextColor( hDC, color )
+
+
+   rc2[1]-=3;rc2[2]-=3;rc2[3]+=3;rc2[4]+=3
+
+   if ::lBorder
+      Box( hDC, rc, 0 )
+   endif
+
+   if ::lModalFrame
+      DrawEdge( hDC, rc, 0x0001, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+      rc[1]++;rc[2]++;rc[3]--;rc[4]--
+      DrawEdge( hDC, rc, 0x0004, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+      rc[1]++;rc[2]++;rc[3]++;rc[4]++
+   endif
+
+   if ::lClientEdge
+      if ::lModalFrame
+         rc[1]+=2;rc[2]+=2;rc[3]-=2;rc[4]-=2
+      endif
+      DrawEdge( hDC, rc, 0x0002, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+      rc[1]+=1;rc[2]+=1;rc[3]-=1;rc[4]-=1
+      DrawEdge( hDC, rc, 0x0008, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+      rc[1]-=1;rc[2]-=1;rc[3]+=1;rc[4]+=1
+      if ::lModalFrame
+         rc[1]-=2;rc[2]-=2;rc[3]+=2;rc[4]+=2
+      endif
+   endif
+   if ::lStaticEdge
+      DrawEdge( hDC, rc, 0x0002, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+   endif
+
+   if ::lSunken
+      if ::lClientEdge .AND. !::lModalFrame
+         rc[1]+=2;rc[2]+=2;rc[3]-=2;rc[4]-=2
+      endif
+
+      DrawEdge( hDC, rc, 0x0002, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+
+      if ::lClientEdge .AND. !::lModalFrame
+         rc[1]-=2;rc[2]-=2;rc[3]+=2;rc[4]+=2
+      endif
+   endif
+
+   if oFont <> nil
+      SelectObject( hDC, hOldFont )
+      oFont:End()
+   endif
+
+
+   if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+      ::DotsSelect( hDC )
+   endif
+
+return nil
+
+
+
+      static FUNCTION TDsgnSay_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnSay := QSelf() AS CLASS TDsgnSay
+
+local oMenu
+local o := self
+
+    MenuAddItem("Adjust"       ,,o:lxAdjust      ,,{|oMenuItem|::lAdjust( !::lxAdjust )             ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("Flat"         ,,o:lFlat         ,,{|oMenuItem|::lFlat          := !::lFlat         ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lBorder"      ,,o:lBorder       ,,{|oMenuItem|::lBorder        := !::lBorder       ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lModalFrame"  ,,o:lModalFrame   ,,{|oMenuItem|::lModalFrame    := !::lModalFrame   ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lClientEdge"  ,,o:lClientEdge   ,,{|oMenuItem|::lClientEdge    := !::lClientEdge   ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lStaticEdge"  ,,o:lStaticEdge   ,,{|oMenuItem|::lStaticEdge    := !::lStaticEdge   ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lSunken"      ,,o:lSunken       ,,{|oMenuItem|::lSunken        := !::lSunken       ,::Refresh()},,,,,,,.F.,,,.F. )
+
+
+
+   MenuAddItem()
+
+
+return nil
+
+
+      static FUNCTION TDsgnSay_ShapeOver( nRow, nCol ) ; local Self AS CLASS TDsgnSay := QSelf() AS CLASS TDsgnSay
+
+ local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+
+ if PtInRect( nRow, nCol, {rc[1]-5,rc[2]-5,rc[3]+5,rc[4]+5} )
+    if !::lStaticFrame
+       return self
+    else
+       rc := {::aRect[1]+5,::aRect[2]+5,::aRect[3]-5,::aRect[4]-5}
+       if !PtInRect( nRow, nCol, rc )
+          return self
+       endif
+    endif
+ endif
+
+ return nil
+
+
+
+  static FUNCTION TDsgnSay_IntersectRect( aRect ) ; local Self AS CLASS TDsgnSay := QSelf() AS CLASS TDsgnSay
+
+local lIntersect := .F.
+
+if ::lStaticFrame
+
+
+
+   if aRect[1] > ::aRect[1] .AND. aRect[2] > ::aRect[1] .AND. aRect[3] < ::aRect[3] .AND. aRect[4] < ::aRect[4]
+      return .F.
+   endif
+endif
+if IntersectRect( aRect, ::aRect )
+   lIntersect := .T.
+endif
+
+return lInterSect
+
+
+
+  static FUNCTION TDsgnSay_lAdjust( lNuevoValor ) ; local Self AS CLASS TDsgnSay := QSelf() AS CLASS TDsgnSay
+
+local nW
+local nH
+
+if pcount() > 0
+   nW := ::aRect[4]-::aRect[2]
+   nH := ::aRect[3]-::aRect[1]
+
+   if lNuevoValor
+      ::aLastSize := {nW,nH}
+      ::aRect[4]  := ::aRect[2] + ::aRealSize[1]
+      ::aRect[3]  := ::aRect[1] + ::aRealSize[2]
+   else
+      ::aRect[4] := ::aRect[2] + ::aLastSize[1]
+      ::aRect[3] := ::aRect[1] + ::aLastSize[2]
+   endif
+   ::lxAdjust := lNuevoValor
+
+endif
+
+return ::lxAdjust
+
+
+
+
+
+
+  static FUNCTION TDsgnSay_Save2INI( ) ; local Self AS CLASS TDsgnSay := QSelf() AS CLASS TDsgnSay
+
+
+local cStr := ""
+local cItem := ::ClassName()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cStr += "["+cItem+"]"                                            + Chr(13)+Chr(10)
+cStr += "nTop="         + ::cStrTop()                            + Chr(13)+Chr(10)
+cStr += "nLeft="        + ::cStrLeft()                           + Chr(13)+Chr(10)
+cStr += "nWidth="       + ::cStrWidth()                          + Chr(13)+Chr(10)
+cStr += "nHeight="      + ::cStrHeight()                         + Chr(13)+Chr(10)
+cStr += "lFlat="        + if(::lFlat,".T.",".F.")                + Chr(13)+Chr(10)
+cStr += "lMultiline="   + if(::lMultiline,".T.",".F.")           + Chr(13)+Chr(10)
+cStr += "cAlign="       + ::cAlign                               + Chr(13)+Chr(10)
+cStr += "cFaceName="    + ::cFaceName                            + Chr(13)+Chr(10)
+cStr += "nHFont="       + strtrim(::nHFont)                      + Chr(13)+Chr(10)
+cStr += "lUnder="       + if( ::lUnder,"Yes","No")               + Chr(13)+Chr(10)
+cStr += "lBold="        + if( ::lBold,"Yes","No")                + Chr(13)+Chr(10)
+cStr += "lItalic="      + if( ::lItalic,"Yes","No")              + Chr(13)+Chr(10)
+cStr += "lTransparent=" + if( ::lTransparent,"Yes","No")         + Chr(13)+Chr(10)
+cStr += "nClrText="     + strtrim(::nClrText)                    + Chr(13)+Chr(10)
+cStr += "cClrPane="     + strtrim(::nClrPane)                    + Chr(13)+Chr(10)
+cStr += "nGiro="        + strtrim(::nGiro)                       + Chr(13)+Chr(10)
+cStr += "lEnable="      + if( ::lEnable,"Yes","No")              + Chr(13)+Chr(10)
+cStr += "nID="          + strtrim(::nID)                         + Chr(13)+Chr(10)+ Chr(13)+Chr(10)
+
+return cStr
+
+return c
+
+
+
+  static FUNCTION TDsgnSay_GenPrg( lDialog, cFrom, cHeader, cFunciones ) ; local Self AS CLASS TDsgnSay := QSelf() AS CLASS TDsgnSay
+
+local cRet := ""
+local cObject := ::cObjName
+local cCaption := alltrim( ::cCaption )
+
+If( lDialog == nil, lDialog := .T., ) ;
+If( cFrom == nil, cFrom := "oWnd", ) ;
+If( cHeader == nil, cHeader := "", ) ;
+If( cFunciones == nil, cFunciones := "", ) ;
+
+   cObject := ::cObjName
+   cHeader += "local " + cObject + Chr(13)+Chr(10)
+
+
+
+   cRet += "        @ " + ::cStrTop(lDialog) + ", " + ::cStrLeft(lDialog) + " SAY " + cObject + ' PROMPT "' + cCaption + '" ;' + Chr(13)+Chr(10) + "                 SIZE " + ::cStrWidth(lDialog) + ", " + ::cStrHeight(lDialog) + " PIXEL ; " + Chr(13)+Chr(10) + "                 OF " + cFrom + " TRANSPARENT FONT oFont" + Chr(13)+Chr(10)
+
+return cRet
+
+
+
+   static FUNCTION TDsgnSay_SetProps( oList ) ; local Self AS CLASS TDsgnSay := QSelf() AS CLASS TDsgnSay
+
+local nGroup
+local o := self
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+nGroup := oList:AddGroup( "Appearence" )
+
+oList:AddItem( "cObjName","Name", ,nGroup )
+oList:AddItem( "lBorder","Border", ,nGroup )
+oList:AddItem( "lActive","Active", ,nGroup )
+oList:AddItem( "cCaption","Text",,nGroup )
+oList:AddItem( "lCanMove","Can move", ,nGroup )
+oList:AddItem( "lCanSize","Can size", ,nGroup )
+oList:AddItem( "lClientEdge" ,"Client Edge", ,nGroup )
+oList:AddItem( "lStaticEdge" ,"Static Edge", ,nGroup )
+oList:AddItem( "lStaticFrame","Static Frame", ,nGroup )
+oList:AddItem( "lSunken"     ,"Sunken", ,nGroup )
+oList:AddItem( "cAlign"      ,"Align", "A",nGroup,,,{||{"Left","Center","Right"}} )
+oList:AddItem( "nClrText"    ,"Text Color", "B",nGroup,,,{|| ChooseColor( o:nClrText )} )
+oList:AddItem( "nClrPane"    ,"Back Color", "B",nGroup,,,{|| ChooseColor( o:nClrPane )} )
+oList:AddItem( "cFaceName"   ,"FaceName", "A",nGroup,,,{|| aGetFontNamesEx() } )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+nGroup := oList:AddGroup(  "Position" )
+
+oList:AddItem( "nTop","Top", ,nGroup )
+oList:AddItem( "nLeft","Left", ,nGroup )
+oList:AddItem( "nWidth","Width", ,nGroup )
+oList:AddItem( "nHeight","Height", ,nGroup )
+
+
+
+
+
+return 0
+
+
+
+#pragma BEGINDUMP
+#include "windows.h"
+#include "hbapi.h"
+
+
+HB_FUNC ( STRSIZE )
+{
+	RECT  rct;
+	rct.top    = hb_parvni( 3, 1 );
+	rct.left   = hb_parvni( 3, 2 );
+	rct.bottom = hb_parvni( 3, 3 );
+	rct.right  = hb_parvni( 3, 4 );
+
+	DrawText( ( HDC ) hb_parnl( 1 ), hb_parc( 2 ), -1, &rct, hb_parnl( 4 ) | DT_CALCRECT );
+
+	hb_reta( 2 );
+
+	hb_storvni( rct.right-rct.left, -1, 1 );
+	hb_storvni( rct.bottom-rct.top, -1, 2 );
+}
+
+
+
+#pragma ENDDUMP

@@ -1,0 +1,1139 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 7 "source\projecto.prg"
+   _HB_CLASS TProyecto ; function TProyecto ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TProyecto" , iif( .F., { }, { @HBObject() } ), @TProyecto() ) ) ;
+
+; _HB_MEMBER { cPrjName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cPrjName"}, .F. )
+; _HB_MEMBER { cPath } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cPath"}, .F. )
+
+; _HB_MEMBER { lResFile } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lResFile"}, .F. )
+; _HB_MEMBER { cDriver } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cDriver"}, .F. )
+; _HB_MEMBER { lMapFile } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lMapFile"}, .F. )
+; _HB_MEMBER { cOutName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cOutName"}, .F. )
+
+; _HB_MEMBER { cPrgDir } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cPrgDir"}, .F. )
+; _HB_MEMBER { cObjDir } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cObjDir"}, .F. )
+; _HB_MEMBER { cIncDir } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cIncDir"}, .F. )
+; _HB_MEMBER { cCesDir } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cCesDir"}, .F. )
+; _HB_MEMBER { oTree } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oTree"}, .F. )
+; _HB_MEMBER { oOutPut } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oOutPut"}, .F. )
+; _HB_MEMBER { oConfig } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oConfig"}, .F. )
+; _HB_MEMBER { oConfWnd } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oConfWnd"}, .F. )
+; _HB_MEMBER { oConfTree } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oConfTree"}, .F. )
+; _HB_MEMBER { oHarbour } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oHarbour"}, .F. )
+; _HB_MEMBER { oC } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oC"}, .F. )
+; _HB_MEMBER { oFive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oFive"}, .F. )
+; _HB_MEMBER { oPaths } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oPaths"}, .F. )
+; _HB_MEMBER { oFlagsCmpHb } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oFlagsCmpHb"}, .F. )
+; _HB_MEMBER { oFlagsCmpC } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oFlagsCmpC"}, .F. )
+; _HB_MEMBER { oFlagsLnkC } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oFlagsLnkC"}, .F. )
+
+         _HB_MEMBER New( cPrjName, cPath) AS CLASS TProyecto; oClass:AddMethod( "New", @TProyecto_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+         _HB_MEMBER ActionTree( oItem); oClass:AddMethod( "ActionTree", @TProyecto_ActionTree(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER AddProj( lMain); oClass:AddMethod( "AddProj", @TProyecto_AddProj(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER AddExistFileToFolder( oItem); oClass:AddMethod( "AddExistFileToFolder", @TProyecto_AddExistFileToFolder(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER AddFile( oFile, oItemFolder); oClass:AddMethod( "AddFile", @TProyecto_AddFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER AddFolder( cName, oItemFolder); oClass:AddMethod( "AddFolder", @TProyecto_AddFolder(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER AddRuta( oItem); oClass:AddMethod( "AddRuta", @TProyecto_AddRuta(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER Borrar( oItem); oClass:AddMethod( "Borrar", @TProyecto_Borrar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER Compilar( oItem); oClass:AddMethod( "Compilar", @TProyecto_Compilar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER CreaArbol(); oClass:AddMethod( "CreaArbol", @TProyecto_CreaArbol(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER Configuracion(); oClass:AddMethod( "Configuracion", @TProyecto_Configuracion(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER ExisteNombre( cName, oItem); oClass:AddMethod( "ExisteNombre", @TProyecto_ExisteNombre(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER GenMake( oItem); oClass:AddMethod( "GenMake", @TProyecto_GenMake(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER GetImageType( cTipo); oClass:AddMethod( "GetImageType", @TProyecto_GetImageType(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER LoadConfig( cFileName); oClass:AddMethod( "LoadConfig", @TProyecto_LoadConfig(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER Menu( nRow, nCol); oClass:AddMethod( "Menu", @TProyecto_Menu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER ModificarNombre( oItem); oClass:AddMethod( "ModificarNombre", @TProyecto_ModificarNombre(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER NuevaCarpeta( oItem); oClass:AddMethod( "NuevaCarpeta", @TProyecto_NuevaCarpeta(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER Open( oItem); oClass:AddMethod( "Open", @TProyecto_Open(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER Properties() ; oClass:AddVirtual( "Properties" )
+         _HB_MEMBER Restaurar( oItem); oClass:AddMethod( "Restaurar", @TProyecto_Restaurar(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER SaveConfig( oItem, cFileName); oClass:AddMethod( "SaveConfig", @TProyecto_SaveConfig(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER SetCesDir( cCarpeta); oClass:AddMethod( "SetCesDir", @TProyecto_SetCesDir(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER SetIncDir( cCarpeta); oClass:AddMethod( "SetIncDir", @TProyecto_SetIncDir(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER SetObjDir( cCarpeta); oClass:AddMethod( "SetObjDir", @TProyecto_SetObjDir(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER SetPrgDir( cCarpeta); oClass:AddMethod( "SetPrgDir", @TProyecto_SetPrgDir(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER SetPrgMain( oItem); oClass:AddMethod( "SetPrgMain", @TProyecto_SetPrgMain(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER SetAsMainPrj( oItem); oClass:AddMethod( "SetAsMainPrj", @TProyecto_SetAsMainPrj(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER VaciarPapelera(); oClass:AddMethod( "VaciarPapelera", @TProyecto_VaciarPapelera(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER VerPropiedades( oItem); oClass:AddMethod( "VerPropiedades", @TProyecto_VerPropiedades(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER aGetFiles( cExt); oClass:AddMethod( "aGetFiles", @TProyecto_aGetFiles(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER cGetFiles( cExt, cSep); oClass:AddMethod( "cGetFiles", @TProyecto_cGetFiles(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER oPapelera(); oClass:AddInline( "oPapelera", {|Self | ( ( Self ) ), ::oTree:Find( {|x| x:cPrompt == "Papelera" .AND. x:cTipo == "bas" } ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+         _HB_MEMBER Zoom( oItem); oClass:AddMethod( "Zoom", @TProyecto_Zoom(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+   oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TProyecto ;
+
+
+
+     static FUNCTION TProyecto_New( cPrjName, cPath ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+     If( cPath == nil, cPath := CurDrive() + ":\" + CurDir(), ) ;
+
+     ::cPrjName   := alltrim(cPrjName)
+     ::cPath      := cPath
+     ::cIncDir    := ""
+     ::cPrgDir    := ""
+     ::cObjDir    := ""
+     ::cCesDir    := ""
+     ::oConfWnd   := nil
+
+   return self
+
+
+         static FUNCTION TProyecto_AddFolder( cName, oItemFolder ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+       aadd( ::aCarpetas, cName )
+
+   return len( ::aCarpetas )
+
+
+         static FUNCTION TProyecto_AddFile( cName, cCarpeta ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+       local oFile := TFilePrj():New( cName, cCarpeta )
+       local nEn
+
+       nEn := ascan( ::aFiles, cName )
+
+       if nEn > 0
+          MsgStop( "Ya existe el fichero " + cName, "Atención")
+          return -1
+       endif
+
+       aadd( ::aFiles, oFile )
+
+
+   return len( ::aFiles )
+
+
+
+
+         static FUNCTION TProyecto_cGetFiles( cExt, cSep ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+       local n
+       local nLen := len( ::aFiles )
+       local cStr := ""
+       local cFile
+
+       If( cSep == nil, cSep := " ", ) ;
+
+       for n := 1 to len( ::aFiles )
+           cFile := ::aFiles[n]
+           if lower(cFileExt( cFile )) == lower(cExt)
+              cStr += cFile + if( n < len( ::aFiles ), cSep, Chr(13)+Chr(10) )
+           endif
+       next
+
+       return cStr
+
+
+         static FUNCTION TProyecto_aGetFiles( cExt ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+       local n
+       local nLen := len( ::aFiles )
+       local aRet := {}
+       local cFile
+
+       for each cFile in ::aFiles
+           if lower(cFileExt( cFile )) == lower(cExt)
+              aadd( aRet, cFile )
+           endif
+       next
+
+       return aRet
+
+
+
+      static FUNCTION TProyecto_SetPrgDir( cCarpeta ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+      local nEn
+
+      nEn := ascan( ::aCarpetas, {|c| lower(c) == lower(cCarpeta) } )
+      if nEn == 0
+         MsgStop( "Carpeta " + cCarpeta + " no encontrada", "Atención. PrdDir" )
+         return .F.
+      endif
+
+      ::cPrdDir := cCarpeta
+
+      return .T.
+
+
+
+
+      static FUNCTION TProyecto_SetObjDir( cCarpeta ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+      local nEn
+
+      nEn := ascan( ::aCarpetas, {|c| lower(c) == lower(cCarpeta) } )
+      if nEn == 0
+         MsgStop( "Carpeta " + cCarpeta + " no encontrada", "Atención. ObjDir" )
+         return .F.
+      endif
+
+      ::cObjDir := cCarpeta
+
+      return .T.
+
+
+      static FUNCTION TProyecto_SetIncDir( cCarpeta ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+      local nEn
+
+      nEn := ascan( ::aCarpetas, {|c| lower(c) == lower(cCarpeta) } )
+      if nEn == 0
+         MsgStop( "Carpeta " + cCarpeta + " no encontrada", "Atención. IncDir" )
+         return .F.
+      endif
+
+      ::cIncDir := cCarpeta
+
+      return .T.
+
+
+      static FUNCTION TProyecto_SetCesDir( cCarpeta ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+      local nEn
+
+      nEn := ascan( ::aCarpetas, {|c| lower(c) == lower(cCarpeta) } )
+      if nEn == 0
+         MsgStop( "Carpeta " + cCarpeta + " no encontrada", "Atención. IncDir" )
+         return .F.
+      endif
+
+      ::cCesDir := cCarpeta
+
+      return .T.
+
+
+
+     static FUNCTION TProyecto_GenMake( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+     local cStr   := ""
+     local aLibs  := ::Aplication():aLibs
+     local h
+     local n, nLen
+     local cPrgFiles, cCFiles
+
+     cStr += "# Make directives ############################################################"          + Chr(13)+Chr(10)
+
+     cStr += ".autodepend"                                                                             + Chr(13)+Chr(10)
+     cStr += ".swap"                                                                                   + Chr(13)+Chr(10)
+     cStr += ".suffixes: .prg .hrb"                                                                    + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "# Flags for modules to include: YES | NO (must be UPPERCASE)##################"          + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "RES_FILE      = " + if( ::lResFile(),"YES","NO")                                         + Chr(13)+Chr(10)
+     cStr += "LNK_DBFNTX    = " + if( ::cDriver == "DBFNTX","YES","NO")                                + Chr(13)+Chr(10)
+     cStr += "LNK_DBFCDX    = " + if( ::cDriver == "DBFCDX","YES","NO")                                + Chr(13)+Chr(10)
+     cStr += "LNK_DEBUG     = NO"                                                                      + Chr(13)+Chr(10)
+     cStr += "LNK_ADVANTAGE = " + if( ::cDriver == "ADS","YES","NO")                                   + Chr(13)+Chr(10)
+     cStr += "LNK_ODBC      = " + if( ::cDriver == "ODBC","YES","NO")                                  + Chr(13)+Chr(10)
+     cStr += "MAP_FILE      = " + if( ::lMapFile(),"YES","NO")                                         + Chr(13)+Chr(10)
+
+
+
+     cStr += "# Application directories & filenames ########################################"          + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "APP_NAME         = " + ::cOutName                                                        + Chr(13)+Chr(10)
+     cStr += "APP_PRG_DIR      = " + ::cPrgDir                                                         + Chr(13)+Chr(10)
+     cStr += "APP_OBJ_DIR      = " + ::cObjDir                                                         + Chr(13)+Chr(10)
+     cStr += "APP_C_DIR        = " + ::cCesDir                                                         + Chr(13)+Chr(10)
+     cStr += "APP_EXE_DIR      = $(APP_PRG_DIR)"                                                       + Chr(13)+Chr(10)
+     cStr += "APP_RES_DIR      = $(APP_PRG_DIR)"                                                       + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "APP_EXE  = $(APP_EXE_DIR)\$(APP_NAME).exe"                                               + Chr(13)+Chr(10)
+     cStr += "APP_RC   = $(APP_RES_DIR)\$(APP_NAME).rc"                                                + Chr(13)+Chr(10)
+     cStr += "APP_RES  = $(APP_RES_DIR)\$(APP_NAME).res"                                               + Chr(13)+Chr(10)
+     cStr += "APP_MAP  = $(APP_RES_DIR)\$(APP_NAME).map"                                               + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "# Paths for dependent files ##################################################"          + Chr(13)+Chr(10)
+
+     cStr += ".path.prg = $(APP_PRG_DIR)"                                                              + Chr(13)+Chr(10)
+     cStr += ".path.hrb = $(APP_OBJ_DIR)"                                                              + Chr(13)+Chr(10)
+     cStr += ".path.obj = $(APP_OBJ_DIR)"                                                              + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+     cStr += ".path.c   = $(APP_PRG_DIR)"                                                              + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "# Application PRG files (your PRG files go here) #############################"          + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "APP_PRG_LIST = "
+     cStr += ::cGetFiles( "prg", " \" + Chr(13)+Chr(10) )                                                         + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "# Application C files (your C files go here) #############################"              + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "APP_C_LIST = "
+     cStr += ::cGetFiles( "c", " \" + Chr(13)+Chr(10) )                                                           + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+
+     cStr += Chr(13)+Chr(10) + "# Contruction of the rest dependency lists ###################################"   + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "APP_PRGS = $(APP_PRG_LIST)"                                                              + Chr(13)+Chr(10)
+     cStr += "APP_HRBS = $(APP_PRG_LIST:.prg=.hrb)"                                                    + Chr(13)+Chr(10)
+     cStr += "APP_OBJS = $(APP_PRG_LIST:.prg=.obj) $(APP_C_LIST:.c=.obj)"                              + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "# Harbour directories & flags ################################################"          + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "HARBOUR_DIR          = " +::cHbDir                                                       + Chr(13)+Chr(10)
+     cStr += "HARBOUR_FLAGS        = " +::cHbFlags
+
+     nLen := len( ::aIncs )
+     if nLen > 0
+        cStr += " -i"
+     endif
+     for n := 1 to nLen
+         cStr += ::aIncs[n] + if( n < nLen, ";","")
+     next
+     cStr += Chr(13)+Chr(10)
+
+     cStr += "HARBOUR_EXE          = $(HARBOUR_DIR)\bin\harbour.exe"                             + Chr(13)+Chr(10)
+     cStr += "BORLANDC_DIR         = " + ::cBCDir                                                + Chr(13)+Chr(10)
+
+     cStr += "BORLANDC_COMP_FLAGS  = " + ::cCCmpFlags
+
+     nLen := len( ::aIncs )
+     if nLen > 0
+        cStr += " -I"
+     endif
+     for n := 1 to nLen
+         cStr += ::aIncs[n] + if( n < nLen, ";","")
+     next
+     cStr += Chr(13)+Chr(10)
+
+     cStr += "BORLANDC_COMP_EXE    = $(BORLANDC_DIR)\bin\bcc32.exe"                             + Chr(13)+Chr(10)
+     cStr += "BORLANDC_LINK_FLAGS  = " + ::cCLnkFlags
+
+     cStr += " -L" + ::cGetPaths( aLibs ) + Chr(13)+Chr(10)
+
+     cStr += "BORLANDC_LINK_EXE    = $(BORLANDC_DIR)\bin\ilink32.exe"                           + Chr(13)+Chr(10)
+     cStr += "BORLANDC_RES_EXE     = $(BORLANDC_DIR)\bin\brc32.exe"                             + Chr(13)+Chr(10)
+
+     cStr += "!if $(MAP_FILE) != YES"                                                           + Chr(13)+Chr(10)
+     cStr += "   BORLANDC_LINK_FLAGS = $(BORLANDC_LINK_FLAGS) -x"                               + Chr(13)+Chr(10)
+     cStr += "!endif"                                                                           + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "# Dependencies ###############################################################"   + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "all: $(APP_OBJS) $(APP_HRBS) $(APP_EXE)"                                          + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "!if $(RES_FILE) == YES"                                                           + Chr(13)+Chr(10)
+     cStr += "all: $(APP_RES)"                                                                  + Chr(13)+Chr(10)
+     cStr += "!endif"                                                                           + Chr(13)+Chr(10)
+
+     cStr += "# Implicit Rules #############################################################"   + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += ".prg.hrb:"                                                                        + Chr(13)+Chr(10)
+     cStr += "   $(HARBOUR_EXE) $(HARBOUR_FLAGS) $** -o$@"                                      + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += ".hrb.obj:"                                                                        + Chr(13)+Chr(10)
+     cStr += "   $(BORLANDC_COMP_EXE) $(BORLANDC_COMP_FLAGS) -o$@ $**"                          + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += ".c.obj:"                                                                          + Chr(13)+Chr(10)
+     cStr += "   $(BORLANDC_COMP_EXE) $(BORLANDC_COMP_FLAGS) -o$@ $**"                          + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+
+     cStr += "# Explicit Rules #############################################################"   + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "!if $(RES_FILE) == YES"                                                           + Chr(13)+Chr(10)
+     cStr += "$(APP_RES) : $(APP_RC)"                                                           + Chr(13)+Chr(10)
+     cStr += "   $(BORLANDC_RES_EXE) -r $**"                                                    + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "$(APP_EXE) :: $(APP_RES)"                                                         + Chr(13)+Chr(10)
+     cStr += "   @if exist $(APP_EXE) del $(APP_EXE) > nul"                                     + Chr(13)+Chr(10)
+     cStr += "!endif"                                                                           + Chr(13)+Chr(10) + Chr(13)+Chr(10)
+
+     cStr += "$(APP_EXE) :: $(APP_OBJS)"                                                        + Chr(13)+Chr(10)
+     cStr += "   @echo $(BORLANDC_DIR)\lib\c0w32.obj + > make.tmp"                              + Chr(13)+Chr(10)
+     cStr += "   @echo $(**), + >> make.tmp"                                                    + Chr(13)+Chr(10)
+     cStr += "   @echo $(APP_EXE), + >> make.tmp"                                               + Chr(13)+Chr(10)
+     cStr += "   @echo $(APP_MAP), + >> make.tmp"                                               + Chr(13)+Chr(10)
+
+     nLen := len( aLibs )
+     for n := 1 to nLen
+         cStr += "   @echo " + lower(aLibs[n]) + " + >> make.tmp"                               + Chr(13)+Chr(10)
+     next
+
+     cStr += "!if $(RES_FILE) == YES"                                                           + Chr(13)+Chr(10)
+     cStr += "   @echo ,$(APP_RES) >> make.tmp"                                                 + Chr(13)+Chr(10)
+     cStr += "!endif"                                                                           + Chr(13)+Chr(10)
+     cStr += "   $(BORLANDC_LINK_EXE) $(BORLANDC_LINK_FLAGS) @make.tmp"                         + Chr(13)+Chr(10)
+     cStr += "   @del $(APP_EXE_DIR)\$(APP_NAME).tds"                                           + Chr(13)+Chr(10)
+
+
+
+     h := fcreate( ::cOutName + ".mak" )
+     fwrite( h, cStr )
+     fclose( h )
+
+
+     return nil
+
+
+     static FUNCTION TProyecto_CreaArbol( ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+     local oItem1, oItem2, oItem3, oItem4
+     local oBrush
+     local oImageList
+     local oWnd := Aplicacion():oWnd
+     local oBar
+     local o := self
+     local oRoot, oRoot2
+     local oRoot0
+
+
+     if Aplicacion():oWndPrj <> nil
+        return ::oWndChild:SetFocus()
+     endif
+
+
+     oImageList = TImageList():New(16,16,"toolbar\image1.bmp")
+
+     oBrush := TBrush():New( Upper("NULL"),,,,, )
+
+     Aplicacion():oWndPrj := TMdiChild():New(,,,, "Proyecto",,, oWnd,, .F.,,,, obrush, .F., .F.,,, !.F., !.F., !.F., !.F., )
+
+
+
+            oBar := TBar():New( Aplicacion():oWndPrj, 25, 25, .T.,,, .F., .F. )
+
+                   TBtnBmp():NewBar( "plus",,,,, {|This|o:oTree:ExpandAll()}, .F., oBar, .F.,, "Expandir", .F.,, "o:oTree:ExpandAll()",,,,,, !.T.,,,,, .F. )
+                   TBtnBmp():NewBar( "minus",,,,, {|This|o:oTree:ColapseAll()}, .F., oBar, .F.,, "Contraer", .F.,, "o:oTree:ColapseAll()",,,,,, !.T.,,,,, .F. )
+                   TBtnBmp():NewBar( "props",,,,,, .F., oBar, .F.,, "Propiedades", .F.,,,,,,,, !.T.,,,,, .F. )
+
+
+            ::oTree := TTreeView():New( 1, 1, Aplicacion():oWndPrj, 0, 16777215,.T., .F., 1000, 1000 )
+            ::oTree:SetImageList( oImageList )
+
+            Aplicacion():oSolucion := TTVItem():New( ::oTree,, "Solucion", 5, .T., ::oTree,,"sol",.T. )
+
+            ::AddProj(.T.)
+
+            TTVItem():New( ::oTree,, "Papelera", 12, .T., ::oTree,,"bas",.T.,.F.  )
+
+            ::oTree:Expand()
+            ::oTree:SetBrush( oBrush )
+            ::oTree:bRClicked := {|nRow,nCol| o:Menu( nRow, nCol, o:oTree ) }
+
+            Aplicacion():oWndPrj:oClient := ::oTree
+
+      Aplicacion():oWndPrj:Activate(, Aplicacion():oWndPrj:bLClicked, Aplicacion():oWndPrj:bRClicked, Aplicacion():oWndPrj:bMoved, Aplicacion():oWndPrj:bResized, Aplicacion():oWndPrj:bPainted, Aplicacion():oWndPrj:bKeyDown, Aplicacion():oWndPrj:bInit := { | Self | Aplicacion():oWndPrj:Resize() },,,,,,,,, {||( Aplicacion():oWndPrj := nil, oImageList:End(),.T.)},, Aplicacion():oWndPrj:bLButtonUp )
+
+
+   return nil
+
+
+
+         static FUNCTION TProyecto_AddProj( lMain ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+   local oRoot
+
+   If( lMain == nil, lMain := .F., ) ;
+
+   oRoot  := TTVItem():New( ::oTree,, ::cPrjName + space(7), 5, .T.,  Aplicacion():oSolucion,,"prj",.T. )
+   oRoot:lMain := lMain
+   aadd( Aplicacion():aProyectos, oRoot )
+
+              TTVItem():New( ::oTree,, "Prg"      , 6, .T., oRoot,,"prg",.T.,.T. )
+              TTVItem():New( ::oTree,, "Includes" , 6, .T., oRoot,,"ch",.T.,.T. )
+              TTVItem():New( ::oTree,, "C"        , 6, .T., oRoot,,"c",.T.,.T. )
+              TTVItem():New( ::oTree,, "Recursos" , 6, .T., oRoot,,"rc",.T.,.T. )
+              TTVItem():New( ::oTree,, "Imágenes" , 6, .T., oRoot,,"img",.T.,.T. )
+              TTVItem():New( ::oTree,, "Librerias", 6, .T., oRoot,,"lib",.T.,.T. )
+
+   oRoot:Expand()
+
+   return nil
+
+
+
+
+         static FUNCTION TProyecto_Configuracion( ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+     local oItem1, oItem2, oItem3, oItem4
+     local oBrush
+     local oImageList
+     local oWnd := Aplicacion():oWnd
+     local oBar
+     local o := self
+     local oRoot, oRoot2
+     local oRoot0
+
+
+
+     if ::oConfWnd <> nil
+        return ::oConfWnd:SetFocus()
+     endif
+
+
+     oImageList = TImageList():New(16,16,"toolbar\image1.bmp")
+
+     oBrush := TBrush():New( Upper("NULL"),,,,, )
+
+     ::oConfWnd := TMdiChild():New(,,,, "Proyecto",,, oWnd,, .F.,,,, obrush, .F., .F.,,, !.F., !.F., !.F., !.F., )
+
+            oBar := TBar():New( ::oConfWnd, 25, 25, .T.,,, .F., .F. )
+
+                   TBtnBmp():NewBar( "plus",,,,, {|This|o:oConfTree:ExpandAll()}, .F., oBar, .F.,, "Expandir", .F.,, "o:oConfTree:ExpandAll()",,,,,, !.T.,,,,, .F. )
+                   TBtnBmp():NewBar( "minus",,,,, {|This|o:oConfTree:ColapseAll()}, .F., oBar, .F.,, "Contraer", .F.,, "o:oConfTree:ColapseAll()",,,,,, !.T.,,,,, .F. )
+                   TBtnBmp():NewBar( "props",,,,,, .F., oBar, .F.,, "Propiedades", .F.,,,,,,,, !.T.,,,,, .F. )
+
+
+            ::oConfTree := TTreeView():New( 1, 1, ::oConfWnd, 0, 16777215,.T., .F., 1000, 1000 )
+            ::oConfTree:SetImageList( oImageList )
+
+            ::oConfig := TTVItem():New( ::oConfTree,, "Configuracion", 13, .T., ::oConfTree,,"config",.T.,.F. )
+
+                      ::oHarbour := TTVItem():New( ::oConfTree,, "Harbour" , 13, .T., ::oConfig,,"cfg",.T.,.F. )
+                      oItem4 := TTVItem():New( ::oConfTree,, "Flags compilador" , 11, .T., ::oHarbour,,"cfg" )
+                          ::oFlagsCmpHb := TTVItem():New( ::oConfTree,,"-n -m -w -es0 -gc0", 11, .T., oItem4,,"flags" )
+                          ::oFlagsCmpHb:bAction :=  {|oItem| ::Open( oItem ) }
+
+                      oItem1   := TTVItem():New( ::oConfTree,, "Librerias" , 11, .T., ::oHarbour,,"lib" )
+
+                                 TTVItem():New( ::oConfTree,, "rtl.lib"   , 11, .T., oItem1,,"lib" )
+                                 TTVItem():New( ::oConfTree,, "vm.lib"    , 11, .T., oItem1,,"lib" )
+                                 TTVItem():New( ::oConfTree,, "gtwin.lib" , 11, .T., oItem1,,"lib" )
+                                 TTVItem():New( ::oConfTree,, "lang.lib"  , 11, .T., oItem1,,"lib" )
+                                 TTVItem():New( ::oConfTree,, "macro.lib" , 11, .T., oItem1,,"lib" )
+                                 TTVItem():New( ::oConfTree,, "rdd.lib"   , 11, .T., oItem1,,"lib" )
+                                 TTVItem():New( ::oConfTree,, "dbfntx.lib", 11, .T., oItem1,,"lib" )
+                                 TTVItem():New( ::oConfTree,, "dbfdbt.lib", 11, .T., oItem1,,"lib" )
+                                 TTVItem():New( ::oConfTree,, "dbfcdx.lib", 11, .T., oItem1,,"lib" )
+                                 TTVItem():New( ::oConfTree,, "debug.lib" , 11, .T., oItem1,,"lib" )
+                                 TTVItem():New( ::oConfTree,, "common.lib", 11, .T., oItem1,,"lib" )
+                                 TTVItem():New( ::oConfTree,, "pp.lib"    , 11, .T., oItem1,,"lib" )
+
+
+            ::oC := TTVItem():New( ::oConfTree,, "C", 13, .T., ::oConfig,,"cfg",.T.,.F. )
+
+                 oItem4 := TTVItem():New( ::oConfTree,, "Compilador" , 11, .T., ::oC,,"lib" )
+                 oItem4 := TTVItem():New( ::oConfTree,, "Flags compilador" , 11, .T., oItem4,,"lib" )
+                          ::oFlagsCmpC := TTVItem():New( ::oConfTree,,"-c -O2", 11, .T., oItem4,,"flags" )
+                          ::oFlagsCmpC:bAction :=  {|oItem| ::Open( oItem ) }
+
+                 oItem4 := TTVItem():New( ::oConfTree,, "Linkador" , 11, .T., ::oC,,"lib" )
+                 oItem4 := TTVItem():New( ::oConfTree,, "Flags Linkador" , 11, .T., oItem4,,"cfg" )
+                          ::oFlagsLnkC := TTVItem():New( ::oConfTree,,"-Gn -aa -Tpe -s ", 11, .T., oItem4,,"flags" )
+                          ::oFlagsLnkC:bAction :=  {|oItem| ::Open( oItem ) }
+
+                 oItem4 := TTVItem():New( ::oConfTree,, "Compilador de recursos" , 11, .T., ::oC,,"lib" )
+                           TTVItem():New( ::oConfTree,, "Flags recursos" , 11, .T., oItem4,,"cfg" )
+
+
+                 oItem2 := TTVItem():New( ::oConfTree,, "Librerias" , 11, .T., ::oC,,"lib",.T.,.F. )
+
+                                       TTVItem():New( ::oConfTree,,"c0w32.obj"         , 11, .T., oItem2,,"lib" )
+                                       TTVItem():New( ::oConfTree,,"cw32.lib"          , 11, .T., oItem2,,"lib" )
+                                       TTVItem():New( ::oConfTree,,"import32.lib"      , 11, .T., oItem2,,"lib" )
+                                       TTVItem():New( ::oConfTree,,"psdk\odbc32.lib"   , 11, .T., oItem2,,"lib" )
+                                       TTVItem():New( ::oConfTree,,"psdk\rasapi32.lib" , 11, .T., oItem2,,"lib" )
+                                       TTVItem():New( ::oConfTree,,"psdk\nddeapi.lib"  , 11, .T., oItem2,,"lib" )
+                                       TTVItem():New( ::oConfTree,,"psdk\iphlpapi.lib" , 11, .T., oItem2,,"lib" )
+
+            ::oFive := TTVItem():New( ::oConfTree,, "FiveWin", 13, .T., ::oConfig,,"cfg",.T.,.F. )
+                oItem2 :=  TTVItem():New( ::oConfTree,, "Librerias" , 11, .T., ::oFIve,,"lib",.T.,.F.  )
+                               TTVItem():New( ::oConfTree,,"Fiveh.lib"  , 11, .T., oItem2,,"lib" )
+                               TTVItem():New( ::oConfTree,,"Fivehc.lib" , 11, .T., oItem2,,"lib" )
+
+            ::oPaths := TTVItem():New( ::oConfTree,, "Paths",28 , .T., ::oConfig,,"cfg",.T.,.F.  )
+                               TTVItem():New( ::oConfTree,,"Prgs"     ,3 , .T., ::oPaths,,"paths" )
+                               TTVItem():New( ::oConfTree,,"Includes" ,1 , .T., ::oPaths,,"paths" )
+                               TTVItem():New( ::oConfTree,,"Libs"     ,11 , .T., ::oPaths,,"paths" )
+                               TTVItem():New( ::oConfTree,,"Objs"     ,13 , .T., ::oPaths,,"paths" )
+
+
+            ::oConfTree:SetBrush( oBrush )
+            ::oConfTree:Expand()
+            ::oPaths:Expand()
+
+
+            ::oConfTree:bRClicked := {|nRow,nCol| o:Menu( nRow, nCol, o:oConfTree ) }
+
+            ::oConfWnd:oClient := ::oConfTree
+
+      o:oConfWnd:Activate(, o:oConfWnd:bLClicked, o:oConfWnd:bRClicked, o:oConfWnd:bMoved, o:oConfWnd:bResized, o:oConfWnd:bPainted, o:oConfWnd:bKeyDown, o:oConfWnd:bInit := { | Self | o:oConfWnd:Resize() },,,,,,,,, {||( o:oConfWnd := nil, oImageList:End(),.T.)},, o:oConfWnd:bLButtonUp )
+
+
+    return nil
+
+
+
+         static FUNCTION TProyecto_GetImageType( cTipo ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+   do case
+      case cTipo == "prg"
+           return  3
+      case cTipo == "ch"
+           return  1
+      case cTipo == "c"
+           return  9
+      case cTipo == "h"
+           return 10
+      case cTipo == "rc"
+           return  2
+      case cTipo == "img"
+           return 0
+      case cTipo == "lib"
+           return  11
+      case cTipo == "paths"
+           return  17
+   endcase
+
+   return 14
+
+
+      static FUNCTION TProyecto_Menu( nRow, nCol, oArbol ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+   local oMenu
+   local oItem
+   local lActivate := .T.
+   local oPapelera := ::oPapelera()
+
+
+   SendMessage( ::oTree:hWnd, 513, 0, nMakeLong( nCol, nRow ) )
+
+   oItem := oArbol:HitTest( nRow, nCol )
+   if oItem == nil
+      lActivate := .F.
+   else
+      if oItem:cTipo == "config"
+         oMenu := MenuBegin( .T.,,, .F., .F. )
+            MenuAddItem( "Salvar configuración",, .F.,, {|oMenuItem|::SaveConfig( oItem )},,,,,,, .F.,,, .F. )
+            MenuAddItem( "Cargar configuración",, .F.,, {|oMenuItem|::LoadConfig(  )},,,,,,, .F.,,, .F. )
+            MenuAddItem()
+            MenuAddItem( "Zoom",, .F.,, {|oMenuItem|::Zoom( oItem )},,,,,,, .F.,,, .F. )
+         MenuEnd()
+      else
+         if oItem:lFolder
+            oMenu := MenuBegin( .T.,,, .F., .F. )
+                 MenuAddItem( "Añadir",, .F.,,,,,,,,, .F.,,, .F. )
+                 MenuBegin( .F.,,, .F., .F. )
+                    if oItem:cTipo == "sol"
+                       MenuAddItem( "Nuevo proyecto",, .F.,, {|oMenuItem|::AddProj()},,,,,,, .F.,,, .F. )
+                    else
+                       MenuAddItem( "Nuevo elemento",, .F.,, {|oMenuItem|Aplicacion():Nuevo( oItem, .T. ), oItem:Expand()},,,,,,, .F.,,, .F. )
+                       MenuAddItem( "Elemento existente a la carpeta",, .F.,, {|oMenuItem|::AddExistFileToFolder( oItem )},,,,,,, .F.,,, .F. )
+                       MenuAddItem( "Nueva carpeta",, .F.,, {|oMenuItem|::NuevaCarpeta( oItem )},,,,,,, .F.,,, .F. )
+                       MenuAddItem( "Ruta",, .F.,, {|oMenuItem|::AddRuta( oItem )},,,,,,, .F.,,, .F. )
+                    endif
+                 MenuEnd()
+                 if oItem:cTipo == "prj"
+                    MenuAddItem( "Build",, .F.,, {|oMenuItem|::GenMake()},,,,,,, .F.,,, .F. )
+                    MenuAddItem( "Borrar",, .F.,, {|oMenuItem|::Borrar( oItem )},,,,,,, .F.,,, .F. )
+                    MenuAddItem( "Renombrar",, .F.,, {|oMenuItem|::ModificarNombre( oItem )},,,,,,, .F.,,, .F. )
+                    MenuAddItem( "Poner como Proyecto principal",, .F.,, {|oMenuItem|::SetAsMainPrj( oItem )},,,,,,, .F.,,, .F. )
+                 else
+                    MenuAddItem( "Cortar",, .F.,, {|oMenuItem|oItem:Copy(.T.)},,,,,,, .F.,,, .F. )
+                    MenuAddItem( "Copiar",, .F.,, {|oMenuItem|oItem:Copy()},,,,,,, .F.,,, .F. )
+                    MenuAddItem( "Pegar",, .F.,, {|oMenuItem|oItem:Paste(oItem)},,,,,,, .F.,,, .F. )
+                    MenuAddItem( "Borrar",, .F.,, {|oMenuItem|::Borrar( oItem )},,,,,,, .F.,,, .F. )
+                    MenuAddItem( "Renombrar",, .F.,, {|oMenuItem|::ModificarNombre( oItem )},,,,,,, .F.,,, .F. )
+                 endif
+                 MenuAddItem()
+                 MenuAddItem( "Propiedades",, .F.,, {|oMenuItem|::VerPropiedades( oItem )},,,,,,, .F.,,, .F. )
+                 if oPapelera <> nil .AND. oItem:nID == oPapelera:nID .AND. len( oPapelera:aItems ) > 0
+                    MenuAddItem( "Vaciar papelera",, .F.,, {|oMenuItem|if( MsgYesNo( "¿Esta seguro de vaciar la papelera?"), ::VaciarPapelera(),MsgInfo( "Operación cancelada","Atención"))},,,,,,, .F.,,, .F. )
+                 endif
+                 MenuAddItem()
+                 MenuAddItem( "Zoom",, .F.,, {|oMenuItem|::Zoom( oItem )},,,,,,, .F.,,, .F. )
+              MenuEnd()
+         else
+
+            if !oItem:lFolder
+
+               oMenu := MenuBegin( .T.,,, .F., .F. )
+
+                    MenuAddItem( "Abrir",, .F.,, {|oMenuItem|::Open( oItem )},,,,,,, .F.,,, .F. )
+
+                    if oItem:cTipo == "paths"
+                       MenuAddItem( "Añadir ruta",, .F.,, {|oMenuItem|::AddRuta( oItem )},,,,,,, .F.,,, .F. )
+                    endif
+
+                    MenuAddItem()
+
+                    if oItem:cTipo == "prg" .OR. oItem:cTipo == "c"
+                       MenuAddItem( "Compilar",, .F.,, {|oMenuItem|::Compilar( oItem )},,,,,,, .F.,,, .F. )
+                    endif
+
+                    MenuAddItem( "Cortar",, .F.,, {|oMenuItem|oItem:Copy(.T.)},,,,,,, .F.,,, .F. )
+                    MenuAddItem( "Copiar",, .F.,, {|oMenuItem|oItem:Copy()},,,,,,, .F.,,, .F. )
+                    MenuAddItem( "Pegar",, .F.,, {|oMenuItem|oItem:Paste(oItem)},,,,,,, .F.,,, .F. )
+                    MenuAddItem( "Borrar",, .F.,, {|oMenuItem|::Borrar( oItem )},,,,,,, .F.,,, .F. )
+
+                    if oPapelera <> nil .AND. oItem:oParent:nID == oPapelera:nID
+                       MenuAddItem( "Restaurar",, .F.,, {|oMenuItem|::Restaurar( oItem )},,,,,,, .F.,,, .F. )
+                    endif
+
+                    MenuAddItem()
+                    MenuAddItem( "Propiedades",, .F.,, {|oMenuItem|::VerPropiedades( oItem )},,,,,,, .F.,,, .F. )
+
+                    if oItem:cTipo == "prg" .OR. oItem:cTipo == "c"
+                       MenuAddItem()
+                       MenuAddItem( "Activar como principal",, .F.,, {|oMenuItem|::SetPrgMain( oItem )},,,,,,, .F.,,, .F. )
+                    endif
+               MenuEnd()
+           endif
+         endif
+      endif
+   endif
+
+   if lActivate
+      oMenu:Activate( nRow, nCol, ::oTree, ! .F., )
+   endif
+
+
+return nil
+
+
+   static FUNCTION TProyecto_AddExistFileToFolder( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+local cGetFile
+local aGetFiles
+local cFiltro
+local nImage, n, nEn
+local cPrompt, cRuta, cTipo
+
+if !oItem:lFolder
+   return nil
+endif
+
+do case
+   case oItem:cTipo == "prg"
+        nImage := 3
+        cFiltro := "Código (*.prg) | *.prg; |"
+
+   case oItem:cTipo == "ch"
+        nImage := 1
+        cFiltro := "Cabecera (*.ch *.h) | *.ch;*.h; |"
+
+   case oItem:cTipo == "c"
+        nImage := 9
+        cFiltro := "C (*.c *.cpp) | *.c;*.cpp; |"
+
+   case oItem:cTipo == "rc"
+        nImage := 3
+        cFiltro := "Recursos (*.rc *.res *.dll ) | *.rc;*.res;*.dll; |"
+
+   case oItem:cTipo == "img"
+        nImage := 0
+        cFiltro := "Imágenes (*.bmp *.gif *.jpg *.ico *.cur ) | *.bmp;*.gif;*.jpg;*.ico;*.cur; |"
+
+   case oItem:cTipo == "lib"
+        nImage := 11
+        cFiltro := "Librerias (*.lib ) | *.lib; |"
+
+   otherwise
+        nImage := 3
+
+
+
+
+
+        cFiltro := "Código (*.prg) | *.prg; |" +  "Cabecera (*.ch) | *.ch; |" +  "C (*.c *.cpp) | *.c;*.cpp; |" + "H (*.h) | *.h; |" + "Recursos (*.rc *.res *.dll ) | *.rc;*.res;*.dll; |" + "Imágenes (*.bmp *.gif *.jpg *.ico *.cur ) | *.bmp;*.gif;*.jpg;*.ico;*.cur; |"
+
+endcase
+
+aGetFiles := cGetFileEx( cFiltro, "Insertar ficheros en el proyecto" )
+
+
+
+if len(aGetFiles)>0
+
+   if valtype( aGetFiles ) == "C"
+      cGetFile := aGetFiles
+      if ::oTree:Find( {|x| lower(alltrim(x:cFileName )) == lower(alltrim(cGetFile)) } ) <> nil
+         MsgStop( "Ya existe en el proyecto" + Chr(13)+Chr(10) + cGetFile, "Atención" )
+         return nil
+      endif
+      cRuta := cFilePath( cGetFile )
+      cRuta := substr( cRuta, 1, len( cRuta )-1)
+      TTVItem():New( ::oTree, , lower(cFileName(cGetFile)), ::GetImageType(oItem:cTipo), oItem:GetCheckState(), oItem, , oItem:cTipo, .F., .F., cRuta )
+
+   else
+      for n := 1 to len( aGetFiles )
+         cGetFile := aGetFiles[n]
+         if ::oTree:Find( {|x| alltrim(x:cFileName) == alltrim(cGetFile) } ) <> nil
+            MsgStop( "Ya existe en el proyecto" + Chr(13)+Chr(10) + cGetFile, "Atención" )
+            loop
+         endif
+         cRuta := cFilePath( cGetFile )
+         cRuta := substr( cRuta, 1, len( cRuta )-1)
+         TTVItem():New( ::oTree, , lower(cFileName(cGetFile)), ::GetImageType(oItem:cTipo), oItem:GetCheckState(), oItem, , oItem:cTipo, .F., .F., cRuta )
+      next
+   endif
+
+   oItem:Expand()
+endif
+
+
+return nil
+
+
+  static FUNCTION TProyecto_Open( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+local cTipo := oItem:cTipo
+
+do case
+   case cTipo == "flags"
+        ::ModificarNombre( oItem, "Modificar Flags" )
+   case cTipo == "prg"
+
+endcase
+
+return nil
+
+
+  static FUNCTION TProyecto_NuevaCarpeta( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+
+  local oItem1
+
+  oItem1 :=  TTVItem():New( ::oTree,,"Nueva", 13, .T., oItem,,oItem:cTipo,.T.,.T. )
+
+
+  oItem:Expand()
+
+return nil
+
+
+
+   static FUNCTION TProyecto_VerPropiedades( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+local oDlg
+local cRuta := oItem:cRuta
+local cName := oItem:cPrompt
+local oRuta, oName
+
+
+if oItem:cTipo == "prj"
+   ::Configuracion()
+else
+
+   oDlg = TDialog():New(,,,,, "PROPERTIES",, .F.,,,,,, .F.,,,,,, .F., )
+
+       oRuta := TGet():ReDefine( 101, { | u | If( PCount()==0, cRuta, cRuta:= u ) }, oDlg,,,,,,,,, .F.,,, .T., .F.,,,,,,, "cRuta", )
+       onAME := TGet():ReDefine( 102, { | u | If( PCount()==0, cName, cName:= u ) }, oDlg,,,,,,,,, .F.,,, .T., .F.,,,,,,, "cName", )
+
+   oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .T.,,,, oDlg:bRClicked,,, )
+
+endif
+
+return nil
+
+
+   static FUNCTION TProyecto_ModificarNombre( oItem, cTitle ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+local oDlg
+local cRuta := oItem:cRuta
+local cTipo := oItem:cTipo
+local cName := padr(oItem:cPrompt, 400 )
+local oRuta, oName
+local oHelp, oOk, oCancel
+
+If( cTitle == nil, cTitle := "Modificar nombre", ) ;
+
+oDlg = TDialog():New(,,,,, "MODIFYNAME",, .F.,,,,,, .F.,,,,,, .F., )
+
+
+    oRuta := TGet():ReDefine( 101, { | u | If( PCount()==0, cRuta, cRuta:= u ) }, oDlg,,,,,,,,, .F.,,, .T., .F.,,,,,,, "cRuta", )
+
+    oName := TGet():ReDefine( 102, { | u | If( PCount()==0, cName, cName:= u ) }, oDlg,,,,,,,,, .F.,,, .F., .F.,,,,,,, "cName", )
+
+    oHelp := TButton():ReDefine( 3,, oDlg,,, .F.,,,, .F. )
+    oOk := TButton():ReDefine( 1, {||if( ::ExisteNombre( cName, oItem ).AND. cTipo <> "flags", MsgAlert( "Existe nombre: " + alltrim(cName), "Corrija" ),( oItem:SetText( alltrim(cName)+ "    " ), oDlg:End()))}, oDlg,,, .F.,,,, .F. )
+    oCancel := TButton():ReDefine( 2, {||oDlg:End()}, oDlg,,, .F.,,,, .F. )
+
+oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .T.,,, {|Self|( oName:SetFocus(), oDlg:cTitle := cTitle )}, oDlg:bRClicked,,, )
+
+return nil
+
+
+
+  static FUNCTION TProyecto_AddRuta( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+local cDir := cGetDir( "Seleccione ruta", if( empty( oItem:cRuta ), "c:\", oItem:cRuta ) )
+local lFallo := .F.
+local nLen, n
+
+if oItem:cTipo <> "paths"
+
+   oItem:cRuta := cDir
+
+else
+
+   if oItem:oParent:cTipo == "paths"
+      oItem := oItem:oParent
+   endif
+
+   TTVItem():New(  ::oTree, , cDir, ::GetImageType(oItem:cTipo), oItem:GetCheckState(), oItem,, oItem:cTipo, .F., .F., cDir )
+
+endif
+
+return nil
+
+
+   static FUNCTION TProyecto_ExisteNombre( cName, oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+if ::oTree:Find( { |x| lower( alltrim(x:cPrompt)) == lower(alltrim( cName )) .AND. oItem:nId <> x:nId } ) <> nil
+   return .T.
+endif
+
+return .F.
+
+
+   static FUNCTION TProyecto_Borrar( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+local oSave
+local cTime
+local oPapelera := ::oPapelera()
+local lDefinitivo
+
+If !MsgYesNo( "¿Esta seguro de borrar este elemento?","Atención" )
+   return nil
+endif
+
+if len( oItem:aItems ) > 0
+   MsgStop( "No puede borrar items que contengan elementos", "Corrija" )
+   return nil
+endif
+
+lDefinitivo := GetKeyState( 16 )
+
+
+if !lDefinitivo .AND. oPapelera:nID <> oItem:oParent:nID
+   cTime := "-" + time()
+   oSave := TTVItem():New( ::oTree,, oItem:cPrompt+cTime , oItem:nImage, oItem:GetCheckState(), oPapelera, oItem:nImage2,,oItem:cTipo,oItem:lFolder, oItem:lChgImage, oItem:cRuta )
+   oSave:oLastParent := oItem:oParent
+
+endif
+
+oItem:DeleteItem()
+::oTree:Refresh()
+
+if !lDefinitivo
+   if len( oPapelera:aItems ) > 0
+      oPapelera:SetImage( 8 )
+   else
+      oPapelera:SetImage(12)
+   endif
+endif
+
+return nil
+
+
+
+  static FUNCTION TProyecto_Restaurar( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+local oSave
+
+
+oSave := TTVItem():New( ::oTree, , substr(oItem:cPrompt,1,len( oItem:cPrompt)-9) , oItem:nImage, oItem:GetCheckState(), oItem:oLastParent, oItem:nImage2,oItem:cTipo,oItem:lFolder, oItem:lChgImage, oItem:cRuta )
+
+oSave:oLastParent := nil
+oItem:DeleteItem()
+::oTree:Refresh()
+
+if (len(::oPapelera:aItems ) == 0 )
+   ::oPapelera:SetImage(12)
+endif
+
+
+return nil
+
+
+  static FUNCTION TProyecto_VaciarPapelera( ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+local oItem
+
+while len( ::oPapelera:aItems ) > 0
+   ::oPapelera:aItems[1]:DeleteItem()
+enddo
+::oPapelera:SetImage( 12 )
+::oTree:Refresh()
+
+
+return nil
+
+
+  static FUNCTION TProyecto_ActionTree( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+local cTipo := oItem:cTipo
+local cFile
+
+
+do case
+
+
+
+
+   case cTipo == "prg" .OR. cTipo == "c"   .OR. cTipo == "h"   .OR. cTipo == "ch"  .OR. cTipo == "txt"
+        cFile := oItem:cRuta + if( left( oItem:cRuta, 1 ) == "\","","\" ) + oItem:cPrompt
+        OpenCode( cFile )
+
+endcase
+
+
+return nil
+
+
+
+  static FUNCTION TProyecto_SetPrgMain( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+local aItems := ::oTree:aGetItems( {|x| x:cTipo == "prg" } )
+local oI
+local cFile := oItem:cRuta + if( left( oItem:cRuta, 1 ) == "\","","\" ) + oItem:cPrompt
+
+local cStr := memoread( cFile )
+
+if empty( cStr )
+   MsgStop( "No se pudo encontrar " + cFile, "Corrija" )
+   return nil
+endif
+
+if at( "functionmain(", strtran(lower(cStr)," ","") ) == 0
+   if !MsgYesNo( 'No se encontró "function main()" en el fichero ' + Chr(13)+Chr(10) + Chr(13)+Chr(10) + cFile + Chr(13)+Chr(10) + Chr(13)+Chr(10) +"¿Desea continuar con la operación?","Atención")
+      MsgStop("Operación cancelada","Atención")
+      return nil
+   endif
+endif
+
+
+for each oI in aItems
+    oI:lMain := .F.
+    oI:SetText(alltrim(oI:cPrompt ))
+next
+
+oItem:SetText(oItem:cPrompt + space( 4 ))
+oItem:lMain := .T.
+
+::oTree:Refresh()
+
+return nil
+
+
+
+   static FUNCTION TProyecto_Compilar( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+WQout( { "compilar" + oItem:cFileName } )
+
+
+return nil
+
+
+   static FUNCTION TProyecto_SaveConfig( oItem, cFileName ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+if cFileName == nil
+   if file( oItem:cRuta + "\" + oItem:cPrompt + ".cfg" )
+      cFileName := oItem:cRuta + "\" + oItem:cPrompt + ".cfg"
+   endif
+endif
+
+If( cFileName == nil, cFileName := cGetFile( "*.cfg","Guardar configuración como...", 1, , .T. ), ) ;
+
+if cFileExt( cFileName ) == ""
+   cFileName += ".cfg"
+endif
+
+::oTree:SaveFile( cFileName )
+
+return nil
+
+
+   static FUNCTION TProyecto_LoadConfig( cFileName ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+
+If( cFileName == nil, cFileName := cGetFile( "*.cfg","Cargar configuración", 1, , .T. ), ) ;
+
+if cFileExt( cFileName ) == ""
+   cFileName += ".cfg"
+endif
+
+if file( cFileName )
+
+
+endif
+
+
+return nil
+
+
+   static FUNCTION TProyecto_Zoom( oItem ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+local oWnd
+local oTree
+local oBar
+local oImageList := TImageList():New(16,16,"toolbar\image1.bmp")
+local oFont
+local o
+
+
+
+oFont := TFont():New( "Ms Sans Serif", 0, -14,,,,,,,,,,,,,, )
+
+oWnd := TMdiChild():New( 10, 10, 400, 400, oItem:cPrompt,,, Aplicacion():oWnd,, .F.,,,,, .T., .F.,,, !.F., !.F., !.F., !.F., )
+
+       oBar := TBar():New( oWnd, 25, 25, .T.,,, .F., .F. )
+
+              TBtnBmp():NewBar( "plus",,,,, {|This|oTree:ExpandAll()}, .F., oBar, .F.,, "Expandir", .F.,, "oTree:ExpandAll()",,,,,, !.T.,,,,, .F. )
+              TBtnBmp():NewBar( "minus",,,,, {|This|oTree:ColapseAll()}, .F., oBar, .F.,, "Contraer", .F.,, "oTree:ColapseAll()",,,,,, !.T.,,,,, .F. )
+              TBtnBmp():NewBar( "props",,,,,, .F., oBar, .F.,, "Propiedades", .F.,,,,,,,, !.T.,,,,, .F. )
+
+
+       oTree := TTreeView():New( 1, 1, oWnd, 0, 16777215,.T., .F., 1000, 1000 )
+       oTree:SetFont( oFont )
+       oTree:SetImageList( oImageList )
+       o := TTVItem():New( oTree,, "Zoom", 5, .T., oTree,,"zoom",.T. )
+
+       oItem:Copy()
+       o:Paste( o )
+
+       oWnd:oClient := oTree
+       o:Expand()
+
+oWnd:Activate(, oWnd:bLClicked, oWnd:bRClicked, oWnd:bMoved, oWnd:bResized, oWnd:bPainted, oWnd:bKeyDown, oWnd:bInit := { | Self | WndCenter( oWnd:hWnd ) },,,,,,,,,,, oWnd:bLButtonUp )
+
+
+
+return nil
+
+
+   static FUNCTION TProyecto_SetAsMainPrj( oItemRef ) ; local Self AS CLASS TProyecto := QSelf() AS CLASS TProyecto
+
+
+::oTree:aevalitems( ::oTree:aItems, {|oItem| oItem:lMain := oItem:nID == oItemRef:nID })
+::oTree:Refresh()
+
+return nil

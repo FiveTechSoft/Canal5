@@ -1,0 +1,484 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 42 "source\findinfi.prg"
+static oWnd
+static oLbx
+static oFont
+static lCancel := .F.
+static cBuscando
+
+function Buscando( c )
+if c <> nil; cBuscando := c; endif
+return cBuscando
+
+function findinfiles( oPage, nShow )
+
+
+local oDlg
+local lValid := .F.
+local aRect
+local oCbxFind, aCbxFind := {}
+local oCbxTipos, aCbxTipos := {}
+local oCbxRutas, aCbxRutas := {}
+local oBtnDir
+local oChkMay, lMay := .F.
+local oChkRec, lRec := .T.
+local oChkExp, lExp := .F.
+local cTipos := padr("*.PRG", 255 )
+local cRutas := padr(CurDrive() + ":\" + GetCurDir(), 255)
+local cDir
+local aLines := {}
+local cVar := ""
+local cFind := space(255)
+
+
+
+oDlg = TDialog():New(,,,,, "FINDINFILES",, .F.,,,,, oPage, .F.,,,,,, .F., )
+
+       oCbxFind := TComboBox():ReDefine( 104, { | u | If( PCount()==0, cFind, cFind:= u ) }, aCbxFind, oDlg,,,,,,, .F.,,,,,, )
+       oCbxTipos := TComboBox():ReDefine( 105, { | u | If( PCount()==0, cTipos, cTipos:= u ) }, aCbxTipos, oDlg,,,,,,, .F.,,,,,, )
+       oCbxRutas := TComboBox():ReDefine( 106, { | u | If( PCount()==0, cRutas, cRutas:= u ) }, aCbxRutas, oDlg,,,,,,, .F.,,,,,, )
+
+
+
+       oBtnDir := TButton():ReDefine( 108, {||( cDir := cGetDir("Seleccione Ruta", alltrim( cRutas ) ), if( !empty( cDir ), (oCbxRutas:oGet:VarPut( cDir ), oCbxRutas:oGet:Refresh()),))}, oDlg,,, .F.,,,, .F. )
+
+       oChkMay := TCheckBox():ReDefine( 101, { | u | If( PCount()==0, lMay, lMay:= u ) }, oDlg,,,,,,, .F.,, )
+       oChkRec := TCheckBox():ReDefine( 102, { | u | If( PCount()==0, lRec, lRec:= u ) }, oDlg,,,,,,, .F.,, )
+
+
+       TButton():ReDefine( 1, {||( Buscar( oCbxFind, oCbxTipos, oCbxRutas, lMay, lRec, lExp))}, oDlg,,, .F.,,,, .F. )
+       TButton():ReDefine( 2, {||lCancel := .T.}, oDlg,,, .F.,,,, .F. )
+
+oDlg:Activate( oDlg:bLClicked, oDlg:bMoved, oDlg:bPainted, .F., {|Self|lValid}, ! .T., {|Self|oDlg:Move( 0, 0, 2000, 2000, .T. )}, oDlg:bRClicked,,, )
+
+
+
+
+
+
+
+
+return nil
+
+function ShowWndFind()
+local cVar
+local aLines := {}
+local aClient := GetClientRect( Aplicacion():oWnd:hWnd )
+
+oFont := TFont():New( "Courier New", 0, -12,,,,,,,,,,,,,, )
+
+
+
+if Aplicacion():oWndFindFiles == nil
+
+
+
+
+
+   Aplicacion():oWndFindFiles := TMdiChild():New( 0, 0, aClient[3]-Aplicacion():oWnd:oBar:nHeight(), 200, "Buscar en ficheros",,, Aplicacion():oWnd,, .F., 0, 16777215,,, .T., .F.,,, !.F., !.F., !.F., !.F., )
+
+
+     oLbx := TListBox():New( 0, 0, { | u | If( PCount()==0, cVar, cVar:= u ) }, aLines, 100, 300,, Aplicacion():oWndFindFiles,, 0, 16777215, .T., .F., {|| AbreFichero()}, oFont,, .F.,, {0},, .F., .F. )
+
+            oLbx:bRClicked := {| nRow, nCol | Contextual( nRow, nCol ) }
+
+            oLbx:nBmpHeight := 20
+            oLbx:bDrawItem := {| hDC, nItem, cText, rc, lFocus, lSelected, hBitmap | PintaItem( hDC, nItem, ctext, rc, lFocus, lSelected, hBitmap ) }
+
+          Aplicacion():oWndFindFiles:oClient := oLbx
+
+
+
+   Aplicacion():oWndFindFiles:Activate(, Aplicacion():oWndFindFiles:bLClicked, Aplicacion():oWndFindFiles:bRClicked, Aplicacion():oWndFindFiles:bMoved, Aplicacion():oWndFindFiles:bResized, Aplicacion():oWndFindFiles:bPainted, Aplicacion():oWndFindFiles:bKeyDown, Aplicacion():oWndFindFiles:bInit := { | Self | Aplicacion():oWndFindFiles:Move( 0, Aplicacion():oToolBox:nRight, aClient[4]-Aplicacion():oToolBox:nWidth,aClient[3]-Aplicacion():oWnd:oBar:nHeight, .T.) },,,,,,,,, {|| ( lValid := .T. )},, Aplicacion():oWndFindFiles:bLButtonUp )
+
+
+else
+   Aplicacion():oWndFindFiles:Show()
+
+endif
+
+
+return nil
+
+
+static function Buscar( oCbxFind, oCbxTipos, oCbxRutas, lExacto, lRecursivo )
+local aLines
+local cLine
+local cStr := ""
+local cBuscar := alltrim(oCbxFind:oGet:VarGet())
+local cRuta   := alltrim(oCbxRutas:oGet:VarGet())
+local cTipos  := alltrim(oCbxTipos:oGet:VarGet())
+
+if right( cRuta, 1 ) == "\"
+   cRuta := substr( cRuta, 1, len( cRuta )-1 )
+endif
+
+if empty( cBuscar )
+   MsgAlert( "Debe especificar busqueda","Atención")
+   return nil
+endif
+
+AAdd( oLbx:aItems, 'Buscando "' + cBuscar + '"  en [' + cRuta + "]" )
+oLbx:SendMsg( 384, 0, "Buscando " + cBuscar + "  en [" + cRuta + "]" )
+
+
+Buscando( cBuscar )
+
+aLines := FindInFile( cBuscar, cRuta, cTipos, lExacto, lRecursivo  )
+oLbx:GoTop()
+
+
+cBuscar := oCbxFind: oGet:VarGet()
+cRuta   := oCbxRutas:oGet:VarGet()
+cTipos  := oCbxTipos:oGet:VarGet()
+
+oCbxFind:oGet:VarPut( cBuscar )
+oCbxFind:oGet:Refresh()
+
+oCbxRutas:oGet:VarPut( cRuta )
+oCbxRutas:oGet:Refresh()
+
+oCbxTipos:oGet:VarPut( cTipos )
+oCbxTipos:oGet:Refresh()
+
+if lCancel
+   MsgStop( "Acción cancelada","Atención")
+   lCancel := .F.
+   return nil
+endif
+
+
+return nil
+
+
+
+
+function FindInFile( cBuscar, cDir, cMask, lExacto, lRecursivo )
+local aDir, cFile, cStr, nEn, nLines, nEnLine, cLine, cAux, nLen, cAux2, n, cNewDir
+local nLastEn := 0
+local aLines := {}
+local lPrimera := .T.
+
+If( lExacto == nil, lExacto := .F., ) ;
+If( lRecursivo == nil, lRecursivo := .F., ) ;
+
+aDir := Directory( cDir + "\*.*", "D" )
+
+nLen := len(aDir)
+
+for n := 1 to nLen
+
+    cFile := aDir[n]
+
+    nLastEn := 0
+
+    if lCancel
+       return .F.
+    endif
+
+
+    if lRecursivo .AND. ("D" $ cFile[5]) .AND. (cFile[1] <> ".") .AND. (cFile[1] <> "..")
+        cNewDir := cDir + "\" + cFile[1]
+        SysRefresh()
+        FindInFile( cBuscar, cNewDir , cMask, lExacto, lRecursivo )
+        if lCancel
+           return .F.
+        endif
+    else
+
+
+       if "." +lower(cFileExt( cFile[1])) $ lower(cMask)
+
+          Aplicacion():oWndFindFiles:cTitle := cDir + "\" +cFile[1]
+
+          cStr   := Memoread( cDir + "\" + cFile[1] )
+          cAux   := Memoread( cDir + "\" + cFile[1] )
+          lPrimera := .T.
+          nLines := 0
+          while ( nEn := at( if( lExacto, cBuscar,lower(cBuscar)), if( lExacto, cStr, lower(cStr)) ) ) <> 0
+
+             if lPrimera
+                lPrimera := .F.
+                AAdd( oLbx:aItems, "" )
+                oLbx:SendMsg( 384, 0, "" )
+                AAdd( oLbx:aItems, cDir + "\" + cFile[1] )
+                oLbx:SendMsg( 384, 0, cDir + "\" + cFile[1] )
+             endif
+
+             nLines  += ((len( left( cStr, nEn ) )-len(strtran( left( cStr, nEn ),Chr(13)+Chr(10),"")))/2)
+             cLine   := memoline( cAux,254,nLines+1 )
+             cStr    := substr( cStr, nEn+1 )
+             AAdd( oLbx:aItems, str(nLines+1,6) + ":  " + cLine )
+             oLbx:SendMsg( 384, 0, str(nLines+1,6) + ":  " + cLine )
+             SysRefresh()
+          enddo
+
+       endif
+    endif
+
+next
+
+return nil
+
+
+function PintaItem( hDC, nItem, ctext, rc, lFocus, lSelected, hBitmap )
+local nTop, nLeft, n
+local nWidth := 0
+local nHeight := 0
+local nMode
+local hOldFont := SelectObject( hDC, oFont:hFont )
+local nEn
+local nW
+local c1, c2
+local cBuscar := alltrim( Buscando() )
+rc[2] += 3
+
+nMode := SetBkMode( hDC, 1 )
+if lSelected
+   FillSolidRect( hDC, rc, 12632256 )
+else
+   FillSolidRect( hDC, rc, 16777215 )
+endif
+
+SetTextColor( hDC, ( 0 + ( 0 * 256 ) + ( 128 * 65536 ) ) )
+
+
+
+
+
+
+
+
+
+nEn := at( lower(cBuscar), lower(cText) )
+
+if nEn > 0
+   c1 := substr( cText, 1, nEn-1 )
+   nW := GetTextWidth( hDC, c1, oFont:hFont )
+   rc[4] := rc[2] + nW
+   DrawText( hDC, c1, {rc[1], rc[2], rc[3], rc[4] }, nOr( 0x00000004, 0x00000020 ) )
+
+   SetTextColor( hDC, ( 0 + ( 100 * 256 ) + ( 0 * 65536 ) ) )
+   rc[2] := rc[4]
+   nW := GetTextWidth( hDC, cBuscar, oFont:hFont )
+   rc[4] := rc[2] + nW
+   DrawText( hDC, substr( cText, nEn, len( cBuscar ) ), {rc[1], rc[2] , rc[3], rc[4] }, nOr( 0x00000004, 0x00000020 ) )
+
+   SetTextColor( hDC, ( 0 + ( 0 * 256 ) + ( 150 * 65536 ) ) )
+   c2 := substr( cText, nEn + len( cBuscar ) )
+   rc[2] := rc[4]
+   nW := GetTextWidth( hDC, c2, oFont:hFont )
+   rc[4] := rc[2] + nW
+   DrawText( hDC, c2, {rc[1], rc[2] , rc[3], rc[4] }, nOr( 0x00000004, 0x00000020 ) )
+else
+   SetTextColor( hDC, ( 128 + ( 0 * 256 ) + ( 150 * 65536 ) ) )
+   DrawText( hDC, cText, {rc[1], rc[2] , rc[3], rc[4] }, nOr( 0x00000004, 0x00000020 ) )
+endif
+
+SetBkMode( hDC, nMode )
+SelectObject( hDC, hOldFont )
+
+return nil
+
+
+
+
+
+function LbxDrawItem( nPStruct, aBitmaps, aItems, nBmpWidth, bDrawItem )
+
+local aInfo := GetDrawItemStruct( nPStruct )
+local CtlType    := aInfo[1]
+local CtlID      := aInfo[2]
+local itemID     := aInfo[3]
+local itemAction := aInfo[4]
+local itemState  := aInfo[5]
+local hWndItem   := aInfo[6]
+local hDC        := aInfo[7]
+local nTop       := aInfo[8]
+local nLeft      := aInfo[9]
+local nBottom    := aInfo[10]
+local nRight     := aInfo[11]
+local rgbFore, rgbBack
+
+do case
+   case itemAction == 0x0001 .OR. itemAction == 0x0002
+
+        if bDrawItem <> nil
+           if itemID+1 > len( aItems ); return " "; endif
+           return eval( bDrawItem, hDC, itemID+1, aItems[itemID+1], {nTop, nLeft, nBottom, nRight}, lAnd( itemState, 0x0010 ),lAnd( itemState, 0x0001 ))
+        endif
+
+        if lAnd( itemState, 0x0010 )
+           DrawFocusRect( hDC, nTop,nLeft,nBottom,nRight )
+        endif
+        if lAnd( itemState, 0x0001 )
+           rgbFore := SetTextColor( hDC, GetSysColor( 14 ) )
+           rgbBack := SetBkColor( hDC, GetSysColor( 13 ) )
+           FillSolidRect( hDC, {nTop, nLeft, nBottom, nRight}, GetSysColor( 13 ) )
+        else
+           FillSolidRect( hDC, {nTop, nLeft, nBottom, nRight}, 16777215     )
+        endif
+
+        DrawText( hDC, aItems[itemID + 1], {nTop, nLeft + 2, nBottom, nRight}, nOr( 0x00000004, 0x00000020 ) )
+
+        if lAnd( itemState, 0x0001 )
+           SetTextColor( hDC, rgbFore )
+           SetBkColor( hDC, rgbBack )
+        endif
+
+        if lAnd( itemState, 0x0010 )
+           DrawFocusRect( hDC, nTop, nLeft, nBottom, nRight )
+        endif
+
+endcase
+
+
+
+static function Abrefichero()
+
+local cLine := oLbx:GetSelText()
+local nLine, cFile, n
+local oCode
+local nIni, nEnd
+
+if substr( cLine, 7, 1 ) == ":"
+   nLine := val( left( cLine, 6 ))
+   for n := oLbx:GetPos to 1 step -1
+       if left( oLbx:aItems[n], 1 ) <> " "
+          cFile := alltrim( oLbx:aItems[n] )
+          exit
+       endif
+   next
+endif
+
+if file( cFile )
+   oCode := OpenCode( cFile )
+   oCode:GotoLine( nLine )
+   nIni := oCode:nPos
+   oCode:GoEol()
+   nEnd := oCode:nPos
+   oCode:SetSel( nIni, nEnd )
+   oCode:SetFocus()
+endif
+
+return nil
+
+
+
+
+static function contextual( nRow, nCol )
+local oMnu
+
+
+ oMnu := MenuBegin( .T.,,, .F., .F. )
+    MenuAddItem( "Limpiar",, .F.,, {|oMenuItem|( if( len( oLbx:aItems ) > 0, (oLbx:Reset(), oLbx:Add( " " )),) )},,,,,,, .F.,,, .F. )
+    MenuAddItem( " ",, .F.,,,,,,,,, .F.,,, .F. )
+    MenuAddItem( " ",, .F.,,,,,,,,, .F.,,, .F. )
+    MenuAddItem( " ",, .F.,,,,,,,,, .F.,,, .F. )
+ MenuEnd()
+ oMnu:Activate( nRow, nCol, oLbx, ! .F., )
+
+return nil
+
+#pragma BEGINDUMP
+#include "windows.h"
+#include "hbapi.h"
+
+
+/*typedef struct tagDRAWITEMSTRUCT {
+    UINT CtlType;
+    UINT CtlID;
+    UINT itemID;
+    UINT itemAction;
+    UINT itemState;
+    HWND hwndItem;
+    HDC hDC;
+    RECT rcItem;
+    ULONG_PTR itemData;
+}*/
+
+HB_FUNC( GETDRAWITEMSTRUCT )
+{
+   LPDRAWITEMSTRUCT lp = ( LPDRAWITEMSTRUCT ) hb_parnl( 1 );
+
+   hb_reta( 12 );
+
+   hb_storvni( lp->CtlType      ,    -1, 1  );
+   hb_storvni( lp->CtlID        ,    -1, 2  );
+   hb_storvni( lp->itemID       ,    -1, 3  );
+   hb_storvni( lp->itemAction   ,    -1, 4  );
+   hb_storvni( lp->itemState    ,    -1, 5  );
+   hb_storvni( ( LONG ) lp->hwndItem     ,    -1, 6  );
+   hb_storvni( ( LONG ) lp->hDC          ,    -1, 7  );
+   hb_storvni( lp->rcItem.top   ,    -1, 8  );
+   hb_storvni( lp->rcItem.left  ,    -1, 9  );
+   hb_storvni( lp->rcItem.bottom,    -1, 10 );
+   hb_storvni( lp->rcItem.right ,    -1, 11 );
+   hb_storvnd( lp->itemData     ,    -1, 12 );
+
+}
+
+
+
+
+HB_FUNC( ALPHABLEND )
+{
+   typedef BOOL (CALLBACK* LPALPHABLEND)( HDC hdcDest,
+                                          int nXOriginDest,
+                                          int nYOriginDest,
+                                          int nWidthDest,
+                                          int nHeightDest,
+                                          HDC hdcSrc,
+                                          int nXOriginSrc,
+                                          int nYOriginSrc,
+                                          int nWidthSrc,
+                                          int nHeightSrc,
+                                          BLENDFUNCTION blendFunction);
+   HINSTANCE hLib;
+   LPALPHABLEND AlphaBlend;
+
+   BLENDFUNCTION m_bf;
+   HDC hDCMem ;
+   HBITMAP hOldBmp;
+   m_bf.BlendOp = AC_SRC_OVER;
+   m_bf.BlendFlags = 0;
+   m_bf.SourceConstantAlpha = (hb_pcount()==7 ? hb_parni(7):0 ) ;
+   m_bf.AlphaFormat = 0;
+
+
+
+   hLib = LoadLibrary( "msimg32.dll" );
+   if( hLib )
+   {
+       hDCMem = CreateCompatibleDC( (HDC) hb_parnl(1) );
+       AlphaBlend = ((LPALPHABLEND) GetProcAddress( hLib, "AlphaBlend" ));
+
+       hOldBmp = (HBITMAP) SelectObject( hDCMem, (HBITMAP) hb_parnl(2) );
+
+       AlphaBlend(( HDC) hb_parnl(1), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6),
+                   hDCMem,         0,           0, hb_parni(5), hb_parni(6), m_bf);
+
+       SelectObject( hDCMem, hOldBmp );
+       DeleteDC( hDCMem );
+       FreeLibrary( hLib );
+   }
+
+}
+#pragma ENDDUMP

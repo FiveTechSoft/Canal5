@@ -1,0 +1,177 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 11 "source\gest_ids.prg"
+_HB_CLASS TIDTable ; function TIDTable ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TIDTable" , iif( .F., { }, { @HBObject() } ), @TIDTable() ) ) ;
+
+; _HB_MEMBER { aIDs } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aIDs"}, .F. )
+      _HB_MEMBER New() AS CLASS TIDTable; oClass:AddMethod( "New", @TIDTable_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Save( cFile); oClass:AddMethod( "Save", @TIDTable_Save(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Load( cFile); oClass:AddMethod( "Load", @TIDTable_Load(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AddID( nID, cID); oClass:AddMethod( "AddID", @TIDTable_AddID(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetId( cSemilla); oClass:AddMethod( "GetId", @TIDTable_GetId(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+      _HB_MEMBER Test(); oClass:AddMethod( "Test", @TIDTable_Test(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TIDTable ;
+
+
+static FUNCTION TIDTable_New( ) ; local Self AS CLASS TIDTable := QSelf() AS CLASS TIDTable
+
+     ::aIDs := {}
+
+return self
+
+
+  static FUNCTION TIDTable_Save( cFile, lOverWrite ) ; local Self AS CLASS TIDTable := QSelf() AS CLASS TIDTable
+
+local n
+local nLen := len( ::aIDs )
+local cIds := ""
+local h
+
+if cFile      == nil; cFile      := "";  endif
+if lOverWrite == nil; lOverWrite := .T.; endif
+
+for n := 1 to nLen
+    cIds += alltrim(str(::aIDs[n,1]))+ Chr(13)+Chr(10) + ::aIDS[n,2] + Chr(13)+Chr(10)
+next
+
+if !empty( cFile )
+   if file( cFile ) .AND. !lOverWrite
+      lOverWrite := MsgYesNo( "Existe el fichero " + cFile + ". " + Chr(13)+Chr(10) + "¿Desea sobreescribirlo?","Atención")
+      if !lOverWrite
+         MsgStop( "Operación cancelada","Atención" )
+         return .F.
+      endif
+   endif
+   h := fcreate( cFile )
+   if h == -1
+      MsgStop( "Error al crear " + cFile, "Atención" )
+      return 0
+   endif
+   fwrite( h, cIds )
+   fclose( h )
+endif
+
+return cIds
+
+
+  static FUNCTION TIDTable_Load( cFile ) ; local Self AS CLASS TIDTable := QSelf() AS CLASS TIDTable
+
+local h
+local buffer, nSize
+local cToken
+local n := 1
+local nLines
+local nId, cID
+local lDuplicados := .F.
+
+if cFile      == nil; cFile      := "";  endif
+
+if empty( cFile ) .OR. !file( cFile )
+   MsgStop( "No se encontro fichero de IDs","Atención" )
+   return .F.
+endif
+
+nSize  := fsize( cFile )
+buffer := space( nSize )
+h      := fopen( cFile, 0 )
+fread( h, @buffer, nSize )
+fclose( h )
+
+nLines := mlcount( buffer )
+
+for n := 1 to nLines step 2
+    nId := val( memoline( buffer,, n ))
+    cId := memoline( buffer,,n+1)
+    ::AddId( nID, cID )
+next
+
+return len( ::aIds )
+
+
+  static FUNCTION TIDTable_AddID( nID, cID ) ; local Self AS CLASS TIDTable := QSelf() AS CLASS TIDTable
+
+local n, nLen
+
+If( cID == nil, cID := "", ) ;
+
+if nID == 0
+   return 1
+endif
+
+cID := alltrim( cID )
+
+if at( " ", cID ) <> 0
+   return 2
+endif
+
+nLen := len( ::aIDs )
+
+if nLen > 0
+   for n := 1 to nLen
+       if !empty( cID )
+          if cID == ::aIDS[n,2] .AND. len( cID ) == len( ::aIDS[n,2] )
+             return 4
+          endif
+       endif
+   next
+endif
+
+aadd( ::aIDs, { nID, cID } )
+
+return 0
+
+
+  static FUNCTION TIDTable_GetId( cSemilla ) ; local Self AS CLASS TIDTable := QSelf() AS CLASS TIDTable
+
+
+
+
+
+return nil
+
+
+
+
+
+  static FUNCTION TIDTable_Test( ) ; local Self AS CLASS TIDTable := QSelf() AS CLASS TIDTable
+
+
+::AddId( 100, "ID_100" )
+::AddId( 101, "ID_101" )
+::AddId( 102, "ID_102" )
+::AddId( 103, "ID_103" )
+::AddId( 100, "ID_100" )
+
+::Save( "Test.ids" )
+WQout( { "len aids", len( ::aIDs ) } )
+
+asize( ::aIDs, 0 )
+WQout( { "len aids", len( ::aIDs ) } )
+
+::Load( "Test.ids" )
+WQout( { "len aids", len( ::aIDs ) } )
+
+FErase( "test.ids" )
+
+::Save( "test.ids" )
+
+return nil

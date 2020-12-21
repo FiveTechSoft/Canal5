@@ -1,0 +1,26 @@
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+	\bcc582\bin\ilink32.exe -Gn -aa -Tpe -s -Iobj -L\bcc582\lib -x @make.tmp
+Turbo Incremental Link 5.69 Copyright (c) 1997-2005 Borland
+Warning: Public symbol '_HB_FUN_DRAWFOCUSRECT' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LISTPROPEX.OBJ
+Warning: Public symbol '_HB_FUN_PTINRECT' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LISTPROPEX.OBJ
+Warning: Public symbol '_HB_FUN_INTERSECTRECT' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\VISTAMENU.OBJ
+Warning: Public symbol '_HB_FUN_BOX' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\VISTAMENU.OBJ
+Warning: Public symbol '_HB_FUN_CREATEBOLD' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LISTPROPEX.OBJ
+Warning: Public symbol '_HB_FUN_WBRWSCROLL' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LISTPROPEX.OBJ
+Warning: Public symbol '_HB_FUN_DRAWFRAMECONTROL' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LISTPROPEX.OBJ
+Warning: Public symbol '_HB_FUN_HWNDCOMBO' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LISTPROPEX.OBJ
+Warning: Public symbol '_HB_FUN_HWNDCOMBOEDIT' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LISTPROPEX.OBJ
+Warning: Public symbol '_HB_FUN_HWNDCOMBOLIST' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LISTPROPEX.OBJ
+Warning: Public symbol '_HB_FUN_HWNDCOMBOLIST' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\SPY.OBJ
+Warning: Public symbol '_HB_FUN_GETDEFAULTFONTNAME' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\SHAPE.OBJ
+Warning: Public symbol '_HB_FUN_ALPHABLEND' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\APP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\FINDINFI.OBJ
+Warning: Public symbol '_HB_FUN_DLGFINDTEXT' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\DLGFIND.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\WNDSCINT.OBJ
+Warning: Public symbol '_HB_FUN_LBXDRAWITEM' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\FINDINFI.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LBXCOLOR.OBJ
+Warning: Public symbol '_HB_FUN_LBXDRAWITEM' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\FINDINFI.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LBXFONT.OBJ
+Warning: Public symbol '_HB_FUN_GETDRAWITEMSTRUCT' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\FINDINFI.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LBXCOLOR.OBJ
+Warning: Public symbol '_HB_FUN_GETDRAWITEMSTRUCT' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\FINDINFI.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LBXFONT.OBJ
+Warning: Public symbol '_HB_FUN_LBXDRAWITEM' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\LBXCOLOR.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LBXFONT.OBJ
+Warning: Public symbol '_HB_FUN_GETDRAWITEMSTRUCT' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\LBXCOLOR.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\LBXFONT.OBJ
+Warning: Public symbol '_HB_FUN_TWBROWSE2' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\LISTPROPEX.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\TOTALCMD.OBJ
+Warning: Public symbol '_HB_FUN_HWNDCOMBOLIST' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\LISTPROPEX.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\SPY.OBJ
+Warning: Public symbol '_HB_FUN_FINDININWORD' defined in both module C:\C5_DEV\TRUNK\C5IDE\OBJ\QFTP.OBJ and C:\C5_DEV\TRUNK\C5IDE\OBJ\TOTALCMD.OBJ

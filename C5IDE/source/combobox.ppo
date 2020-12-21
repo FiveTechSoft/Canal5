@@ -1,0 +1,605 @@
+#line 38 "\fwh\include\FiveWin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\FiveWin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 37 "source\combobox.prg"
+_HB_CLASS TComboBox ; function TComboBox ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TComboBox" , iif( .T., { @TControl() }, { @HBObject() } ), @TComboBox() ) ) ;
+
+ ;; _HB_MEMBER { aItems, aBitmaps } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aItems", "aBitmaps"}, .F. )
+ ; ;; _HB_MEMBER { lOwnerDraw, nBmpHeight, nBmpWidth } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lOwnerDraw", "nBmpHeight", "nBmpWidth"}, .F. )
+; _HB_MEMBER { nAt } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nAt"}, .F. )
+ ;; _HB_MEMBER { bDrawItem, bCloseUp } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bDrawItem", "bCloseUp"}, .F. )
+; _HB_MEMBER { AS STRING cError } ; oClass:AddMultiData( "String",, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cError"}, .F. )
+; _HB_MEMBER { oGet } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oGet"}, .F. )
+
+
+
+
+   _HB_MEMBER New( nRow, nCol, bSetGet, aItems, nWidth, nHeight, oWnd, nHelpId, bChange, bValid, nClrText, nClrBack, lPixel, oFont, cMsg, lUpdate, bWhen, lDesign, acBitmaps, bDrawItem, nStyle, cPict, bEChange) AS CLASS TComboBox; oClass:AddMethod( "New", @TComboBox_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+
+   _HB_MEMBER ReDefine( nId, bSetGet, aItems, oWnd, nHelpId, bValid,  bChange, nClrText, nClrBack, cMsg, lUpdate, bWhen, acBitmaps, bDrawItem, nStyle, cPict, bEChange) AS CLASS TComboBox; oClass:AddMethod( "ReDefine", @TComboBox_ReDefine(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Add( cItem, nAt); oClass:AddMethod( "Add", @TComboBox_Add(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER cToChar(); oClass:AddInline( "cToChar", {|Self | ( ( Self ) ), ::TControl:cToChar( "COMBOBOX" ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Change(); oClass:AddMethod( "Change", @TComboBox_Change(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER CloseUp(); oClass:AddInline( "CloseUp", {|Self | ( ( Self ) ), If( ::bCloseUp <> nil, Eval( ::bCloseUp, Self ),) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Default(); oClass:AddMethod( "Default", @TComboBox_Default(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER DefControl( oControl); oClass:AddMethod( "DefControl", @TComboBox_DefControl(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Del( nAt); oClass:AddMethod( "Del", @TComboBox_Del(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Destroy(); oClass:AddMethod( "Destroy", @TComboBox_Destroy(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER DrawItem( nIdCtl, nPStruct); oClass:AddMethod( "DrawItem", @TComboBox_DrawItem(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER FillMeasure(); oClass:AddInline( "FillMeasure", {|Self, nPInfo | ( ( Self ) ), LbxMeasure( nPInfo, ::nBmpHeight ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+
+   _HB_MEMBER FindString(); oClass:AddInline( "FindString", {|Self, cItem, nFrom | ( ( Self ) ), nFrom := If( nFrom == nil, 0, nFrom ), ::SendMsg( ( 320 + 12 ), nFrom, cItem ) + 1 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Find(); oClass:AddInline( "Find", {|Self, cItem, nFrom | ( ( Self ) ), ::FindString( cItem, nFrom ) <> 0 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+   _HB_MEMBER Initiate( hDlg); oClass:AddMethod( "Initiate", @TComboBox_Initiate(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+
+   _HB_MEMBER Insert( cItem, nAt); oClass:AddMethod( "Insert", @TComboBox_Insert(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER LostFocus(); oClass:AddMethod( "LostFocus", @TComboBox_LostFocus(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER lValid(); oClass:AddMethod( "lValid", @TComboBox_lValid(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Modify( cItem, nAt); oClass:AddMethod( "Modify", @TComboBox_Modify(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER MouseMove( nRow, nCol, nKeyFlags); oClass:AddMethod( "MouseMove", @TComboBox_MouseMove(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Open(); oClass:AddInline( "Open", {|Self | ( ( Self ) ), ::SendMsg( ( 320 + 15 ), 1 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Refresh(); oClass:AddInline( "Refresh", {|Self | ( ( Self ) ), ::Set( Eval( ::bSetGet ) ), ::TControl:Refresh() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+
+
+   _HB_MEMBER Reset(); oClass:AddInline( "Reset", {|Self | ( ( Self ) ), Eval( ::bSetGet, If( ValType( Eval( ::bSetGet ) ) == "N", 0, "" ) ), ::nAt := 0, ::SendMsg( ( 320 + 11 ) ), ::Change() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+   _HB_MEMBER Select(); oClass:AddInline( "Select", {|Self, nItem | ( ( Self ) ), ::nAt := nItem, ::SendMsg( ( 320 + 14 ), nItem - 1, 0 ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Set( cNewItem); oClass:AddMethod( "Set", @TComboBox_Set(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER SetBitmaps( acBitmaps); oClass:AddMethod( "SetBitmaps", @TComboBox_SetBitmaps(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+   _HB_MEMBER SetItems(); oClass:AddInline( "SetItems", {|Self, aItems | ( ( Self ) ), ::Reset(), ::aItems := aItems, ::Default() }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER ShowToolTip(); oClass:AddMethod( "ShowToolTip", @TComboBox_ShowToolTip(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER VarGet(); oClass:AddMethod( "VarGet", @TComboBox_VarGet(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TComboBox ;
+
+
+
+
+
+
+static FUNCTION TComboBox_New( nRow, nCol, bSetGet, aItems, nWidth, nHeight, oWnd, nHelpId, bChange, bValid, nClrFore, nClrBack, lPixel, oFont, cMsg, lUpdate, bWhen, lDesign, acBitmaps, bDrawItem, nStyle, cPict, bEChange ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   if nClrFore == nil
+      nClrBack := GetSysColor( 5 )
+   endif
+
+
+
+
+
+
+
+   If( nRow == nil, nRow := 0, ) ; If( nCol == nil, nCol := 0, ); If( bSetGet == nil, bSetGet := { || nil }, ); If( oWnd == nil, oWnd := GetWndDefault(), ); If( oFont == nil, oFont := oWnd:oFont, ); If( aItems == nil, aItems := {}, ); If( nWidth == nil, nWidth := 40, ); If( nHeight == nil, nHeight := 60, ); If( nClrFore == nil, nClrFore := GetSysColor( 8 ), ); If( lPixel == nil, lPixel := .F., ); If( lUpdate == nil, lUpdate := .F., ); If( lDesign == nil, lDesign := .F., ); If( nStyle == nil, nStyle := 3, );
+
+   ::cCaption  = ""
+   ::nTop      = nRow * If( lPixel, 1, 14 )
+   ::nLeft     = nCol * If( lPixel, 1, 8 )
+   ::nBottom   = ::nTop  + nHeight - 1
+   ::nRight    = ::nLeft + nWidth  - 1
+   ::nAt       = 0
+   ::aItems    = aItems
+   ::bChange   = bChange
+   ::bSetGet   = bSetGet
+   ::oWnd      = oWnd
+   ::oFont     = oFont
+
+   if acBitmaps <> nil
+      ::SetBitmaps( acBitmaps )
+   else
+      ::lOwnerDraw = .F.
+   endif
+
+
+
+
+
+   ::nStyle    = nOR( If( nStyle == 2, 0, 1 ), 65536, nStyle, 4096, 1073741824, 268435456, 8388608, 2097152, If( lDesign, 67108864, 0 ), If( ::lOwnerDraw, 16, 0 ) )
+
+   ::nId       = ::GetNewId()
+   ::nHelpId   = nHelpId
+   ::bValid    = bValid
+   ::lDrag     = lDesign
+   ::lCaptured = .F.
+   ::cMsg      = cMsg
+   ::lUpdate   = lUpdate
+   ::bWhen     = bWhen
+   ::bDrawItem = bDrawItem
+
+   ::SetColor( nClrFore, nClrBack )
+
+   if nStyle == 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ::oGet := TGet():ReDefine( nil,     ::bSetGet,  Self,       ::nHelpID,  cPict,      nil,        ::nClrText, ::nClrPane, ::oFont,    nil,        nil,        nil,        nil,        bEChange,   .F.        )
+   endif
+
+   if ! Empty( oWnd:hWnd )
+      ::Create( "COMBOBOX" )
+      ::Default()
+      if oFont <> nil
+         ::SetFont( oFont )
+      endif
+      oWnd:AddControl( Self )
+   else
+      oWnd:DefControl( Self )
+   endif
+
+   if ::oGet <> nil
+      ::oGet:hWnd = GetWindow( ::hWnd, 5 )
+      ::oGet:Link()
+
+
+
+
+
+
+
+
+
+      ::oGet:bLostFocus =  {| hCtlFocus, nAt, cItem| cItem := GetWindowText( ::hWnd ),  nAt := ::SendMsg( ( 320 + 12 ), 0, Trim( cItem )) + 1, Eval( ::bSetGet, cItem ), ::Select( nAt ), SetWindowText( ::hWnd, cItem ), If( ::bValid <> nil .AND.  GetParent( hCtlFocus ) == GetParent( ::hWnd ), If( ! Eval( ::bValid ), PostMessage( ::hWnd, 7 ),),) }
+  endif
+
+   if lDesign
+      ::CheckDots()
+   endif
+
+return Self
+
+
+
+
+
+
+static FUNCTION TComboBox_ReDefine( nId, bSetGet, aItems, oWnd, nHelpId, bValid,  bChange, nClrFore, nClrBack, cMsg, lUpdate,  bWhen, acBitmaps, bDrawItem, nStyle, cPict,  bEChange ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   if nClrFore == nil
+      nClrBack := GetSysColor( 5 )
+   endif
+
+
+
+
+   If( aItems == nil, aItems := {}, ) ; If( nClrFore == nil, nClrFore := GetSysColor( 8 ), ); If( lUpdate == nil, lUpdate := .F., ); If( nStyle == nil, nStyle := 3, );
+
+   ::nId       = nId
+   ::hWnd      = 0
+   ::aItems    = aItems
+   ::bChange   = bChange
+   ::bSetGet   = bSetGet
+   ::oWnd      = oWnd
+   ::nHelpId   = nHelpId
+   ::bValid    = bValid
+   ::nAt       = 0
+   ::lDrag     = .F.
+   ::lCaptured = .F.
+   ::cMsg      = cMsg
+   ::lUpdate   = lUpdate
+   ::bWhen     = bWhen
+   ::bDrawItem = bDrawItem
+   ::nStyle    = nStyle
+
+   if acBitmaps <> nil
+      ::SetBitmaps( acBitmaps )
+   else
+      ::lOwnerDraw = .F.
+   endif
+
+   ::SetColor( nClrFore, nClrBack )
+
+   if lAnd(::nStyle, 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ::oGet := TGet():ReDefine( nil,     ::bSetGet,  Self,       ::nHelpID,  cPict,      nil,        ::nClrText, ::nClrPane, ::oFont,    nil,        nil,        nil,        nil,        bEChange,   .F.        )
+     endif
+
+   oWnd:DefControl( Self )
+
+return Self
+
+
+
+static FUNCTION TComboBox_Add( cItem, nAt ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   If( nAt == nil, nAt := 0, ) ;
+
+   if nAt == 0
+      AAdd( ::aItems, cItem )
+   else
+      ASize( ::aItems, Len( ::aItems ) + 1 )
+      AIns( ::aItems, nAt )
+      ::aItems[ nAt ] = cItem
+   endif
+
+   ::SendMsg( ( 320 + 3 ), 0, cItem )
+
+return nil
+
+
+
+static FUNCTION TComboBox_Change( ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   local cItem := GetWindowText( ::hWnd )
+   local nAt
+
+   nAt = ::SendMsg( ( 320 +  7 ) ) + 1
+
+   if nAt == ::nAt .AND. !Empty(Eval( ::bSetGet ))
+      return nil
+   endif
+
+   ::nAt := nAt
+
+   if ::nAt <> 0 .AND. ::nAt <= Len( ::aItems )
+      if ValType( Eval( ::bSetGet ) ) == "N"
+         Eval( ::bSetGet, ::nAt )
+      else
+         Eval( ::bSetGet, ::aItems[ ::nAt ] )
+      endif
+   endif
+
+   if ::oGet <> nil
+      ::oGet:VarPut( Eval( ::bSetGet ) )
+      ::oGet:Refresh()
+   endif
+
+   if ::bChange <> nil
+      Eval( ::bChange, Self, cItem )
+   endif
+
+return nil
+
+
+
+static FUNCTION TComboBox_DefControl( oControl ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   if ::aControls == nil
+      ::aControls = {}
+   endif
+
+   AAdd( ::AControls, oControl )
+
+return nil
+
+
+
+static FUNCTION TComboBox_Set( cNewItem ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   local nAt
+
+   if ValType( cNewItem ) == "N"
+      nAt = cNewItem
+      if nAt == 0
+         nAt = 1
+      endif
+   else
+
+
+      nAt = AScan( ::aItems, { | cItem | Upper( AllTrim( cItem ) ) ==  Upper( AllTrim( cNewItem ) ) } )
+   endif
+
+   if ValType( cNewItem ) == "N" .OR. nAt <> 0
+      ::Select( nAt )
+   else
+      cNewItem := cValToChar( cNewItem )
+      Eval( ::bSetGet, cNewItem )
+      SetWindowText( ::hWnd , cNewItem )
+   endif
+
+return nil
+
+
+
+static FUNCTION TComboBox_LostFocus( ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   local nAt := ::SendMsg( ( 320 +  7 ) )
+
+   ::TControl:LostFocus()
+
+   if nAt <> -1
+      ::nAt = nAt + 1
+      if ValType( Eval( ::bSetGet ) ) == "N"
+         Eval( ::bSetGet, nAt + 1 )
+      else
+         Eval( ::bSetGet, ::aItems[ nAt + 1 ] )
+      endif
+   else
+      Eval( ::bSetGet, GetWindowText( ::hWnd ) )
+   endif
+
+return nil
+
+
+
+static FUNCTION TComboBox_Modify( cItem, nAt ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   If( nAt == nil, nAt := 0, ) ;
+
+   if nAt <> 0
+      ::aItems[ nAt ] = cItem
+      ::SendMsg( ( 320 +  4 ), nAt - 1 )
+      ::SendMsg( ( 320 + 10 ), nAt - 1, cItem )
+   endif
+
+return nil
+
+
+
+static FUNCTION TComboBox_Insert( cItem, nAt ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   If( nAt == nil, nAt := 0, ) ;
+
+   if nAt <> 0
+      ASize( ::aItems, Len( ::aItems ) + 1 )
+      AIns( ::aItems, nAt )
+      ::aItems[ nAt ] = cItem
+      ::SendMsg( ( 320 + 10 ), nAt - 1, cItem )
+   endif
+
+return nil
+
+
+
+static FUNCTION TComboBox_Del( nAt ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   If( nAt == nil, nAt := 0, ) ;
+
+   if nAt <> 0
+      ADel( ::aItems, nAt )
+      ASize( ::aItems, Len( ::aItems ) - 1 )
+      ::SendMsg( ( 320 +  4 ), nAt - 1 )
+   endif
+
+return nil
+
+
+
+static FUNCTION TComboBox_Initiate( hDlg ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   ::TControl:Initiate( hDlg )
+
+   ::Default()
+
+
+
+   if ::oGet <> nil
+      ::oGet:hWnd = GetWindow( ::hWnd, 5 )
+      ::oGet:Link()
+
+
+
+
+
+
+
+
+
+
+      ::oGet:bLostFocus =  {| hCtlFocus, nAt, cItem| cItem := GetWindowText( ::hWnd ),  nAt := ::SendMsg( ( 320 + 12 ), 0, Trim( cItem )) + 1, Eval( ::bSetGet, cItem ), ::Select( nAt ), SetWindowText( ::hWnd, cItem ), If( ::bValid <> nil .AND.  GetParent( hCtlFocus ) == GetParent( ::hWnd ), If( ! Eval( ::bValid ), PostMessage( ::hWnd, 7 ),),) }
+   endif
+
+   ::Refresh()
+
+RETURN NIL
+
+
+
+static FUNCTION TComboBox_Default( ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   local cStart := Eval( ::bSetGet )
+
+   if cStart == nil
+      Eval( ::bSetGet, If( Len( ::aItems ) > 0, ::aItems[ 1 ], "" ) )
+      cStart = If( Len( ::aItems ) > 0, ::aItems[ 1 ], "" )
+   endif
+
+   AEval( ::aItems, { | cItem, nAt | ::SendMsg( ( 320 + 3 ), nAt, cItem ) } )
+
+   if ValType( cStart ) <> "N"
+
+      ::nAt = AScan( ::aItems, { | cItem | Upper( AllTrim( cItem ) ) ==  Upper( AllTrim( cStart ) ) } )
+   else
+      ::nAt = cStart
+   endif
+
+   ::nAt = If( ::nAt > 0, ::nAt, 1 )
+
+   if cStart == nil
+      ::Select( ::nAt )
+   else
+      ::Set( cStart )
+   endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+return nil
+
+
+
+static FUNCTION TComboBox_MouseMove( nRow, nCol, nKeyFlags ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   local nResult := ::TControl:MouseMove( nRow, nCol, nKeyFlags )
+
+return If( ::lDrag, nResult, nil )
+
+
+
+static FUNCTION TComboBox_SetBitmaps( acBitmaps ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   local n
+
+   ::lOwnerDraw = .T.
+
+   if acBitmaps <> nil
+      ::aBitmaps = Array( Len( acBitmaps ) )
+      for n = 1 to Len( acBitmaps )
+         if File( acBitmaps[ n ] )
+            ::aBitmaps[ n ] = ReadBitmap( 0, acBitmaps[ n ] )
+         else
+            ::aBitmaps[ n ] = LoadBitmap( GetResources(), acBitmaps[ n ] )
+         endif
+      next
+      ::nBmpHeight = nBmpHeight( ::aBitmaps[ 1 ] )
+      ::nBmpWidth  = nBmpWidth( ::aBitmaps[ 1 ] )
+   endif
+
+return nil
+
+
+
+static FUNCTION TComboBox_Destroy( ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   local n
+
+   if ::aBitmaps <> nil
+      for n = 1 to Len( ::aBitmaps )
+         DeleteObject( ::aBitmaps[ n ] )
+      next
+   endif
+
+   if ::oGet <> nil
+      ::oGet:Destroy()
+   endif
+
+return ::TControl:Destroy()
+
+
+
+static FUNCTION TComboBox_DrawItem( nIdCtl, nPStruct ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+return LbxDrawItem( nPStruct, ::aBitmaps, ::aItems, ::nBmpWidth, ::bDrawItem )
+
+
+
+static FUNCTION TComboBox_VarGet( ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   local cRet, nAt := ::SendMsg( ( 320 +  7 ) )
+
+   if nAt <> -1
+      ::nAt = nAt + 1
+      cRet :=  ::aItems[ nAt + 1 ]
+   else
+      cRet := GetWindowText( ::hWnd )
+   endif
+
+return cRet
+
+
+
+static FUNCTION TComboBox_lValid( ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   local lRet := .T.
+
+   if ValType( ::bValid ) == "B"
+      lRet = Eval( ::bValid, ::oGet  )
+   endif
+
+return lRet
+
+
+
+static FUNCTION TComboBox_ShowToolTip( ) ; local Self AS CLASS TComboBox := QSelf() AS CLASS TComboBox
+
+   local nOldBottom
+
+   nOldBottom = ::nBottom
+   ::nBottom  = ::nTop + GetTextHeight( ::hWnd ) + 8
+
+   ::TControl:ShowToolTip()
+   ::nBottom  = nOldBottom
+
+return nil

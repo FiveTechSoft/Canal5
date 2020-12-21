@@ -1,0 +1,1371 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 7 "source\dsgnWnd.prg"
+_HB_CLASS TWndDsgn ; function TWndDsgn ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TWndDsgn" , iif( .T., { @TShape() }, { @HBObject() } ), @TWndDsgn() ) ) ;
+
+; _HB_MEMBER { aProperties } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aProperties"}, .F. )
+
+; _HB_MEMBER { nGrid } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nGrid"}, .F. )
+
+; _HB_MEMBER { lxToolWindow } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxToolWindow"}, .F. )
+; _HB_MEMBER { nHCaption } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nHCaption"}, .F. )
+; _HB_MEMBER { nBorder } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nBorder"}, .F. )
+; _HB_MEMBER { nLastLeftBtn } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nLastLeftBtn"}, .F. )
+; _HB_MEMBER { nTypeWnd } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nTypeWnd"}, .F. )
+; _HB_MEMBER { aTypesWnd } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aTypesWnd"}, .F. )
+; _HB_MEMBER { nTypeBorder } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nTypeBorder"}, .F. )
+; _HB_MEMBER { aTypesBorder } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aTypesBorder"}, .F. )
+
+; _HB_MEMBER { lCaption } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lCaption"}, .F. )
+; _HB_MEMBER { lxSysMenu } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxSysMenu"}, .F. )
+ ;; _HB_MEMBER { lCloseBtn, aBtnClose } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lCloseBtn", "aBtnClose"}, .F. )
+ ;; _HB_MEMBER { lxMinBtn , aBtnMin } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxMinBtn" , "aBtnMin"}, .F. )
+ ;; _HB_MEMBER { lxMaxBtn  , aBtnMax } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxMaxBtn"  , "aBtnMax"}, .F. )
+ ;; _HB_MEMBER { lResBtn  , aBtnRes } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lResBtn"  , "aBtnRes"}, .F. )
+ ;; _HB_MEMBER { lxHelpBtn , aBtnHelp } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lxHelpBtn" , "aBtnHelp"}, .F. )
+; _HB_MEMBER { lVScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lVScroll"}, .F. )
+; _HB_MEMBER { lHScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lHScroll"}, .F. )
+; _HB_MEMBER { nxHeightFont } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nxHeightFont"}, .F. )
+
+; _HB_MEMBER { oBrush } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oBrush"}, .F. )
+; _HB_MEMBER { lGrid } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lGrid"}, .F. )
+ ; ;; _HB_MEMBER { oBar, oMsgBar, oMenu } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oBar", "oMsgBar", "oMenu"}, .F. )
+; _HB_MEMBER { nExStyle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nExStyle"}, .F. )
+; _HB_MEMBER { nStyle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nStyle"}, .F. )
+
+
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd) AS CLASS TWndDsgn; oClass:AddMethod( "New", @TWndDsgn_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TWndDsgn_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER DrawNoClient( hDC) ; oClass:AddVirtual( "DrawNoClient" )
+      _HB_MEMBER DrawCaption( hDC); oClass:AddMethod( "DrawCaption", @TWndDsgn_DrawCaption(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TWndDsgn_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetGrid( nGrid); oClass:AddMethod( "SetGrid", @TWndDsgn_SetGrid(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GetClientRect(); oClass:AddMethod( "GetClientRect", @TWndDsgn_GetClientRect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Move( nTop, nLeft, nBottom, nRight); oClass:AddMethod( "Move", @TWndDsgn_Move(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetSize( nWidth, nHeight, lUndo); oClass:AddMethod( "SetSize", @TWndDsgn_SetSize(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Edit(); oClass:AddMethod( "Edit", @TWndDsgn_Edit(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Inspect( cDataName, oInspector); oClass:AddMethod( "Inspect", @TWndDsgn_Inspect(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cCaption( cNewVal); _HB_MEMBER _cCaption( cNewVal); oClass:AddMethod( "cCaption", @TWndDsgn_cCaption(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_cCaption", @TWndDsgn_cCaption(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER cSetFocus( coCtrlName); oClass:AddMethod( "cSetFocus", @TWndDsgn_cSetFocus(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Run(); oClass:AddMethod( "Run", @TWndDsgn_Run(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProps( oList); oClass:AddMethod( "SetProps", @TWndDsgn_SetProps(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+      _HB_MEMBER nTop( nNewValue); _HB_MEMBER _nTop( nNewValue); oClass:AddMethod( "nTop", @TWndDsgn_nTop(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nTop", @TWndDsgn_nTop(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nLeft( nNewValue); _HB_MEMBER _nLeft( nNewValue); oClass:AddMethod( "nLeft", @TWndDsgn_nLeft(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nLeft", @TWndDsgn_nLeft(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nBottom( nNewValue); _HB_MEMBER _nBottom( nNewValue); oClass:AddMethod( "nBottom", @TWndDsgn_nBottom(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nBottom", @TWndDsgn_nBottom(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nRight( nNewValue); _HB_MEMBER _nRight( nNewValue); oClass:AddMethod( "nRight", @TWndDsgn_nRight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nRight", @TWndDsgn_nRight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nWidth( nNewValue); _HB_MEMBER _nWidth( nNewValue); oClass:AddMethod( "nWidth", @TWndDsgn_nWidth(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nWidth", @TWndDsgn_nWidth(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nHeight( nNewValue); _HB_MEMBER _nHeight( nNewValue); oClass:AddMethod( "nHeight", @TWndDsgn_nHeight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nHeight", @TWndDsgn_nHeight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lToolWindow( lNewValue); _HB_MEMBER _lToolWindow( lNewValue); oClass:AddMethod( "lToolWindow", @TWndDsgn_lToolWindow(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lToolWindow", @TWndDsgn_lToolWindow(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lMinBtn( lNewValue); _HB_MEMBER _lMinBtn( lNewValue); oClass:AddMethod( "lMinBtn", @TWndDsgn_lMinBtn(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lMinBtn", @TWndDsgn_lMinBtn(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lMaxBtn( lNewVal); _HB_MEMBER _lMaxBtn( lNewVal); oClass:AddMethod( "lMaxBtn", @TWndDsgn_lMaxBtn(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lMaxBtn", @TWndDsgn_lMaxBtn(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lHelpBtn( lNewVal); _HB_MEMBER _lHelpBtn( lNewVal); oClass:AddMethod( "lHelpBtn", @TWndDsgn_lHelpBtn(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lHelpBtn", @TWndDsgn_lHelpBtn(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER lSysMenu( lNewVal); _HB_MEMBER _lSysMenu( lNewVal); oClass:AddMethod( "lSysMenu", @TWndDsgn_lSysMenu(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_lSysMenu", @TWndDsgn_lSysMenu(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nHeightFont( nNewVal); _HB_MEMBER _nHeightFont( nNewVal); oClass:AddMethod( "nHeightFont", @TWndDsgn_nHeightFont(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nHeightFont", @TWndDsgn_nHeightFont(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TWndDsgn ;
+
+
+      static FUNCTION TWndDsgn_New( nTop, nLeft, nBottom, nRight, oWnd ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::cFaceName    := if( GetDefaultFontName()== "MS Shell Dlg","MS Sans Serif",GetDefaultFontName())
+   ::nWidthFont   := GetDefaultFontWidth()
+   ::nxHeightFont := GetDefaultFontHeight()
+   ::lBold        := GetDefaultFontBold()
+   ::lItalic      := GetDefaultFontItalic()
+   ::lUnderline   := GetDefaultFontUnderline()
+   ::lStrikeOut   := GetDefaultFontStrikeOut()
+
+
+   ::nGrid       := 10
+   ::nGrid       := 10
+   ::lxToolWindow  := .F.
+   ::lBorder      := .F.
+   ::lPaintBorderDsgn := .T.
+   ::aDotsActives := {0,0,0,1,1,1,0,0}
+
+   ::lCanMove      := .F.
+   ::nClrBorder   := 0
+   ::nClrPane     := GetSysColor(15)
+   ::nHCaption    := 0
+   ::nBorder      := 0
+   ::lGrid        := .F.
+   ::lVScroll     := .F.
+   ::lHScroll     := .F.
+   ::nLastLeftBtn := nRight
+   ::nTypeWnd     := 3
+   ::aTypesWnd    := {"Popup","Overlapped","Child"}
+   ::nTypeBorder  := 3
+   ::aTypesBorder := {"Dialog frame","Border","Caption","No border"}
+   ::lCanMove     := .F.
+
+
+   ::cCaption       := alltrim(::oWnd:oWnd:GetText())
+   ::lCaption     := .T.
+   ::lCloseBtn    := .T.
+   ::lxSysMenu    := .T.
+   ::lxMinBtn     := .F.
+   ::lxMaxBtn     := .F.
+   ::lResBtn      := .F.
+   ::lxHelpBtn    := .F.
+   ::bContextMenu := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+   ::nMinHeight   := 38
+   ::nMinWidth    := 113
+   ::aRect        := {0,0,0,0}
+  ::cObjName         := ::GetObjName()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ::aPropertiesPPC := { "cCaption"      , "lBorder"       , "nID"           , "nWidth"        , "nHeight"       , "nClrPane"      , "nClrText"      , "lVScroll"      , "lHScroll"      , "cFaceName"     , "nWidthFont"    , "nHeightFont"   , "lBold"         , "lItalic"       , "lUnderline"    , "lStrikeOut"    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ::aProperties := { "cCaption", "lBorder"     , "lCaption"    , "lCloseBtn"   , "lHelpBtn"    , "lMaxBtn"     , "lMinBtn"     , "lResBtn"     , "lToolWindow" , "cFaceName"   , "nHeightFont"      , "nClrPane"    , "nTypeWnd"    , "nTypeBorder" , "oBottom"     , "oClient"     , "oLeft"       , "oRight"      , "oTop"        , "nGrid"       , "nGrid"        }
+    if ::lGrid
+       ::SetGrid()
+    endif
+
+   if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+
+
+return self
+
+
+
+  static FUNCTION TWndDsgn_Paint( hDC ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+  local hOldBrush
+  local nRow, nCol
+  local rc :=  ::GetClientRect()
+  local nClrPane := ::nClrPane
+
+  ::SetSize(,,.T.,.F.)
+
+  if nClrPane == nil
+     if ::oWnd:lPocketPc()
+        nClrPane := 16777215
+     else
+        nClrPane := GetSysColor(15)
+     endif
+  endif
+
+
+  rc[3]--;  rc[4]--
+
+  if ::lCaption
+     rc[1]+= 4
+  endif
+
+  if ::lGrid
+     SetBrushOrgEx( hDC, rc[2], rc[1] )
+     FillRect( hDC, rc, ::oBrush:hBrush )
+  else
+     if ::lBorder
+        FillSolidRect( hDC, rc, nClrPane )
+     else
+        FillSolidRect( hDC, rc, nClrPane )
+     endif
+  endif
+
+
+
+
+
+
+
+
+
+
+return nil
+
+
+
+
+
+
+      static FUNCTION TWndDsgn_DrawCaption( hDC ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+local aRect2, rc
+local aRcBtn
+local nW, nH
+local hFont := FontCaption( ::lToolWindow )
+local hOldFont
+local color, nClrText
+local nRight
+local hTheme := nil
+local hBmp
+local aInfo := MetricsCaption()
+local oFontPPC := nil
+local aRect := ::GetClientRect()
+
+if !::lCaption
+   ::nHCaption := 0
+   ::nBorder   := 0
+   nW := 0
+   nH := 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+endif
+
+
+if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+   aRect2 :=  {::aRect[1],::aRect[2],::aRect[1]+::nHCaption,::aRect[4]}
+
+   hTheme := C5_OpenThemeData(::oWnd:hWnd, "WINDOW")
+
+   if hTheme <> nil
+
+      if ::lCaption
+
+         aRect2 :=  {::aRect[1],::aRect[2],::aRect[1]+::nHCaption,::aRect[4]}
+
+         C5_DrawThemeBackground( hTheme, hDC, if(::lToolWindow, 2,1), 1 , aRect2 )
+
+
+
+
+         aRcBtn := { aRect2[1] +5, aRect2[4]-::nHCaption+5 , aRect2[3] -5, aRect2[4] -5 }
+
+         if ::lCloseBtn
+            C5_DrawThemeBackground( hTheme, hDC, 18, 1 , aRcBtn )
+            aRcBtn[2] -= (nW +2)
+            aRcBtn[4] -= (nW +2)
+         endif
+
+         if ::lHelpBtn
+            C5_DrawThemeBackground( hTheme, hDC, 23, 1 , aRcBtn )
+
+            aRcBtn[2] -= (nW +2)
+            aRcBtn[4] -= (nW +2)
+         endif
+
+         if ::lMaxBtn
+            C5_DrawThemeBackground( hTheme, hDC, 17, 1 , aRcBtn )
+
+            aRcBtn[2] -= (nW +2)
+            aRcBtn[4] -= (nW +2)
+         endif
+
+         if ::lResBtn
+            C5_DrawThemeBackground( hTheme, hDC, 21, 1 , aRcBtn )
+
+            aRcBtn[2] -= (nW +2)
+            aRcBtn[4] -= (nW +2)
+         endif
+
+         if ::lMinBtn
+            C5_DrawThemeBackground( hTheme, hDC, 15, 1 , aRcBtn )
+
+            aRcBtn[2] -= (nW +2)
+            aRcBtn[4] -= (nW +2)
+         endif
+
+         DeleteObject( hFont )
+
+
+
+
+
+
+
+
+
+         hBmp := LoadBitmap( GetResources(), "canalfive" )
+
+
+         DeleteObject( hBmp )
+         aRect2[2] += 26
+         aRect2[4] := aRcBtn[2]
+
+
+
+
+
+
+
+         C5_DrawThemeText( hTheme, hDC, if(::lToolWindow, 2,1), 1, ::cCaption, nOr( 0x00000020 , 0x00000004, 0x00008000 ), nil, aRect2 )
+
+
+
+
+
+
+         aRect2 :=  {::aRect[1]+::nHCaption,::aRect[2],::aRect[3],::aRect[2]+::nBorder}
+         C5_DrawThemeBackground( hTheme, hDC, 7,   1 , aRect2 )
+
+         aRect2 :=  {::aRect[1]+::nHCaption,::aRect[4]-::nBorder,::aRect[3],::aRect[4]}
+         C5_DrawThemeBackground( hTheme, hDC, 8,  1 , aRect2 )
+
+         aRect2 :=  {::aRect[3]-::nBorder,::aRect[2],::aRect[3],::aRect[4]}
+         C5_DrawThemeBackground( hTheme, hDC, 9, 1 , aRect2 )
+
+
+      endif
+
+      C5_CloseThemeData()
+
+   endif
+
+else
+
+   aRect2 :=  {::aRect[1]+::nBorder,::aRect[2]+::nBorder,::aRect[1]+::nBorder+::nHCaption,::aRect[4]-::nBorder}
+
+   if ::lCaption
+
+      if ::oWnd:lPocketPc()
+
+         aRect2 :=  {::aRect[1],::aRect[2],::aRect[1]+::nHCaption+1,::aRect[4]}
+
+         if ::oWnd:nTypePPC == 2 .OR. ::oWnd:nTypePPC == 3
+            Degrada95( hDC, aRect2, ( 49 + ( 154 * 256 ) + ( 239 * 65536 ) ),( 0 + ( 65 * 256 ) + ( 158 * 65536 ) ),.F. )
+         else
+            FillSolidRect( hDC, aRect2, ( 16 + ( 85 * 256 ) + ( 181 * 65536 ) ) )
+         endif
+
+         oFontPPC := TFont():New( "Tahoma", 0, -12,, .T.,,,,,,,,,,,, )
+
+         hOldFont := SelectObject( hDC, oFontPPC:hFont )
+
+         if ::oWnd:nTypePPC == 1 .OR. ::oWnd:nTypePPC == 2
+            hBmp     := LoadBitmap( GetResources(), "sysppc" )
+            DrawBitmap( hDC, hBmp, aRect2[1], aRect2[2] )
+            DeleteObject( hBmp )
+
+            aRect2[2] += 28
+
+         endif
+
+         SetBkMode( hDC, 1 )
+         color := SetTextColor( hDC, 16777215 )
+
+         aRect2[4] -= 28
+         DrawText( hDC, alltrim( ::cCaption ), aRect2, nOr( 0x00000020 , 0x00000004, 0x00008000 ))
+         aRect2[4] += 28
+
+         SelectObject( hDC, hOldFont  )
+         SetTextColor(hDC, color)
+
+         ::nLastLeftBtn := aRect2[4] - 28
+
+         if ::oWnd:nTypePPC == 1 .OR. ::oWnd:nTypePPC == 2
+            hBmp     := LoadBitmap( GetResources(), "xppc" )
+
+            DrawMasked( hDC, hBmp, aRect2[1]+4-1, aRect2[4]-24-1 )
+            DeleteObject( hBmp )
+         else
+            if ::oWnd:nTypePPC == 3
+               hBmp     := LoadBitmap( GetResources(), "oksmph" )
+               DrawMasked( hDC, hBmp, aRect2[1], aRect2[4]-40 )
+               DeleteObject( hBmp )
+               ::nLastLeftBtn := aRect2[4]-40
+            endif
+         endif
+
+      else
+
+         hOldFont := SelectObject( hDC, GetStockObject( 17 ) )
+
+
+
+
+
+
+         aRect2 := { ::aRect[1]+::nBorder, ::aRect[2]+::nBorder, ::aRect[1]+::nHCaption-::nBorder, ::aRect[4]-::nBorder}
+
+         Degrada95( hDC, aRect2, ( 0 + ( 65 * 256 ) + ( 158 * 65536 ) ),( 49 + ( 154 * 256 ) + ( 239 * 65536 ) ),.F. )
+
+
+
+
+         aRcBtn := { aRect2[1] + int((aRect2[3]-aRect2[1])/2)- int(nH/2), aRect2[4]-nW-::nBorder , aRect2[1] + int((aRect2[3]-aRect2[1])/2)+ int(nH/2), aRect2[4]-::nBorder}
+
+         if ::lCloseBtn
+            DrawFrameControl( hDC, aRcBtn, 1, 0x0000 )
+
+            aRcBtn[2] -= (nW +2)
+            aRcBtn[4] -= (nW +2)
+         endif
+
+         if ::lHelpBtn
+            DrawFrameControl( hDC, arcBtn, 1, 0x0004 )
+
+            aRcBtn[2] -= (nW +2)
+            aRcBtn[4] -= (nW +2)
+         endif
+
+         if ::lMaxBtn
+            DrawFrameControl( hDC, aRcBtn, 1, 0x0002 )
+
+            aRcBtn[2] -= (nW +2)
+            aRcBtn[4] -= (nW +2)
+         endif
+
+         if ::lResBtn
+            DrawFrameControl( hDC, aRcBtn, 1, 0x0003 )
+            aRcBtn[2] -= (nW +2)
+            aRcBtn[4] -= (nW +2)
+         endif
+
+         if ::lMinBtn
+            DrawFrameControl( hDC, aRcBtn, 1, 0x0001 )
+            aRcBtn[2] -= (nW +2)
+            aRcBtn[4] -= (nW +2)
+         endif
+
+         nRight := aRcBtn[2]
+
+         aRcBtn[2] := aRect2[2] + ::nBorder
+         aRcBtn[4] := nRight
+
+
+         SetBkMode( hDC, 1 )
+         color := SetTextColor(hDC, GetSysColor(9))
+         hOldFont := SelectObject( hDC, hFont )
+         DrawText( hDC, ::cCaption, aRcBtn, nOr( 0x00000020 , 0x00000004, 0x00008000 ))
+         SelectObject( hDC, hOldFont  )
+         SetTextColor(hDC, color)
+
+         ::nLastLeftBtn := aRcBtn[2]
+
+         DrawEdge( hDC, ::aRect, 0x0004, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+
+         rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+
+         DrawEdge( hDC, rc, 0x0001, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+         rc[1]++;rc[2]++;rc[3]--;rc[4]--
+         DrawEdge( hDC, rc, 0x0004, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+         rc[1]++;rc[2]++;rc[3]++;rc[4]++
+      endif
+
+   endif
+
+   if oFontPPC <> nil
+      oFontPPC:End()
+   endif
+
+   DeleteObject( hFont )
+
+
+
+
+
+  aRect2 := {::aRect[1]+::nBorder+ GetSysMetrics(if( ::lToolWindow,51,4)) + ::nBorder , ::aRect[2]+::nBorder, ::aRect[3]-::nBorder, ::aRect[4]-::nBorder}
+
+      nH :=aRect2[3]-aRect2[1]
+      nW := nH
+
+    if ::lVScroll
+       ::PaintVScroll( hDC, .T.,::lHScroll, ::lHScroll, .F., ::nHCaption  )
+    endif
+
+    if ::lHScroll
+       ::PaintHScroll( hDC, .T. ,::lVScroll, ::lVScroll )
+    endif
+
+    if ::lBorder
+       Box( hDC, {::aRect[1],::aRect[2],::aRect[3]-1,::aRect[4]-1}, ::nClrBorder )
+    endif
+
+endif
+
+if !::oWnd:lPocketPc()
+   if ::lCaption
+      aRect2 :=  {::aRect[1]+::nBorder,::aRect[2]+::nBorder,::aRect[1]+::nBorder+::nHCaption,::aRect[4]-::nBorder}
+      hBmp     := LoadBitmap( GetResources(), "iconwnd" )
+      DrawMasked( hDC, hBmp, aRect2[1]+3, aRect2[2]+5 )
+      DeleteObject( hBmp )
+ endif
+endif
+
+
+return nil
+
+
+
+
+      static FUNCTION TWndDsgn_ContextMenu( nRow, nCol ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local oMenu
+
+
+
+if nRow <= ::nHCaption + 8 .AND. !::oWnd:lPocketPc
+   MenuAddItem( "Botón Minimizar",, .F.,, {|oMenuItem|::lMinBtn   := !::lMinBtn  , ::Refresh()},,,,,,, .F.,,, .F. )
+   MenuAddItem( "Botón Restaurar",, .F.,, {|oMenuItem|::lResBtn   := !::lResBtn  , ::Refresh()},,,,,,, .F.,,, .F. )
+   MenuAddItem( "Botón Maximizar",, .F.,, {|oMenuItem|::lMaxBtn   := !::lMaxBtn  , ::Refresh()},,,,,,, .F.,,, .F. )
+   MenuAddItem( "Botón ?",, .F.,, {|oMenuItem|::lHelpBtn  := !::lHelpBtn , ::Refresh()},,,,,,, .F.,,, .F. )
+   MenuAddItem( "Botón X",, .F.,, {|oMenuItem|::lCloseBtn := !::lCloseBtn, ::Refresh()},,,,,,, .F.,,, .F. )
+   MenuAddItem()
+   MenuAddItem( "ToolWindow",, .F.,, {|oMenuItem|::lToolWindow := !::lToolWindow, ::Refresh()},,,,,,, .F.,,, .F. )
+
+else
+   MenuAddItem( "Paste",, .F.,, {|oMenuItem|::Paste( nRow, nCol, ::oWnd )},,,,,,, .F.,,, .F. )
+   MenuAddItem( "Save",, .F.,, {|oMenuItem|::Save2Prg()},,,,,,, .F.,,, .F. )
+   MenuAddItem( "Run",, .F.,, {|oMenuItem|::Run()},,,,,,, .F.,,, .F. )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+endif
+
+return nil
+
+
+
+
+
+   static FUNCTION TWndDsgn_SetGrid( nGrid ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local hDC, hDCMem, hOldBmp
+local hBmpBrush
+local nClrPane := ::nClrPane
+local n := nGrid
+
+If( nGrid == nil, nGrid := ::nGrid, ) ;
+
+if nGrid == 0
+   WQout( { "nGrid == 0" } )
+   ::lGrid := .F.
+   return nil
+endif
+
+if nClrPane == nil
+   if ::oWnd:lPocketPc()
+      nClrPane := 16777215
+   else
+      nClrPane := GetSysColor(15)
+   endif
+endif
+
+hDC         := ::oWnd:GetDC()
+hDCMem      := CreateCompatibleDC( hDC )
+hBmpBrush   := CreateCompatibleBitmap( hDC, n, n )
+hOldBmp     := SelectObject( hDCMem, hBmpBrush )
+
+FillSolidRect( hDCMem, {0, 0, n, n }, nClrPane )
+
+if nGrid <> 0
+   SetPixel( hDCMem, nGrid-1, nGrid-1, 0 )
+endif
+
+SelectObject( hDCMem, hOldBmp )
+
+DeleteDC( hDCMem )
+::oWnd:ReleaseDC()
+
+if ::oBrush <> nil
+   ::oBrush:End()
+endif
+
+::oBrush := TBrush():New(, 255,,,, )
+::oBrush:hBrush := CreatePatternBrush( hBmpBrush )
+
+
+
+
+return nil
+
+
+  static FUNCTION TWndDsgn_GetClientRect( ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local aClient
+local hTheme
+local hDC
+local nBorder
+
+if ::oWnd:lPocketPc()
+   nBorder := 0
+else
+   nBorder := ::nBorder
+endif
+
+if !::lCaption
+   aClient := { ::aRect[1]+1, ::aRect[2]+1, ::aRect[3]-1, ::aRect[4]-1 }
+else
+
+   aClient := { ::aRect[1], ::aRect[2], ::aRect[3], ::aRect[4] }
+
+   ::nHCaption := 0
+   if lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+      hTheme := hTheme := C5_OpenThemeData(::oWnd:hWnd, "WINDOW" )
+
+      C5_CloseThemeData()
+
+   else
+
+      if ::oWnd:lPocketPc()
+         do case
+            case ::oWnd:nTypePPC == 1 .OR. ::oWnd:nTypePPC == 2
+                 ::nHCaption := 0
+            case ::oWnd:nTypePPC == 3
+                 ::nHCaption := 0
+         endcase
+      else
+         ::nHCaption := 0
+         ::nHCaption := 0
+      endif
+
+   endif
+
+   aClient[1] += ::nHCaption
+
+   if !::oWnd:lPocketPc()
+      if ::oMenu <> nil
+         ::oMenu:aRect[1] := aClient[1]
+         ::oMenu:aRect[2] := aClient[2]
+         aClient[1] += ::oMenu:nHeight
+         ::oMenu:aRect[3] := ::oMenu:aRect[1] + ::oMenu:nHeight
+         ::oMenu:aRect[4] := aClient[4]
+      endif
+   endif
+
+   if ::oBar <> nil
+      do case
+         case ::oBar:nSide == 1
+              aClient[1] += ::oBar:nHeight
+         case ::oBar:nSide == 2
+              aClient[2] += ::oBar:nWidth
+         case ::oBar:nSide == 3
+              aClient[4] -= ::oBar:nWidth
+         case ::oBar:nSide == 4
+              aClient[3] += ::oBar:nHeight
+      endcase
+   endif
+
+   if ::oMsgBar <> nil
+      aClient[3] += ::oMsgBar:nHeight
+   endif
+
+   if ::lVScroll
+      aClient[4] -= 16
+   endif
+
+   if ::lHScroll
+      aClient[3] -= 16
+   endif
+
+   if ::oWnd:lPocketPc()
+      if ::oMenu <> nil
+         ::oMenu:aRect[1] := ::aRect[3]- 26
+         ::oMenu:aRect[2] := aClient[2]
+         aClient[3] -= 26
+         ::oMenu:aRect[3] := ::aRect[3]
+         ::oMenu:aRect[4] := ::aRect[4]
+      endif
+   endif
+
+endif
+
+return aClient
+
+
+
+
+
+  static FUNCTION TWndDsgn_Move( nTop, nLeft, nBottom, nRight ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+::aRect[1] := nTop
+::aRect[2] := nLeft
+
+::SetSize( nRight-nLeft, nBottom-nTop )
+
+
+return nil
+
+
+
+   static FUNCTION TWndDsgn_SetSize( nWidth, nHeight, lUndo, lRefresh ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local lChange := .T.
+local aClient
+local nT, nL, nH, nW
+local oTop, oLeft, oBottom, oRight, oClient
+
+if nWidth   == nil; nWidth   := ::nWidth ; endif
+if nHeight  == nil; nHeight  := ::nHeight; endif
+if lUndo    == nil; lUndo    := .F.      ; endif
+if lRefresh == nil; lRefresh := .T.      ; endif
+
+if nWidth < ::nMinWidth
+   nWidth := ::nMinWidth
+   lChange := .F.
+endif
+
+if nHeight < ::nMinHeight
+   nHeight := ::nMinHeight
+   lChange := .F.
+endif
+
+if !lUndo .AND. lChange
+   ::oWnd:AddUndo( self, "SetSize", ::nWidth, ::nHeight, .T. )
+endif
+
+::aRect[4] := ::aRect[2] + nWidth
+::aRect[3] := ::aRect[1] + nHeight
+
+::StorePos()
+
+aClient := ::GetClientRect()
+
+if ::oBar <> nil
+   do case
+      case ::oBar:nSide == 1
+           ::oBar:nRight := aClient[4]
+      case ::oBar:nSide == 2
+           ::oBar:nBottom := aClient[3]
+      case ::oBar:nSide == 3
+           ::oBar:nLeft := aClient[4]-::oBar:nWidth
+           ::oBar:nBottom := aClient[3]
+      case ::oBar:nSide == 4
+           ::oBar:nTop := aClient[3]-::oBar:nHeight
+   endcase
+endif
+
+
+
+if ::oTop <> nil
+   oTop := ::GetObjFromName(::oTop)
+   if oTop <> nil
+      nT := aClient[1]
+      nL := aClient[2]
+      nW := aClient[4]-aClient[2]
+      nH := oTop:nHeight
+      oTop:aRect := {nT, nL, nT+nH, nL+nW}
+      aClient[1] += nH
+   endif
+endif
+
+if ::oBottom <> nil
+   oBottom := ::GetObjFromName(::oBottom)
+   if oBottom <> nil
+      nT := aClient[3]-oBottom:nHeight
+      nL := aClient[2]
+      nW := aClient[4]
+      nH := oBottom:nHeight
+      aClient[3] -= nH
+      oBottom:aRect := {nT, nL, nT+nH, nL+nW}
+   endif
+endif
+
+if ::oLeft  <> nil
+   oLeft := ::GetObjFromName(::oLeft)
+   if oLeft <> nil
+      nT := aClient[1]
+      nL := aClient[2]
+      nW := oLeft:nWidth
+      nH := aClient[3]-aClient[1]
+      aClient[2] += nW
+      oLeft:aRect := {nT, nL, nT+nH, nL+nW}
+   endif
+endif
+
+if ::oRight  <> nil
+   oRight := ::GetObjFromName(::oRight)
+   if oRight <> nil
+      nT := aClient[1]
+      nL := aClient[4]- oRight:nWidth
+      nW := oRight:nWidth
+      nH := aClient[3]-aClient[1]
+      aClient[4] -= nW
+      oRight:aRect := {nT, nL, nT+nH, nL+nW}
+   endif
+endif
+
+if ::oClient <> nil
+   oClient := ::GetObjFromName(::oClient)
+   if oClient <> nil
+      nT := aClient[1]
+      nL := aClient[2]
+      nW := aClient[4]-aClient[2]
+      nH := aClient[3]-aClient[1]
+      oClient:aRect := {nT, nL, nT+nH, nL+nW}
+   endif
+endif
+
+
+
+if lUndo .AND. lRefresh
+   ::oWnd:Refresh()
+endif
+
+
+
+
+return nil
+
+
+   static FUNCTION TWndDsgn_Edit( nKey ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local oFont
+local bValid := {||.T.}
+local oShape := self
+local uVar
+local nTop, nLeft, nWidth, nHeight
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+
+uVar := padr(::cCaption, 100)
+
+nTop    := rc[1]+4
+nLeft   := rc[2]+4
+if ::oWnd:lPocketPc()
+   if ::oWnd:nTypePPC == 1 .OR. ::oWnd:nTypePPC == 2
+      nLeft   := rc[2]+4+24
+   endif
+endif
+nWidth  := ::nLastLeftBtn - nLeft - 4
+nHeight := rc[1]+::nHCaption-8
+
+if ::oWnd:lPocketPc()
+   oFont := TFont():New( "Tahoma", 0, -12,, .T.,,,,,,,,,,,, )
+else
+   oFont := TFont():New( "Ms Sans Serif", 0, -10,,,,,,,,,,,,,, )
+endif
+
+if oShape:lEditable
+
+   if nKey <> nil
+      uVar := padr(chr( nKey ), 100)
+   endif
+
+   ::oWnd:oGet := TGet():New(nTop,nLeft,{ | u | If( PCount()==0, uVar, uVar:= u ) },oShape:oWnd,nWidth,nHeight,,,0,16777215,oFont,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,.T.,)
+
+   if nKey <> nil
+      ::oWnd:oGet:SetPos(2,2)
+   endif
+
+
+
+   ::oWnd:nLastKey := 0
+   ::oWnd:oGet:SetFocus()
+
+   if Upper( ::oWnd:oGet:ClassName() ) <> "TGET"
+      ::oWnd:oGet:Refresh()
+   endif
+
+
+   ::oWnd:oGet:bValid := {|| .T. }
+
+
+
+
+
+
+
+
+
+   ::oWnd:oGet:bLostFocus := {|| (oShape:oWnd:oGet:Assign(), oShape:oWnd:oGet:VarPut( oShape:oWnd:oGet:oGet:VarGet()), oShape:cCaption := if( oShape:oWnd:nLastKey <> 27, (EnableUndo(),alltrim(oShape:oWnd:oGet:oGet:VarGet())), oShape:cCaption) , If( oShape:oWnd:nLastKey <> 27, Eval( bValid, uVar, oShape:oWnd:nLastKey, Self ), Eval( bValid, nil, oShape:oWnd:nLastKey, Self ) ), oShape:oWnd:oGet:End(), DisableUndo(),::Refresh()) }
+
+   ::oWnd:oGet:bKeyDown := { | nKey | If( nKey == 13 .OR. nKey == 27, ( oShape:oWnd:nLastKey := nKey, oShape:oWnd:oGet:End()), ) }
+
+endif
+
+return nil
+
+
+
+
+
+
+
+  static FUNCTION TWndDsgn_Inspect( cDataName, oInspector ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+local o := self
+local n
+local uVal
+local hDC, aFonts
+local aPoint := {0,0}
+local aCtrls := {}
+
+   do case
+      case cDataName == "oTop" .OR. cDataName == "oLeft" .OR. cDataName == "oBottom" .OR. cDataName == "oRight" .OR. cDataName == "oClient"
+           if !empty( oInspector:aRectBtn )
+              aPoint := {oInspector:aRectBtn[3],oInspector:aRectBtn[4]}
+              aPoint := ClientToScreen( oInspector:hWnd, aPoint )
+           endif
+
+
+
+
+           return {|cDataName| oSend( self,  "_" + cDataName,  xSelControl( aPoint[1], aPoint[2]-155, "", o:GetObjNames(), o ) ), o:SetSize(), o:Refresh(),oInspector:Refresh() }
+
+
+      case cDataName == "cFaceName"
+
+           if !empty( oInspector:aRectBtn )
+              aPoint := {oInspector:aRectBtn[3],oInspector:aRectBtn[4]}
+              aPoint := ClientToScreen( oInspector:hWnd, aPoint )
+           endif
+
+
+
+           return { | cDataName | oSend( self, "_" + cDataName, xSelFont( aPoint[1], aPoint[2]-155, oSend( Self, cDataName ))), o:Refresh(), oInspector:Refresh() }
+
+
+   endcase
+
+return nil
+
+
+   static FUNCTION TWndDsgn_cSetFocus( coCtrlName ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local n
+
+  for n := 1 to len( ::oWnd:aShapes ) -1
+      if coCtrlName == ::oWnd:aShapes[n]:GetObjName()
+         ::oWnd:aShapes[n]:SetFocus(.F.)
+      endif
+  next
+  ::oWnd:Refresh()
+
+return nil
+
+
+  static FUNCTION TWndDsgn_cCaption( cNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+if cNewVal <> nil
+
+   if lMetoEnUndo()
+      ::oWnd:AddUndo( self, "cCaption", ::cxCaption , .T. )
+   endif
+
+   ::cxCaption := alltrim(cNewVal)
+
+   if lFromUndo()
+      ::oWnd:Refresh()
+   endif
+   ::oWnd:oWnd:cTitle := ::cxCaption
+
+endif
+
+return ::cxCaption
+
+
+  static FUNCTION TWndDsgn_Run( ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local cCurPath  := cFilePath( GetModuleFileName( GetInstance() ) )
+
+if right( cCurPath,1) <> "\";     cCurPath += "\";   endif
+DeleteFile( "comp.log" )
+
+CursorWait()
+
+WAITRUN( "buildh.bat " + cFileNoext( ::cFileName )  ,0 )
+
+if File( "comp.log" )
+   if At( upper(memoread("comp.log")),"ERROR" ) <> 0
+      ShellExecute( GetActiveWindow(),nil,"comp.log","","",8)
+      CursorArrow()
+      return 0
+   endif
+endif
+CursorArrow()
+
+ if file( cCurPath + cFileNoExt( ::cFileName ) + ".EXE" )
+    ShellExecute( GetActiveWindow() ,nil, cCurPath + cFileNoExt( ::cFileName ) + ".EXE" ,"","",8)
+ ENDIF
+
+return 0
+
+
+   static FUNCTION TWndDsgn_SetProps( oList ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local nGroup
+local o := self
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+nGroup := oList:AddGroup( "Appearence" )
+
+oList:AddItem( "cObjName","Name", ,nGroup )
+
+oList:AddItem( "cCaption","Text",,nGroup )
+
+oList:AddItem( "lCanMove","Can move?", "L",nGroup )
+oList:AddItem( "lCanSize","Can size?", "L",nGroup )
+oList:AddItem( "lGrid","Grid?", "L",nGroup )
+
+oList:AddItem( "lSysMenu","System menu?", "L",nGroup )
+oList:AddItem( "lHelpBtn","Help button?", "L",nGroup )
+oList:AddItem( "lMaxBtn","Maximize button?", "L",nGroup )
+oList:AddItem( "lMinBtn","Minimize button?", "L",nGroup )
+oList:AddItem( "lResBtn","Restore button?", "L",nGroup )
+oList:AddItem( "lCaption","Title bar?", "L",nGroup )
+oList:AddItem( "lToolWindow","ToolbarWindow?", "L",nGroup )
+
+oList:AddItem( "nClrText"    ,"Text color", "B",nGroup,,,{|| ChooseColor( o:nClrText )} )
+oList:AddItem( "nClrPane"    ,"Back color", "B",nGroup,,,{|| ChooseColor( o:nClrPane )} )
+
+nGroup := oList:AddGroup( "Font" )
+oList:AddItem( "cFaceName",  "FaceName",    "A",nGroup,,,{|| aGetFontNamesEx() } )
+oList:AddItem( "nHeightFont","nHeightFont",    ,nGroup )
+oList:AddItem( "lBold",      "lBold      ", "L",nGroup )
+oList:AddItem( "lItalic",    "lItalic    ", "L",nGroup )
+oList:AddItem( "lUnderline", "lUnderline ", "L",nGroup )
+oList:AddItem( "lStrikeOut", "lStrikeOut ", "L",nGroup )
+
+
+
+nGroup := oList:AddGroup(  "Position" )
+
+oList:AddItem( "nTop","Top", ,nGroup )
+oList:AddItem( "nLeft","Left", ,nGroup )
+oList:AddItem( "nWidth","Width", ,nGroup )
+oList:AddItem( "nHeight","Height", ,nGroup )
+
+
+
+
+
+return 0
+
+
+
+      static FUNCTION TWndDsgn_nTop( nNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local nHeight
+
+if nNewVal <> nil
+   nHeight := ::aRect[3] - ::aRect[1]
+   ::aRect[1] := nNewVal
+   ::aRect[3] := ::aRect[1] + nHeight
+   ::oWnd:oWnd:Move( nNewVal, ::oWnd:oWnd:nLeft )
+endif
+
+return ::oWnd:oWnd:nTop
+
+
+      static FUNCTION TWndDsgn_nLeft( nNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local nWidth
+
+if nNewVal <> nil
+   nWidth := ::aRect[4] - ::aRect[2]
+   ::aRect[2] := nNewVal
+   ::aRect[4] := ::aRect[2] + nWidth
+   ::oWnd:oWnd:Move( ::oWnd:oWnd:nTop, nNewVal )
+endif
+
+return ::oWnd:oWnd:nLeft
+
+
+      static FUNCTION TWndDsgn_nBottom( nNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+if nNewVal <> nil
+   ::aRect[3] := nNewVal
+   ::oWnd:oWnd:SetSize( ::oWnd:oWnd:nWidth, nNewVal-::oWnd:oWnd:nTop  )
+endif
+
+return ::oWnd:oWnd:nBottom
+
+
+      static FUNCTION TWndDsgn_nRight( nNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+if nNewVal <> nil
+   ::aRect[4] := nNewVal
+   ::oWnd:oWnd:SetSize( ::oWnd:oWnd:nWidth, nNewVal-::oWnd:oWnd:nTop  )
+endif
+
+return ::oWnd:oWnd:nRight
+
+
+      static FUNCTION TWndDsgn_nWidth( nNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+if nNewVal <> nil
+   ::aRect[4] := ::aRect[2] + nNewVal
+   ::oWnd:oWnd:SetSize(  nNewVal, ::oWnd:oWnd:nHeight )
+endif
+
+return ::oWnd:oWnd:nWidth
+
+
+
+      static FUNCTION TWndDsgn_nHeight( nNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+if nNewVal <> nil
+   ::aRect[3] := ::aRect[1] + nNewVal
+   ::oWnd:oWnd:SetSize(  ::oWnd:oWnd:nWidth, nNewVal )
+endif
+
+return ::oWnd:oWnd:nHeight
+
+
+
+
+
+
+
+
+      static FUNCTION TWndDsgn_lToolWindow( lNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+if pcount() > 0
+
+   if lNewVal
+      ::nExStyle := GetWindowLong( ::oWnd:oWnd:hWnd, -20 )
+      SetWindowLong( ::oWnd:oWnd:hWnd, -20,nOr( ::nExStyle, 128 ) )
+      SetWindowPos( ::oWnd:oWnd:hWnd, 0, ::nTop, ::nLeft, ::nRight - ::nLeft + 1,::nBottom - ::nTop + 1, 55 )
+
+   else
+      SetWindowLong( ::oWnd:oWnd:hWnd, -20,::nExStyle )
+      SetWindowPos( ::oWnd:oWnd:hWnd, 0, ::nTop, ::nLeft, ::nRight - ::nLeft + 1,::nBottom - ::nTop + 1, 55 )
+   endif
+
+   ::lxToolWindow := lNewVal
+
+endif
+
+return ::lxToolWindow
+
+
+      static FUNCTION TWndDsgn_lMinBtn( lNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+if pcount() > 0
+
+   if !lNewVal
+
+
+
+      SetWindowLong( ::oWnd:oWnd:hWnd, -16, nAnd( ::nStyle, nNot( 131072 ) ))
+      SetWindowPos( ::oWnd:oWnd:hWnd, 0, ::nTop, ::nLeft, ::nRight - ::nLeft + 1,::nBottom - ::nTop + 1, 55 )
+
+   else
+      ::nStyle := GetWindowLong( ::oWnd:oWnd:hWnd, -16 )
+      SetWindowLong( ::oWnd:oWnd:hWnd, -16,nOr( ::nStyle, 131072 ) )
+      SetWindowPos( ::oWnd:oWnd:hWnd, 0, ::nTop, ::nLeft, ::nRight - ::nLeft + 1,::nBottom - ::nTop + 1, 55 )
+   endif
+
+   ::lxMinBtn := lNewVal
+
+endif
+
+
+
+return ::lxMinBtn
+
+
+      static FUNCTION TWndDsgn_lMaxBtn( lNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+
+if pcount() > 0
+
+   if !lNewVal
+
+
+
+      SetWindowLong( ::oWnd:oWnd:hWnd, -16, nAnd( ::nStyle, nNot( 65536 ) ))
+      SetWindowPos( ::oWnd:oWnd:hWnd, 0, ::nTop, ::nLeft, ::nRight - ::nLeft + 1,::nBottom - ::nTop + 1, 55 )
+
+   else
+      ::nStyle := GetWindowLong( ::oWnd:oWnd:hWnd, -16 )
+      SetWindowLong( ::oWnd:oWnd:hWnd, -16,nOr( ::nStyle, 65536 ) )
+      SetWindowPos( ::oWnd:oWnd:hWnd, 0, ::nTop, ::nLeft, ::nRight - ::nLeft + 1,::nBottom - ::nTop + 1, 55 )
+   endif
+
+   ::lxMaxBtn := lNewVal
+
+endif
+
+
+
+return ::lxMaxBtn
+
+
+
+      static FUNCTION TWndDsgn_lHelpBtn( lNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local nStyle
+
+if pcount() > 0
+
+   nStyle := GetWindowLong( ::oWnd:oWnd:hWnd, -20 )
+
+   if !lNewVal
+      SetWindowLong( ::oWnd:oWnd:hWnd, -20, nAnd( nStyle, nNot( 1024 ) ))
+      SetWindowPos( ::oWnd:oWnd:hWnd, 0, ::nTop, ::nLeft, ::nRight - ::nLeft + 1,::nBottom - ::nTop + 1, 55 )
+   else
+      SetWindowLong( ::oWnd:oWnd:hWnd, -20, nOr( nStyle, 1024 ) )
+      SetWindowPos( ::oWnd:oWnd:hWnd, 0, ::nTop, ::nLeft, ::nRight - ::nLeft + 1,::nBottom - ::nTop + 1, 55 )
+   endif
+
+   ::lxHelpBtn := lNewVal
+
+endif
+
+
+
+return ::lxHelpBtn
+
+
+
+      static FUNCTION TWndDsgn_lSysMenu( lNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local nStyle
+
+if pcount() > 0
+
+   nStyle := GetWindowLong( ::oWnd:oWnd:hWnd, -16 )
+
+   if !lNewVal
+
+      SetWindowLong( ::oWnd:oWnd:hWnd, -16, nAnd( nStyle, nNot( 524288 ) ))
+      SetWindowPos( ::oWnd:oWnd:hWnd, 0, ::nTop, ::nLeft, ::nRight - ::nLeft + 1,::nBottom - ::nTop + 1, 55 )
+
+   else
+      SetWindowLong( ::oWnd:oWnd:hWnd, -16,nOr(nStyle, 524288) )
+      SetWindowPos( ::oWnd:oWnd:hWnd, 0, ::nTop, ::nLeft, ::nRight - ::nLeft + 1,::nBottom - ::nTop + 1, 55 )
+   endif
+
+   ::lxSysMenu := lNewVal
+
+endif
+
+return ::lxSysMenu
+
+
+    static FUNCTION TWndDsgn_nHeightFont( nNewVal ) ; local Self AS CLASS TWndDsgn := QSelf() AS CLASS TWndDsgn
+
+local oFont
+local nDH
+local nDW
+local nH, nW
+local nH2, nW2
+local n
+local c := ""
+local nLen
+
+if pcount() > 0
+
+   oFont := TFont():New( ::cFaceName, 0, ::nxHeightFont , .F.,::lBold,,,,::lItalic,::lUnderline,::lStrikeOut )
+   nH := oFont:nHeight
+   ::nxHeightFont := nNewVal
+   oFont:End()
+
+   oFont := TFont():New( ::cFaceName, 0, ::nxHeightFont , .F.,::lBold,,,,::lItalic,::lUnderline,::lStrikeOut )
+   nH2 := oFont:nHeight
+
+   oFont:End()
+   nD := nH2/nH
+
+   nLen := len( ::oWnd:ashapes ) -1
+   for n := 1 to nLen
+       ::oWnd:aShapes[n]:nLeft   := int( ::oWnd:aShapes[n]:nLeft   * nD )
+       ::oWnd:aShapes[n]:nTop    := int( ::oWnd:aShapes[n]:nTop    * nD )
+       ::oWnd:aShapes[n]:nWidth  := int( ::oWnd:aShapes[n]:nWidth  * nD )
+       ::oWnd:aShapes[n]:nHeight := int( ::oWnd:aShapes[n]:nHeight * nD )
+   next
+
+endif
+
+return ::nxHeightFont

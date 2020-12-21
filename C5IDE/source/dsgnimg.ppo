@@ -1,0 +1,724 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 9 "source\dsgnimg.prg"
+STATIC hLib
+
+_HB_CLASS TDsgnImg ; function TDsgnImg ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnImg" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnImg() ) ) ;
+
+; _HB_MEMBER { aProperties } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aProperties"}, .F. )
+
+
+; _HB_MEMBER { cFileName } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"cFileName"}, .F. )
+; _HB_MEMBER { hBmp } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hBmp"}, .F. )
+; _HB_MEMBER { hDib } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hDib"}, .F. )
+; _HB_MEMBER { hIcon } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hIcon"}, .F. )
+; _HB_MEMBER { lIcon } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lIcon"}, .F. )
+; _HB_MEMBER { lAdjust } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lAdjust"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { lClientEdge } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lClientEdge"}, .F. )
+; _HB_MEMBER { lFlat } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFlat"}, .F. )
+; _HB_MEMBER { lModalFrame } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lModalFrame"}, .F. )
+; _HB_MEMBER { lMultiline } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lMultiline"}, .F. )
+; _HB_MEMBER { lStaticEdge } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lStaticEdge"}, .F. )
+; _HB_MEMBER { lTransparent } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lTransparent"}, .F. )
+; _HB_MEMBER { lSunken } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lSunken"}, .F. )
+; _HB_MEMBER { nAlign } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nAlign"}, .F. )
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd, lIcon) AS CLASS TDsgnImg; oClass:AddMethod( "New", @TDsgnImg_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnImg_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnImg_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER cGetFileName(); oClass:AddMethod( "cGetFileName", @TDsgnImg_cGetFileName(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Destroy(); oClass:AddMethod( "Destroy", @TDsgnImg_Destroy(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER RotateClassic2( nAngle); oClass:AddMethod( "RotateClassic2", @TDsgnImg_RotateClassic2(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AjustaBrillo( nBrillo); oClass:AddMethod( "AjustaBrillo", @TDsgnImg_AjustaBrillo(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER AjustaContraste( nConstraste); oClass:AddMethod( "AjustaContraste", @TDsgnImg_AjustaContraste(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER LoadImage2( cFileName); oClass:AddMethod( "LoadImage2", @TDsgnImg_LoadImage2(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER GenPrg( lDialog, cFrom, cHeader); oClass:AddMethod( "GenPrg", @TDsgnImg_GenPrg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER EditDlg(); oClass:AddMethod( "EditDlg", @TDsgnImg_EditDlg(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER SetProps( oList); oClass:AddMethod( "SetProps", @TDsgnImg_SetProps(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnImg ;
+
+
+      static FUNCTION TDsgnImg_New( nTop, nLeft, nBottom, nRight, oWnd, lIcon ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+
+   If( lIcon == nil, lIcon := .F., ) ;
+
+   if nTop <> nil .AND. ( nBottom-nTop < 10 .OR. nRight-nLeft < 10 )
+      nBottom := nTop + 32
+      nRight  := nLeft + 32
+   endif
+
+   if lIcon
+      nBottom := nTop + 32
+      nRight  := nLeft + 32
+   endif
+
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::lFlat         := .F.
+   ::nClrText      := 0
+   ::nClrBorder    := 0
+   ::cCaption      := "Text"
+
+   ::nClrPane := GetSysColor( 15 )
+   ::nAlign        := nOr(0x00000020)
+   ::lAdjust       := .F.
+   ::lActive       := .T.
+   ::lMultiline    := .F.
+   ::lModalFrame   := .F.
+   ::lClientEdge   := .F.
+   ::lStaticEdge   := .F.
+   ::lTransparent  := .T.
+   ::lSunken       := .F.
+   ::lBorder       := .F.
+   ::lIcon         := lIcon
+   ::hIcon         := 0
+   ::hBmp          := 0
+   ::nMinHeight    := 1
+   ::nMinWidth     := 1
+   ::cFileName     := " "
+   ::cObjName         := ::GetObjName()
+
+   ::cCaption     := "Image"
+   ::bContextMenu := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ::aProperties := { "cCaption"       , "aDotsActives"   , "aRect"          , "cFileName"     , "lActive"        , "lAdjust"        , "lBorder"        , "lCanSize" , "lCanMove"       , "lClientEdge"    , "lStaticEdge"    , "lSunken"        , "lEditable"      , "lFlat"          , "lModalFrame"    , "lTransparent"   , "lVisible"       , "nClrBorder"     , "nClrPane"       , "nClrText"       , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      }
+
+   hLib := hLib()
+
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+return self
+
+
+
+
+  static FUNCTION TDsgnImg_Paint( hDC ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local hBmp := 0
+
+if ::lIcon
+   if file( ::cFileName )
+      ::hBmp := ExtractIcon( ::cFileName )
+   endif
+   if ::hBmp == 0
+      ::hBmp := LoadIcon( GetResources(),"icono" )
+   endif
+   if ::hBmp <> 0
+      DrawIcon( hDC, rc[1], rc[2], ::hBmp )
+      DestroyIcon( ::hBmp )
+   endif
+
+else
+
+   if file( ::cFileName )
+      ::hBmp = FILoadImg( AllTrim( ::cFileName ) )
+   endif
+
+
+   if .F.
+      return ::PaintContour( hDC )
+   endif
+
+   if ::hBmp == 0
+      FillSolidRect( hDC, rc, 16777215, 0 )
+      Moveto( hDC, rc[2], rc[1])
+      Lineto( hDC, rc[4], rc[3])
+      Moveto( hDC, rc[4], rc[1])
+      Lineto( hDC, rc[2], rc[3])
+   else
+      if ::lAdjust
+         if ::lTransparent
+            DrawMasked( hDC, ::hBmp, ::aRect[1], ::aRect[2], ::nWidth, ::nHeight )
+         else
+            DrawBitmapEx( hDC, ::hBmp, ::aRect[1], ::aRect[2], ::nWidth, ::nHeight )
+         endif
+      else
+         if ::lTransparent
+            DrawMasked( hDC, ::hBmp, ::aRect[1], ::aRect[2] )
+         else
+            DrawBitmapEx( hDC, ::hBmp, ::aRect[1], ::aRect[2], nBmpWidth( hBmp ), nBmpHeight( hBmp ) )
+         endif
+      endif
+   endif
+endif
+
+if ::lBorder
+   Box( hDC, rc, 0 )
+endif
+
+if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+   ::DotsSelect( hDC )
+endif
+
+if ::hBmp <> 0
+   DeleteObject( ::hBmp )
+endif
+
+return nil
+
+
+      static FUNCTION TDsgnImg_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+local oMenu
+local o := self
+
+    MenuAddItem("Flat"         ,,o:lFlat         ,,{|oMenuItem|::lFlat          := !::lFlat         ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lBorder"      ,,o:lBorder       ,,{|oMenuItem|::lBorder        := !::lBorder       ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lAdjust"      ,,o:lAdjust       ,,{|oMenuItem|::lAdjust        := !::lAdjust       ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem( "Imagen",, .F.,, {|oMenuItem|o:cGetFileName()},,,,,,, .F.,,, .F. )
+   MenuAddItem()
+
+
+return nil
+
+
+
+      static FUNCTION TDsgnImg_cGetFileName( ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+local cFiltro := "Imágenes (*.bmp *.gif *.jpg ) | *.bmp;*.gif;*.jpg; |"
+local cFiles := cGetFile( cFiltro, "Selecciona imagen" )
+local cFile := ::cFileName
+
+if ::lIcon
+   cFiltro := "Iconos (*.ico ) | *.ico; |"
+endif
+
+::cFileName := cFiles
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+::oWnd:Refresh()
+
+return ::cFileName
+
+
+   static FUNCTION TDsgnImg_Destroy( nKey, nFlags ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+
+if ::hBmp <> nil
+   DeleteObject( ::hBmp )
+endif
+
+ FreeFreeImage()
+
+return nil
+
+
+
+  static FUNCTION TDsgnImg_AjustaBrillo( nBrillo ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+   local nFormat, hInfoH, hInfo, hBits, hWnd, hDC, hBmp, hDib
+
+   if hLib <= 32
+      MsgStop( "Cannot load Freeimage.dll" )
+      return 0
+   endif
+
+   FIAdjustBrightness( @::hDib, nBrillo )
+
+   hInfoH  := fiGetInfoHeader( ::hDib )
+   hInfo   := fiGetInfo( ::hDib )
+   hBits   := fiGetBits( ::hDib )
+   hWnd    := GetDskTp32()
+   hDC     := GetDC32( hWnd )
+   DeleteObject( ::hBmp )
+   ::hBmp    := CreateDIBitmap( hDC, hInfoH, 4, hBits, hInfo,0 )
+   ReleaseDC32( hWnd, hDC )
+
+return nil
+
+
+  static FUNCTION TDsgnImg_AjustaContraste( nConstraste ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+   local nFormat, hInfoH, hInfo, hBits, hWnd, hDC, hBmp, hDib
+
+   if hLib <= 32
+      MsgStop( "Cannot load Freeimage.dll" )
+      return 0
+   endif
+
+   FIAdjustContrast( @::hDib, nConstraste )
+
+   hInfoH  := fiGetInfoHeader( ::hDib )
+   hInfo   := fiGetInfo( ::hDib )
+   hBits   := fiGetBits( ::hDib )
+   hWnd    := GetDskTp32()
+   hDC     := GetDC32( hWnd )
+   DeleteObject( ::hBmp )
+   ::hBmp    := CreateDIBitmap( hDC, hInfoH, 4, hBits, hInfo,0 )
+   ReleaseDC32( hWnd, hDC )
+
+return nil
+
+
+  static FUNCTION TDsgnImg_RotateClassic2( nAngle ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+
+   local nFormat, hInfoH, hInfo, hBits, hWnd, hDC, hBmp
+   local cFile := ::cFileName
+
+
+   if hLib <= 32
+      MsgStop( "Cannot load Freeimage.dll" )
+      return 0
+   endif
+
+   nFormat := fiGetFileType( cFile, 0 )
+   ::hDib    := fiLoad( nFormat, cFile, 0 )
+   ::hDib    := RotateClassic( ::hDib, nAngle )
+   hInfoH    := fiGetInfoHeader( ::hDib )
+   hInfo     := fiGetInfo( ::hDib )
+   hBits     := fiGetBits( ::hDib )
+
+   hWnd      := GetDskTp32()
+   hDC       := GetDC32( hWnd )
+   hBmp      := CreateDIBitmap( hDC, hInfoH, 4, hBits, hInfo,0 )
+
+   ReleaseDC32( hWnd, hDC )
+
+return hBmp
+
+
+
+  static FUNCTION TDsgnImg_LoadImage2( cFile ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+
+   local nFormat, hInfoH, hInfo, hBits, hWnd, hDC, hBmp
+
+   if hLib <= 32
+      MsgStop( "Cannot load Freeimage.dll" )
+      return 0
+   endif
+
+   nFormat := fiGetFileType( cFile, 0 )
+   ::hDib  := fiLoad( nFormat, cFile, 0 )
+   hInfoH  := fiGetInfoHeader( ::hDib )
+   hInfo   := fiGetInfo( ::hDib )
+   hBits   := fiGetBits( ::hDib )
+   hWnd    := GetDesktopWindow()
+   hDC     := GetDC( hWnd )
+   hBmp    := CreateDIBitmap( hDC, hInfoH, 4, hBits, hInfo,0 )
+
+   ReleaseDC32( hWnd, hDC )
+
+
+
+return hBmp
+
+
+
+  static FUNCTION TDsgnImg_GenPrg( lDialog, cFrom, cHeader, cFunciones ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+local cRet := ""
+
+local cObject := ::cObjName
+
+If( lDialog == nil, lDialog := .T., ) ;
+If( cFrom == nil, cFrom := "oWnd", ) ;
+If( cHeader == nil, cHeader := "", ) ;
+If( cFunciones == nil, cFunciones := "", ) ;
+
+  cHeader += "local " + cObject + Chr(13)+Chr(10)
+
+
+
+  cRet += "        @ " + ::cStrTop(lDialog) + ", " + ::cStrLeft(lDialog) + " IMAGE " + cObject + ' FILENAME "' + alltrim( ::cFileName ) + '" ;' + Chr(13)+Chr(10) + "                 SIZE " + ::cStrWidth(lDialog) + ", " + ::cStrHeight(lDialog) + " PIXEL ; " + Chr(13)+Chr(10) + "                 OF " + cFrom + if( !::lBorder," NOBORDER","") + Chr(13)+Chr(10)
+
+return cRet
+
+
+
+  static FUNCTION TDsgnImg_EditDlg( ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+
+local oWnd
+local oBtn1
+local oBtn3
+local oBtn4
+local oGet1
+local cGet1 := padr( ::cFileName, 250 )
+local oSay1
+local oChk1
+local lChk1 := .F.
+local oImg1
+local oBtn2
+local oChk2
+local lChk2 := .F.
+local oChk3
+local lChk3 := .F.
+
+
+
+ oWnd = TDialog():New( 0, 0, 0, 0, "Propiedades de imágen",,, .F.,,,,,, .F.,,,, 363, 229, .F., )
+
+
+
+
+        oSay1 := TSay():New( 10.50, 7.00, {|| "Fichero"}, oWnd,,, .F., .F., .F., .T.,,, 19.00, 8.00, .F., .F., .F., .F., .F., .F., .F. )
+
+
+
+        oGet1 := TGet():New( 8.00, 30.00, { | u | If( PCount()==0, cGet1, cGet1:= u ) }, oWnd, 107.50, 11.50,,,,,, .F.,, .T.,, .F.,, .F., .F.,, .F., .F., .F.,, .F.,,,,,,, "cGet1", )
+
+
+
+
+        oBtn1 := TButton():New( 7.50, 140.00, "...", oWnd, {|| ( cGet1 := cGetFile( "*.bmp", "Seleccione imágen" ), oGet1:Refresh())}, 13.00, 12.30,,, .F., .T., .F.,, .F.,,, .F. )
+
+
+
+        oChk1 := TCheckBox():New( 23.00, 30.00, "Ruta relativa", { | u | If( PCount()==0, lChk1, lChk1:= u ) }, oWnd, 42.00, 8.00,,,,,,, .F., .T.,, .F., )
+
+
+
+        oImg1 := TImage():New( 31.50, 99.00, 62.50, 62.50,, "", .T., oWnd,,, .F., .F.,,, .F.,, .T.,, .F. )
+
+
+
+
+        oBtn2 := TButton():New( 34.00, 30.00, "Capturar", oWnd, {|| CapturaRect()}, 37.50, 11.50,,, .F., .T., .F.,, .F.,,, .F. )
+
+
+
+        oChk2 := TCheckBox():New( 49.00, 30.00, "Borde", { | u | If( PCount()==0, lChk2, lChk2:= u ) }, oWnd, 31.00, 8.00,,,,,,, .F., .T.,, .F., )
+
+
+
+        oChk3 := TCheckBox():New( 60.50, 30.00, "Ajustar", { | u | If( PCount()==0, lChk3, lChk3:= u ) }, oWnd, 31.00, 8.00,,,,,,, .F., .T.,, .F., )
+
+
+
+
+        oBtn3 := TButton():New( 99.50, 137.00, "&Aceptar", oWnd, {|| MsgInfo( "Action" )}, 37.50, 11.50,,, .F., .T., .F.,, .F.,,, .F. )
+
+
+
+
+        oBtn4 := TButton():New( 99.50, 97.00, "&Cancelar", oWnd, {|| MsgInfo( "Action" )}, 37.50, 11.50,,, .F., .T., .F.,, .F.,,, .F. )
+
+
+oWnd:lHelpIcon := .F.
+
+oWnd:Activate( oWnd:bLClicked, oWnd:bMoved, oWnd:bPainted, .T.,,,, oWnd:bRClicked,,, )
+
+
+
+return 0
+
+
+   static FUNCTION TDsgnImg_SetProps( oList ) ; local Self AS CLASS TDsgnImg := QSelf() AS CLASS TDsgnImg
+
+local nGroup
+local o := self
+
+nGroup := oList:AddGroup( "Appearence" )
+
+oList:AddItem( "cObjName","Name", ,nGroup )
+oList:AddItem( "lBorder","Border","L",nGroup )
+oList:AddItem( "lAdjust","Adjust","L",nGroup )
+oList:AddItem( "cFileName","Filename", "B",nGroup,,,{|| o:cGetFileName() } )
+
+
+nGroup := oList:AddGroup(  "Position" )
+
+oList:AddItem( "nTop","Top", ,nGroup )
+oList:AddItem( "nLeft","Left", ,nGroup )
+oList:AddItem( "nWidth","Width", ,nGroup )
+oList:AddItem( "nHeight","Height", ,nGroup )
+
+
+return 0
+
+
+
+STATIC function FIGETFILETYPE( cFileName,nSize ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_GetFileType@8" ) == .T., "FIGETFILETYPE", "_FreeImage_GetFileType@8" ), .T., 7,9,7 ) ; uResult = FWCallDLL( cFarProc,cFileName,nSize ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FILOAD( nFormat,cFileName,nFlags ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_Load@12" ) == .T., "FILOAD", "_FreeImage_Load@12" ), .T., 7,7,9,7 ) ; uResult = FWCallDLL( cFarProc,nFormat,cFileName,nFlags ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FIGETINFOHEADER( hDib ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_GetInfoHeader@4" ) == .T., "FIGETINFOHEADER", "_FreeImage_GetInfoHeader@4" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hDib ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FIGETINFO( hDib ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_GetInfo@4" ) == .T., "FIGETINFO", "_FreeImage_GetInfo@4" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hDib ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FIGETBITS( hDib ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_GetBits@4" ) == .T., "FIGETBITS", "_FreeImage_GetBits@4" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hDib ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function GETDSKTP32( hWnd ) ; local _hDLL := If( ValType( "user32.dll" ) == "N", "user32.dll", LoadLibrary( "user32.dll" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "GetDesktopWindow" ) == .T., "GETDSKTP32", "GetDesktopWindow" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hWnd ) ; If( ValType( "user32.dll" ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( "user32.dll" ) == "C", "user32.dll", Str( "user32.dll" ) ) ) ; end ; return uResult
+
+
+STATIC function GETDC32( hWnd ) ; local _hDLL := If( ValType( "user32.dll" ) == "N", "user32.dll", LoadLibrary( "user32.dll" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "GetDC" ) == .T., "GETDC32", "GetDC" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hWnd ) ; If( ValType( "user32.dll" ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( "user32.dll" ) == "C", "user32.dll", Str( "user32.dll" ) ) ) ; end ; return uResult
+
+
+STATIC function RELEASEDC32( hWnd ) ; local _hDLL := If( ValType( "user32.dll" ) == "N", "user32.dll", LoadLibrary( "user32.dll" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "ReleaseDC" ) == .T., "RELEASEDC32", "ReleaseDC" ), .T., 7,7 ) ; uResult = FWCallDLL( cFarProc,hWnd ) ; If( ValType( "user32.dll" ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( "user32.dll" ) == "C", "user32.dll", Str( "user32.dll" ) ) ) ; end ; return uResult
+
+
+STATIC function CREATEDIBITMAP( hDC,hInfoH,nFlags,hBits,hInfo,nUsage ) ; local _hDLL := If( ValType( "gdi32.dll" ) == "N", "gdi32.dll", LoadLibrary( "gdi32.dll" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "CreateDIBitmap" ) == .T., "CREATEDIBITMAP", "CreateDIBitmap" ), .T., 7,7,7,7,7,7,7 ) ; uResult = FWCallDLL( cFarProc,hDC,hInfoH,nFlags,hBits,hInfo,nUsage ) ; If( ValType( "gdi32.dll" ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( "gdi32.dll" ) == "C", "gdi32.dll", Str( "gdi32.dll" ) ) ) ; end ; return uResult
+
+
+STATIC function ROTATECLASSIC( hDib,angle ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_RotateClassic@12" ) == .T., "ROTATECLASSIC", "_FreeImage_RotateClassic@12" ), .T., 7,7,11 ) ; uResult = FWCallDLL( cFarProc,hDib,angle ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FISETBKCOLOR( hDib,bkcolor ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "FreeImage_SetBackgroundColor" ) == .T., "FISETBKCOLOR", "FreeImage_SetBackgroundColor" ), .T., 5,7,11 ) ; uResult = FWCallDLL( cFarProc,hDib,bkcolor ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FISAVE( nFormat,hDib,cFileName,nFlags ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_Save@16" ) == .T., "FISAVE", "_FreeImage_Save@16" ), .T., 5,7,7,9,7 ) ; uResult = FWCallDLL( cFarProc,nFormat,hDib,cFileName,nFlags ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FIADJUSTBRIGHTNESS( hDib,percentage ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_AdjustBrightness@12" ) == .T., "FIADJUSTBRIGHTNESS", "_FreeImage_AdjustBrightness@12" ), .T., 5,7,11 ) ; uResult = FWCallDLL( cFarProc,hDib,percentage ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+STATIC function FIADJUSTCONTRAST( hDib,percentage ) ; local _hDLL := If( ValType( hLib ) == "N", hLib, LoadLibrary( "hLib" ) ) ; local uResult ; local cFarProc ; if Abs( _hDLL ) > 32 ; cFarProc = GetProcAdd( _hDLL, If( Empty( "_FreeImage_AdjustContrast@12" ) == .T., "FIADJUSTCONTRAST", "_FreeImage_AdjustContrast@12" ), .T., 5,7,11 ) ; uResult = FWCallDLL( cFarProc,hDib,percentage ) ; If( ValType( hLib ) == "N",, FreeLibrary( _hDLL ) ) ; else ; MsgAlert( "Error code: " + LTrim( Str( _hDLL ) ) + " loading " + If( ValType( hLib ) == "C", hLib, Str( hLib ) ) ) ; end ; return uResult
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function LoadImageEx( cImage )
+
+
+ local hBmp := 0
+
+ hBmp := LoadBitmap( GetResources(), cImage )
+ if hBmp == 0
+    hBmp := ReadBitmap( 0, cImage )
+ endif
+
+return hBmp

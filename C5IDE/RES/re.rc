@@ -1,0 +1,16 @@
+#ifdef __FLAT__
+  1 24 "WinXP/WindowsXP.Manifest" 
+#endif
+
+//New     BITMAP "c:/fwh/bitmaps/16x16/new.bmp"
+//Dialog  BITMAP "c:/fwh/bitmaps/16x16/form.bmp"
+DlgMask BITMAP "c:/fwh/bitmaps/16x16/frmmask.bmp"
+//Open    BITMAP "c:/fwh/bitmaps/16x16/open.bmp"
+//Save    BITMAP "c:/fwh/bitmaps/16x16/floppy.bmp"
+//Exit    BITMAP "c:/fwh/bitmaps/16x16/exit.bmp"
+//bitmap  BITMAP "c:/fwh/bitmaps/16x16/bitmap.bmp"
+bmpmask BITMAP "c:/fwh/bitmaps/16x16/bmpmask.bmp"
+//icon    BITMAP "c:/fwh/bitmaps/16x16/icon.bmp"
+icomask BITMAP "c:/fwh/bitmaps/16x16/icomask.bmp"
+//folder  BITMAP "c:/fwh/bitmaps/16x16/folder.bmp"
+fldmask BITMAP "c:/fwh/bitmaps/16x16/fldmask.bmp"

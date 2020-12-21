@@ -1,0 +1,366 @@
+#line 38 "\fwh\include\fivewin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\fivewin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 12 "source\dsgnlw.prg"
+_HB_CLASS TDsgnListView ; function TDsgnListView ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TDsgnListView" , iif( .T., { @TShape() }, { @HBObject() } ), @TDsgnListView() ) ) ;
+
+; _HB_MEMBER { aProperties } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aProperties"}, .F. )
+
+
+; _HB_MEMBER { lFlat } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lFlat"}, .F. )
+; _HB_MEMBER { lRightVScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lRightVScroll"}, .F. )
+; _HB_MEMBER { lDownHScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lDownHScroll"}, .F. )
+; _HB_MEMBER { lVScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lVScroll"}, .F. )
+; _HB_MEMBER { lHScroll } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lHScroll"}, .F. )
+; _HB_MEMBER { nAlign } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nAlign"}, .F. )
+; _HB_MEMBER { lActive } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lActive"}, .F. )
+; _HB_MEMBER { nClrText } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nClrText"}, .F. )
+; _HB_MEMBER { lModalFrame } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lModalFrame"}, .F. )
+; _HB_MEMBER { nStyle } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"nStyle"}, .F. )
+
+      _HB_MEMBER New( nTop, nLeft, nBottom, nRight, oWnd) AS CLASS TDsgnListView; oClass:AddMethod( "New", @TDsgnListView_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER Paint( hDC); oClass:AddMethod( "Paint", @TDsgnListView_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER ContextMenu( nRow, nCol); oClass:AddMethod( "ContextMenu", @TDsgnListView_ContextMenu(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMinWidth( nVal); _HB_MEMBER _nMinWidth( nVal); oClass:AddMethod( "nMinWidth", @TDsgnListView_nMinWidth(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMinWidth", @TDsgnListView_nMinWidth(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+      _HB_MEMBER nMinHeight( nVal); _HB_MEMBER _nMinHeight( nVal); oClass:AddMethod( "nMinHeight", @TDsgnListView_nMinHeight(), nScope + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) ) ; oClass:AddMethod( "_nMinHeight", @TDsgnListView_nMinHeight(), nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TDsgnListView ;
+
+
+      static FUNCTION TDsgnListView_New( nTop, nLeft, nBottom, nRight, oWnd ) ; local Self AS CLASS TDsgnListView := QSelf() AS CLASS TDsgnListView
+
+
+   if nTop <> nil .AND. ( nBottom-nTop < 10 .OR. nRight-nLeft < 10)
+      nBottom := nTop + 90
+      nRight  := nLeft + 81
+   endif
+
+   ::TShape:New( nTop, nLeft, nBottom, nRight, oWnd )
+
+   ::nClrText      := 0
+   ::nClrBorder    := 0
+   ::nClrPane      := 16777215
+   ::nAlign        := nOr(0x00000020,0x00000004,0x00000001)
+   ::lActive       := .T.
+   ::lRightVScroll := .T.
+   ::lDownHScroll  := .T.
+   ::lVScroll      := .T.
+   ::lHScroll      := .T.
+   ::lBorder       := .T.
+   ::lModalFrame   := .F.
+   ::nStyle        := 1
+  ::cObjName         := ::GetObjName()
+
+   ::cCaption     := "ListView"
+   ::bContextMenu := {|nRow,nCol| ::ContextMenu( nRow, nCol ) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ::aProperties := { "aDotsActives"   , "aRect"          , "lActive"        , "lBorder"        , "lCanSize" , "lCanMove"       , "lDownHScroll"   , "lEditable"      , "lHScroll"       , "lModalFrame"    , "lRightVScroll"  , "lVScroll"       , "lVisible"       , "nAlign"         , "nClrBorder"     , "nClrPane"       , "nClrText"       , "nStyle"         , "xMaxHeight"     , "xMaxWidth"      , "xMinHeight"     , "xMinWidth"      }
+
+  if oCbxComponentes() <> nil
+     oCbxComponentes():Add( ::cObjName )
+  endif
+
+
+
+return self
+
+
+
+
+  static FUNCTION TDsgnListView_Paint( hDC ) ; local Self AS CLASS TDsgnListView := QSelf() AS CLASS TDsgnListView
+
+local rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+local rc2
+local rcText
+local iMode
+local color
+local hOldFont
+local nHItem
+local nWItem
+local nTop := 0
+local nLeft := 0
+local nBottom := 0
+local nRight := 0
+local hBmp, nWBmp
+local lCabenV := .T.
+local lCabenH := .T.
+local n
+local nCol   := 0
+local nCount := 0
+local lTheme
+local hTheme
+local lThemes := lTemas() .AND. !::oWnd:lPocketPc()  .AND. C5_IsAppThemed() .AND. C5_IsThemeActive()
+
+
+
+    iMode := SetBkMode(hDC,1)
+
+
+    if lThemes
+
+    endif
+
+
+
+    if ::lBorder
+       if lThemes
+          hTheme := C5_OpenThemeData(::oWnd:hWnd, "LISTVIEW")
+          C5_DrawThemeBackground( hTheme, hDC, 1,1, rc )
+          C5_CloseThemeData()
+       else
+          FillSolidRect(hDC, rc, if(::lActive,16777215,GetSysColor(15)), 0 )
+       endif
+    else
+       FillSolidRect(hDC, rc, if(::lActive,16777215,GetSysColor(15)))
+    endif
+
+    rcText := {rc[1],rc[2],rc[3],rc[4]}
+
+    if ::lModalFrame
+       rc := {::aRect[1],::aRect[2],::aRect[3],::aRect[4]}
+       DrawEdge( hDC, rc, 0x0002, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+       rc[1]++; rc[2]++; rc[3]--; rc[4]--
+       DrawEdge( hDC, rc, 0x0008, nOr(0x0001 , 0x0002 , 0x0004 , 0x0008) )
+       rc[1]--; rc[2]--; rc[3]++; rc[4]++
+    endif
+
+   for n := 1 to 6
+
+
+       do case
+          case ::nStyle == 0
+
+               hBmp := LoadBitmap( GetResources(), {"Yellow","Red","Green","Magenta","Cyan","Blue"}[n] )
+
+               nHItem := 50
+               nWItem := 75
+
+               nLeft   := ::nLeft + (( n-1 ) * nWItem )
+               nRight  := nLeft + nWItem
+               nTop    := ::nTop + 5
+               nBottom := nTop + nHItem
+
+               if nRight - 20 > ::nRight
+                  lCabenH := .F.
+               endif
+
+               if nBottom  > ::nBottom - 20
+                  lCabenV := .F.
+               endif
+
+               if !lCabenV .OR. !lCabenH
+                  DeleteObject( hBmp )
+                  exit
+               endif
+
+               nLeft   := ::nLeft + ( n - 1 ) * nWItem +  nWitem /2 - nBmpWidth( hBmp ) / 2
+               nRight  := nLeft + nWItem
+               nTop    := ::nTop + 5
+               nBottom := nTop + nHItem
+
+               DrawMasked( hDC, hBmp, nTop, nLeft )
+               DeleteObject( hBmp )
+
+               DrawText( hDC, {"Yellow","Red","Green","Magenta","Cyan","Blue"}[n],  { nBottom - 15, ::nLeft + ( n-1 )*nWItem, nBottom, ::nLeft +  n*nWItem }, nOr( 0x00000004, 0x00000001 ) )
+
+          case ::nStyle == 2 .OR. ::nStyle == 1
+
+
+               hBmp := LoadBitmap( GetResources(), {"smyell","smred","smgreen","smmagen","smcyan","smblue"}[n] )
+
+               nHItem := 21
+               nWItem := ::nWidth
+
+               nTop    := ::nTop  + ((n-1) * nHItem ) + if( ::nStyle == 1, 19,0)
+               nLeft   := ::nLeft + 1
+               nRight  := nLeft   + nWItem
+               nBottom := nTop    + nHItem
+
+               if nBottom  > ::nBottom
+                  lCabenV := .F.
+               endif
+
+               if nRight -20 > ::nRight
+                  lCabenH := .F.
+               endif
+
+               if ::nStyle == 1 .AND. n == 6
+
+                  rc := { ::nTop+1, ::nLeft+1,::nTop+ 17,::nRight-1- if( !lCabenV,20,0) }
+
+                  if lThemes
+                     hTheme := C5_OpenThemeData(::oWnd:hWnd, "HEADER")
+                     rc := { ::nTop+2, ::nLeft+2,::nTop+ nHItem,::nLeft + 2 + 80 }
+                     C5_DrawThemeBackground( hTheme, hDC, 2, 2, rc )
+                     rc := { ::nTop+2, ::nLeft+2+80+1 ,::nTop+nHItem,::nRight- if( !lCabenV,22,2) }
+                     C5_DrawThemeBackground( hTheme, hDC, 2, 2, rc )
+                     C5_CloseThemeData()
+                  else
+                     FillSolidRect( hDC, rc, GetSysColor(15) )
+
+                     rc := { ::nTop+1, ::nLeft+1,::nTop+ 17,::nLeft + 1 + 80 }
+                     DrawFrameControl(hDC, rc, 4, 0x0010  )
+
+                     rc := { ::nTop+1, ::nLeft+1+1+80,::nTop+ 17,::nRight- if( !lCabenV,20,0) }
+                     DrawFrameControl(hDC, rc, 4, 0x0010  )
+
+                  endif
+                  iMode := SetBkMode( hDC, 1 )
+
+                  DrawText( hDC, "Colores", { ::nTop+1, ::nLeft+5,::nTop+ 17,::nLeft + 1 + 80 }, nOr( 0x00000004, 0x00000020 ) )
+
+                  SetBkMode( hDC, iMode )
+
+               endif
+
+               if !lCabenV .OR. !lCabenH
+                  DeleteObject( hBmp )
+                  exit
+               endif
+
+               DrawMasked( hDC, hBmp, nTop+1, nLeft )
+
+               DrawText( hDC, {"Yellow","Red","Green","Magenta","Cyan","Blue"}[n],  { nTop, nLeft + 20, nTop + nHItem, nRight-20 }, nOr( 0x00000004, 0x00000020 ) )
+               DeleteObject( hBmp )
+
+          case ::nStyle == 3
+
+               hBmp := LoadBitmap( GetResources(), {"smyell","smred","smgreen","smmagen","smcyan","smblue"}[n] )
+
+               nHItem := 17
+               nWItem := 100
+
+               if nTop + nHItem + 20 > ::nBottom
+                  nCol := nCol + 1
+                  nCount := 0
+               endif
+               nCount++
+
+               nTop    := ::nTop  + ((nCount-1)*nHItem )
+               nLeft   := ::nLeft + (nCol*nWItem)+1
+               nBottom := nTop    + nHItem
+               nRight  := nLeft   + nWItem
+
+               if nBottom  > ::nBottom
+                  lCabenV := .F.
+               endif
+
+               if nRight -20 > ::nRight
+                  DeleteObject( hBmp )
+                  lCabenH := .F.
+                  exit
+               endif
+
+               DrawMasked( hDC, hBmp, nTop+1, nLeft )
+
+               DrawText( hDC, {"Yellow","Red","Green","Magenta","Cyan","Blue"}[n],  { nTop, nLeft + 20, nTop + nHItem, nRight-20 }, nOr( 0x00000004, 0x00000020 ) )
+               DeleteObject( hBmp )
+
+       endcase
+
+   next
+
+
+
+
+    if ::lVScroll .AND. !lCabenV
+       ::PaintVScroll( hDC, ::lRightVScroll,::lHScroll .AND. !lCabenH, ::lDownHScroll  )
+    endif
+
+    if ::lHScroll .AND. !lCabenH
+       ::PaintHScroll( hDC, ::lDownHScroll ,::lVScroll .AND. !lCabenV, ::lRightVScroll )
+    endif
+
+
+if ::oWnd:oSelected <> nil .AND. (::oWnd:oSelected:nItemId == ::nItemId .OR. ::lSelected)
+   ::DotsSelect( hDC )
+endif
+
+return nil
+
+
+
+
+      static FUNCTION TDsgnListView_ContextMenu( nRow, nCol ) ; local Self AS CLASS TDsgnListView := QSelf() AS CLASS TDsgnListView
+
+local oMenu
+local o := self
+
+    MenuAddItem("Flat"         ,,o:lFlat         ,,{|oMenuItem|::lFlat          := !::lFlat            ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lBorder"      ,,o:lBorder       ,,{|oMenuItem|::lBorder        := !::lBorder          ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lVScroll"     ,,o:lVScroll      ,,{|oMenuItem|::lVScroll       := !::lVScroll         ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lHScroll"     ,,o:lHScroll      ,,{|oMenuItem|::lHScroll       := !::lHScroll         ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lRightVScroll",,o:lRightVScroll ,,{|oMenuItem|::lRightVScroll  := !::lRightVScroll    ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lDownHScroll" ,,o:lDownHScroll  ,,{|oMenuItem|::lDownHScroll   := !::lDownHScroll     ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lModalFrame"  ,,o:lModalFrame   ,,{|oMenuItem|::lModalFrame    := !::lModalFrame      ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("lActive"      ,,o:lActive       ,,{|oMenuItem|::lActive        := !::lActive          ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem( "Estilo",, .F.,,,,,,,,, .F.,,, .F. )
+    MenuBegin( .F.,,, .F., .F. )
+    MenuAddItem("Icon"         ,,                ,,{|oMenuItem|::nStyle         :=  0      ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("Small Icon"   ,,                ,,{|oMenuItem|::nStyle         :=  2 ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("List"         ,,                ,,{|oMenuItem|::nStyle         :=  3      ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuAddItem("Report"       ,,                ,,{|oMenuItem|::nStyle         :=  1    ,::Refresh()},,,,,,,.F.,,,.F. )
+    MenuEnd()
+
+   MenuAddItem()
+
+
+return nil
+
+
+  static FUNCTION TDsgnListView_nMinWidth( nVal ) ; local Self AS CLASS TDsgnListView := QSelf() AS CLASS TDsgnListView
+
+
+if pcount() > 0
+   ::xMinWidth := nVal
+endif
+
+return if( ::lHScroll .OR. ::lVScroll, max( 22, ::xMinWidth ), ::xMinWidth )
+
+
+  static FUNCTION TDsgnListView_nMinHeight( nVal ) ; local Self AS CLASS TDsgnListView := QSelf() AS CLASS TDsgnListView
+
+
+if pcount() > 0
+   ::xMinHeight := nVal
+endif
+
+return if( ::lVScroll .OR. ::lHScroll , max( 22, ::xMinHeight ), ::xMinHeight )

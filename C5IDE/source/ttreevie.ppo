@@ -1,0 +1,776 @@
+#line 38 "\fwh\include\FiveWin.ch"
+      static bError
+#line 219 "hbclass.ch"
+DECLARE HBClass  New( cName AS STRING, OPTIONAL SuperParams ) AS CLASS HBClass  Create() AS OBJECT  Instance() AS OBJECT  AddClsMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC, n2 AS NUMERIC, n3 AS NUMERIC )  AddMultiClsData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING )  AddMultiData( cType AS STRING, uVal, nScope AS NUMERIC, aDatas AS ARRAY OF STRING, x AS LOGICAL, lPer AS LOGICAL )  AddMethod( cName AS STRING, @MethodName(), nScope AS NUMERIC )  AddInLine( cName AS STRING, bBlock AS CODEBLOCK, nScope AS NUMERIC )  AddVirtual( cName AS STRING )
+#line 79 "\fwh\include\FiveWin.ch"
+         EXTERNAL FW_GT
+
+
+
+
+
+
+
+
+
+
+
+extern errorsys
+#line 80 "source\ttreevie.prg"
+_HB_CLASS TTreeView ; function TTreeView ( ... ) ; static s_oClass ; local nScope, oClass, oInstance ; if s_oClass == NIL .AND. __clsLockDef( @s_oClass ) ; begin sequence ; nScope := 1 ; ( ( nScope ) ) ; oClass := IIF(.F.,, HBClass():new( "TTreeView" , iif( .T., { @TControl() }, { @HBObject() } ), @TTreeView() ) ) ;
+
+; _HB_MEMBER { aItems } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aItems"}, .F. )
+; _HB_MEMBER { oImageList } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oImageList"}, .F. )
+; _HB_MEMBER { bChanged } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"bChanged"}, .F. )
+; _HB_MEMBER { oGet } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oGet"}, .F. )
+; _HB_MEMBER { aRet } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"aRet"}, .F. )
+ ;; _HB_MEMBER { hBold, hOldFont } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"hBold", "hOldFont"}, .F. )
+; _HB_MEMBER { lMain } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lMain"}, .F. )
+; _HB_MEMBER { AS LOGICAL lDobleBuffer } ; oClass:AddMultiData( "LOGICAL", .T., nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"lDobleBuffer"}, .F. )
+
+; _HB_MEMBER { oCutItem } ; oClass:AddMultiData(,, nScope + iif( .F., 16, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ), {"oCutItem"}, .F. )
+
+   _HB_MEMBER New( nTop, nLeft, oWnd, nClrFore,nClrBack, lPixel, lDesign, nWidth, nHeight,cMsg) AS CLASS TTreeView; oClass:AddMethod( "New", @TTreeView_New(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER ReDefine( nId, oWnd, nClrFore, nClrBack, lDesign, cMsg) AS CLASS TTreeView; oClass:AddMethod( "ReDefine", @TTreeView_ReDefine(), nScope + iif( .T., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+   _HB_MEMBER Add( cPrompt, nImage, lChecked); oClass:AddMethod( "Add", @TTreeView_Add(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER ColapseAll(); oClass:AddInline( "ColapseAll", {|Self | ( ( Self ) ), ScanItems( ::aItems, .F. ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER DeleteAll(); oClass:AddInline( "DeleteAll", {|Self | ( ( Self ) ), ( TVDelAllItems( ::hWnd ), ::aItems := {} ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Display(); oClass:AddInline( "Display", {|Self | ( ( Self ) ), ::BeginPaint(), ::Paint(), ::EndPaint(), 0 }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Expand(); oClass:AddInline( "Expand", {|Self | ( ( Self ) ), AEval( ::aItems, { | oItem | oItem:Expand() } ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER ExpandAll(); oClass:AddInline( "ExpandAll", {|Self | ( ( Self ) ), ScanItems( ::aItems, .T. ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Find( bFind, aItems); oClass:AddMethod( "Find", @TTreeView_Find(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER GetItem( hItem); oClass:AddMethod( "GetItem", @TTreeView_GetItem(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER GetSelText(); oClass:AddInline( "GetSelText", {|Self | ( ( Self ) ), TVGetSelText( ::hWnd ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER GetSelected(); oClass:AddMethod( "GetSelected", @TTreeView_GetSelected(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER HScroll( nWParam, nLParam) ; oClass:AddVirtual( "HScroll" )
+   _HB_MEMBER HandleEvent( nMsg, nWParam, nLParam); oClass:AddMethod( "HandleEvent", @TTreeView_HandleEvent(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER HitTest( nRow, nCol); oClass:AddMethod( "HitTest", @TTreeView_HitTest(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER KeyDown( nKey, nFlags); oClass:AddMethod( "KeyDown", @TTreeView_KeyDown(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER LDblCLick( nRow, nCol); oClass:AddMethod( "LDblCLick", @TTreeView_LDblCLick(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Load( cInfo, oParent, nFrom); oClass:AddMethod( "Load", @TTreeView_Load(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER LoadFile( cFileName); oClass:AddMethod( "LoadFile", @TTreeView_LoadFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Notify( nIdCtrl, nPtrNMHDR); oClass:AddMethod( "Notify", @TTreeView_Notify(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER OnBeginDrag(); oClass:AddInline( "OnBeginDrag", {|Self | ( ( Self ) ), MsgInfo(  "OnBeginDrag()     " ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER OnBeginLabelEdit(); oClass:AddMethod( "OnBeginLabelEdit", @TTreeView_OnBeginLabelEdit(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER OnBeginRDrag(); oClass:AddInline( "OnBeginRDrag", {|Self | ( ( Self ) ), MsgInfo(  "OnBeginRDrag()    " ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER OnItemExpanded( hItem); oClass:AddMethod( "OnItemExpanded", @TTreeView_OnItemExpanded(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Paint(); oClass:AddMethod( "Paint", @TTreeView_Paint(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Save(); oClass:AddMethod( "Save", @TTreeView_Save(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SaveFile( oItem, cFileName); oClass:AddMethod( "SaveFile", @TTreeView_SaveFile(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SelChanged(); oClass:AddInline( "SelChanged", {|Self | ( ( Self ) ), If( ::bChanged <> nil, Eval( ::bChanged, Self ), nil ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER Select(); oClass:AddInline( "Select", {|Self, oItem | ( ( Self ) ), TVSelect( ::hWnd, oItem:hItem ) }, nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER SetImageList( oImageList); oClass:AddMethod( "SetImageList", @TTreeView_SetImageList(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER VScroll( nWParam, nLParam) ; oClass:AddVirtual( "VScroll" )
+   _HB_MEMBER aGetItems( bEval, aItems); oClass:AddMethod( "aGetItems", @TTreeView_aGetItems(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER aGetItemsAux( bEval, aItems); oClass:AddMethod( "aGetItemsAux", @TTreeView_aGetItemsAux(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER DispBegin( lCreateDC); oClass:AddMethod( "DispBegin", @TTreeView_DispBegin(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER DispEnd( aRestore); oClass:AddMethod( "DispEnd", @TTreeView_DispEnd(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+   _HB_MEMBER aevalitems( aItems, bEval); oClass:AddMethod( "aevalitems", @TTreeView_aevalitems(), nScope + iif( .F., 8, 0 ) + iif( .F., 256, 0 ) + iif( .F., 2048, 0 ) )
+
+oClass:Create() ; ; oInstance := oClass:Instance() ; if __ObjHasMsg( oInstance, "InitClass" ) ; oInstance:InitClass( ... ) ; end ; always ; __clsUnlockDef( @s_oClass, oClass ) ; end ; return oInstance ; end ; return s_oClass:Instance() AS CLASS TTreeView ;
+
+
+
+
+
+static FUNCTION TTreeView_New( nTop, nLeft, oWnd, nClrFore, nClrBack, lPixel, lDesign, nWidth, nHeight, cMsg ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+
+
+
+
+
+
+   If( nTop == nil, nTop := 0, ) ; If( nLeft == nil, nLeft := 0, ); If( oWnd == nil, oWnd := GetWndDefault(), ); If( nClrFore == nil, nClrFore := oWnd:nClrText, ); If( nClrBack == nil, nClrBack := GetSysColor( 5 ), ); If( lPixel == nil, lPixel := .F., ); If( lDesign == nil, lDesign := .F., ); If( nWidth == nil, nWidth := 200, ); If( nHeight == nil, nHeight := 150, );
+
+
+
+   ::nStyle    = nOR( 1073741824, 268435456, If( lDesign, 67108864, 0 ), 65536, 1, 2, 4, 32, 8 )
+
+   ::nId       = ::GetNewId()
+   ::oWnd      = oWnd
+   ::cMsg      = cMsg
+   ::nTop      = If( lPixel, nTop, nTop * 15 )
+   ::nLeft     = If( lPixel, nLeft, nLeft * 6 )
+   ::nBottom   = ::nTop + nHeight - 1
+   ::nRight    = ::nLeft + nWidth - 1
+   ::lDrag     = lDesign
+   ::lCaptured = .F.
+   ::oFont     = TFont():New( "Ms Sans Serif", 0, -9 )
+   ::nClrText  = nClrFore
+   ::nClrPane  = nClrBack
+   ::aItems    = {}
+   ::oGet      = nil
+   ::aRet      = {}
+   ::oCutItem  = nil
+   ::lMain     = .F.
+
+   if !Empty( oWnd:hWnd )
+      ::Create( "SysTreeView32" )
+      oWnd:AddControl( Self )
+   else
+      oWnd:DefControl( Self )
+   endif
+
+   ::Default()
+
+   if lDesign
+      ::CheckDots()
+   endif
+
+return Self
+
+
+
+static FUNCTION TTreeView_ReDefine( nId, oWnd, nClrFore, nClrBack, lDesign, cMsg ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+
+
+
+   If( oWnd == nil, oWnd := GetWndDefault(), ) ; If( nClrFore == nil, nClrFore := oWnd:nClrText, ); If( nClrBack == nil, nClrBack := GetSysColor( 5 ), ); If( lDesign == nil, lDesign := .F., );
+
+   ::nId     = nId
+   ::oWnd    = oWnd
+   ::aItems  = {}
+
+   ::Register( nOR( 1, 2, 1, 2, 4, 8  ) )
+
+   oWnd:DefControl( Self )
+
+return Self
+
+
+
+static FUNCTION TTreeView_Add( cPrompt, nImage, cCargo, nImage2, lChecked ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+   local oItem
+   local hItem := TVInsertItem( ::hWnd, cPrompt,, nImage, nImage2 )
+   If( nImage2 == nil, nImage2 := nImage, ) ;
+   If( lChecked == nil, lChecked := .T., ) ;
+
+
+   oItem := TTVItem():New( hItem, Self, cCargo, cPrompt, nImage, lChecked, self )
+   AAdd( ::aItems, oItem )
+
+return oItem
+
+
+
+static function ScanItem( aItems, hItem )
+
+   local n, oItem
+
+   for n = 1 to Len( aItems )
+      if Len( aItems[ n ]:aItems ) > 0
+         if ( oItem := ScanItem( aItems[ n ]:aItems, hItem ) ) <> nil
+            return oItem
+         endif
+      endif
+      if aItems[ n ]:hItem == hItem
+         return aItems[ n ]
+      endif
+   next
+
+return nil
+
+
+
+static function ScanItems( aItems, lExpand )
+
+   local oItem, i
+
+   If( lExpand == nil, lExpand := .T., ) ;
+
+   for i := 1 to Len( aItems )
+       oItem = aItems[ i ]
+
+       if lExpand
+          oItem:Expand()
+       else
+          oItem:Colapse()
+       endif
+
+       if Len( oItem:aItems ) <> 0
+          ScanItems( oItem:aItems )
+       endif
+   next
+
+return nil
+
+
+static FUNCTION TTreeView_aevalitems( aItems, bEval ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+   local oItem, i
+
+   for i := 1 to Len( aItems )
+       oItem = aItems[ i ]
+       eval( bEval, oItem )
+       if Len( oItem:aItems ) <> 0
+          ::AevalItems( oItem:aItems, bEval )
+       endif
+   next
+
+return nil
+
+
+
+
+
+static FUNCTION TTreeView_GetSelected( ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+return ScanItem( ::aItems, TVGetSelected( ::hWnd ) )
+
+
+
+static FUNCTION TTreeView_GetItem( hItem ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+return ScanItem( ::aItems, hItem )
+
+
+
+static FUNCTION TTreeView_HitTest( nRow, nCol ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+   local hItem
+
+   hItem := TVHitTest( ::hWnd, nRow, nCol )
+
+   If hItem > 0
+      return ::GetItem( hItem )
+   Endif
+
+return nil
+
+
+
+static FUNCTION TTreeView_SetImageList( oImageList ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+   ::oImageList = oImageList
+
+   TVSetImageList( ::hWnd, oImageList:hImageList, 0 )
+
+return nil
+
+
+
+static FUNCTION TTreeView_Paint( ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+   local aInfo := ::DispBegin()
+   local hBrush := CreateSolidBrush( 16777215 )
+
+   FillRect( ::hDC, GetClientRect( ::hWnd ), hBrush )
+   CallWindowProc( ::nOldProc, ::hWnd, 15, ::hDC, 0 )
+   DeleteObject( hBrush )
+   ::DispEnd( aInfo )
+
+return nil
+
+static FUNCTION TTreeView_OnItemExpanded( hItem ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+local oItem
+
+
+if hItem <> nil
+   oItem := ::GetItem( hItem )
+   if oItem:lFolder .AND. oItem:lChgImage
+      if IsExpanded( ::hWnd, hItem )
+         SetImage( ::hWnd, hItem, 7 )
+      else
+         SetImage( ::hWnd, hItem, 6 )
+      endif
+   endif
+endif
+
+return nil
+
+static FUNCTION TTreeView_OnBeginLabelEdit( hEdit ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+  ShowWindow( hEdit, 0 )
+  SetFocus( hEdit )
+
+return nil
+
+
+return nil
+
+static FUNCTION TTreeView_Find( bFind, aItems ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+   LOCAL oItem, oReturn
+
+   If( aItems == nil, aItems := ::aItems, ) ;
+
+   FOR EACH oItem IN aItems
+
+       if Len( oItem:aItems ) > 0
+          if ( oReturn := ::Find( bFind, oItem:aItems ) ) <> NIL
+             return oReturn
+          endif
+       endif
+
+       if eval( bFind, oItem )
+          return oItem
+       endif
+
+   next
+
+return nil
+
+
+   static FUNCTION TTreeView_aGetItems( bEval, aItems ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+
+   If( aItems == nil, aItems := ::aItems, ) ;
+
+   ::aRet := {}
+
+return ::aGetItemsAux( bEval, aItems )
+
+
+
+
+
+   static FUNCTION TTreeView_aGetItemsAux( bEval, aItems ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+   local oItem, i
+
+   for i := 1 to Len( aItems )
+       oItem = aItems[ i ]
+       if Len( oItem:aItems ) <> 0
+          ::aGetItemsAux( bEval, oItem:aItems )
+       endif
+       if eval( bEval, oItem )
+          aadd( ::aRet, oItem )
+       endif
+   next
+
+
+return ::aRet
+
+
+   static FUNCTION TTreeView_LDblCLick( nRow, nCol ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+local oItem := ::HitTest( nRow, nCol )
+
+if oItem <> nil
+   if oItem:bAction <> nil
+      eval( oItem:bAction, oItem )
+   else
+      if Aplicacion():oProyecto <> nil
+         Aplicacion():oProyecto:ActionTree( oItem )
+      endif
+   endif
+endif
+
+return nil
+
+
+
+
+   static FUNCTION TTreeView_KeyDown( nKey, nFlags ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+
+
+do case
+   case nKey == 46
+        Aplicacion():oProyecto:Borrar( ::GetSelected() )
+   case nKey == 107
+        Aplicacion():oProyecto:AddExistFileToFolder( ::GetSelected() )
+endcase
+
+return ::TControl:KeyDown( nKey, nFlags )
+
+
+   static FUNCTION TTreeView_SaveFile( oItem, cFileName ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+local h
+local cStr := ""
+local n, nLen
+
+If( oItem == nil, oItem := self, ) ;
+
+nLen := len( oItem:aItems )
+
+if nLen == 0
+   MsgStop( "No encuentro elementos en el arbol","Atención" )
+   return nil
+endif
+
+h := fcreate( cFileName )
+
+cStr += alltrim( str( len(oItem:aItems) ) ) + Chr(13)+Chr(10)
+
+for n := 1 to nLen
+    cStr += oItem:aItems[n]:Save()
+next
+
+cStr := strtran( cStr, Chr(13)+Chr(10), chr(9) )
+
+fwrite( h, cStr )
+fclose( h )
+
+return nil
+
+
+   static FUNCTION TTreeView_Save( ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+local cStr := ""
+local nLen := len( ::aItems )
+local n
+
+
+for n := 1 to nLen
+    cStr += ::aItems[n]:Save()
+next
+
+return cStr
+
+
+
+
+   static FUNCTION TTreeView_LoadFile( cFileName ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+local h
+local nSize := fsize( cFileName )
+local buffer
+local nItems, n
+local nFrom := 1
+
+if nSize == 0
+   MsgInfo( "No encuentro el fichero " + cFileName, "Atención" )
+   return nil
+endif
+buffer := space( nSize )
+
+h := fopen( cFileName, 0 )
+fread( h, @buffer, nSize )
+fclose( h )
+
+buffer := strtran( buffer, chr(9), Chr(13)+Chr(10) )
+
+
+
+nItems  := val( alltrim( memoline( buffer,,nFrom)))
+
+for n := 1 to nItems
+    nFrom++
+    ::Load( buffer, self, @nFrom )
+next
+
+
+
+return nil
+
+
+   static FUNCTION TTreeView_Load( cInfo, oParent, nFrom ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+local cPrompt, nImage, nImage2, lCheck, cRuta, cTipo, lChgImage, lFolder, nItems, oItem, lIsExpand
+local n
+
+If( nFrom == nil, nFrom := 1, ) ;
+
+    cPrompt   :=      alltrim( memoline( cInfo,,  nFrom))
+    nImage    := val( alltrim( memoline( cInfo,,++nFrom)))
+    nImage2   := val( alltrim( memoline( cInfo,,++nFrom)))
+    lCheck    := if(  alltrim( memoline( cInfo,,++nFrom))==".t.",.T.,.F.)
+    cRuta     :=      alltrim( memoline( cInfo,,++nFrom))
+    cTipo     :=      alltrim( memoline( cInfo,,++nFrom))
+    lChgImage := if(  alltrim( memoline( cInfo,,++nFrom))==".t.",.T.,.F.)
+    lFolder   := if(  alltrim( memoline( cInfo,,++nFrom))==".t.",.T.,.F.)
+    lIsExpand := if(  alltrim( memoline( cInfo,,++nFrom))==".t.",.T.,.F.)
+    nItems    := val( alltrim( memoline( cInfo,,++nFrom)))
+
+
+    oItem := TTVItem():New( self,, cPrompt, nImage, lCheck, oParent, nImage2,cTipo, lFolder, lChgImage, cRuta )
+    for n := 1 to nItems
+        nFrom++
+        ::Load( cInfo, oItem, @nFrom )
+    next
+    if lIsExpand
+       oItem:Expand()
+    endif
+
+return oItem
+
+
+   static FUNCTION TTreeView_HandleEvent( nMsg, nWParam, nLParam ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+Local hBrush
+
+if nMsg == 20
+   return 1
+endif
+
+
+return ::TControl:HandleEvent( nMsg, nWParam, nLParam )
+
+
+
+
+   static FUNCTION TTreeView_Notify( nIdCtrl, nPtrNMHDR ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+
+  local nCode := GetNMHDRCode( nPtrNMHDR )
+  local nDrawStage
+  local hItem
+  local uItemState
+  local hDC
+  local aRect
+  local oItem
+
+  do case
+     case nCode == -406
+
+          return ::OnItemExpanded( GetItemExpanded( nPtrNMHDR ) )
+
+     case nCode == -12
+
+          nDrawStage := DrawStage( nPtrNMHDR )
+
+          do case
+             case nDrawStage == 1
+
+                  return 32
+
+             case nDrawStage == nOr(65536, 1)
+
+                  hItem      := GetItemPrePaint( nPtrNMHDR )
+                  oItem      := ::GetItem( hItem )
+                  uItemState := UItemState     ( nPtrNMHDR )
+                  hDC        := Getnmcdhcd     ( nPtrNMHDR )
+
+                  if oItem <> nil .AND. oItem:lMain
+                     ::hBold    := CreateBold     ( ::oFont:hFont )
+                     ::hOldFont := SelectObject( hDC, ::hBold )
+                  endif
+                  return 2
+
+             case nDrawStage == 2
+                  return 16
+
+
+             case nDrawStage == nOr(65536, 2)
+
+                  hDC := Getnmcdhcd( nPtrNMHDR )
+                  aRect := GetItemRect( .T. )
+                  hItem      := GetItemPrePaint( nPtrNMHDR )
+                  oItem      := ::GetItem( hItem )
+
+
+
+                  if oItem <> nil .AND. oItem:lMain
+                     SelectObject( hDC, ::hOldFont )
+                     DeleteObject( ::hFont )
+                  endif
+
+                  return 2
+
+
+          endcase
+
+  endcase
+
+return nil
+
+static FUNCTION TTreeView_DispBegin( ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+   local aInfo
+   if ::lDobleBuffer
+      aInfo = FWDispBegin( ::hWnd, ::hDC )
+      ::hDC = aInfo[ 3 ]
+   endif
+return aInfo
+
+
+
+static FUNCTION TTreeView_DispEnd( aRestore ) ; local Self AS CLASS TTreeView := QSelf() AS CLASS TTreeView
+
+   if ::lDobleBuffer
+      FWDispEnd( aRestore )
+      ::hDC = aRestore[ 2 ]
+   endif
+
+return nil
+
+
+
+
+
+
+
+
+
+
+#pragma BEGINDUMP
+#include <windows.h>
+#include <hbapi.h>
+#include <commctrl.h>
+#include "hbvm.h"
+#include "hbstack.h"
+#include "hbapiitm.h"
+//#include "hbfast.h"
+
+UINT GetItemState(HWND hWnd, HTREEITEM hItem, UINT nStateMask )
+{
+#if (_WIN32_IE >= 0x0500) && !defined(_WIN32_WCE)
+      return (UINT)::SendMessage(hWnd, TVM_GETITEMSTATE, (WPARAM)hItem, (LPARAM)nStateMask);
+#else //!((_WIN32_IE >= 0x0500) && !defined(_WIN32_WCE))
+      TVITEM item = { 0 };
+      item.hItem = hItem;
+      item.mask = TVIF_STATE;
+      item.state = 0;
+      item.stateMask = nStateMask;
+      ::SendMessage(m_hWnd, TVM_GETITEM, 0, (LPARAM)&item);
+      return item.state;
+#endif //!((_WIN32_IE >= 0x0500) && !defined(_WIN32_WCE))
+}
+
+HB_FUNC( TVGETITEMSTATE )
+{
+   hb_retni( GetItemState( (HWND) hb_parnl( 1 ),(HTREEITEM) hb_parnl(2), hb_parni(3) ) );
+}
+
+HB_FUNC( ISEXPANDED )
+{
+      hb_retl( (GetItemState( (HWND) hb_parnl(1), (HTREEITEM) hb_parnl(2), TVIS_STATEIMAGEMASK  ) & TVIS_EXPANDED ) );
+}
+
+
+BOOL SetItem(HWND m_hWnd, HTREEITEM hItem, UINT nMask, LPCTSTR lpszItem, int nImage,
+                int nSelectedImage, UINT nState, UINT nStateMask, LPARAM lParam)
+{
+   TVITEM item = { 0 };
+   item.hItem = hItem;
+   item.mask = nMask;
+   item.pszText = (LPTSTR) lpszItem;
+   item.iImage = nImage;
+   item.iSelectedImage = nSelectedImage;
+   item.state = nState;
+   item.stateMask = nStateMask;
+   item.lParam = lParam;
+   return (BOOL)SendMessage(m_hWnd, TVM_SETITEM, 0, (LPARAM)&item);
+}
+
+HB_FUNC( GETITEMDATA )
+{
+   TVITEM item = { 0 };
+   item.hItem = (HTREEITEM) hb_parnl( 2 );
+   item.mask = TVIF_PARAM;
+   SendMessage( (HWND) hb_parnl( 1 ), TVM_GETITEM, 0, (LPARAM)&item);
+   hb_retni( item.lParam );
+}
+
+HB_FUNC( SETITEMDATA )
+{
+      SetItem( (HWND) hb_parnl( 1 ), (HTREEITEM) hb_parnl( 2 ), TVIF_PARAM, NULL, 0, 0, 0, 0, (LPARAM) hb_parni( 3 ) );
+      hb_ret();
+}
+
+HB_FUNC( SETIMAGE )
+{
+   hb_retl(  SetItem((HWND)hb_parnl(1),(HTREEITEM)hb_parnl(2), TVIF_IMAGE|TVIF_SELECTEDIMAGE, NULL, hb_parni(3),hb_parni(3), 0, 0, NULL) );
+}
+
+
+HB_FUNC( TVINSERTITEM ) // ( hWnd, cItemText, hItem, nImage )
+{
+   TV_INSERTSTRUCT is;
+
+   ZeroMemory( ( char * ) &is, sizeof( TV_INSERTSTRUCT ) );
+
+   is.hParent      = ( HTREEITEM ) hb_parnl( 3 );
+   is.hInsertAfter = TVI_LAST;
+
+   #if (_WIN32_IE >= 0x0400)
+      is.DUMMYUNIONNAME.item.pszText = hb_parc( 2 );
+      is.DUMMYUNIONNAME.item.mask    = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+      is.DUMMYUNIONNAME.item.iImage  = hb_parnl( 4 );
+      is.DUMMYUNIONNAME.item.iSelectedImage = hb_parnl( 5 );
+   #else
+      is.item.pszText = hb_parc( 2 );
+      is.item.mask    = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+      is.item.iImage  = hb_parnl( 4 );
+      is.item.iSelectedImage = hb_parnl( 5 );
+   #endif
+
+   hb_retnl( SendMessage( ( HWND ) hb_parnl( 1 ), TVM_INSERTITEM, 0,
+           ( LPARAM )( LPTV_INSERTSTRUCT )( &is ) ) );
+}
+
+
+//BOOL TreeView_GetCheckState(HWND hwndTreeView, HTREEITEM hItem)
+HB_FUNC( TVGETSTATE )
+{
+    TVITEM tvItem;
+    HWND hwndTreeView = (HWND) hb_parnl( 1 );
+    HTREEITEM hItem = (HTREEITEM) hb_parnl( 2 );
+
+    // Prepare to receive the desired information.
+    tvItem.mask = TVIF_HANDLE | TVIF_STATE;
+    tvItem.hItem = hItem;
+    tvItem.stateMask = TVIS_STATEIMAGEMASK;
+
+    // Request the information.
+    TreeView_GetItem(hwndTreeView, &tvItem);
+
+    // Return zero if it's not checked, or nonzero otherwise.
+    hb_retl( ((BOOL)(tvItem.state >> 12) -1));
+}
+
+HB_FUNC_STATIC( GETITEMRECT )
+{
+   BOOL fItemRect = hb_parl( 2 );
+   RECT rc;
+   SendMessage( (HWND) hb_parnl(1), TVM_GETITEMRECT,  fItemRect, (long)&rc );
+   hb_reta(4);
+   hb_storvni( rc.top    ,-1, 1 );
+   hb_storvni( rc.left   ,-1, 2 );
+   hb_storvni( rc.bottom ,-1, 3 );
+   hb_storvni( rc.right  ,-1, 4 );
+}
+
+HB_FUNC_STATIC( GETITEMEXPANDED )
+{
+   LPNMTREEVIEW pnmtv = (LPNMTREEVIEW) hb_parnl( 1 );
+   TVITEM vItem = pnmtv->itemNew;
+   hb_retnl((long)vItem.hItem );
+}
+
+HB_FUNC_STATIC( DRAWSTAGE )
+{
+   LPNMTVCUSTOMDRAW pNMTVCD = (LPNMTVCUSTOMDRAW)hb_parnl( 1 );
+   hb_retnl( pNMTVCD->nmcd.dwDrawStage );
+}
+
+HB_FUNC_STATIC( GETITEMPREPAINT )
+{
+   LPNMTVCUSTOMDRAW pNMTVCD = (LPNMTVCUSTOMDRAW)hb_parnl( 1 );
+
+   hb_retnl( (long)((HTREEITEM) pNMTVCD->nmcd.dwItemSpec) );
+}
+
+
+
+
+HB_FUNC_STATIC( UITEMSTATE )
+{
+   LPNMTVCUSTOMDRAW pNMTVCD = (LPNMTVCUSTOMDRAW)hb_parnl( 1 );
+   hb_retni( pNMTVCD->nmcd.uItemState );
+}
+
+
+HB_FUNC_STATIC( ISUITEMSTATE )
+{
+    UINT uItemState = (UINT) hb_parni( 1 );
+    hb_retl( ( (int)uItemState & hb_parni(2) ) == hb_parni(2) );
+}
+
+HB_FUNC_STATIC( GETNMCDHCD )
+{
+   LPNMTVCUSTOMDRAW pNMTVCD = (LPNMTVCUSTOMDRAW)hb_parnl( 1 );
+
+   hb_retnl( (long) pNMTVCD->nmcd.hdc );
+
+}
+
+
+#pragma ENDDUMP
