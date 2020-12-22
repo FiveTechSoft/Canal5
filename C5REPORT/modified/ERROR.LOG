@@ -1,0 +1,245 @@
+Application
+===========
+   Path and name: C:\HAL\DISSENY\REPORT\C5\OLD.EXE (32 bits)
+   Size: 1,644,544 bytes
+   Time from start: 0 hours 0 mins 22 secs 
+   Error occurred at: 06/26/10, 19:18:06
+   Error description: Error BASE/1066  Argument error: conditional
+   Args:
+     [   1] = U   
+
+Stack Calls
+===========
+   Called from:  => TBRUSHEX:END(0)
+   Called from:  => TC5RPTITEMRECT:PAINT(187)
+   Called from:  => TC5REPORT:PAINT(1489)
+   Called from: .\FONTS\C5REPORT.PRG => (b)TC5REPORT(97)
+   Called from:  => TC5REPORT:DISPLAY(0)
+   Called from:  => TCONTROL:HANDLEEVENT(0)
+   Called from:  => TC5REPORT:HANDLEEVENT(770)
+   Called from: .\source\classes\WINDOW.PRG => _FWH(0)
+   Called from:  => WINRUN(0)
+   Called from:  => TWINDOW:ACTIVATE(0)
+   Called from: .\FONTS\PRUEBA.PRG => MAIN(234)
+
+System
+======
+   CPU type: Intel(R) Core(TM)2 Quad  CPU   Q8200  @ 2.33GHz 2333 Mhz
+   Hardware memory: 2048 megs
+
+   Free System resources: 90 %
+        GDI    resources: 90 %
+        User   resources: 90 %
+
+   Compiler version: Harbour 1.0.0RC1 Intl. (Rev. 8835)
+   Windows version: 5.1, Build 2600 Service Pack 3
+
+   Windows total applications running: 45
+      1 
+      2 M
+      3 Default IME
+      4 COMODO Firewall - Eliminación Fallada
+      5 CiceroUIWndFrame
+      6 TF_FloatingLangBar_WndTitle
+      7 Menú Inicio
+      8 Actualización de la Base de Datos de Virus
+      9 CanalFive Report
+     10 PopupSyncId2
+     11 Acceso directo a FWH1005
+     12 fivewin_function_prnsetsize [FiveTech Software] - Mozilla Firefox
+     13 ???????s?????????????????????????????????????????????????
+     14 MCI command handling window
+     15 NetscapeDispatchWnd
+     16 nsAppShell:EventWindow
+     17 PopupSyncId5
+     18 PopupSyncId0
+     19 COMODO Antivirus - Requiere Reinicio
+     20 PopupSyncId1
+     21 PopupSyncId6
+     22 PopupSyncId4
+     23 PopupSyncId3
+     24 Authentication Status
+     25 Ralink Wireless UI
+     26 Gsm Event Window
+     27 POP Peeper
+     28 AVerQuick
+     29 HID Window
+     30 TaskSwitchXP Pro 2.0
+     31 CAvastTrayIcon
+     32 avast! UI Control Window
+     33 VIA HD Audio Deck
+     34 CLASS_FLV_SERVICE
+     35 MediaCenter
+     36 Connections Tray
+     37 Medidor de energía
+     38 UPnP Notification Monitor
+     39 MS_WebcheckMonitor
+     40 TSVNCacheWindow
+     41 NVSVCPMMWindowClass
+     42 Remote Window
+     43 Schedule Window
+     44 GDI+ Window
+     45 Program Manager
+
+Variables in use
+================
+   Procedure     Type   Value
+   ==========================
+   TBRUSHEX:END
+     Local   1:    O    Class: TBRUSHEX
+     Local   2:    N    5
+     Local   3:    U    
+     Local   4:    U    
+     Local   5:    N    0
+   TC5RPTITEMRECT:PAINT
+     Param   1:    N    -2029972779
+     Local   1:    O    Class: TC5RPTITEMRECT
+     Local   2:    U    
+     Local   3:    N    75.00
+     Local   4:    N    -64.00
+     Local   5:    N    680.00
+     Local   6:    N    356.00
+     Local   7:    N    -1940909449
+     Local   8:    N    28311575
+     Local   9:    U    
+     Local  10:    N    26214416
+     Local  11:    O    Class: TBRUSHEX
+     Local  12:    N    16777215
+     Local  13:    N    10.00
+     Local  14:    N    10.00
+   TC5REPORT:PAINT
+     Local   1:    O    Class: TC5REPORT
+     Local   2:    N    -2029972779
+     Local   3:    A    Len:    4
+     Local   4:    U    
+     Local   5:    N    25493519
+     Local   6:    N    1
+     Local   7:    U    
+     Local   8:    U    
+     Local   9:    N    24
+     Local  10:    O    Class: TFONT
+     Local  11:    N    25821217
+     Local  12:    N    2
+     Local  13:    N    0
+     Local  14:    C    "CanalFiveReport Demo"
+   (b)TC5REPORT
+     Param   1:    O    Class: TC5REPORT
+   TC5REPORT:DISPLAY
+   TCONTROL:HANDLEEVENT
+     Param   1:    N    15
+     Param   2:    N    0
+     Param   3:    N    0
+     Local   1:    O    Class: TC5REPORT
+     Local   2:    U    
+   TC5REPORT:HANDLEEVENT
+     Param   1:    N    15
+     Param   2:    N    0
+     Param   3:    N    0
+     Local   1:    O    Class: TC5REPORT
+   _FWH
+     Param   1:    N    0
+     Param   2:    N    15
+     Param   3:    N    0
+     Param   4:    N    0
+     Param   5:    N    19
+     Local   1:    O    Class: TC5REPORT
+   WINRUN
+     Param   1:    N    14812830
+   TWINDOW:ACTIVATE
+     Param   1:    C    "MAXIMIZED"
+     Param   2:    U    
+     Param   3:    U    
+     Param   4:    U    
+     Param   5:    B    {|| ... }
+     Param   6:    U    
+     Param   7:    U    
+     Param   8:    U    
+     Param   9:    U    
+     Param  10:    U    
+     Param  11:    U    
+     Param  12:    U    
+     Param  13:    U    
+     Param  14:    U    
+     Param  15:    U    
+     Param  16:    U    
+     Param  17:    U    
+     Param  18:    U    
+     Param  19:    U    
+     Local   1:    O    Class: TWINDOW
+     Local   2:    U    
+     Local   3:    U    
+   MAIN
+     Local   1:    U    
+     Local   2:    U    
+     Local   3:    U    
+     Local   4:    A    Len:   30
+     Local   5:    O    Class: TPANELEX
+     Local   6:    O    Class: TFONT
+     Local   7:    U    
+     Local   8:    O    Class: TMENU
+     Local   9:    U    
+     Local  10:    C    "10"
+     Local  11:    A    Len:   15
+     Local  12:    U    
+     Local  13:    U    
+     Local  14:    N    20
+
+Linked RDDs
+===========
+   DBF
+   DBFFPT
+   DBFBLOB
+   DBFNTX
+
+DataBases in use
+================
+
+Classes in use:
+===============
+     1 ERROR
+     2 HBCLASS
+     3 HBOBJECT
+     4 TFONT
+     5 TMENU
+     6 TMENUITEM
+     7 TACCTABLE
+     8 TWINDOW
+     9 TBRUSH
+    10 TCONTROL
+    11 TC5STBAR
+    12 TC5STBARITEM
+    13 TCHECKBOX
+    14 TCOMBOBOX
+    15 TPANEL
+    16 TPANELEX
+    17 TSCROLLBAR
+    18 TTREEVIEW
+    19 TTREEVIEWEX
+    20 TTVITEM
+    21 TGRIDEXTENDED
+    22 TLISTPROP
+    23 TBAR
+    24 TRECT
+    25 TBTNBMP
+    26 TSPLITTER
+    27 TC5REPORT
+    28 TINI
+    29 TTIMER
+    30 TC5RULE
+    31 TC5RPTITEM
+    32 TC5RPTITEMRECT
+    33 TPROPERTY
+    34 TC5RPTITEMIMG
+    35 TC5RPTITEMTEXT
+    36 TC5RPTITEMLINE
+    37 TBRUSHEX
+    38 TREG32
+
+Memory Analysis
+===============
+      270 Static variables
+
+   Dynamic memory consume:
+      Actual  Value:          0 bytes
+      Highest Value:          0 bytes
+

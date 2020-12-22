@@ -1,0 +1,960 @@
+/*
+ * xHarbour build 0.99.71 Intl. (SimpLex)
+ * Generated C source code from <prueba.prg>
+ * Command: C:\xharbour\bin\harbour.exe -i.;\fwh\include;\xharbour\include -n -m -w -es2 -gc0 -p .\prueba.prg -oobj\prueba.hrb 
+ * Created: 2008.01.11 17:08:01 (Borland C++ 5.5.1)
+ */
+
+#include "hbvmpub.h"
+#include "hbinit.h"
+
+#define __PRG_SOURCE__ "prueba.prg"
+
+HB_FUNC( MAIN );
+HB_FUNC( C5SETVAR );
+HB_FUNC( RESETBAR );
+HB_FUNC( OWND );
+HB_FUNC( OVSPLIT );
+HB_FUNC( NGETACTIVO );
+HB_FUNC( OREPORT );
+HB_FUNC( SELARROW );
+HB_FUNC( INSPECTOR );
+HB_FUNC( OUNDO );
+HB_FUNC( OREDO );
+HB_FUNC( OTREE );
+HB_FUNC( OROOT );
+HB_FUNC( LFIXED );
+HB_FUNC( OFACENAME );
+HB_FUNC( OBOLD );
+HB_FUNC( OITALIC );
+HB_FUNC( OUNDER );
+HB_FUNC( OSTRIKE );
+HB_FUNC( HIDEPANELLEFT );
+HB_FUNC( SHOWPANELLEFT );
+HB_FUNC( TTREEVIEWEX );
+HB_FUNC_STATIC( TTREEVIEWEX_NEW );
+HB_FUNC_STATIC( TTREEVIEWEX_DELITEM );
+HB_FUNC_STATIC( SEARCHITEM );
+HB_FUNC_INITSTATICS();
+HB_FUNC_EXTERN( ARRAY );
+HB_FUNC_EXTERN( TFONT );
+HB_FUNC_EXTERN( MENUBEGIN );
+HB_FUNC_EXTERN( MENUADDITEM );
+HB_FUNC_EXTERN( ASC );
+HB_FUNC_EXTERN( MENUEND );
+HB_FUNC_EXTERN( TWINDOW );
+HB_FUNC_EXTERN( TC5STBAR );
+HB_FUNC_EXTERN( MAX );
+HB_FUNC_EXTERN( TCHECKBOX );
+HB_FUNC_EXTERN( PCOUNT );
+HB_FUNC_EXTERN( XSELFONT );
+HB_FUNC_EXTERN( TCOMBOBOX );
+HB_FUNC_EXTERN( VAL );
+HB_FUNC_EXTERN( XSELCOLOR );
+HB_FUNC_EXTERN( TPANELEX );
+HB_FUNC_EXTERN( TLISTPROP );
+HB_FUNC_EXTERN( TSPLITTER );
+HB_FUNC_EXTERN( TC5REPORT );
+HB_FUNC_EXTERN( TC5RULE );
+HB_FUNC_EXTERN( GETCLIENTRECT );
+HB_FUNC_EXTERN( SETKEY );
+HB_FUNC_EXTERN( UPPER );
+HB_FUNC_EXTERN( OSEND );
+HB_FUNC_EXTERN( AEVAL );
+HB_FUNC_EXTERN( LEN );
+HB_FUNC_EXTERN( GETKEYSTATE );
+HB_FUNC_EXTERN( HBCLASS );
+HB_FUNC_EXTERN( __CLS_PARAM );
+HB_FUNC_EXTERN( __CLSINST );
+HB_FUNC_EXTERN( __OBJHASMSG );
+HB_FUNC_EXTERN( HB_APARAMS );
+HB_FUNC_EXTERN( GETWNDDEFAULT );
+HB_FUNC_EXTERN( GETSYSCOLOR );
+HB_FUNC_EXTERN( NOR );
+HB_FUNC_EXTERN( EMPTY );
+HB_FUNC_EXTERN( ADEL );
+HB_FUNC_EXTERN( ASIZE );
+HB_FUNC_EXTERN( TVDELETEITEM );
+HB_FUNC_EXTERN( GETPROCADDRESS );
+HB_FUNC_EXTERN( TACTIVEX );
+HB_FUNC_EXTERN( ERRORSYS );
+HB_FUNC_EXTERN( TTREEVIEW );
+
+#undef HB_PRG_PCODE_VER
+#define HB_PRG_PCODE_VER 7
+
+HB_INIT_SYMBOLS_BEGIN( hb_vm_SymbolInit_PRUEBA )
+{ "MAIN", {HB_FS_PUBLIC | HB_FS_LOCAL | HB_FS_FIRST}, {HB_FUNCNAME( MAIN )}, NULL },
+{ "ARRAY", {HB_FS_PUBLIC}, {HB_FUNCNAME( ARRAY )}, NULL },
+{ "NEW", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TFONT", {HB_FS_PUBLIC}, {HB_FUNCNAME( TFONT )}, NULL },
+{ "MENUBEGIN", {HB_FS_PUBLIC}, {HB_FUNCNAME( MENUBEGIN )}, NULL },
+{ "MENUADDITEM", {HB_FS_PUBLIC}, {HB_FUNCNAME( MENUADDITEM )}, NULL },
+{ "SELECTALL", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "OREPORT", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OREPORT )}, NULL },
+{ "ASC", {HB_FS_PUBLIC}, {HB_FUNCNAME( ASC )}, NULL },
+{ "MENUEND", {HB_FS_PUBLIC}, {HB_FUNCNAME( MENUEND )}, NULL },
+{ "TWINDOW", {HB_FS_PUBLIC}, {HB_FUNCNAME( TWINDOW )}, NULL },
+{ "TC5STBAR", {HB_FS_PUBLIC}, {HB_FUNCNAME( TC5STBAR )}, NULL },
+{ "_LBORDER", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_OTOP", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "ADDITEM", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "NUEVO", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "RESETBAR", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( RESETBAR )}, NULL },
+{ "LOAD", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SAVE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "PRINT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "PREVIEW", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SEPARATOR", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "CUT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "COPY", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "PASTE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "ZOOM", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "MAX", {HB_FS_PUBLIC}, {HB_FUNCNAME( MAX )}, NULL },
+{ "UNDO", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TOBACK", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TOFRONT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "ALIGN", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_LCHECKED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "GETBOXES", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_OFONT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NFIXWIDTH", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_LHIDE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TCHECKBOX", {HB_FS_PUBLIC}, {HB_FUNCNAME( TCHECKBOX )}, NULL },
+{ "PCOUNT", {HB_FS_PUBLIC}, {HB_FUNCNAME( PCOUNT )}, NULL },
+{ "_CTOOLTIP", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "C5SETVAR", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( C5SETVAR )}, NULL },
+{ "CFACENAME", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_BPOPUP", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "XSELFONT", {HB_FS_PUBLIC}, {HB_FUNCNAME( XSELFONT )}, NULL },
+{ "_CPROMPT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "REFRESH", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TCOMBOBOX", {HB_FS_PUBLIC}, {HB_FUNCNAME( TCOMBOBOX )}, NULL },
+{ "VAL", {HB_FS_PUBLIC}, {HB_FUNCNAME( VAL )}, NULL },
+{ "LCHECKED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "NCLRTEXT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "XSELCOLOR", {HB_FS_PUBLIC}, {HB_FUNCNAME( XSELCOLOR )}, NULL },
+{ "NCLRPANE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TPANELEX", {HB_FS_PUBLIC}, {HB_FUNCNAME( TPANELEX )}, NULL },
+{ "_OLEFT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TTREEVIEWEX", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( TTREEVIEWEX )}, NULL },
+{ "ADD", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TLISTPROP", {HB_FS_PUBLIC}, {HB_FUNCNAME( TLISTPROP )}, NULL },
+{ "_NLINESTYLE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TSPLITTER", {HB_FS_PUBLIC}, {HB_FUNCNAME( TSPLITTER )}, NULL },
+{ "NHEIGHT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "NWIDTH", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TC5REPORT", {HB_FS_PUBLIC}, {HB_FUNCNAME( TC5REPORT )}, NULL },
+{ "_CARGO", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_OHRULE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TC5RULE", {HB_FS_PUBLIC}, {HB_FUNCNAME( TC5RULE )}, NULL },
+{ "_OVRULE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_BRESIZED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SETSIZE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "OHRULE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "OVRULE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SETPROPERTIES", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_BCHANGED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TREETOREPORT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "EXPAND", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NWIDTH", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_COORSUPDATE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "NTOP", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "GETCLIENTRECT", {HB_FS_PUBLIC}, {HB_FUNCNAME( GETCLIENTRECT )}, NULL },
+{ "HWND", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SETKEY", {HB_FS_PUBLIC}, {HB_FUNCNAME( SETKEY )}, NULL },
+{ "HIDEPANELLEFT", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( HIDEPANELLEFT )}, NULL },
+{ "ACTIVATE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "UPPER", {HB_FS_PUBLIC}, {HB_FUNCNAME( UPPER )}, NULL },
+{ "BLCLICKED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BRCLICKED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BMOVED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BRESIZED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BPAINTED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BKEYDOWN", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BINIT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BLBUTTONUP", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "OSEND", {HB_FS_PUBLIC}, {HB_FUNCNAME( OSEND )}, NULL },
+{ "OSELECTED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "LSELECTEDS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "AEVAL", {HB_FS_PUBLIC}, {HB_FUNCNAME( AEVAL )}, NULL },
+{ "AITEMS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "LSELECTED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "LEN", {HB_FS_PUBLIC}, {HB_FUNCNAME( LEN )}, NULL },
+{ "OWND", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OWND )}, NULL },
+{ "OVSPLIT", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OVSPLIT )}, NULL },
+{ "NGETACTIVO", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( NGETACTIVO )}, NULL },
+{ "SELARROW", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( SELARROW )}, NULL },
+{ "INSPECTOR", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( INSPECTOR )}, NULL },
+{ "OUNDO", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OUNDO )}, NULL },
+{ "OREDO", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OREDO )}, NULL },
+{ "OTREE", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OTREE )}, NULL },
+{ "OROOT", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OROOT )}, NULL },
+{ "LFIXED", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( LFIXED )}, NULL },
+{ "OFACENAME", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OFACENAME )}, NULL },
+{ "OBOLD", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OBOLD )}, NULL },
+{ "LBOLD", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "OITALIC", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OITALIC )}, NULL },
+{ "LITALIC", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "OUNDER", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OUNDER )}, NULL },
+{ "LUNDER", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "OSTRIKE", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( OSTRIKE )}, NULL },
+{ "LSTRIKE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "GETKEYSTATE", {HB_FS_PUBLIC}, {HB_FUNCNAME( GETKEYSTATE )}, NULL },
+{ "NLEFT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SETPOSITION", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SHOWPANELLEFT", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( SHOWPANELLEFT )}, NULL },
+{ "HBCLASS", {HB_FS_PUBLIC}, {HB_FUNCNAME( HBCLASS )}, NULL },
+{ "__CLS_PARAM", {HB_FS_PUBLIC}, {HB_FUNCNAME( __CLS_PARAM )}, NULL },
+{ "ADDMETHOD", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TTREEVIEWEX_NEW", {HB_FS_STATIC | HB_FS_LOCAL}, {HB_FUNCNAME( TTREEVIEWEX_NEW )}, NULL },
+{ "TTREEVIEWEX_DELITEM", {HB_FS_STATIC | HB_FS_LOCAL}, {HB_FUNCNAME( TTREEVIEWEX_DELITEM )}, NULL },
+{ "CREATE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "HCLASS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "__CLSINST", {HB_FS_PUBLIC}, {HB_FUNCNAME( __CLSINST )}, NULL },
+{ "__OBJHASMSG", {HB_FS_PUBLIC}, {HB_FUNCNAME( __OBJHASMSG )}, NULL },
+{ "INITCLASS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "HB_APARAMS", {HB_FS_PUBLIC}, {HB_FUNCNAME( HB_APARAMS )}, NULL },
+{ "CONSTRUCTORCALL", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "GETWNDDEFAULT", {HB_FS_PUBLIC}, {HB_FUNCNAME( GETWNDDEFAULT )}, NULL },
+{ "GETSYSCOLOR", {HB_FS_PUBLIC}, {HB_FUNCNAME( GETSYSCOLOR )}, NULL },
+{ "_NSTYLE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "NOR", {HB_FS_PUBLIC}, {HB_FUNCNAME( NOR )}, NULL },
+{ "_NID", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "GETNEWID", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_OWND", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_CMSG", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NTOP", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NLEFT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NBOTTOM", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NRIGHT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_LDRAG", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_LCAPTURED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NCLRTEXT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NCLRPANE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_AITEMS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "EMPTY", {HB_FS_PUBLIC}, {HB_FUNCNAME( EMPTY )}, NULL },
+{ "ADDCONTROL", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SETCOLOR", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "DEFCONTROL", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "DEFAULT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "CHECKDOTS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "GETPARENT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "HITEM", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "ADEL", {HB_FS_PUBLIC}, {HB_FUNCNAME( ADEL )}, NULL },
+{ "ASIZE", {HB_FS_PUBLIC}, {HB_FUNCNAME( ASIZE )}, NULL },
+{ "TVDELETEITEM", {HB_FS_PUBLIC}, {HB_FUNCNAME( TVDELETEITEM )}, NULL },
+{ "SEARCHITEM", {HB_FS_STATIC | HB_FS_LOCAL}, {HB_FUNCNAME( SEARCHITEM )}, NULL },
+{ "GETPROCADDRESS", {HB_FS_PUBLIC}, {HB_FUNCNAME( GETPROCADDRESS )}, NULL },
+{ "TACTIVEX", {HB_FS_PUBLIC}, {HB_FUNCNAME( TACTIVEX )}, NULL },
+{ "ERRORSYS", {HB_FS_PUBLIC}, {HB_FUNCNAME( ERRORSYS )}, NULL },
+{ "TTREEVIEW", {HB_FS_PUBLIC}, {HB_FUNCNAME( TTREEVIEW )}, NULL },
+{ "(_INITSTATICS00032)", {HB_FS_INITEXIT}, {hb_INITSTATICS}, NULL }
+HB_INIT_SYMBOLS_END( hb_vm_SymbolInit_PRUEBA )
+
+#if defined(HB_PRAGMA_STARTUP)
+   #pragma startup hb_vm_SymbolInit_PRUEBA
+#elif defined(HB_MSC_STARTUP)
+   #if _MSC_VER >= 1010
+      #pragma data_seg( ".CRT$XIY" )
+      #pragma comment( linker, "/Merge:.CRT=.data" )
+   #else
+      #pragma data_seg( "XIY" )
+   #endif
+   static HB_$INITSYM hb_vm_auto_SymbolInit_PRUEBA = hb_vm_SymbolInit_PRUEBA;
+   #pragma data_seg()
+#endif
+
+HB_FUNC( MAIN )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 11, 3, 116, 165, 0, 133, 46, 0, 127, 10, 3, 0, 49, 
+	48, 0, 134, 1, 106, 2, 56, 0, 106, 2, 57, 0, 106, 3, 
+	49, 48, 0, 106, 3, 49, 50, 0, 106, 3, 49, 52, 0, 106, 
+	3, 49, 54, 0, 106, 3, 49, 56, 0, 106, 3, 50, 48, 0, 
+	106, 3, 50, 50, 0, 106, 3, 50, 52, 0, 106, 3, 50, 54, 
+	0, 106, 3, 50, 56, 0, 106, 3, 51, 54, 0, 106, 3, 52, 
+	56, 0, 106, 3, 55, 50, 0, 4, 15, 0, 80, 11, 134, 3, 
+	126, 14, 20, 0, 134, 5, 108, 1, 100, 92, 30, 12, 1, 80, 
+	4, 134, 11, 48, 2, 0, 108, 3, 100, 12, 0, 106, 8, 86, 
+	101, 114, 100, 97, 110, 97, 0, 121, 92, 245, 100, 100, 100, 100, 
+	100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 112, 17, 80, 6, 
+	134, 13, 108, 4, 100, 9, 12, 1, 80, 8, 134, 14, 108, 5, 
+	100, 106, 8, 65, 114, 99, 104, 105, 118, 111, 0, 100, 9, 100, 
+	100, 100, 100, 100, 100, 100, 100, 9, 100, 100, 9, 20, 15, 134, 
+	15, 108, 5, 100, 106, 8, 69, 100, 105, 99, 105, 243, 110, 0, 
+	100, 9, 100, 100, 100, 100, 100, 100, 100, 100, 9, 100, 100, 9, 
+	20, 15, 134, 16, 108, 4, 100, 9, 20, 1, 134, 17, 108, 5, 
+	100, 106, 7, 67, 111, 114, 116, 97, 114, 0, 100, 9, 100, 100, 
+	100, 100, 100, 100, 100, 100, 9, 100, 100, 9, 20, 15, 134, 18, 
+	108, 5, 100, 106, 7, 67, 111, 112, 105, 97, 114, 0, 100, 9, 
+	100, 100, 100, 100, 100, 100, 100, 100, 9, 100, 100, 9, 20, 15, 
+	134, 19, 108, 5, 100, 106, 6, 80, 101, 103, 97, 114, 0, 100, 
+	9, 100, 100, 100, 100, 100, 100, 100, 100, 9, 100, 100, 9, 20, 
+	15, 134, 20, 108, 5, 100, 20, 0, 134, 22, 108, 5, 100, 106, 
+	17, 83, 101, 108, 101, 99, 99, 105, 111, 110, 97, 114, 32, 116, 
+	111, 100, 111, 0, 100, 9, 100, 89, 18, 0, 1, 0, 0, 0, 
+	48, 6, 0, 108, 7, 100, 12, 0, 112, 0, 6, 100, 100, 100, 
+	100, 92, 8, 108, 8, 100, 106, 2, 65, 0, 12, 1, 9, 100, 
+	100, 9, 20, 15, 134, 24, 108, 9, 100, 20, 0, 134, 25, 108, 
+	5, 100, 106, 8, 70, 111, 114, 109, 97, 116, 111, 0, 100, 9, 
+	100, 100, 100, 100, 100, 100, 100, 100, 9, 100, 100, 9, 20, 15, 
+	134, 26, 108, 5, 100, 106, 6, 86, 105, 115, 116, 97, 0, 100, 
+	9, 100, 100, 100, 100, 100, 100, 100, 100, 9, 100, 100, 9, 20, 
+	15, 134, 27, 108, 9, 100, 20, 0, 134, 30, 48, 2, 0, 108, 
+	10, 100, 12, 0, 100, 100, 100, 100, 106, 17, 67, 97, 110, 97, 
+	108, 70, 105, 118, 101, 32, 82, 101, 112, 111, 114, 116, 0, 100, 
+	95, 8, 100, 100, 100, 100, 100, 121, 97, 128, 128, 128, 0, 100, 
+	100, 120, 120, 120, 120, 9, 112, 21, 82, 8, 0, 134, 32, 48, 
+	2, 0, 108, 11, 100, 12, 0, 121, 121, 93, 204, 16, 92, 60, 
+	103, 8, 0, 97, 255, 255, 255, 0, 97, 173, 197, 229, 0, 112, 
+	7, 82, 4, 0, 134, 33, 48, 12, 0, 103, 4, 0, 120, 112, 
+	1, 73, 134, 34, 48, 13, 0, 103, 8, 0, 103, 4, 0, 112, 
+	1, 73, 134, 36, 48, 2, 0, 108, 11, 100, 12, 0, 121, 121, 
+	93, 68, 2, 92, 30, 103, 4, 0, 97, 255, 255, 255, 0, 97, 
+	173, 197, 229, 0, 112, 7, 82, 5, 0, 134, 37, 48, 12, 0, 
+	103, 5, 0, 120, 112, 1, 73, 134, 38, 48, 14, 0, 103, 5, 
+	0, 100, 106, 4, 110, 101, 119, 0, 90, 19, 48, 15, 0, 103, 
+	9, 0, 112, 0, 73, 108, 16, 100, 122, 9, 12, 2, 6, 112, 
+	3, 96, 4, 0, 122, 2, 134, 39, 48, 14, 0, 103, 5, 0, 
+	100, 106, 5, 111, 112, 101, 110, 0, 90, 19, 48, 17, 0, 103, 
+	9, 0, 112, 0, 73, 108, 16, 100, 122, 9, 12, 2, 6, 112, 
+	3, 96, 4, 0, 92, 2, 2, 134, 40, 48, 14, 0, 103, 5, 
+	0, 100, 106, 5, 115, 97, 118, 101, 0, 90, 19, 48, 18, 0, 
+	103, 9, 0, 112, 0, 73, 108, 16, 100, 122, 9, 12, 2, 6, 
+	112, 3, 96, 4, 0, 92, 3, 2, 134, 41, 48, 14, 0, 103, 
+	5, 0, 100, 106, 6, 112, 114, 105, 110, 116, 0, 90, 19, 48, 
+	19, 0, 103, 9, 0, 112, 0, 73, 108, 16, 100, 122, 9, 12, 
+	2, 6, 112, 3, 96, 4, 0, 92, 4, 2, 134, 42, 48, 14, 
+	0, 103, 5, 0, 100, 106, 8, 112, 114, 101, 118, 105, 101, 119, 
+	0, 90, 19, 48, 20, 0, 103, 9, 0, 112, 0, 73, 108, 16, 
+	100, 122, 9, 12, 2, 6, 112, 3, 82, 29, 0, 134, 44, 48, 
+	21, 0, 103, 5, 0, 112, 0, 73, 134, 45, 48, 14, 0, 103, 
+	5, 0, 100, 106, 4, 99, 117, 116, 0, 90, 19, 48, 22, 0, 
+	103, 9, 0, 112, 0, 73, 108, 16, 100, 122, 9, 12, 2, 6, 
+	112, 3, 96, 4, 0, 92, 5, 2, 134, 46, 48, 14, 0, 103, 
+	5, 0, 100, 106, 5, 99, 111, 112, 121, 0, 90, 19, 48, 23, 
+	0, 103, 9, 0, 112, 0, 73, 108, 16, 100, 122, 9, 12, 2, 
+	6, 112, 3, 96, 4, 0, 92, 6, 2, 134, 47, 48, 14, 0, 
+	103, 5, 0, 100, 106, 6, 112, 97, 115, 116, 101, 0, 90, 19, 
+	48, 24, 0, 103, 9, 0, 112, 0, 73, 108, 16, 100, 122, 9, 
+	12, 2, 6, 112, 3, 96, 4, 0, 92, 7, 2, 134, 48, 48, 
+	21, 0, 103, 5, 0, 112, 0, 73, 134, 49, 48, 14, 0, 103, 
+	5, 0, 100, 106, 8, 122, 111, 111, 109, 111, 117, 116, 0, 90, 
+	37, 48, 25, 0, 103, 9, 0, 108, 26, 100, 92, 10, 48, 25, 
+	0, 103, 9, 0, 112, 0, 128, 246, 255, 12, 2, 112, 1, 73, 
+	108, 16, 100, 122, 9, 12, 2, 6, 112, 3, 96, 4, 0, 92, 
+	26, 2, 134, 50, 48, 14, 0, 103, 5, 0, 100, 106, 7, 122, 
+	111, 111, 109, 105, 110, 0, 90, 30, 48, 25, 0, 103, 9, 0, 
+	48, 25, 0, 103, 9, 0, 112, 0, 128, 10, 0, 112, 1, 73, 
+	108, 16, 100, 122, 9, 12, 2, 6, 112, 3, 96, 4, 0, 92, 
+	27, 2, 134, 51, 48, 21, 0, 103, 5, 0, 112, 0, 73, 134, 
+	52, 48, 14, 0, 103, 5, 0, 100, 106, 5, 117, 110, 100, 111, 
+	0, 90, 11, 48, 27, 0, 103, 9, 0, 112, 0, 6, 112, 3, 
+	82, 12, 0, 134, 53, 48, 14, 0, 103, 5, 0, 100, 106, 5, 
+	114, 101, 100, 111, 0, 90, 4, 120, 6, 112, 3, 82, 12, 0, 
+	134, 54, 48, 21, 0, 103, 5, 0, 112, 0, 73, 134, 55, 48, 
+	14, 0, 103, 5, 0, 100, 106, 7, 116, 111, 98, 97, 99, 107, 
+	0, 90, 11, 48, 28, 0, 103, 9, 0, 112, 0, 6, 112, 3, 
+	73, 134, 56, 48, 14, 0, 103, 5, 0, 100, 106, 8, 116, 111, 
+	102, 114, 111, 110, 116, 0, 90, 11, 48, 29, 0, 103, 9, 0, 
+	112, 0, 6, 112, 3, 73, 134, 57, 48, 21, 0, 103, 5, 0, 
+	112, 0, 73, 134, 58, 48, 14, 0, 103, 5, 0, 100, 106, 6, 
+	97, 108, 116, 111, 112, 0, 90, 12, 48, 30, 0, 103, 9, 0, 
+	122, 112, 1, 6, 112, 3, 73, 134, 59, 48, 14, 0, 103, 5, 
+	0, 100, 106, 7, 97, 108, 108, 101, 102, 116, 0, 90, 13, 48, 
+	30, 0, 103, 9, 0, 92, 2, 112, 1, 6, 112, 3, 73, 134, 
+	60, 48, 14, 0, 103, 5, 0, 100, 106, 9, 97, 108, 98, 111, 
+	116, 116, 111, 109, 0, 90, 13, 48, 30, 0, 103, 9, 0, 92, 
+	3, 112, 1, 6, 112, 3, 73, 134, 61, 48, 14, 0, 103, 5, 
+	0, 100, 106, 8, 97, 108, 114, 105, 103, 104, 116, 0, 90, 13, 
+	48, 30, 0, 103, 9, 0, 92, 4, 112, 1, 6, 112, 3, 73, 
+	134, 65, 48, 2, 0, 108, 11, 100, 12, 0, 92, 30, 121, 93, 
+	44, 1, 92, 30, 103, 4, 0, 97, 255, 255, 255, 0, 97, 173, 
+	197, 229, 0, 112, 7, 82, 6, 0, 134, 66, 48, 12, 0, 103, 
+	6, 0, 120, 112, 1, 73, 134, 68, 48, 14, 0, 103, 6, 0, 
+	100, 106, 9, 99, 117, 114, 97, 114, 114, 111, 119, 0, 90, 24, 
+	121, 82, 2, 0, 108, 16, 100, 92, 2, 9, 20, 2, 48, 31, 
+	0, 103, 11, 0, 120, 112, 1, 6, 112, 3, 82, 11, 0, 134, 
+	69, 48, 14, 0, 103, 6, 0, 100, 106, 5, 116, 101, 120, 116, 
+	0, 89, 33, 0, 0, 0, 1, 0, 4, 0, 122, 82, 2, 0, 
+	108, 16, 100, 92, 2, 9, 20, 2, 48, 31, 0, 95, 255, 92, 
+	9, 1, 120, 112, 1, 6, 112, 3, 96, 4, 0, 92, 9, 2, 
+	134, 70, 48, 14, 0, 103, 6, 0, 100, 106, 6, 105, 109, 97, 
+	103, 101, 0, 89, 34, 0, 0, 0, 1, 0, 4, 0, 92, 2, 
+	82, 2, 0, 108, 16, 100, 92, 2, 9, 20, 2, 48, 31, 0, 
+	95, 255, 92, 10, 1, 120, 112, 1, 6, 112, 3, 96, 4, 0, 
+	92, 10, 2, 134, 71, 48, 14, 0, 103, 6, 0, 100, 106, 5, 
+	108, 105, 110, 101, 0, 89, 34, 0, 0, 0, 1, 0, 4, 0, 
+	92, 3, 82, 2, 0, 108, 16, 100, 92, 2, 9, 20, 2, 48, 
+	31, 0, 95, 255, 92, 11, 1, 120, 112, 1, 6, 112, 3, 96, 
+	4, 0, 92, 11, 2, 134, 72, 48, 14, 0, 103, 6, 0, 100, 
+	106, 4, 98, 111, 120, 0, 89, 34, 0, 0, 0, 1, 0, 4, 
+	0, 92, 9, 82, 2, 0, 108, 16, 100, 92, 2, 9, 20, 2, 
+	48, 31, 0, 95, 255, 92, 12, 1, 120, 112, 1, 6, 112, 3, 
+	96, 4, 0, 92, 12, 2, 134, 73, 48, 14, 0, 103, 6, 0, 
+	100, 106, 7, 101, 108, 105, 112, 115, 101, 0, 89, 34, 0, 0, 
+	0, 1, 0, 4, 0, 92, 13, 82, 2, 0, 108, 16, 100, 92, 
+	2, 9, 20, 2, 48, 31, 0, 95, 255, 92, 13, 1, 120, 112, 
+	1, 6, 112, 3, 96, 4, 0, 92, 13, 2, 134, 74, 48, 14, 
+	0, 103, 6, 0, 100, 106, 6, 102, 105, 101, 108, 100, 0, 89, 
+	34, 0, 0, 0, 1, 0, 4, 0, 92, 4, 82, 2, 0, 108, 
+	16, 100, 92, 2, 9, 20, 2, 48, 31, 0, 95, 255, 92, 14, 
+	1, 120, 112, 1, 6, 112, 3, 96, 4, 0, 92, 14, 2, 134, 
+	75, 48, 21, 0, 103, 6, 0, 112, 0, 73, 134, 76, 48, 14, 
+	0, 103, 6, 0, 100, 106, 6, 80, 104, 111, 116, 111, 0, 90, 
+	13, 48, 32, 0, 108, 7, 100, 12, 0, 112, 0, 6, 112, 3, 
+	73, 134, 78, 48, 2, 0, 108, 11, 100, 12, 0, 92, 30, 93, 
+	44, 1, 93, 164, 1, 92, 30, 103, 4, 0, 97, 255, 255, 255, 
+	0, 97, 173, 197, 229, 0, 112, 7, 82, 7, 0, 134, 79, 48, 
+	12, 0, 103, 7, 0, 120, 112, 1, 73, 134, 80, 48, 33, 0, 
+	103, 7, 0, 95, 6, 112, 1, 73, 134, 82, 48, 14, 0, 103, 
+	7, 0, 112, 0, 96, 4, 0, 92, 16, 2, 134, 83, 48, 34, 
+	0, 95, 4, 92, 16, 1, 92, 30, 112, 1, 73, 134, 84, 48, 
+	35, 0, 95, 4, 92, 16, 1, 120, 112, 1, 73, 134, 86, 48, 
+	2, 0, 108, 36, 100, 12, 0, 92, 9, 92, 8, 106, 1, 0, 
+	89, 28, 0, 1, 0, 0, 0, 108, 37, 100, 12, 0, 121, 8, 
+	28, 7, 103, 28, 0, 25, 8, 95, 1, 21, 82, 28, 0, 6, 
+	103, 7, 0, 92, 12, 92, 12, 100, 100, 100, 100, 100, 100, 9, 
+	120, 100, 9, 100, 112, 18, 82, 18, 0, 134, 87, 48, 38, 0, 
+	103, 18, 0, 106, 32, 70, 105, 106, 97, 114, 32, 118, 97, 108, 
+	111, 114, 101, 115, 32, 112, 97, 114, 97, 32, 105, 116, 101, 109, 
+	115, 32, 110, 117, 101, 118, 111, 115, 0, 112, 1, 73, 134, 89, 
+	48, 14, 0, 103, 7, 0, 100, 100, 90, 44, 108, 39, 100, 106, 
+	10, 99, 70, 97, 99, 101, 78, 97, 109, 101, 0, 48, 40, 0, 
+	103, 9, 0, 112, 0, 20, 2, 48, 38, 0, 103, 19, 0, 48, 
+	40, 0, 103, 9, 0, 112, 0, 112, 1, 6, 112, 3, 82, 19, 
+	0, 134, 90, 48, 34, 0, 103, 19, 0, 92, 120, 112, 1, 73, 
+	134, 92, 48, 41, 0, 103, 19, 0, 89, 86, 0, 2, 0, 0, 
+	0, 108, 39, 100, 106, 10, 99, 70, 97, 99, 101, 78, 97, 109, 
+	101, 0, 108, 42, 100, 95, 1, 95, 2, 106, 8, 86, 101, 114, 
+	100, 97, 110, 97, 0, 12, 3, 20, 2, 48, 43, 0, 103, 19, 
+	0, 48, 40, 0, 103, 9, 0, 112, 0, 112, 1, 73, 48, 44, 
+	0, 103, 19, 0, 112, 0, 73, 48, 38, 0, 103, 19, 0, 48, 
+	40, 0, 103, 9, 0, 112, 0, 112, 1, 6, 112, 1, 73, 134, 
+	94, 48, 14, 0, 103, 7, 0, 112, 0, 96, 4, 0, 92, 17, 
+	2, 134, 95, 48, 34, 0, 95, 4, 92, 17, 1, 92, 55, 112, 
+	1, 73, 134, 96, 48, 35, 0, 95, 4, 92, 17, 1, 120, 112, 
+	1, 73, 134, 99, 48, 2, 0, 108, 45, 100, 12, 0, 92, 5, 
+	93, 165, 0, 89, 28, 0, 1, 0, 1, 0, 10, 0, 108, 37, 
+	100, 12, 0, 121, 8, 28, 6, 95, 255, 25, 7, 95, 1, 21, 
+	80, 255, 6, 95, 11, 92, 40, 93, 200, 0, 103, 7, 0, 100, 
+	89, 31, 0, 1, 0, 1, 0, 10, 0, 108, 39, 100, 106, 7, 
+	110, 72, 70, 111, 110, 116, 0, 108, 46, 100, 95, 255, 12, 1, 
+	12, 2, 6, 100, 100, 100, 120, 95, 6, 100, 9, 100, 9, 100, 
+	100, 100, 100, 100, 112, 23, 82, 20, 0, 134, 101, 48, 14, 0, 
+	103, 7, 0, 100, 106, 5, 98, 111, 108, 100, 0, 90, 42, 48, 
+	31, 0, 103, 21, 0, 48, 47, 0, 103, 21, 0, 112, 0, 68, 
+	112, 1, 73, 108, 39, 100, 106, 6, 108, 66, 111, 108, 100, 0, 
+	48, 47, 0, 103, 21, 0, 112, 0, 12, 2, 6, 112, 3, 82, 
+	21, 0, 134, 102, 48, 14, 0, 103, 7, 0, 100, 106, 7, 105, 
+	116, 97, 108, 105, 99, 0, 90, 44, 48, 31, 0, 103, 23, 0, 
+	48, 47, 0, 103, 23, 0, 112, 0, 68, 112, 1, 73, 108, 39, 
+	100, 106, 8, 108, 73, 116, 97, 108, 105, 99, 0, 48, 47, 0, 
+	103, 23, 0, 112, 0, 12, 2, 6, 112, 3, 82, 23, 0, 134, 
+	103, 48, 14, 0, 103, 7, 0, 100, 106, 6, 117, 110, 100, 101, 
+	114, 0, 90, 43, 48, 31, 0, 103, 22, 0, 48, 47, 0, 103, 
+	22, 0, 112, 0, 68, 112, 1, 73, 108, 39, 100, 106, 7, 108, 
+	85, 110, 100, 101, 114, 0, 48, 47, 0, 103, 22, 0, 112, 0, 
+	12, 2, 6, 112, 3, 82, 22, 0, 134, 104, 48, 14, 0, 103, 
+	7, 0, 100, 106, 7, 115, 116, 114, 105, 107, 101, 0, 90, 44, 
+	48, 31, 0, 103, 24, 0, 48, 47, 0, 103, 24, 0, 112, 0, 
+	68, 112, 1, 73, 108, 39, 100, 106, 8, 108, 83, 116, 114, 105, 
+	107, 101, 0, 48, 47, 0, 103, 24, 0, 112, 0, 12, 2, 6, 
+	112, 3, 82, 24, 0, 134, 106, 48, 14, 0, 103, 7, 0, 100, 
+	106, 8, 116, 101, 120, 116, 99, 108, 114, 0, 90, 27, 108, 39, 
+	100, 106, 9, 110, 67, 108, 114, 84, 101, 120, 116, 0, 48, 48, 
+	0, 103, 9, 0, 112, 0, 12, 2, 6, 112, 3, 82, 25, 0, 
+	134, 107, 48, 41, 0, 103, 25, 0, 89, 41, 0, 2, 0, 0, 
+	0, 108, 39, 100, 106, 9, 110, 67, 108, 114, 84, 101, 120, 116, 
+	0, 108, 49, 100, 95, 1, 95, 2, 48, 48, 0, 103, 9, 0, 
+	112, 0, 12, 3, 12, 2, 6, 112, 1, 73, 134, 111, 48, 14, 
+	0, 103, 7, 0, 106, 3, 32, 32, 0, 106, 8, 112, 97, 110, 
+	101, 99, 108, 114, 0, 90, 27, 108, 39, 100, 106, 9, 110, 67, 
+	108, 114, 80, 97, 110, 101, 0, 48, 50, 0, 103, 9, 0, 112, 
+	0, 12, 2, 6, 112, 3, 82, 26, 0, 134, 112, 48, 41, 0, 
+	103, 26, 0, 89, 41, 0, 2, 0, 0, 0, 108, 39, 100, 106, 
+	9, 110, 67, 108, 114, 80, 97, 110, 101, 0, 108, 49, 100, 95, 
+	1, 95, 2, 48, 50, 0, 103, 9, 0, 112, 0, 12, 3, 12, 
+	2, 6, 112, 1, 73, 134, 115, 48, 2, 0, 108, 51, 100, 12, 
+	0, 121, 121, 92, 100, 93, 230, 0, 103, 8, 0, 97, 173, 197, 
+	229, 0, 112, 6, 80, 5, 134, 116, 48, 52, 0, 103, 8, 0, 
+	95, 5, 112, 1, 73, 134, 118, 48, 2, 0, 108, 53, 100, 12, 
+	0, 121, 122, 95, 5, 121, 97, 255, 255, 255, 0, 120, 9, 93, 
+	228, 0, 93, 200, 0, 112, 9, 82, 14, 0, 134, 119, 48, 54, 
+	0, 103, 14, 0, 106, 8, 73, 110, 102, 111, 114, 109, 101, 0, 
+	112, 1, 82, 15, 0, 134, 122, 48, 2, 0, 108, 55, 100, 12, 
+	0, 93, 205, 0, 122, 93, 228, 0, 93, 44, 1, 100, 106, 1, 
+	0, 106, 1, 0, 106, 1, 0, 4, 3, 0, 92, 20, 92, 100, 
+	92, 100, 4, 3, 0, 95, 5, 100, 100, 100, 100, 100, 100, 95, 
+	6, 112, 15, 82, 3, 0, 134, 124, 48, 56, 0, 103, 3, 0, 
+	92, 2, 112, 1, 73, 134, 134, 48, 2, 0, 108, 57, 100, 12, 
+	0, 93, 200, 0, 92, 2, 9, 103, 14, 0, 4, 1, 0, 120, 
+	103, 3, 0, 4, 1, 0, 120, 90, 5, 92, 70, 6, 100, 95, 
+	5, 100, 93, 184, 11, 92, 4, 120, 9, 97, 173, 197, 229, 0, 
+	9, 120, 112, 18, 82, 16, 0, 134, 136, 48, 2, 0, 108, 51, 
+	100, 12, 0, 48, 58, 0, 103, 4, 0, 112, 0, 128, 255, 255, 
+	48, 59, 0, 95, 5, 112, 0, 128, 5, 0, 92, 100, 93, 230, 
+	0, 103, 8, 0, 97, 173, 197, 229, 0, 112, 6, 82, 30, 0, 
+	134, 138, 48, 2, 0, 108, 60, 100, 12, 0, 92, 35, 92, 31, 
+	93, 38, 2, 93, 16, 3, 103, 30, 0, 121, 97, 173, 197, 229, 
+	0, 92, 20, 92, 20, 93, 61, 1, 93, 230, 0, 4, 4, 0, 
+	112, 8, 82, 9, 0, 134, 140, 48, 61, 0, 103, 15, 0, 103, 
+	9, 0, 112, 1, 73, 134, 142, 48, 62, 0, 103, 9, 0, 48, 
+	2, 0, 108, 63, 100, 12, 0, 92, 4, 92, 30, 93, 208, 7, 
+	92, 30, 103, 30, 0, 121, 97, 173, 197, 229, 0, 9, 103, 9, 
+	0, 112, 9, 112, 1, 73, 134, 143, 48, 64, 0, 103, 9, 0, 
+	48, 2, 0, 108, 63, 100, 12, 0, 92, 34, 121, 92, 30, 93, 
+	208, 7, 103, 30, 0, 121, 97, 173, 197, 229, 0, 120, 103, 9, 
+	0, 112, 9, 112, 1, 73, 134, 147, 48, 65, 0, 103, 30, 0, 
+	90, 112, 48, 66, 0, 103, 9, 0, 48, 59, 0, 103, 30, 0, 
+	112, 0, 128, 221, 255, 48, 58, 0, 103, 30, 0, 112, 0, 128, 
+	221, 255, 120, 112, 3, 73, 48, 66, 0, 48, 67, 0, 103, 9, 
+	0, 112, 0, 48, 59, 0, 103, 30, 0, 112, 0, 128, 221, 255, 
+	48, 58, 0, 48, 67, 0, 103, 9, 0, 112, 0, 112, 0, 120, 
+	112, 3, 73, 48, 66, 0, 48, 68, 0, 103, 9, 0, 112, 0, 
+	48, 59, 0, 48, 68, 0, 103, 9, 0, 112, 0, 112, 0, 48, 
+	58, 0, 103, 30, 0, 112, 0, 128, 221, 255, 120, 112, 3, 6, 
+	112, 1, 73, 134, 157, 48, 2, 0, 108, 57, 100, 12, 0, 48, 
+	58, 0, 103, 4, 0, 112, 0, 128, 255, 255, 93, 231, 0, 120, 
+	95, 5, 4, 1, 0, 120, 103, 30, 0, 4, 1, 0, 120, 90, 
+	4, 122, 6, 100, 103, 8, 0, 100, 92, 4, 93, 184, 11, 120, 
+	9, 97, 173, 197, 229, 0, 9, 120, 112, 18, 82, 17, 0, 134, 
+	159, 48, 69, 0, 103, 9, 0, 120, 112, 1, 73, 134, 160, 48, 
+	70, 0, 103, 14, 0, 90, 11, 48, 71, 0, 103, 9, 0, 112, 
+	0, 6, 112, 1, 73, 134, 162, 48, 72, 0, 103, 14, 0, 112, 
+	0, 73, 134, 167, 48, 65, 0, 95, 5, 89, 95, 0, 0, 0, 
+	1, 0, 5, 0, 48, 73, 0, 103, 14, 0, 48, 59, 0, 95, 
+	255, 112, 0, 128, 254, 255, 112, 1, 73, 48, 66, 0, 103, 16, 
+	0, 48, 59, 0, 95, 255, 112, 0, 92, 4, 120, 112, 3, 73, 
+	48, 74, 0, 103, 16, 0, 112, 0, 73, 48, 66, 0, 103, 3, 
+	0, 48, 59, 0, 95, 255, 112, 0, 128, 254, 255, 48, 58, 0, 
+	95, 255, 112, 0, 48, 75, 0, 103, 16, 0, 112, 0, 49, 128, 
+	252, 255, 120, 112, 3, 6, 112, 1, 73, 134, 171, 48, 65, 0, 
+	103, 8, 0, 89, 68, 0, 1, 0, 1, 0, 5, 0, 48, 66, 
+	0, 103, 30, 0, 108, 76, 100, 48, 77, 0, 103, 8, 0, 112, 
+	0, 12, 1, 92, 4, 1, 48, 59, 0, 95, 255, 112, 0, 49, 
+	108, 76, 100, 48, 77, 0, 103, 8, 0, 112, 0, 12, 1, 92, 
+	3, 1, 48, 58, 0, 103, 4, 0, 112, 0, 49, 120, 112, 3, 
+	6, 112, 1, 73, 134, 183, 108, 78, 100, 92, 119, 90, 8, 108, 
+	79, 100, 12, 0, 6, 20, 2, 134, 188, 48, 80, 0, 103, 8, 
+	0, 108, 81, 100, 106, 10, 77, 65, 88, 73, 77, 73, 90, 69, 
+	68, 0, 12, 1, 48, 82, 0, 103, 8, 0, 112, 0, 48, 83, 
+	0, 103, 8, 0, 112, 0, 48, 84, 0, 103, 8, 0, 112, 0, 
+	48, 85, 0, 103, 8, 0, 112, 0, 48, 86, 0, 103, 8, 0, 
+	112, 0, 48, 87, 0, 103, 8, 0, 112, 0, 48, 88, 0, 103, 
+	8, 0, 112, 0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 
+	48, 89, 0, 103, 8, 0, 112, 0, 112, 19, 73, 134, 192, 100, 
+	110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( C5SETVAR )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 0, 2, 116, 165, 0, 133, 244, 0, 95, 1, 106, 9, 110, 
+	67, 108, 114, 84, 101, 120, 116, 0, 8, 28, 29, 134, 1, 108, 
+	90, 100, 103, 9, 0, 106, 11, 95, 110, 120, 67, 108, 114, 84, 
+	101, 120, 116, 0, 95, 2, 20, 3, 25, 66, 134, 3, 95, 1, 
+	106, 9, 110, 67, 108, 114, 80, 97, 110, 101, 0, 8, 28, 29, 
+	134, 4, 108, 90, 100, 103, 9, 0, 106, 11, 95, 110, 120, 67, 
+	108, 114, 80, 97, 110, 101, 0, 95, 2, 20, 3, 25, 21, 134, 
+	6, 108, 90, 100, 103, 9, 0, 106, 2, 95, 0, 95, 1, 72, 
+	95, 2, 20, 3, 134, 10, 48, 91, 0, 103, 9, 0, 112, 0, 
+	100, 69, 28, 26, 134, 11, 108, 90, 100, 48, 91, 0, 103, 9, 
+	0, 112, 0, 106, 2, 95, 0, 95, 1, 72, 95, 2, 20, 3, 
+	134, 14, 48, 92, 0, 103, 9, 0, 112, 0, 28, 57, 134, 15, 
+	108, 93, 100, 48, 94, 0, 103, 9, 0, 112, 0, 89, 40, 0, 
+	1, 0, 2, 0, 1, 0, 2, 0, 48, 95, 0, 95, 1, 112, 
+	0, 28, 20, 108, 90, 100, 95, 1, 106, 2, 95, 0, 95, 255, 
+	72, 95, 254, 12, 3, 25, 3, 100, 6, 20, 2, 134, 18, 48, 
+	44, 0, 103, 9, 0, 112, 0, 73, 134, 20, 95, 2, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( RESETBAR )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 3, 2, 116, 165, 0, 133, 16, 1, 95, 2, 100, 8, 28, 
+	8, 120, 21, 80, 2, 25, 3, 100, 73, 95, 2, 100, 8, 28, 
+	10, 126, 2, 1, 0, 95, 2, 25, 3, 100, 73, 95, 1, 122, 
+	8, 28, 11, 134, 5, 103, 5, 0, 80, 5, 25, 36, 134, 6, 
+	95, 1, 92, 2, 8, 28, 11, 134, 7, 103, 6, 0, 80, 5, 
+	25, 18, 134, 8, 95, 1, 92, 3, 8, 28, 9, 134, 9, 103, 
+	7, 0, 80, 5, 134, 14, 108, 96, 100, 48, 94, 0, 95, 5, 
+	112, 0, 12, 1, 80, 4, 134, 15, 126, 3, 1, 0, 95, 3, 
+	95, 4, 34, 28, 29, 134, 16, 48, 31, 0, 48, 94, 0, 95, 
+	5, 112, 0, 95, 3, 1, 9, 112, 1, 73, 134, 17, 125, 3, 
+	1, 0, 25, 224, 134, 19, 95, 2, 28, 38, 134, 20, 48, 31, 
+	0, 48, 94, 0, 95, 5, 112, 0, 122, 1, 120, 112, 1, 73, 
+	134, 21, 121, 82, 2, 0, 134, 22, 48, 31, 0, 103, 11, 0, 
+	120, 112, 1, 73, 134, 24, 48, 44, 0, 95, 5, 112, 0, 73, 
+	134, 26, 100, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OWND )
+
+{
+   static const BYTE pcode[] =
+   {
+116, 165, 0, 103, 8, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OVSPLIT )
+
+{
+   static const BYTE pcode[] =
+   {
+116, 165, 0, 103, 17, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( NGETACTIVO )
+
+{
+   static const BYTE pcode[] =
+   {
+116, 165, 0, 103, 2, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OREPORT )
+
+{
+   static const BYTE pcode[] =
+   {
+116, 165, 0, 103, 9, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( SELARROW )
+
+{
+   static const BYTE pcode[] =
+   {
+108, 16, 100, 92, 2, 120, 20, 2, 121, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( INSPECTOR )
+
+{
+   static const BYTE pcode[] =
+   {
+116, 165, 0, 103, 3, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OUNDO )
+
+{
+   static const BYTE pcode[] =
+   {
+116, 165, 0, 103, 12, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OREDO )
+
+{
+   static const BYTE pcode[] =
+   {
+116, 165, 0, 103, 13, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OTREE )
+
+{
+   static const BYTE pcode[] =
+   {
+116, 165, 0, 103, 14, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OROOT )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 0, 1, 116, 165, 0, 133, 55, 1, 95, 1, 100, 69, 28, 
+	9, 134, 1, 95, 1, 82, 15, 0, 134, 3, 103, 15, 0, 110, 
+	7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( LFIXED )
+
+{
+   static const BYTE pcode[] =
+   {
+116, 165, 0, 103, 28, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OFACENAME )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 0, 1, 116, 165, 0, 133, 62, 1, 95, 1, 100, 69, 28, 
+	26, 134, 1, 48, 43, 0, 103, 19, 0, 95, 1, 112, 1, 73, 
+	134, 2, 48, 44, 0, 103, 19, 0, 112, 0, 73, 134, 5, 48, 
+	40, 0, 103, 9, 0, 112, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OBOLD )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 0, 1, 116, 165, 0, 133, 70, 1, 95, 1, 100, 69, 28, 
+	26, 134, 1, 48, 31, 0, 103, 21, 0, 95, 1, 112, 1, 73, 
+	134, 2, 48, 44, 0, 103, 21, 0, 112, 0, 73, 134, 4, 48, 
+	109, 0, 103, 9, 0, 112, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OITALIC )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 0, 1, 116, 165, 0, 133, 77, 1, 95, 1, 100, 69, 28, 
+	26, 134, 1, 48, 31, 0, 103, 23, 0, 95, 1, 112, 1, 73, 
+	134, 2, 48, 44, 0, 103, 23, 0, 112, 0, 73, 134, 4, 48, 
+	111, 0, 103, 9, 0, 112, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OUNDER )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 0, 1, 116, 165, 0, 133, 84, 1, 95, 1, 100, 69, 28, 
+	26, 134, 1, 48, 31, 0, 103, 22, 0, 95, 1, 112, 1, 73, 
+	134, 2, 48, 44, 0, 103, 22, 0, 112, 0, 73, 134, 4, 48, 
+	113, 0, 103, 9, 0, 112, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( OSTRIKE )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 0, 1, 116, 165, 0, 133, 91, 1, 95, 1, 100, 69, 28, 
+	26, 134, 1, 48, 31, 0, 103, 24, 0, 95, 1, 112, 1, 73, 
+	134, 2, 48, 44, 0, 103, 24, 0, 112, 0, 73, 134, 4, 48, 
+	115, 0, 103, 9, 0, 112, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( HIDEPANELLEFT )
+
+{
+   static const BYTE pcode[] =
+   {
+133, 100, 1, 108, 116, 100, 92, 17, 12, 1, 28, 41, 134, 2, 
+	48, 117, 0, 108, 98, 100, 12, 0, 112, 0, 122, 15, 28, 18, 
+	134, 3, 48, 118, 0, 108, 98, 100, 12, 0, 122, 112, 1, 73, 
+	25, 9, 134, 5, 108, 119, 100, 20, 0, 134, 10, 121, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( SHOWPANELLEFT )
+
+{
+   static const BYTE pcode[] =
+   {
+133, 113, 1, 48, 118, 0, 108, 98, 100, 12, 0, 93, 231, 0, 
+	112, 1, 73, 134, 1, 121, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( TTREEVIEWEX )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 2, 255, 116, 165, 0, 126, 2, 1, 0, 103, 32, 0, 100, 
+	8, 29, 170, 0, 48, 2, 0, 108, 120, 100, 12, 0, 106, 12, 
+	84, 84, 114, 101, 101, 86, 105, 101, 119, 69, 120, 0, 108, 121, 
+	100, 106, 10, 84, 84, 114, 101, 101, 86, 105, 101, 119, 0, 12, 
+	1, 112, 2, 82, 32, 0, 133, 159, 1, 48, 122, 0, 103, 32, 
+	0, 106, 4, 78, 101, 119, 0, 108, 123, 14, 95, 2, 128, 16, 
+	0, 9, 112, 4, 73, 134, 2, 48, 122, 0, 103, 32, 0, 106, 
+	8, 68, 101, 108, 73, 116, 101, 109, 0, 108, 124, 14, 95, 2, 
+	9, 112, 4, 73, 48, 125, 0, 103, 32, 0, 112, 0, 73, 48, 
+	126, 0, 103, 32, 0, 112, 0, 151, 108, 127, 100, 48, 126, 0, 
+	103, 32, 0, 112, 0, 12, 1, 80, 1, 108, 128, 100, 95, 1, 
+	106, 10, 73, 110, 105, 116, 67, 108, 97, 115, 115, 0, 12, 2, 
+	28, 32, 48, 129, 0, 95, 1, 108, 130, 100, 12, 0, 112, 1, 
+	73, 25, 17, 108, 127, 100, 48, 126, 0, 103, 32, 0, 112, 0, 
+	12, 1, 80, 1, 108, 37, 100, 12, 0, 121, 15, 28, 19, 48, 
+	131, 0, 103, 32, 0, 95, 1, 108, 130, 100, 12, 0, 112, 2, 
+	110, 7, 95, 1, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC_STATIC( TTREEVIEWEX_NEW )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 1, 10, 102, 80, 11, 133, 174, 1, 95, 1, 100, 8, 28, 
+	10, 126, 1, 0, 0, 95, 1, 25, 3, 100, 73, 95, 2, 100, 
+	8, 28, 10, 126, 2, 0, 0, 95, 2, 25, 3, 100, 73, 95, 
+	3, 100, 8, 28, 12, 108, 132, 100, 12, 0, 21, 80, 3, 25, 
+	3, 100, 73, 95, 4, 100, 8, 28, 14, 48, 48, 0, 95, 3, 
+	112, 0, 21, 80, 4, 25, 3, 100, 73, 95, 5, 100, 8, 28, 
+	14, 108, 133, 100, 92, 5, 12, 1, 21, 80, 5, 25, 3, 100, 
+	73, 95, 6, 100, 8, 28, 8, 9, 21, 80, 6, 25, 3, 100, 
+	73, 95, 7, 100, 8, 28, 8, 9, 21, 80, 7, 25, 3, 100, 
+	73, 95, 8, 100, 8, 28, 10, 126, 8, 200, 0, 95, 8, 25, 
+	3, 100, 73, 95, 9, 100, 8, 28, 10, 126, 9, 150, 0, 95, 
+	9, 25, 3, 100, 73, 48, 134, 0, 95, 11, 108, 135, 100, 97, 
+	0, 0, 0, 64, 97, 0, 0, 0, 16, 95, 7, 28, 9, 97, 
+	0, 0, 0, 4, 25, 3, 121, 97, 0, 0, 1, 0, 97, 0, 
+	0, 128, 0, 97, 0, 0, 32, 0, 122, 92, 2, 92, 4, 92, 
+	32, 92, 16, 12, 11, 112, 1, 73, 134, 6, 48, 136, 0, 95, 
+	11, 48, 137, 0, 95, 11, 112, 0, 112, 1, 73, 134, 7, 48, 
+	138, 0, 95, 11, 95, 3, 112, 1, 73, 134, 8, 48, 139, 0, 
+	95, 11, 95, 10, 112, 1, 73, 134, 9, 48, 140, 0, 95, 11, 
+	95, 6, 28, 6, 95, 1, 25, 7, 95, 1, 92, 15, 65, 112, 
+	1, 73, 134, 10, 48, 141, 0, 95, 11, 95, 6, 28, 6, 95, 
+	2, 25, 7, 95, 2, 92, 6, 65, 112, 1, 73, 134, 11, 48, 
+	142, 0, 95, 11, 48, 75, 0, 95, 11, 112, 0, 95, 9, 72, 
+	128, 255, 255, 112, 1, 73, 134, 12, 48, 143, 0, 95, 11, 48, 
+	117, 0, 95, 11, 112, 0, 95, 8, 72, 128, 255, 255, 112, 1, 
+	73, 134, 13, 48, 144, 0, 95, 11, 95, 7, 112, 1, 73, 134, 
+	14, 48, 145, 0, 95, 11, 9, 112, 1, 73, 134, 15, 48, 146, 
+	0, 95, 11, 95, 4, 112, 1, 73, 134, 16, 48, 147, 0, 95, 
+	11, 95, 5, 112, 1, 73, 134, 17, 48, 148, 0, 95, 11, 4, 
+	0, 0, 112, 1, 73, 134, 19, 108, 149, 100, 48, 77, 0, 95, 
+	3, 112, 0, 12, 1, 31, 56, 134, 20, 48, 125, 0, 95, 11, 
+	106, 14, 83, 121, 115, 84, 114, 101, 101, 86, 105, 101, 119, 51, 
+	50, 0, 112, 1, 73, 134, 21, 48, 150, 0, 95, 3, 95, 11, 
+	112, 1, 73, 134, 22, 48, 151, 0, 95, 11, 95, 4, 95, 5, 
+	112, 2, 73, 25, 14, 134, 24, 48, 152, 0, 95, 3, 95, 11, 
+	112, 1, 73, 134, 27, 48, 153, 0, 95, 11, 112, 0, 73, 134, 
+	29, 95, 7, 28, 12, 134, 30, 48, 154, 0, 95, 11, 112, 0, 
+	73, 134, 33, 95, 11, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC_STATIC( TTREEVIEWEX_DELITEM )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 4, 1, 102, 80, 2, 133, 214, 1, 48, 155, 0, 95, 1, 
+	112, 0, 80, 4, 134, 1, 108, 96, 100, 48, 94, 0, 95, 4, 
+	112, 0, 12, 1, 80, 5, 134, 3, 126, 3, 1, 0, 95, 3, 
+	95, 5, 34, 28, 95, 134, 4, 48, 156, 0, 48, 94, 0, 95, 
+	4, 112, 0, 95, 3, 1, 112, 0, 48, 156, 0, 95, 1, 112, 
+	0, 8, 28, 60, 134, 5, 108, 157, 100, 48, 94, 0, 95, 4, 
+	112, 0, 95, 3, 20, 2, 134, 6, 108, 158, 100, 48, 94, 0, 
+	95, 4, 112, 0, 95, 5, 128, 255, 255, 20, 2, 134, 7, 108, 
+	159, 100, 48, 77, 0, 95, 2, 112, 0, 48, 156, 0, 95, 1, 
+	112, 0, 20, 2, 25, 10, 134, 10, 125, 3, 1, 0, 25, 158, 
+	134, 11, 48, 44, 0, 95, 2, 112, 0, 73, 134, 13, 121, 110, 
+	7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC_STATIC( SEARCHITEM )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 2, 2, 133, 233, 1, 126, 3, 1, 0, 95, 3, 108, 96, 
+	100, 95, 1, 12, 1, 34, 28, 89, 134, 1, 108, 96, 100, 48, 
+	94, 0, 95, 1, 95, 3, 1, 112, 0, 12, 1, 121, 15, 28, 
+	34, 134, 2, 108, 160, 100, 48, 94, 0, 95, 1, 95, 3, 1, 
+	112, 0, 95, 2, 12, 2, 21, 80, 4, 100, 69, 28, 8, 134, 
+	3, 95, 4, 110, 7, 134, 6, 48, 156, 0, 95, 1, 95, 3, 
+	1, 112, 0, 95, 2, 8, 28, 11, 134, 7, 95, 1, 95, 3, 
+	1, 110, 7, 134, 9, 125, 3, 1, 0, 25, 159, 134, 11, 100, 
+	110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC_INITSTATICS()
+
+{
+   static const BYTE pcode[] =
+   {
+117, 165, 0, 32, 0, 116, 165, 0, 122, 82, 1, 0, 121, 82, 
+	2, 0, 9, 82, 28, 0, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+#line 506 ".\\prueba.prg"
+#include "windows.h"
+#include "hbapi.h"
+#include "math.h"
+
+

@@ -1,0 +1,529 @@
+/*
+ * xHarbour build 0.99.71 Intl. (SimpLex)
+ * Generated C source code from <lbxfont.prg>
+ * Command: c:\xharbour\bin\harbour.exe -i.;\fwh\include;\xharbour\include -n -m -w -es2 -gc0 .\lbxfont.prg -oobj\lbxfont.hrb 
+ * Created: 2007.12.08 11:48:51 (Borland C++ 5.5.1)
+ */
+
+#include "hbvmpub.h"
+#include "hbinit.h"
+
+#define __PRG_SOURCE__ "lbxfont.prg"
+
+HB_FUNC( XSELCOLOR );
+HB_FUNC( SETCOLORRETURN );
+HB_FUNC( XSELFONT );
+HB_FUNC( SETFACENAMERETURN );
+HB_FUNC( TLBXFONT );
+HB_FUNC_STATIC( TLBXFONT_NEW );
+HB_FUNC_STATIC( TLBXFONT_PAINTITEM );
+HB_FUNC_STATIC( TLBXFONT_DEFAULT );
+HB_FUNC( LBXDRAWITEM );
+HB_FUNC( AGETFONTNAMESEX );
+HB_FUNC_INITSTATICS();
+HB_FUNC_EXTERN( TFONT );
+HB_FUNC_EXTERN( TDIALOG );
+HB_FUNC_EXTERN( NOR );
+HB_FUNC_EXTERN( TFOLDER );
+HB_FUNC_EXTERN( TBITMAP );
+HB_FUNC_EXTERN( TBUTTON );
+HB_FUNC_EXTERN( CHOOSECOLOR );
+HB_FUNC_EXTERN( INT );
+HB_FUNC_EXTERN( PCOUNT );
+HB_FUNC_EXTERN( HBCLASS );
+HB_FUNC_EXTERN( __CLS_PARAM );
+HB_FUNC_EXTERN( __CLSINST );
+HB_FUNC_EXTERN( __OBJHASMSG );
+HB_FUNC_EXTERN( HB_APARAMS );
+HB_FUNC_EXTERN( AEVAL );
+HB_FUNC_EXTERN( ALLTRIM );
+HB_FUNC_EXTERN( EMPTY );
+HB_FUNC_EXTERN( SETBKMODE );
+HB_FUNC_EXTERN( FILLSOLIDRECT );
+HB_FUNC_EXTERN( GETSYSCOLOR );
+HB_FUNC_EXTERN( SETTEXTCOLOR );
+HB_FUNC_EXTERN( SELECTOBJECT );
+HB_FUNC_EXTERN( DRAWTEXT );
+HB_FUNC_EXTERN( VALTYPE );
+HB_FUNC_EXTERN( ASCAN );
+HB_FUNC_EXTERN( UPPER );
+HB_FUNC_EXTERN( LAND );
+HB_FUNC_EXTERN( DRAWFOCUSRECT );
+HB_FUNC_EXTERN( SETBKCOLOR );
+HB_FUNC_EXTERN( LEN );
+HB_FUNC_EXTERN( GETDC );
+HB_FUNC_EXTERN( GETFONTNAMES );
+HB_FUNC_EXTERN( ASORT );
+HB_FUNC_EXTERN( RELEASEDC );
+HB_FUNC_EXTERN( GETPROCADDRESS );
+HB_FUNC_EXTERN( TACTIVEX );
+HB_FUNC_EXTERN( ERRORSYS );
+HB_FUNC_EXTERN( TLISTBOX );
+HB_FUNC( GETDRAWITEMSTRUCT );
+
+#undef HB_PRG_PCODE_VER
+#define HB_PRG_PCODE_VER 7
+
+HB_INIT_SYMBOLS_BEGIN( hb_vm_SymbolInit_LBXFONT )
+{ "XSELCOLOR", {HB_FS_PUBLIC | HB_FS_LOCAL | HB_FS_FIRST}, {HB_FUNCNAME( XSELCOLOR )}, NULL },
+{ "NEW", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TFONT", {HB_FS_PUBLIC}, {HB_FUNCNAME( TFONT )}, NULL },
+{ "TDIALOG", {HB_FS_PUBLIC}, {HB_FUNCNAME( TDIALOG )}, NULL },
+{ "NOR", {HB_FS_PUBLIC}, {HB_FUNCNAME( NOR )}, NULL },
+{ "TFOLDER", {HB_FS_PUBLIC}, {HB_FUNCNAME( TFOLDER )}, NULL },
+{ "_OCLIENT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TBITMAP", {HB_FS_PUBLIC}, {HB_FUNCNAME( TBITMAP )}, NULL },
+{ "ADIALOGS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TBUTTON", {HB_FS_PUBLIC}, {HB_FUNCNAME( TBUTTON )}, NULL },
+{ "CHOOSECOLOR", {HB_FS_PUBLIC}, {HB_FUNCNAME( CHOOSECOLOR )}, NULL },
+{ "END", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_BLCLICKED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "ACTIVATE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BLCLICKED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BMOVED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BPAINTED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BRCLICKED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "INT", {HB_FS_PUBLIC}, {HB_FUNCNAME( INT )}, NULL },
+{ "SETCOLORRETURN", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( SETCOLORRETURN )}, NULL },
+{ "XSELFONT", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( XSELFONT )}, NULL },
+{ "TLBXFONT", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( TLBXFONT )}, NULL },
+{ "PCOUNT", {HB_FS_PUBLIC}, {HB_FUNCNAME( PCOUNT )}, NULL },
+{ "_BLDBLCLICK", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SETFACENAMERETURN", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( SETFACENAMERETURN )}, NULL },
+{ "AITEMS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "GETPOS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SET", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "HBCLASS", {HB_FS_PUBLIC}, {HB_FUNCNAME( HBCLASS )}, NULL },
+{ "__CLS_PARAM", {HB_FS_PUBLIC}, {HB_FUNCNAME( __CLS_PARAM )}, NULL },
+{ "ADDMULTIDATA", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "ADDMETHOD", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TLBXFONT_NEW", {HB_FS_STATIC | HB_FS_LOCAL}, {HB_FUNCNAME( TLBXFONT_NEW )}, NULL },
+{ "TLBXFONT_DEFAULT", {HB_FS_STATIC | HB_FS_LOCAL}, {HB_FUNCNAME( TLBXFONT_DEFAULT )}, NULL },
+{ "TLBXFONT_PAINTITEM", {HB_FS_STATIC | HB_FS_LOCAL}, {HB_FUNCNAME( TLBXFONT_PAINTITEM )}, NULL },
+{ "ADDINLINE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "LBXDRAWITEM", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( LBXDRAWITEM )}, NULL },
+{ "ABITMAPS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "NBMPWIDTH", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BDRAWITEM", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "CREATE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "HCLASS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "__CLSINST", {HB_FS_PUBLIC}, {HB_FUNCNAME( __CLSINST )}, NULL },
+{ "__OBJHASMSG", {HB_FS_PUBLIC}, {HB_FUNCNAME( __OBJHASMSG )}, NULL },
+{ "INITCLASS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "HB_APARAMS", {HB_FS_PUBLIC}, {HB_FUNCNAME( HB_APARAMS )}, NULL },
+{ "CONSTRUCTORCALL", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_BSETGET", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_CCAPTION", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NTOP", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NLEFT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NBOTTOM", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "NTOP", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NRIGHT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "NLEFT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_AITEMS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "AGETFONTNAMESEX", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( AGETFONTNAMESEX )}, NULL },
+{ "AEVAL", {HB_FS_PUBLIC}, {HB_FUNCNAME( AEVAL )}, NULL },
+{ "ALLTRIM", {HB_FS_PUBLIC}, {HB_FUNCNAME( ALLTRIM )}, NULL },
+{ "_ABITMAPS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_OWND", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_OFONT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_LOWNERDRAW", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_BDRAWITEM", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "PAINTITEM", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NSTYLE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_NID", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "GETNEWID", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_LCAPTURED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SETCOLOR", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "EMPTY", {HB_FS_PUBLIC}, {HB_FUNCNAME( EMPTY )}, NULL },
+{ "HWND", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "DEFAULT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SETFONT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "ADDCONTROL", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "DEFCONTROL", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "SETBKMODE", {HB_FS_PUBLIC}, {HB_FUNCNAME( SETBKMODE )}, NULL },
+{ "FILLSOLIDRECT", {HB_FS_PUBLIC}, {HB_FUNCNAME( FILLSOLIDRECT )}, NULL },
+{ "GETSYSCOLOR", {HB_FS_PUBLIC}, {HB_FUNCNAME( GETSYSCOLOR )}, NULL },
+{ "SETTEXTCOLOR", {HB_FS_PUBLIC}, {HB_FUNCNAME( SETTEXTCOLOR )}, NULL },
+{ "SELECTOBJECT", {HB_FS_PUBLIC}, {HB_FUNCNAME( SELECTOBJECT )}, NULL },
+{ "HFONT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "DRAWTEXT", {HB_FS_PUBLIC}, {HB_FUNCNAME( DRAWTEXT )}, NULL },
+{ "SENDMSG", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "VALTYPE", {HB_FS_PUBLIC}, {HB_FUNCNAME( VALTYPE )}, NULL },
+{ "ASCAN", {HB_FS_PUBLIC}, {HB_FUNCNAME( ASCAN )}, NULL },
+{ "UPPER", {HB_FS_PUBLIC}, {HB_FUNCNAME( UPPER )}, NULL },
+{ "GETDRAWITEMSTRUCT", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( GETDRAWITEMSTRUCT )}, NULL },
+{ "LAND", {HB_FS_PUBLIC}, {HB_FUNCNAME( LAND )}, NULL },
+{ "DRAWFOCUSRECT", {HB_FS_PUBLIC}, {HB_FUNCNAME( DRAWFOCUSRECT )}, NULL },
+{ "SETBKCOLOR", {HB_FS_PUBLIC}, {HB_FUNCNAME( SETBKCOLOR )}, NULL },
+{ "EVAL", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "LEN", {HB_FS_PUBLIC}, {HB_FUNCNAME( LEN )}, NULL },
+{ "GETDC", {HB_FS_PUBLIC}, {HB_FUNCNAME( GETDC )}, NULL },
+{ "GETFONTNAMES", {HB_FS_PUBLIC}, {HB_FUNCNAME( GETFONTNAMES )}, NULL },
+{ "ASORT", {HB_FS_PUBLIC}, {HB_FUNCNAME( ASORT )}, NULL },
+{ "RELEASEDC", {HB_FS_PUBLIC}, {HB_FUNCNAME( RELEASEDC )}, NULL },
+{ "GETPROCADDRESS", {HB_FS_PUBLIC}, {HB_FUNCNAME( GETPROCADDRESS )}, NULL },
+{ "TACTIVEX", {HB_FS_PUBLIC}, {HB_FUNCNAME( TACTIVEX )}, NULL },
+{ "ERRORSYS", {HB_FS_PUBLIC}, {HB_FUNCNAME( ERRORSYS )}, NULL },
+{ "TLISTBOX", {HB_FS_PUBLIC}, {HB_FUNCNAME( TLISTBOX )}, NULL },
+{ "(_INITSTATICS00003)", {HB_FS_INITEXIT}, {hb_INITSTATICS}, NULL }
+HB_INIT_SYMBOLS_END( hb_vm_SymbolInit_LBXFONT )
+
+#if defined(HB_PRAGMA_STARTUP)
+   #pragma startup hb_vm_SymbolInit_LBXFONT
+#elif defined(HB_MSC_STARTUP)
+   #if _MSC_VER >= 1010
+      #pragma data_seg( ".CRT$XIY" )
+      #pragma comment( linker, "/Merge:.CRT=.data" )
+   #else
+      #pragma data_seg( "XIY" )
+   #endif
+   static HB_$INITSYM hb_vm_auto_SymbolInit_LBXFONT = hb_vm_SymbolInit_LBXFONT;
+   #pragma data_seg()
+#endif
+
+HB_FUNC( XSELCOLOR )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 14, 3, 116, 101, 0, 133, 76, 0, 120, 80, 13, 134, 3, 
+	9, 80, 16, 134, 19, 97, 255, 127, 127, 0, 97, 255, 255, 127, 
+	0, 97, 127, 255, 127, 0, 97, 0, 255, 127, 0, 97, 127, 255, 
+	255, 0, 97, 0, 127, 255, 0, 97, 255, 127, 191, 0, 97, 255, 
+	127, 255, 0, 93, 255, 0, 97, 255, 255, 0, 0, 97, 127, 255, 
+	0, 0, 97, 0, 255, 63, 0, 97, 0, 255, 255, 0, 97, 0, 
+	127, 191, 0, 97, 127, 127, 191, 0, 97, 255, 0, 255, 0, 97, 
+	127, 63, 63, 0, 97, 255, 127, 63, 0, 97, 0, 255, 0, 0, 
+	97, 0, 127, 127, 0, 97, 0, 63, 127, 0, 97, 127, 127, 255, 
+	0, 97, 127, 0, 63, 0, 97, 255, 0, 127, 0, 92, 127, 93, 
+	255, 127, 93, 0, 127, 97, 0, 127, 63, 0, 97, 0, 0, 255, 
+	0, 97, 0, 0, 159, 0, 97, 127, 0, 127, 0, 97, 127, 0, 
+	255, 0, 92, 63, 93, 127, 63, 93, 0, 63, 97, 0, 63, 63, 
+	0, 97, 0, 0, 127, 0, 97, 0, 0, 63, 0, 97, 63, 0, 
+	63, 0, 97, 63, 0, 127, 0, 121, 93, 127, 127, 97, 127, 127, 
+	63, 0, 97, 127, 127, 127, 0, 97, 63, 127, 127, 0, 97, 191, 
+	191, 191, 0, 97, 63, 0, 63, 0, 97, 255, 255, 255, 0, 4, 
+	48, 0, 80, 17, 134, 21, 48, 1, 0, 108, 2, 100, 12, 0, 
+	106, 14, 77, 115, 32, 83, 97, 110, 115, 32, 83, 101, 114, 105, 
+	102, 0, 92, 5, 92, 13, 100, 100, 100, 100, 100, 100, 100, 100, 
+	100, 100, 100, 100, 100, 100, 112, 17, 80, 12, 134, 23, 100, 82, 
+	2, 0, 134, 26, 48, 1, 0, 108, 3, 100, 12, 0, 95, 1, 
+	95, 2, 95, 1, 128, 152, 0, 95, 2, 128, 148, 0, 100, 100, 
+	100, 9, 108, 4, 100, 159, 0, 0, 0, 128, 0, 0, 0, 0, 
+	93, 128, 0, 12, 2, 100, 100, 100, 100, 120, 100, 100, 100, 100, 
+	100, 9, 112, 20, 80, 4, 134, 28, 48, 1, 0, 108, 5, 100, 
+	12, 0, 121, 121, 106, 8, 67, 111, 108, 111, 114, 101, 115, 0, 
+	4, 1, 0, 4, 0, 0, 95, 4, 100, 100, 100, 120, 9, 93, 
+	150, 0, 93, 150, 0, 100, 9, 100, 112, 15, 80, 14, 134, 30, 
+	48, 6, 0, 95, 4, 95, 14, 112, 1, 73, 134, 35, 48, 1, 
+	0, 108, 7, 100, 12, 0, 121, 121, 92, 73, 92, 54, 106, 7, 
+	112, 97, 108, 101, 116, 97, 0, 100, 120, 48, 8, 0, 95, 14, 
+	112, 0, 122, 1, 100, 100, 9, 9, 100, 100, 9, 100, 120, 100, 
+	9, 112, 19, 80, 5, 134, 44, 48, 1, 0, 108, 9, 100, 12, 
+	0, 92, 54, 121, 106, 8, 38, 77, 97, 115, 46, 46, 46, 0, 
+	47, 48, 8, 0, 95, 14, 112, 0, 122, 1, 89, 34, 0, 0, 
+	0, 3, 0, 3, 0, 13, 0, 4, 0, 108, 10, 100, 95, 255, 
+	12, 1, 82, 2, 0, 9, 80, 254, 48, 11, 0, 95, 253, 112, 
+	0, 6, 92, 72, 92, 12, 100, 95, 12, 9, 120, 9, 100, 9, 
+	100, 100, 9, 112, 17, 80, 11, 134, 49, 48, 12, 0, 95, 5, 
+	89, 39, 0, 2, 0, 5, 0, 6, 0, 7, 0, 13, 0, 16, 
+	0, 4, 0, 95, 1, 80, 255, 95, 2, 80, 254, 9, 80, 253, 
+	120, 80, 252, 48, 11, 0, 95, 251, 112, 0, 6, 112, 1, 73, 
+	134, 58, 48, 13, 0, 95, 4, 48, 14, 0, 95, 4, 112, 0, 
+	48, 15, 0, 95, 4, 112, 0, 48, 16, 0, 95, 4, 112, 0, 
+	9, 100, 100, 100, 48, 17, 0, 95, 4, 112, 0, 100, 100, 112, 
+	10, 73, 134, 60, 95, 13, 28, 8, 134, 61, 95, 3, 110, 7, 
+	134, 64, 95, 16, 28, 74, 134, 66, 108, 18, 100, 92, 18, 12, 
+	1, 80, 9, 134, 67, 108, 18, 100, 101, 0, 0, 0, 0, 0, 
+	32, 50, 64, 255, 255, 12, 1, 80, 10, 134, 69, 108, 18, 100, 
+	95, 6, 95, 9, 18, 12, 1, 92, 8, 65, 108, 18, 100, 95, 
+	7, 95, 10, 18, 12, 1, 72, 128, 1, 0, 80, 8, 134, 71, 
+	95, 17, 95, 8, 1, 82, 2, 0, 134, 75, 103, 2, 0, 110, 
+	7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( SETCOLORRETURN )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 0, 1, 116, 101, 0, 133, 155, 0, 95, 1, 82, 2, 0, 
+	134, 1, 103, 2, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( XSELFONT )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 3, 3, 116, 101, 0, 133, 163, 0, 120, 80, 6, 134, 2, 
+	95, 3, 82, 1, 0, 134, 5, 48, 1, 0, 108, 3, 100, 12, 
+	0, 95, 1, 95, 2, 128, 236, 255, 95, 1, 128, 132, 0, 95, 
+	2, 128, 148, 0, 100, 100, 100, 9, 108, 4, 100, 159, 0, 0, 
+	0, 128, 0, 0, 0, 0, 93, 128, 0, 12, 2, 100, 100, 100, 
+	100, 120, 100, 100, 100, 100, 100, 9, 112, 20, 80, 4, 134, 7, 
+	48, 1, 0, 108, 21, 100, 12, 0, 121, 121, 92, 85, 92, 70, 
+	95, 4, 89, 28, 0, 1, 0, 1, 0, 3, 0, 108, 22, 100, 
+	12, 0, 121, 8, 28, 6, 95, 255, 25, 7, 95, 1, 21, 80, 
+	255, 6, 112, 6, 80, 5, 134, 10, 48, 23, 0, 95, 5, 89, 
+	39, 0, 0, 0, 2, 0, 5, 0, 4, 0, 108, 24, 100, 48, 
+	25, 0, 95, 255, 112, 0, 48, 26, 0, 95, 255, 112, 0, 1, 
+	20, 1, 48, 11, 0, 95, 254, 112, 0, 6, 112, 1, 73, 134, 
+	12, 48, 6, 0, 95, 4, 95, 5, 112, 1, 73, 134, 15, 48, 
+	13, 0, 95, 4, 48, 14, 0, 95, 4, 112, 0, 48, 15, 0, 
+	95, 4, 112, 0, 48, 16, 0, 95, 4, 112, 0, 9, 100, 100, 
+	89, 21, 0, 1, 0, 2, 0, 5, 0, 3, 0, 48, 27, 0, 
+	95, 255, 95, 254, 112, 1, 6, 48, 17, 0, 95, 4, 112, 0, 
+	100, 100, 112, 10, 73, 134, 17, 103, 1, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( SETFACENAMERETURN )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 0, 1, 116, 101, 0, 133, 183, 0, 95, 1, 82, 1, 0, 
+	134, 1, 103, 1, 0, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( TLBXFONT )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 2, 255, 116, 101, 0, 126, 2, 1, 0, 103, 3, 0, 100, 
+	8, 29, 42, 1, 48, 1, 0, 108, 28, 100, 12, 0, 106, 9, 
+	84, 76, 98, 120, 70, 111, 110, 116, 0, 108, 29, 100, 106, 9, 
+	84, 76, 105, 115, 116, 66, 111, 120, 0, 12, 1, 112, 2, 82, 
+	3, 0, 133, 190, 0, 48, 30, 0, 103, 3, 0, 100, 100, 95, 
+	2, 106, 11, 97, 83, 121, 115, 67, 111, 108, 111, 114, 115, 0, 
+	4, 1, 0, 9, 9, 112, 6, 73, 134, 2, 48, 31, 0, 103, 
+	3, 0, 106, 4, 78, 101, 119, 0, 108, 32, 14, 95, 2, 128, 
+	16, 0, 9, 112, 4, 73, 134, 3, 48, 31, 0, 103, 3, 0, 
+	106, 8, 68, 101, 102, 97, 117, 108, 116, 0, 108, 33, 14, 95, 
+	2, 9, 112, 4, 73, 134, 4, 48, 31, 0, 103, 3, 0, 106, 
+	10, 80, 97, 105, 110, 116, 73, 116, 101, 109, 0, 108, 34, 14, 
+	95, 2, 9, 112, 4, 73, 134, 5, 48, 35, 0, 103, 3, 0, 
+	106, 9, 68, 114, 97, 119, 73, 116, 101, 109, 0, 89, 43, 0, 
+	3, 0, 0, 0, 108, 36, 100, 95, 3, 48, 37, 0, 95, 1, 
+	112, 0, 48, 25, 0, 95, 1, 112, 0, 48, 38, 0, 95, 1, 
+	112, 0, 48, 39, 0, 95, 1, 112, 0, 12, 5, 6, 95, 2, 
+	9, 112, 4, 73, 134, 8, 48, 40, 0, 103, 3, 0, 112, 0, 
+	73, 48, 41, 0, 103, 3, 0, 112, 0, 151, 108, 42, 100, 48, 
+	41, 0, 103, 3, 0, 112, 0, 12, 1, 80, 1, 108, 43, 100, 
+	95, 1, 106, 10, 73, 110, 105, 116, 67, 108, 97, 115, 115, 0, 
+	12, 2, 28, 32, 48, 44, 0, 95, 1, 108, 45, 100, 12, 0, 
+	112, 1, 73, 25, 17, 108, 42, 100, 48, 41, 0, 103, 3, 0, 
+	112, 0, 12, 1, 80, 1, 108, 22, 100, 12, 0, 121, 15, 28, 
+	19, 48, 46, 0, 103, 3, 0, 95, 1, 108, 45, 100, 12, 0, 
+	112, 2, 110, 7, 95, 1, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC_STATIC( TLBXFONT_NEW )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 3, 6, 102, 80, 7, 133, 205, 0, 95, 7, 80, 9, 134, 
+	2, 48, 47, 0, 95, 7, 89, 28, 0, 1, 0, 1, 0, 6, 
+	0, 108, 22, 100, 12, 0, 121, 8, 28, 6, 95, 255, 25, 7, 
+	95, 1, 21, 80, 255, 6, 112, 1, 73, 134, 3, 48, 48, 0, 
+	95, 7, 106, 1, 0, 112, 1, 73, 134, 4, 48, 49, 0, 95, 
+	7, 95, 1, 112, 1, 73, 134, 5, 48, 50, 0, 95, 7, 95, 
+	2, 112, 1, 73, 134, 6, 48, 51, 0, 95, 7, 48, 52, 0, 
+	95, 7, 112, 0, 95, 4, 72, 128, 255, 255, 112, 1, 73, 134, 
+	7, 48, 53, 0, 95, 7, 48, 54, 0, 95, 7, 112, 0, 95, 
+	3, 72, 128, 255, 255, 112, 1, 73, 134, 8, 48, 55, 0, 95, 
+	7, 108, 56, 100, 12, 0, 112, 1, 73, 134, 9, 108, 57, 100, 
+	48, 25, 0, 95, 7, 112, 0, 89, 27, 0, 2, 0, 1, 0, 
+	7, 0, 108, 58, 100, 95, 1, 12, 1, 21, 48, 25, 0, 95, 
+	255, 150, 95, 2, 2, 6, 20, 2, 134, 11, 48, 59, 0, 95, 
+	7, 4, 0, 0, 112, 1, 73, 134, 13, 48, 60, 0, 95, 7, 
+	95, 5, 112, 1, 73, 134, 14, 48, 61, 0, 95, 7, 95, 8, 
+	112, 1, 73, 134, 16, 48, 62, 0, 95, 7, 120, 112, 1, 73, 
+	134, 18, 48, 63, 0, 95, 7, 89, 31, 0, 7, 0, 1, 0, 
+	9, 0, 48, 64, 0, 95, 255, 95, 1, 95, 2, 95, 3, 95, 
+	4, 95, 5, 95, 6, 95, 7, 112, 7, 6, 112, 1, 73, 134, 
+	20, 48, 65, 0, 95, 7, 108, 4, 100, 122, 92, 16, 93, 0, 
+	16, 97, 0, 0, 0, 64, 97, 0, 0, 0, 16, 97, 0, 0, 
+	128, 0, 97, 0, 0, 32, 0, 12, 7, 112, 1, 73, 134, 22, 
+	48, 66, 0, 95, 7, 48, 67, 0, 95, 7, 112, 0, 112, 1, 
+	73, 134, 23, 48, 68, 0, 95, 7, 9, 112, 1, 73, 134, 25, 
+	48, 69, 0, 95, 7, 121, 97, 255, 255, 255, 0, 112, 2, 73, 
+	134, 27, 108, 70, 100, 48, 71, 0, 95, 5, 112, 0, 12, 1, 
+	31, 66, 134, 28, 48, 40, 0, 95, 7, 106, 8, 76, 73, 83, 
+	84, 66, 79, 88, 0, 112, 1, 73, 134, 29, 48, 72, 0, 95, 
+	7, 112, 0, 73, 134, 30, 95, 8, 100, 69, 28, 14, 134, 31, 
+	48, 73, 0, 95, 7, 95, 8, 112, 1, 73, 134, 33, 48, 74, 
+	0, 95, 5, 95, 7, 112, 1, 73, 25, 14, 134, 35, 48, 75, 
+	0, 95, 5, 95, 7, 112, 1, 73, 134, 38, 95, 7, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC_STATIC( TLBXFONT_PAINTITEM )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 4, 7, 102, 80, 8, 133, 250, 0, 108, 76, 100, 95, 1, 
+	122, 12, 2, 80, 10, 134, 3, 95, 6, 28, 36, 134, 4, 108, 
+	77, 100, 95, 1, 95, 4, 108, 78, 100, 92, 13, 12, 1, 20, 
+	3, 134, 5, 108, 79, 100, 95, 1, 97, 255, 255, 255, 0, 20, 
+	2, 25, 28, 134, 7, 108, 77, 100, 95, 1, 95, 4, 97, 255, 
+	255, 255, 0, 20, 3, 134, 8, 108, 79, 100, 95, 1, 121, 20, 
+	2, 134, 11, 48, 1, 0, 108, 2, 100, 12, 0, 48, 25, 0, 
+	95, 8, 112, 0, 95, 2, 1, 121, 92, 240, 100, 100, 100, 100, 
+	100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 112, 17, 80, 11, 
+	134, 12, 108, 80, 100, 95, 1, 48, 81, 0, 95, 11, 112, 0, 
+	12, 2, 80, 9, 134, 14, 108, 82, 100, 95, 1, 48, 25, 0, 
+	95, 8, 112, 0, 95, 2, 1, 95, 4, 108, 4, 100, 92, 4, 
+	92, 32, 12, 2, 20, 4, 134, 16, 108, 80, 100, 95, 1, 95, 
+	9, 20, 2, 134, 17, 48, 11, 0, 95, 11, 112, 0, 73, 134, 
+	19, 108, 76, 100, 95, 1, 95, 10, 20, 2, 134, 21, 122, 110, 
+	7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC_STATIC( TLBXFONT_DEFAULT )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 4, 0, 102, 80, 1, 133, 20, 1, 48, 25, 0, 95, 1, 
+	112, 0, 122, 1, 80, 3, 134, 3, 95, 3, 100, 8, 28, 11, 
+	127, 3, 1, 0, 0, 95, 3, 25, 3, 100, 73, 108, 57, 100, 
+	48, 25, 0, 95, 1, 112, 0, 89, 57, 0, 2, 0, 1, 0, 
+	1, 0, 95, 1, 100, 8, 28, 17, 106, 1, 0, 21, 48, 25, 
+	0, 95, 255, 150, 95, 2, 2, 25, 3, 100, 73, 48, 83, 0, 
+	95, 255, 93, 128, 1, 121, 95, 1, 100, 8, 28, 7, 106, 1, 
+	0, 25, 4, 95, 1, 112, 3, 6, 20, 2, 134, 10, 108, 84, 
+	100, 95, 3, 12, 1, 106, 2, 78, 0, 69, 28, 55, 134, 12, 
+	108, 85, 100, 48, 25, 0, 95, 1, 112, 0, 89, 35, 0, 1, 
+	0, 1, 0, 3, 0, 108, 86, 100, 108, 58, 100, 95, 1, 12, 
+	1, 12, 1, 108, 86, 100, 108, 58, 100, 95, 255, 12, 1, 12, 
+	1, 8, 6, 12, 2, 80, 2, 25, 8, 134, 14, 95, 3, 80, 
+	2, 134, 17, 95, 2, 121, 69, 28, 22, 134, 18, 48, 83, 0, 
+	95, 1, 93, 134, 1, 95, 2, 128, 255, 255, 112, 2, 73, 25, 
+	16, 134, 20, 48, 83, 0, 95, 1, 93, 134, 1, 121, 112, 2, 
+	73, 134, 23, 100, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( LBXDRAWITEM )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 14, 5, 133, 49, 1, 108, 87, 100, 95, 1, 12, 1, 80, 
+	6, 134, 1, 95, 6, 122, 1, 80, 7, 134, 2, 95, 6, 92, 
+	2, 1, 80, 8, 134, 3, 95, 6, 92, 3, 1, 80, 9, 134, 
+	4, 95, 6, 92, 4, 1, 80, 10, 134, 5, 95, 6, 92, 5, 
+	1, 80, 11, 134, 6, 95, 6, 92, 6, 1, 80, 12, 134, 7, 
+	95, 6, 92, 7, 1, 80, 13, 134, 8, 95, 6, 92, 8, 1, 
+	80, 14, 134, 9, 95, 6, 92, 9, 1, 80, 15, 134, 10, 95, 
+	6, 92, 10, 1, 80, 16, 134, 11, 95, 6, 92, 11, 1, 80, 
+	17, 134, 15, 95, 10, 122, 8, 21, 31, 8, 73, 95, 10, 92, 
+	2, 8, 29, 67, 1, 134, 17, 108, 88, 100, 95, 11, 92, 16, 
+	12, 2, 28, 19, 134, 18, 108, 89, 100, 95, 13, 95, 14, 95, 
+	15, 95, 16, 95, 17, 20, 5, 134, 21, 108, 88, 100, 95, 11, 
+	122, 12, 2, 28, 67, 134, 22, 108, 79, 100, 95, 13, 108, 78, 
+	100, 92, 14, 12, 1, 12, 2, 80, 18, 134, 23, 108, 90, 100, 
+	95, 13, 108, 78, 100, 92, 13, 12, 1, 12, 2, 80, 19, 134, 
+	24, 108, 77, 100, 95, 13, 95, 14, 95, 15, 95, 16, 95, 17, 
+	4, 4, 0, 108, 78, 100, 92, 13, 12, 1, 20, 3, 25, 27, 
+	134, 26, 108, 77, 100, 95, 13, 95, 14, 95, 15, 95, 16, 95, 
+	17, 4, 4, 0, 97, 255, 255, 255, 0, 20, 3, 134, 30, 108, 
+	82, 100, 95, 13, 95, 3, 95, 9, 128, 1, 0, 1, 95, 14, 
+	95, 15, 128, 2, 0, 95, 16, 95, 17, 4, 4, 0, 108, 4, 
+	100, 92, 4, 92, 32, 12, 2, 20, 4, 134, 33, 108, 88, 100, 
+	95, 11, 122, 12, 2, 28, 24, 134, 34, 108, 79, 100, 95, 13, 
+	95, 18, 20, 2, 134, 35, 108, 90, 100, 95, 13, 95, 19, 20, 
+	2, 134, 38, 108, 88, 100, 95, 11, 92, 16, 12, 2, 28, 19, 
+	134, 39, 108, 89, 100, 95, 13, 95, 14, 95, 15, 95, 16, 95, 
+	17, 20, 5, 134, 42, 95, 5, 100, 69, 28, 78, 134, 43, 48, 
+	91, 0, 95, 5, 95, 13, 95, 9, 128, 1, 0, 95, 3, 95, 
+	9, 128, 1, 0, 1, 95, 14, 95, 15, 95, 16, 95, 17, 4, 
+	4, 0, 108, 88, 100, 95, 11, 92, 16, 12, 2, 108, 88, 100, 
+	95, 11, 122, 12, 2, 108, 92, 100, 95, 2, 12, 1, 121, 15, 
+	28, 12, 95, 2, 95, 9, 128, 1, 0, 1, 25, 3, 121, 112, 
+	7, 110, 7, 134, 48, 100, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( AGETFONTNAMESEX )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 2, 0, 133, 102, 1, 108, 93, 100, 121, 12, 1, 80, 1, 
+	134, 1, 108, 94, 100, 95, 1, 12, 1, 80, 2, 134, 2, 108, 
+	95, 100, 95, 2, 12, 1, 80, 2, 134, 3, 108, 96, 100, 121, 
+	95, 1, 20, 2, 134, 5, 95, 2, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC_INITSTATICS()
+
+{
+   static const BYTE pcode[] =
+   {
+117, 101, 0, 3, 0, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+#line 375 ".\\lbxfont.prg"
+#include "windows.h"
+#include "hbapi.h"
+
+HB_FUNC( GETDRAWITEMSTRUCT )
+{
+   LPDRAWITEMSTRUCT lp = ( LPDRAWITEMSTRUCT ) hb_parnl( 1 );
+
+   hb_reta( 12 );
+
+   hb_storni( lp->CtlType      ,    -1, 1  );
+   hb_storni( lp->CtlID        ,    -1, 2  );
+   hb_storni( lp->itemID       ,    -1, 3  );
+   hb_storni( lp->itemAction   ,    -1, 4  );
+   hb_storni( lp->itemState    ,    -1, 5  );
+   hb_storni( ( LONG ) lp->hwndItem     ,    -1, 6  );
+   hb_storni( ( LONG ) lp->hDC          ,    -1, 7  );
+   hb_storni( lp->rcItem.top   ,    -1, 8  );
+   hb_storni( lp->rcItem.left  ,    -1, 9  );
+   hb_storni( lp->rcItem.bottom,    -1, 10 );
+   hb_storni( lp->rcItem.right ,    -1, 11 );
+   hb_stornd( lp->itemData     ,    -1, 12 );
+
+}
+
+
+
+

@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Report xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/1002.xsd">
+<nWidth>240.47</nWidth>
+<nHeight>340.98</nHeight>
+<cType>A4 210 x 297 mm</cType>
+<nItems>31</nItems>
+<nZoom>60</nZoom>
+<Item Name="Rectangle" Num="1">
+   <nTop>57</nTop>
+   <nLeft>522</nLeft>
+   <nWidth>328</nWidth>
+   <nHeight>186</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>4</nPen>
+   <nClrPen>255</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lTransparent>Yes</lTransparent>
+   <lRoundRect>No</lRoundRect>
+   <lBorder>Yes</lBorder>
+   <nRadioW>10</nRadioW>
+   <nRadioH>10</nRadioH>
+   <nID>110</nID>
+</Item>
+<Item Name="Text" Num="2">
+   <nTop>140</nTop>
+   <nLeft>545</nLeft>
+   <nWidth>285</nWidth>
+   <nHeight>24</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>FACTURA ELECTRONICA</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>23</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>Yes</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>Yes</lTransparent>
+   <nClrText>255</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>111</nID>
+</Item>
+<Item Name="Text" Num="3">
+   <nTop>87</nTop>
+   <nLeft>567</nLeft>
+   <nWidth>236</nWidth>
+   <nHeight>24</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>R.U.T.: 79.894.240 - 8</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>19</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>Yes</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>255</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>113</nID>
+</Item>
+<Item Name="Text" Num="4">
+   <nTop>187</nTop>
+   <nLeft>635</nLeft>
+   <nWidth>71</nWidth>
+   <nHeight>24</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>Nº 74</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>19</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>Yes</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>255</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>3</nAlign>
+   <nID>114</nID>
+</Item>
+<Item Name="Rectangle" Num="5">
+   <nTop>273</nTop>
+   <nLeft>21</nLeft>
+   <nWidth>828</nWidth>
+   <nHeight>234</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lTransparent>Yes</lTransparent>
+   <lRoundRect>No</lRoundRect>
+   <lBorder>Yes</lBorder>
+   <nRadioW>10</nRadioW>
+   <nRadioH>10</nRadioH>
+   <nID>115</nID>
+</Item>
+<Item Name="Text" Num="6">
+   <nTop>288</nTop>
+   <nLeft>35</nLeft>
+   <nWidth>125</nWidth>
+   <nHeight>184</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>SEÑOR(ES):ÿÿDIRECCIÓN:ÿÿGIRO:ÿÿCOLUMNA:ÿÿVENDEDOR:ÿÿFECHA:ÿÿCONDICIÓN DE VENTA:ÿÿLOCAL:</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>12</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>Yes</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>4</nAlign>
+   <nID>116</nID>
+</Item>
+<Item Name="Text" Num="7">
+   <nTop>295</nTop>
+   <nLeft>568</nLeft>
+   <nWidth>175</nWidth>
+   <nHeight>165</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>R.U.T.:ÿÿÿÿÿÿÿCIUDAD:ÿÿDIR. ORIGEN:ÿÿFECHA DE VENCIMIENTO:ÿÿ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>12</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>Yes</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>4</nAlign>
+   <nID>117</nID>
+</Item>
+<Item Name="Rectangle" Num="8">
+   <nTop>511</nTop>
+   <nLeft>21</nLeft>
+   <nWidth>828</nWidth>
+   <nHeight>425</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lTransparent>Yes</lTransparent>
+   <lRoundRect>No</lRoundRect>
+   <lBorder>Yes</lBorder>
+   <nRadioW>10</nRadioW>
+   <nRadioH>10</nRadioH>
+   <nID>118</nID>
+</Item>
+<Item Name="Line" Num="9">
+   <nTop>542</nTop>
+   <nLeft>22</nLeft>
+   <nWidth>825</nWidth>
+   <nHeight>0</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lVertical>No</lVertical>
+   <lFree>No</lFree>
+   <nID>119</nID>
+</Item>
+<Item Name="Line" Num="10">
+   <nTop>512</nTop>
+   <nLeft>108</nLeft>
+   <nWidth>0</nWidth>
+   <nHeight>421</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lVertical>Yes</lVertical>
+   <lFree>No</lFree>
+   <nID>120</nID>
+</Item>
+<Item Name="Line" Num="11">
+   <nTop>512</nTop>
+   <nLeft>193</nLeft>
+   <nWidth>0</nWidth>
+   <nHeight>423</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lVertical>Yes</lVertical>
+   <lFree>No</lFree>
+   <nID>128</nID>
+</Item>
+<Item Name="Line" Num="12">
+   <nTop>512</nTop>
+   <nLeft>393</nLeft>
+   <nWidth>0</nWidth>
+   <nHeight>422</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lVertical>Yes</lVertical>
+   <lFree>No</lFree>
+   <nID>129</nID>
+</Item>
+<Item Name="Line" Num="13">
+   <nTop>512</nTop>
+   <nLeft>476</nLeft>
+   <nWidth>0</nWidth>
+   <nHeight>422</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lVertical>Yes</lVertical>
+   <lFree>No</lFree>
+   <nID>130</nID>
+</Item>
+<Item Name="Line" Num="14">
+   <nTop>512</nTop>
+   <nLeft>575</nLeft>
+   <nWidth>0</nWidth>
+   <nHeight>422</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lVertical>Yes</lVertical>
+   <lFree>No</lFree>
+   <nID>131</nID>
+</Item>
+<Item Name="Line" Num="15">
+   <nTop>512</nTop>
+   <nLeft>666</nLeft>
+   <nWidth>0</nWidth>
+   <nHeight>423</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lVertical>Yes</lVertical>
+   <lFree>No</lFree>
+   <nID>132</nID>
+</Item>
+<Item Name="Line" Num="16">
+   <nTop>512</nTop>
+   <nLeft>758</nLeft>
+   <nWidth>0</nWidth>
+   <nHeight>422</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lVertical>Yes</lVertical>
+   <lFree>No</lFree>
+   <nID>133</nID>
+</Item>
+<Item Name="Line" Num="17">
+   <nTop>510</nTop>
+   <nLeft>433</nLeft>
+   <nWidth>0</nWidth>
+   <nHeight>423</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lVertical>Yes</lVertical>
+   <lFree>No</lFree>
+   <nID>134</nID>
+</Item>
+<Item Name="Rectangle" Num="18">
+   <nTop>935</nTop>
+   <nLeft>667</nLeft>
+   <nWidth>182</nWidth>
+   <nHeight>95</nHeight>
+   <lForeGround>No</lForeGround>
+   <nPen>1</nPen>
+   <nClrPen>0</nClrPen>
+   <nClrPane>16777215</nClrPane>
+   <lTransparent>Yes</lTransparent>
+   <lRoundRect>No</lRoundRect>
+   <lBorder>Yes</lBorder>
+   <nRadioW>10</nRadioW>
+   <nRadioH>10</nRadioH>
+   <nID>135</nID>
+</Item>
+<Item Name="Text" Num="19">
+   <nTop>518</nTop>
+   <nLeft>121</nLeft>
+   <nWidth>62</nWidth>
+   <nHeight>14</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>CÓDIGO</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>139</nID>
+</Item>
+<Item Name="Text" Num="20">
+   <nTop>518</nTop>
+   <nLeft>248</nLeft>
+   <nWidth>90</nWidth>
+   <nHeight>14</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>PRODUCTO</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>140</nID>
+</Item>
+<Item Name="Text" Num="21">
+   <nTop>519</nTop>
+   <nLeft>41</nLeft>
+   <nWidth>31</nWidth>
+   <nHeight>15</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>PLU</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>141</nID>
+</Item>
+<Item Name="Text" Num="22">
+   <nTop>520</nTop>
+   <nLeft>398</nLeft>
+   <nWidth>31</nWidth>
+   <nHeight>15</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>ENV.</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>143</nID>
+</Item>
+<Item Name="Text" Num="23">
+   <nTop>520</nTop>
+   <nLeft>439</nLeft>
+   <nWidth>31</nWidth>
+   <nHeight>15</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>EST.</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>144</nID>
+</Item>
+<Item Name="Text" Num="24">
+   <nTop>520</nTop>
+   <nLeft>499</nLeft>
+   <nWidth>47</nWidth>
+   <nHeight>15</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>UNID.</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>145</nID>
+</Item>
+<Item Name="Text" Num="25">
+   <nTop>521</nTop>
+   <nLeft>596</nLeft>
+   <nWidth>47</nWidth>
+   <nHeight>15</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>KILOS</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>146</nID>
+</Item>
+<Item Name="Text" Num="26">
+   <nTop>520</nTop>
+   <nLeft>687</nLeft>
+   <nWidth>47</nWidth>
+   <nHeight>15</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>PRECIOS</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>147</nID>
+</Item>
+<Item Name="Text" Num="27">
+   <nTop>519</nTop>
+   <nLeft>776</nLeft>
+   <nWidth>47</nWidth>
+   <nHeight>15</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>VALOR</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>148</nID>
+</Item>
+<Item Name="Text" Num="28">
+   <nTop>948</nTop>
+   <nLeft>678</nLeft>
+   <nWidth>47</nWidth>
+   <nHeight>15</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>NETO     :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>149</nID>
+</Item>
+<Item Name="Text" Num="29">
+   <nTop>968</nTop>
+   <nLeft>677</nLeft>
+   <nWidth>47</nWidth>
+   <nHeight>15</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>I.V.A.     :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>150</nID>
+</Item>
+<Item Name="Text" Num="30">
+   <nTop>1005</nTop>
+   <nLeft>679</nLeft>
+   <nWidth>47</nWidth>
+   <nHeight>15</nHeight>
+   <lForeGround>No</lForeGround>
+   <cCaption>TOTAL   :</cCaption>
+   <cFaceName>Verdana</cFaceName>
+   <nHFont>14</nHFont>
+   <lUnder>No</lUnder>
+   <lBold>No</lBold>
+   <lItalic>No</lItalic>
+   <lTransparent>No</lTransparent>
+   <nClrText>0</nClrText>
+   <nClrPane>16777215</nClrPane>
+   <nGiro>0</nGiro>
+   <nAlign>1</nAlign>
+   <nID>151</nID>
+</Item>
+<Item Name="Image" Num="31">
+   <nTop>54</nTop>
+   <nLeft>32</nLeft>
+   <nWidth>343</nWidth>
+   <nHeight>88</nHeight>
+   <lForeGround>No</lForeGround>
+   <cBmp>C:\CANAL5\reportdsgn\formularios\AGROSUPER.bmp</cBmp>
+   <lAdjust>No</lAdjust>
+   <nID>152</nID>
+</Item>
+</Report>

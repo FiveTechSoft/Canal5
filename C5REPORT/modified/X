@@ -1,0 +1,35 @@
+makepath[.prg]=".\fonts.z\zads"
+makepath[.obj]=".\code.obj"
+makepath[.hc]=".\fonts.z\zads"
+makepath[.c]=".\code.c"
+
+.prg.c:
+   cls
+   echo Compil.lan $<
+   harbour $< /o$@ /n/w
+   bcc32 -c -O2 -o.\code.obj\$*.obj .\code.c\$*.c
+   Tlib /P32 .\lib\Z -.\code.obj\$*.obj +.\code.obj\$*.obj
+
+
+.hc.obj:
+   cls
+   echo Compil.lan $<
+   bcc32 -c -O2 -D__HARBOUR__ -o.\code.obj\$*.obj $<
+   Tlib /P32 .\lib\Z    -.\code.obj\$*.obj +.\code.obj\$*.obj
+
+
+.lib.exe:
+   cls
+   del .\fonts.z\zads\*.bak
+   del .\lib\Z.bak
+   echo Llibreria Z.lib Done !!!
+
+ZAdsCfg.c   : ZAdsCfg.prg
+ZAdsCone.c  : ZAdsCone.prg
+ZAdsInfo.c  : ZAdsInfo.prg
+ZWhoLock.c  : ZWhoLock.prg
+
+Adsfunc.obj : AdsFunc.hc
+
+
+Z.exe        : .\lib\Z.lib

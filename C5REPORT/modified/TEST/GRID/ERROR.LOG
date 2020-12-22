@@ -1,0 +1,222 @@
+Application
+===========
+   Path and name: C:\HAL\DISSENY\REPORT\TEST\GRID\TEST.EXE (32 bits)
+   Size: 1,254,912 bytes
+   Time from start: 0 hours 0 mins 3 secs 
+   Error occurred at: 08/08/08, 12:09:42
+   Error description: Error BASE/1003  Variable does not exist: GRUPO
+
+Stack Calls
+===========
+   Called from: ListProp.prg => (b)TLISTPROP(117)
+   Called from:  => TLISTPROP:ADDGROUP(0)
+   Called from: Test.prg => T(37)
+   Called from: Test.prg => (b)MAIN(12)
+   Called from:  => TBTNBMP:CLICK(0)
+   Called from:  => TBTNBMP:LBUTTONUP(0)
+   Called from:  => TWINDOW:HANDLEEVENT(0)
+   Called from:  => TCONTROL:HANDLEEVENT(0)
+   Called from:  => TBTNBMP:HANDLEEVENT(0)
+   Called from: .\source\classes\WINDOW.PRG => _FWH(0)
+   Called from:  => WINRUN(0)
+   Called from:  => TMDIFRAME:ACTIVATE(0)
+   Called from: Test.prg => MAIN(14)
+
+System
+======
+   CPU type:         Intel(R) Pentium(R) M processor 1.73GHz 1733 Mhz
+   Hardware memory: 1016 megs
+
+   Free System resources: 90 %
+        GDI    resources: 90 %
+        User   resources: 90 %
+
+   Compiler version: Harbour 1.0.0RC1 Intl. (Rev. 8835)
+   Windows version: 5.1, Build 2600 Service Pack 2
+
+   Windows total applications running: 62
+      1 
+      2 Back   (F3)
+      3 Generar modo nuevo
+      4 CiceroUIWndFrame
+      5 Sapgui 640 [/M/BY-SAP-HI3.BAYER-AG.COM/S/sapmsHI3/G/Production 3]
+      6 TF_FloatingLangBar_WndTitle
+      7 LANDesk Remote Control
+      8 FWH0807
+      9 Thorsten Demmel/LSDEM/LS/DE/BAYER  [inicio: 11:56]
+     10 Replicación - Lotus Notes
+     11 SAP Logon 640
+     12 Áreas de ventas de cliente
+     13 Grupos de usuarios
+     14 This is a DataTip :)
+     15 SAP Graphics Multiplexer
+     16 YX08 - Visualización stocks por familias de productos
+     17 Visual.lista material.p.mater.: Resumen de posiciones general
+     18 SAPLPD.LOG - SAPLPD
+     19 257 MB of utilidades.zip Copied
+     20 www.FiveTechSoft.com :: View Forum - FiveWin para Harbour/xHarbour - Avant Browser
+     21 Avant Browser
+     22 DDE Server Window
+     23 Lexibase - Collins En-Es
+     24 MCI command handling window
+     25 Registro de red de TextTrans
+     26 TextTrans
+     27 Lotus Sametime Connect - Carles Aubia/TA/ES/BAYER
+     28 Timer
+     29 IMMIF UI
+     30 Lista de contactos de mensajería instantánea
+     31 UbqSock
+     32 TosBtAPI(Bluetooth Manager)
+     33 Bluetooth Manager(Ready)
+     34 TosBtAPI(HSP Manager)
+     35 HSP Manager
+     36 UbqSynchWnd
+     37 AIM socket
+     38 TosBtHid
+     39 TosA2dp - Bluetooth A2DP Manager
+     40 TosBtAPI(Toshiba Bluetooth AVDTP Module)
+     41 TosAvdtp Status
+     42 WinAMRestoreWnd
+     43 c20
+     44 DccMan
+     45 Connections Tray
+     46 RAPIMgr
+     47 TSVNCacheWindow
+     48 Medidor de energía
+     49 MS_WebcheckMonitor
+     50 NotesAgent.Lotus.211.101
+     51 Elara
+     52 HelperMsgListenerWnd
+     53 ApUsbPnP
+     54 QuickSet
+     55 C:\Program Files\Apoint\Apntex.exe
+     56 Europa
+     57 NICCONFIGSVC
+     58 ISSLDTopLevelWndClass
+     59 C:\PROGRA~1\LANDesk\LDClient\collector.exe
+     60 DispatchWindow
+     61 SysFader
+     62 Program Manager
+
+Variables in use
+================
+   Procedure     Type   Value
+   ==========================
+   (b)TLISTPROP
+     Param   1:    O    Class: TLISTPROP
+     Param   2:    C    "Información"
+     Local   1:    S    
+     Local   2:    O    Class: TLISTPROP
+     Local   3:    C    ""
+     Local   4:    C    "Información"
+     Local   5:    C    ""
+     Local   6:    U    
+     Local   7:    U    
+     Local   8:    N    0
+   TLISTPROP:ADDGROUP
+     Param   1:    C    "Información"
+   T
+     Local   1:    O    Class: TLISTPROP
+     Local   2:    O    Class: TFONT
+     Local   3:    C    "Información"
+     Local   4:    U    
+   (b)MAIN
+     Param   1:    O    Class: TBTNBMP
+   TBTNBMP:CLICK
+     Local   1:    O    Class: TBTNBMP
+   TBTNBMP:LBUTTONUP
+     Param   1:    N    5
+     Param   2:    N    8
+     Param   3:    N    0
+     Local   1:    U    
+     Local   2:    L    .T.
+     Local   3:    S    
+   TWINDOW:HANDLEEVENT
+     Param   1:    N    514
+     Param   2:    N    0
+     Param   3:    N    327688
+   TCONTROL:HANDLEEVENT
+     Param   1:    N    514
+     Param   2:    N    0
+     Param   3:    N    327688
+     Local   1:    O    Class: TBTNBMP
+     Local   2:    U    
+   TBTNBMP:HANDLEEVENT
+     Param   1:    N    514
+     Param   2:    N    0
+     Param   3:    N    327688
+     Local   1:    O    Class: TBTNBMP
+   _FWH
+     Param   1:    N    327688
+     Param   2:    N    514
+     Param   3:    N    0
+     Param   4:    N    327688
+     Param   5:    N    4
+     Local   1:    O    Class: TBTNBMP
+   WINRUN
+     Param   1:    N    1835898
+   TMDIFRAME:ACTIVATE
+     Param   1:    C    "NORMAL"
+     Param   2:    U    
+     Param   3:    U    
+     Param   4:    U    
+     Param   5:    U    
+     Param   6:    U    
+     Param   7:    U    
+     Param   8:    U    
+     Param   9:    U    
+     Param  10:    U    
+     Param  11:    U    
+     Param  12:    U    
+     Param  13:    U    
+     Param  14:    U    
+     Param  15:    U    
+     Param  16:    U    
+     Param  17:    U    
+     Param  18:    U    
+     Param  19:    U    
+     Local   1:    O    Class: TMDIFRAME
+     Local   2:    U    
+     Local   3:    U    
+   MAIN
+     Local   1:    O    Class: TBAR
+
+Linked RDDs
+===========
+   DBF
+   DBFFPT
+   DBFBLOB
+   DBFNTX
+
+DataBases in use
+================
+
+Classes in use:
+===============
+     1 ERROR
+     2 HBCLASS
+     3 HBOBJECT
+     4 TWINDOW
+     5 TMDIFRAME
+     6 TMENU
+     7 TMENUITEM
+     8 TBRUSH
+     9 TMDICLIENT
+    10 TFONT
+    11 TCONTROL
+    12 TBAR
+    13 TRECT
+    14 TBTNBMP
+    15 TGRIDEXTENDED
+    16 TLISTPROP
+    17 TSCROLLBAR
+    18 TREG32
+
+Memory Analysis
+===============
+      180 Static variables
+
+   Dynamic memory consume:
+      Actual  Value:          0 bytes
+      Highest Value:          0 bytes
+

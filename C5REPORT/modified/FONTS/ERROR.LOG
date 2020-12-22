@@ -1,0 +1,107 @@
+Application
+===========
+   Path and name: C:\canal5\reportdsgn\c5report.exe (32 bits)
+   Size: 1,833,472 bytes
+   Time from start: 0 hours 0 mins 14 secs 
+   Error occurred at: 01/11/08, 17:07:00
+   Error description: Error BASE/1004  Class: 'NIL' has no exported method: END
+   Args:
+     [   1] = U   
+
+Stack Calls
+===========
+   Called from:  => END(0)
+   Called from: prueba.prg => MAIN(236)
+
+System
+======
+   CPU type:               Intel(R) Pentium(R) 4 CPU 2.40GHz 2400 Mhz
+   Hardware memory: 447 megs
+
+   Free System resources: 90 %
+        GDI    resources: 90 %
+        User   resources: 90 %
+
+   Compiler version: xHarbour build 0.99.71 Intl. (SimpLex)
+   Windows version: 5.1, Build 2600 Service Pack 2
+
+   Windows total applications running: 0
+
+Variables in use
+================
+   Procedure     Type   Value
+   ==========================
+   END
+     Local   1:    A    Len:    0
+     Local   2:    U    
+     Local   3:    N    0
+   MAIN
+     Local   1:    U    
+     Local   2:    U    
+     Local   3:    U    
+     Local   4:    A    Len:   30
+     Local   5:    O    Class: TPANELEX
+     Local   6:    O    Class: TFONT
+     Local   7:    U    
+     Local   8:    O    Class: TMENU
+     Local   9:    U    
+     Local  10:    C    "10"
+     Local  11:    A    Len:   15
+     Local  12:    U    
+     Local  13:    U    
+     Local  14:    N    20
+
+Linked RDDs
+===========
+   DBF
+   DBFFPT
+   DBFBLOB
+   DBFNTX
+
+DataBases in use
+================
+
+Classes in use:
+===============
+     1 HASHENTRY
+     2 HBCLASS
+     3 HBOBJECT
+     4 TFONT
+     5 TMENU
+     6 TMENUITEM
+     7 TACCTABLE
+     8 TWINDOW
+     9 TBRUSH
+    10 TCONTROL
+    11 TC5STBAR
+    12 TC5STBARITEM
+    13 TCHECKBOX
+    14 TCOMBOBOX
+    15 TPANEL
+    16 TPANELEX
+    17 TSCROLLBAR
+    18 TTREEVIEW
+    19 TTREEVIEWEX
+    20 TTVITEM
+    21 TGRIDEXTENDED
+    22 TLISTPROP
+    23 TBAR
+    24 TRECT
+    25 TBTNBMP
+    26 TSPLITTER
+    27 TC5REPORT
+    28 TINI
+    29 TTIMER
+    30 TC5RULE
+    31 TDIALOG
+    32 ERROR
+    33 TREG32
+
+Memory Analysis
+===============
+      218 Static variables
+
+   Dynamic memory consume:
+      Actual  Value:          0 bytes
+      Highest Value:          0 bytes
+

@@ -1,0 +1,79 @@
+#ifdef __FLAT__
+  1 24 ".\WinXP\WindowsXP.Manifest"
+#endif
+
+#ifdef __64__
+   1 24 "WinXP/WindowsXP.Manifest64"
+#endif
+
+
+brush1 BITMAP "../smallbmp/brush1.bmp"
+hand2  CURSOR "../cur/hand2.cur"
+catch2 CURSOR "../cur/catch2.cur"
+
+curarrow  BITMAP "..\bmps\carrow.bmp"
+text      BITMAP "..\bmps\text.bmp"
+field     BITMAP "..\bmps\field.bmp"
+image     BITMAP "..\bmps\image.bmp"
+line      BITMAP "..\bmps\line.bmp"
+box       BITMAP "..\bmps\box.bmp"
+elipse    BITMAP "..\bmps\ellipse.bmp"
+base      BITMAP "..\bmps\base.bmp"
+detail    BITMAP "..\btns\browse.bmp"
+btn1      BITMAP "..\bmps\btn1.bmp"
+btn2      BITMAP "..\bmps\btn2.bmp"
+btn3      BITMAP "..\bmps\btn3.bmp"
+btn4      BITMAP "..\bmps\btn4.bmp"
+genie     BITMAP "..\bmps\genie.bmp"
+
+undo      BITMAP "..\bmps\undo.bmp"
+redo      BITMAP "..\bmps\redo.bmp"
+
+altop     BITMAP "..\smallbmp\top.bmp"
+alleft    BITMAP "..\smallbmp\left.bmp"
+albottom  BITMAP "..\smallbmp\down.bmp"
+alright   BITMAP "..\smallbmp\right.bmp"
+alcenter  BITMAP "..\smallbmp\alcenter.bmp"
+almides   BITMAP "..\smallbmp\almides.bmp"
+
+samehe    BITMAP "..\smallbmp\samehe.bmp"
+samewi    BITMAP "..\smallbmp\samewi.bmp"
+samebo    BITMAP "..\smallbmp\samebo.bmp"
+
+toback    BITMAP "..\btns\toback.bmp"
+tofront   BITMAP "..\btns\tofront.bmp"
+
+candado   BITMAP "..\smallbmp\candado.bmp"
+candoff   BITMAP "..\smallbmp\cand_off.bmp"
+top       BITMAP "../brush/T.bmp"
+left      BITMAP "../brush/L.bmp"
+downleft  BITMAP "../brush/dl.bmp"
+down      BITMAP "../brush/d.bmp"
+downright BITMAP "../brush/dr.bmp"
+right     BITMAP "../brush/r.bmp"
+topright  BITMAP "../brush/tr.bmp"
+
+new       BITMAP "..\smallbmp\nuevo.bmp"
+open      BITMAP "..\smallbmp\abrir.bmp"
+save      BITMAP "..\smallbmp\save.bmp"
+print     BITMAP "..\smallbmp\print.bmp"
+copy      BITMAP "..\smallbmp\copy.bmp"
+cut       BITMAP "..\smallbmp\cut.bmp"
+paste     BITMAP "..\smallbmp\paste.bmp"
+
+plus      BITMAP "..\bmps\plus.bmp"
+minus     BITMAP "..\bmps\minus.bmp"
+
+zoomin    BITMAP "..\smallbmp\zoomin.bmp"
+zoomout   BITMAP "..\smallbmp\zoomout.bmp"
+
+paleta    BITMAP "..\bmps\paleta.bmp"
+
+bold    BITMAP "..\smallbmp\bold.bmp"
+italic  BITMAP "..\smallbmp\italic.bmp"
+under   BITMAP "..\smallbmp\under.bmp"
+strike  BITMAP "..\smallbmp\strike.bmp"
+
+textclr  BITMAP "..\smallbmp\textclr.bmp"
+paneclr  BITMAP "..\smallbmp\paneclr.bmp"
+

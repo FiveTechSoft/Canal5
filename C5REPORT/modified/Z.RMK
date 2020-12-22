@@ -1,0 +1,50 @@
+makepath[.prg]=".\fonts"
+makepath[.hc]=".\fonts"
+makepath[.c]=".\code.c"
+makepath[.obj]=".\code.obj"
+makepath[.lib]=".\lib"
+
+.prg.c:
+   @echo on
+   cls
+   echo Compil.lan $<
+   harbour $< /o$@ /n/w
+   bcc32 -c -O2 -D__HARBOUR__ -o.\code.obj\$*.obj .\code.c\$*.c
+   Tlib .\lib\Report -.\code.obj\$*.obj +.\code.obj\$*.obj
+
+.hc.obj:
+   cls
+   echo Compil.lan $<
+   bcc32 -c -O2 -D__HARBOUR__ -o.\code.obj\$*.obj $<
+   Tlib /P32 .\lib\Report   -.\code.obj\$*.obj +.\code.obj\$*.obj
+
+.lib.exe:
+   cls
+   del .\fonts\*.bak
+   del .\lib\*.bak
+
+Prueba.c     : Prueba.prg
+bmpitem.c    : bmpitem.prg
+c5report.c   : c5report.prg
+c5stbar.c    : c5stbar.prg
+c5print.c    : c5print.prg
+itdetail.c   : itdetail.prg
+itfield.c    : itfield.prg
+itemelip.c   : itemelip.prg
+itemline.c   : itemline.prg
+itemrect.c   : itemrect.prg
+itemtext.c   : itemtext.prg
+itemelip.c   : itemelip.prg
+propery.c    : propery.prg
+rptitem.c    : rptitem.prg
+rule.c       : rule.prg
+listprop.c   : listprop.prg
+itfield.c  : itfield.prg
+lbxfont.c    : lbxfont.prg
+lbxcolor.c   : lbxcolor.prg
+funcions.c   : funcions.prg
+Dbg.c        : Dbg.prg
+
+Ces.obj      : Ces.hc
+
+Report.exe   : Report.lib

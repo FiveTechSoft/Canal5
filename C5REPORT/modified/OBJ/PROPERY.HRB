@@ -1,0 +1,144 @@
+/*
+ * xHarbour build 0.99.71 Intl. (SimpLex)
+ * Generated C source code from <propery.prg>
+ * Command: c:\xharbour\bin\harbour.exe -i.;\fwh\include;\xharbour\include -n -m -w -es2 -gc0 -p .\propery.prg -oobj\propery.hrb 
+ * Created: 2008.01.07 19:55:13 (Borland C++ 5.5.1)
+ */
+
+#include "hbvmpub.h"
+#include "hbinit.h"
+
+#define __PRG_SOURCE__ "propery.prg"
+
+HB_FUNC( TPROPERTY );
+HB_FUNC_STATIC( TPROPERTY_NEW );
+HB_FUNC_INITSTATICS();
+HB_FUNC_EXTERN( HBCLASS );
+HB_FUNC_EXTERN( __CLS_PARAM );
+HB_FUNC_EXTERN( OSEND );
+HB_FUNC_EXTERN( __CLSINST );
+HB_FUNC_EXTERN( __OBJHASMSG );
+HB_FUNC_EXTERN( HB_APARAMS );
+HB_FUNC_EXTERN( PCOUNT );
+HB_FUNC_EXTERN( GETPROCADDRESS );
+HB_FUNC_EXTERN( TACTIVEX );
+HB_FUNC_EXTERN( ERRORSYS );
+
+#undef HB_PRG_PCODE_VER
+#define HB_PRG_PCODE_VER 7
+
+HB_INIT_SYMBOLS_BEGIN( hb_vm_SymbolInit_PROPERY )
+{ "TPROPERTY", {HB_FS_PUBLIC | HB_FS_LOCAL | HB_FS_FIRST}, {HB_FUNCNAME( TPROPERTY )}, NULL },
+{ "NEW", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "HBCLASS", {HB_FS_PUBLIC}, {HB_FUNCNAME( HBCLASS )}, NULL },
+{ "__CLS_PARAM", {HB_FS_PUBLIC}, {HB_FUNCNAME( __CLS_PARAM )}, NULL },
+{ "ADDMULTIDATA", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "ADDMETHOD", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TPROPERTY_NEW", {HB_FS_STATIC | HB_FS_LOCAL}, {HB_FUNCNAME( TPROPERTY_NEW )}, NULL },
+{ "ADDINLINE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "OSEND", {HB_FS_PUBLIC}, {HB_FUNCNAME( OSEND )}, NULL },
+{ "OOBJECT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "CPROPERTY", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "CREATE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "HCLASS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "__CLSINST", {HB_FS_PUBLIC}, {HB_FUNCNAME( __CLSINST )}, NULL },
+{ "__OBJHASMSG", {HB_FS_PUBLIC}, {HB_FUNCNAME( __OBJHASMSG )}, NULL },
+{ "INITCLASS", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "HB_APARAMS", {HB_FS_PUBLIC}, {HB_FUNCNAME( HB_APARAMS )}, NULL },
+{ "PCOUNT", {HB_FS_PUBLIC}, {HB_FUNCNAME( PCOUNT )}, NULL },
+{ "CONSTRUCTORCALL", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_CPROPERTY", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_CTEXT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_BPROPERTY", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_CCATEGORY", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "_CTYPE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "GETPROCADDRESS", {HB_FS_PUBLIC}, {HB_FUNCNAME( GETPROCADDRESS )}, NULL },
+{ "TACTIVEX", {HB_FS_PUBLIC}, {HB_FUNCNAME( TACTIVEX )}, NULL },
+{ "ERRORSYS", {HB_FS_PUBLIC}, {HB_FUNCNAME( ERRORSYS )}, NULL },
+{ "(_INITSTATICS00001)", {HB_FS_INITEXIT}, {hb_INITSTATICS}, NULL }
+HB_INIT_SYMBOLS_END( hb_vm_SymbolInit_PROPERY )
+
+#if defined(HB_PRAGMA_STARTUP)
+   #pragma startup hb_vm_SymbolInit_PROPERY
+#elif defined(HB_MSC_STARTUP)
+   #if _MSC_VER >= 1010
+      #pragma data_seg( ".CRT$XIY" )
+      #pragma comment( linker, "/Merge:.CRT=.data" )
+   #else
+      #pragma data_seg( "XIY" )
+   #endif
+   static HB_$INITSYM hb_vm_auto_SymbolInit_PROPERY = hb_vm_SymbolInit_PROPERY;
+   #pragma data_seg()
+#endif
+
+HB_FUNC( TPROPERTY )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 2, 255, 116, 27, 0, 126, 2, 1, 0, 103, 1, 0, 100, 
+	8, 29, 158, 1, 48, 1, 0, 108, 2, 100, 12, 0, 106, 10, 
+	84, 80, 114, 111, 112, 101, 114, 116, 121, 0, 108, 3, 100, 12, 
+	0, 112, 2, 82, 1, 0, 133, 5, 0, 48, 4, 0, 103, 1, 
+	0, 100, 100, 95, 2, 106, 8, 111, 79, 98, 106, 101, 99, 116, 
+	0, 4, 1, 0, 9, 9, 112, 6, 73, 134, 1, 48, 4, 0, 
+	103, 1, 0, 100, 100, 95, 2, 106, 10, 99, 80, 114, 111, 112, 
+	101, 114, 116, 121, 0, 4, 1, 0, 9, 9, 112, 6, 73, 134, 
+	2, 48, 4, 0, 103, 1, 0, 100, 100, 95, 2, 106, 6, 99, 
+	84, 101, 120, 116, 0, 4, 1, 0, 9, 9, 112, 6, 73, 134, 
+	3, 48, 4, 0, 103, 1, 0, 100, 100, 95, 2, 106, 10, 98, 
+	80, 114, 111, 112, 101, 114, 116, 121, 0, 4, 1, 0, 9, 9, 
+	112, 6, 73, 134, 4, 48, 4, 0, 103, 1, 0, 100, 100, 95, 
+	2, 106, 10, 99, 67, 97, 116, 101, 103, 111, 114, 121, 0, 4, 
+	1, 0, 9, 9, 112, 6, 73, 134, 5, 48, 4, 0, 103, 1, 
+	0, 100, 100, 95, 2, 106, 6, 99, 84, 121, 112, 101, 0, 4, 
+	1, 0, 9, 9, 112, 6, 73, 134, 7, 48, 5, 0, 103, 1, 
+	0, 106, 4, 78, 101, 119, 0, 108, 6, 14, 95, 2, 128, 16, 
+	0, 9, 112, 4, 73, 134, 9, 48, 7, 0, 103, 1, 0, 106, 
+	4, 83, 101, 116, 0, 89, 34, 0, 2, 0, 0, 0, 108, 8, 
+	100, 48, 9, 0, 95, 1, 112, 0, 106, 2, 95, 0, 48, 10, 
+	0, 95, 1, 112, 0, 72, 95, 2, 12, 3, 6, 95, 2, 9, 
+	112, 4, 73, 134, 10, 48, 7, 0, 103, 1, 0, 106, 4, 71, 
+	101, 116, 0, 89, 27, 0, 1, 0, 0, 0, 108, 8, 100, 48, 
+	9, 0, 95, 1, 112, 0, 48, 10, 0, 95, 1, 112, 0, 12, 
+	2, 6, 95, 2, 9, 112, 4, 73, 134, 12, 48, 11, 0, 103, 
+	1, 0, 112, 0, 73, 48, 12, 0, 103, 1, 0, 112, 0, 151, 
+	108, 13, 100, 48, 12, 0, 103, 1, 0, 112, 0, 12, 1, 80, 
+	1, 108, 14, 100, 95, 1, 106, 10, 73, 110, 105, 116, 67, 108, 
+	97, 115, 115, 0, 12, 2, 28, 32, 48, 15, 0, 95, 1, 108, 
+	16, 100, 12, 0, 112, 1, 73, 25, 17, 108, 13, 100, 48, 12, 
+	0, 103, 1, 0, 112, 0, 12, 1, 80, 1, 108, 17, 100, 12, 
+	0, 121, 15, 28, 19, 48, 18, 0, 103, 1, 0, 95, 1, 108, 
+	16, 100, 12, 0, 112, 2, 110, 7, 95, 1, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC_STATIC( TPROPERTY_NEW )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 1, 5, 102, 80, 6, 133, 23, 0, 48, 19, 0, 95, 6, 
+	95, 1, 112, 1, 73, 134, 1, 48, 20, 0, 95, 6, 95, 2, 
+	112, 1, 73, 134, 2, 48, 21, 0, 95, 6, 95, 3, 112, 1, 
+	73, 134, 3, 48, 22, 0, 95, 6, 95, 4, 112, 1, 73, 134, 
+	4, 48, 23, 0, 95, 6, 95, 5, 112, 1, 73, 134, 6, 95, 
+	6, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC_INITSTATICS()
+
+{
+   static const BYTE pcode[] =
+   {
+117, 27, 0, 1, 0, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+

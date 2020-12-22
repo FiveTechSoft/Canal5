@@ -1,0 +1,30 @@
+@ECHO OFF
+CLS
+del *.exe
+
+Harbour Test     /n
+Harbour BtnDown  /n
+Harbour BtnGet   /n
+Harbour FWCal    /n
+Harbour ZoomLbx  /n
+
+Bcc32 -M -c -O2 Test.c
+Bcc32 -M -c -O2 BtnDown.c
+Bcc32 -M -c -O2 BtnGet.c
+Bcc32 -M -c -O2 FWCal.c
+Bcc32 -M -c -O2 ZoomLbx.c
+Bcc32 -c -O2 -D__HARBOUR__ GetBtn.hc
+Bcc32 -c -O2 -D__HARBOUR__ FWBmp.hc
+
+Brc32 -r Test
+
+ILink32 -aa -Tpe -s -x @z.lnk
+
+del *.c
+del *.obj
+del *.i??
+del *.bak
+del *.t??
+del *.res
+
+TEST.exe

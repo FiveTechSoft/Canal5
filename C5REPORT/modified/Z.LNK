@@ -1,0 +1,15 @@
+-aa -Tpe +
+-j.\code.obj +
+C0W32.OBJ Prueba.obj , +
+Prueba.exe    ,+
+               ,+
+.\lib\report.lib      +
+.\lib\c5h.lib      +
+FiveH.lib FiveHc.lib  +
+HBRTL.LIB HBVM.LIB GTGUI.LIB HBLANG.LIB HBMACRO.LIB +
+HBRDD.LIB RDDNTX.LIB RDDCDX.LIB RDDFPT.LIB HBSIX.LIB +
+HBDEBUG.LIB HBCOMMON.LIB HBPP.LIB HBCPAGE.LIB HBW32.LIB CW32.LIB IMPORT32.LIB +
+ODBC32.LIB NDDEAPI.LIB IPHLPAPI.LIB MSIMG32.LIB RASAPI32.LIB +
+RddAds.lib ACE32.LIB,, +
+.\res\c5report.res
+

@@ -1,0 +1,9 @@
+Metodo  no encontrado: >> KEYDOWN <<
+
+prueba.prg->CSCINTILLA:WMKEYDOWN(224)
+->HB_EXECFROMARRAY(0)
+WinObject.prg->CSCINTILLA:FREEWIN_PROCEDURE(382)
+Window.prg->TAPP:ACTIVATE(0)
+prueba.prg->TAPP:START(42)
+prueba.prg->MAIN(11)
+

@@ -1,0 +1,121 @@
+/*
+ * xHarbour build 0.99.71 Intl. (SimpLex)
+ * Generated C source code from <prueba2.prg>
+ * Command: c:\xharbour\bin\harbour.exe -i.;\fwh\include;\xharbour\include -n -m -w -es2 -gc0 -p .\prueba2.prg -oobj\prueba2.hrb 
+ * Created: 2007.12.23 18:38:33 (Borland C++ 5.5.1)
+ */
+
+#include "hbvmpub.h"
+#include "hbinit.h"
+
+#define __PRG_SOURCE__ "prueba2.prg"
+
+HB_FUNC( MAIN );
+HB_FUNC( CONNECT );
+HB_FUNC_INITSTATICS();
+HB_FUNC_EXTERN( TWINDOW );
+HB_FUNC_EXTERN( TBAR );
+HB_FUNC_EXTERN( TBTNBMP );
+HB_FUNC_EXTERN( WQOUT );
+HB_FUNC_EXTERN( WINEXEC );
+HB_FUNC_EXTERN( STR );
+HB_FUNC_EXTERN( GETPROCADDRESS );
+HB_FUNC_EXTERN( TACTIVEX );
+HB_FUNC_EXTERN( ERRORSYS );
+
+#undef HB_PRG_PCODE_VER
+#define HB_PRG_PCODE_VER 7
+
+HB_INIT_SYMBOLS_BEGIN( hb_vm_SymbolInit_PRUEBA2 )
+{ "MAIN", {HB_FS_PUBLIC | HB_FS_LOCAL | HB_FS_FIRST}, {HB_FUNCNAME( MAIN )}, NULL },
+{ "NEW", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TWINDOW", {HB_FS_PUBLIC}, {HB_FUNCNAME( TWINDOW )}, NULL },
+{ "TBAR", {HB_FS_PUBLIC}, {HB_FUNCNAME( TBAR )}, NULL },
+{ "NEWBAR", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "TBTNBMP", {HB_FS_PUBLIC}, {HB_FUNCNAME( TBTNBMP )}, NULL },
+{ "CONNECT", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( CONNECT )}, NULL },
+{ "ACTIVATE", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BLCLICKED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BRCLICKED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BMOVED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BRESIZED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BPAINTED", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BKEYDOWN", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BINIT", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "BLBUTTONUP", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "WQOUT", {HB_FS_PUBLIC}, {HB_FUNCNAME( WQOUT )}, NULL },
+{ "WINEXEC", {HB_FS_PUBLIC}, {HB_FUNCNAME( WINEXEC )}, NULL },
+{ "STR", {HB_FS_PUBLIC}, {HB_FUNCNAME( STR )}, NULL },
+{ "HWND", {HB_FS_PUBLIC | HB_FS_MEMVAR | HB_FS_MESSAGE}, {NULL}, NULL },
+{ "GETPROCADDRESS", {HB_FS_PUBLIC}, {HB_FUNCNAME( GETPROCADDRESS )}, NULL },
+{ "TACTIVEX", {HB_FS_PUBLIC}, {HB_FUNCNAME( TACTIVEX )}, NULL },
+{ "ERRORSYS", {HB_FS_PUBLIC}, {HB_FUNCNAME( ERRORSYS )}, NULL },
+{ "(_INITSTATICS00001)", {HB_FS_INITEXIT}, {hb_INITSTATICS}, NULL }
+HB_INIT_SYMBOLS_END( hb_vm_SymbolInit_PRUEBA2 )
+
+#if defined(HB_PRAGMA_STARTUP)
+   #pragma startup hb_vm_SymbolInit_PRUEBA2
+#elif defined(HB_MSC_STARTUP)
+   #if _MSC_VER >= 1010
+      #pragma data_seg( ".CRT$XIY" )
+      #pragma comment( linker, "/Merge:.CRT=.data" )
+   #else
+      #pragma data_seg( "XIY" )
+   #endif
+   static HB_$INITSYM hb_vm_auto_SymbolInit_PRUEBA2 = hb_vm_SymbolInit_PRUEBA2;
+   #pragma data_seg()
+#endif
+
+HB_FUNC( MAIN )
+
+{
+   static const BYTE pcode[] =
+   {
+13, 1, 0, 116, 23, 0, 133, 9, 0, 48, 1, 0, 108, 2, 
+	100, 12, 0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 
+	100, 100, 100, 100, 100, 120, 120, 120, 120, 9, 112, 21, 82, 1, 
+	0, 134, 1, 48, 1, 0, 108, 3, 100, 12, 0, 103, 1, 0, 
+	100, 100, 9, 100, 100, 112, 6, 80, 1, 134, 2, 48, 4, 0, 
+	108, 5, 100, 12, 0, 100, 100, 100, 100, 100, 89, 13, 0, 1, 
+	0, 0, 0, 108, 6, 100, 12, 0, 6, 9, 95, 1, 9, 100, 
+	100, 9, 100, 106, 10, 67, 111, 110, 110, 101, 99, 116, 40, 41, 
+	0, 100, 100, 100, 100, 100, 100, 100, 100, 112, 22, 73, 134, 6, 
+	48, 7, 0, 103, 1, 0, 100, 48, 8, 0, 103, 1, 0, 112, 
+	0, 48, 9, 0, 103, 1, 0, 112, 0, 48, 10, 0, 103, 1, 
+	0, 112, 0, 48, 11, 0, 103, 1, 0, 112, 0, 48, 12, 0, 
+	103, 1, 0, 112, 0, 48, 13, 0, 103, 1, 0, 112, 0, 48, 
+	14, 0, 103, 1, 0, 112, 0, 100, 100, 100, 100, 100, 100, 100, 
+	100, 100, 100, 48, 15, 0, 103, 1, 0, 112, 0, 112, 19, 73, 
+	134, 8, 100, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC( CONNECT )
+
+{
+   static const BYTE pcode[] =
+   {
+116, 23, 0, 133, 21, 0, 108, 16, 100, 108, 17, 100, 106, 14, 
+	99, 53, 114, 101, 112, 111, 114, 116, 46, 101, 120, 101, 32, 0, 
+	108, 18, 100, 48, 19, 0, 103, 1, 0, 112, 0, 12, 1, 72, 
+	106, 6, 32, 112, 97, 99, 111, 0, 72, 106, 12, 113, 101, 113, 
+	114, 119, 101, 49, 50, 51, 52, 49, 0, 72, 12, 1, 4, 1, 
+	0, 20, 1, 134, 2, 100, 110, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
+HB_FUNC_INITSTATICS()
+
+{
+   static const BYTE pcode[] =
+   {
+117, 23, 0, 1, 0, 7
+   };
+
+   hb_vmExecute( pcode, symbols, NULL );
+}
+
